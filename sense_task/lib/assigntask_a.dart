@@ -14,22 +14,24 @@ class _taskassign_aState extends State<taskassign_a> {
     return Scaffold(
       body:Center(
         child:Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('data'),
+            Text('Assign Task')
+            ///TODO: Add task assigning datas with setting parameters
+            ///try ov-ai profile page and try to implement according to ui design 
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => taskpage_a()),
+            MaterialPageRoute(builder: (context) => TabsScreen()),
           );
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.done),
       ),
     );
   }
