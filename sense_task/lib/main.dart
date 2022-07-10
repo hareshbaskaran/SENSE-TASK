@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sense_task/assigntask_a.dart';
 import 'package:sense_task/staffpage_a.dart';
 import 'package:sense_task/taskpage_a.dart';
-
+import 'package:hive_flutter/hive_flutter.dart';
 class SizeConfig {
   static MediaQueryData _mediaQueryData = const MediaQueryData();
   static double screenWidth = 0;
@@ -18,7 +18,11 @@ class SizeConfig {
   }
 }
 
-void main() {
+void main() async{
+  await Hive.initFlutter();
+  // Hive.registerAdapter(CalorieDataAdapter());
+  Box<dynamic> Hive_box = await Hive.openBox('myBox');
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
