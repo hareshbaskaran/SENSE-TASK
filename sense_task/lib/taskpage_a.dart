@@ -15,6 +15,10 @@ class _taskpage_aState extends State<taskpage_a> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
+        child:Container(
+          height: 500,
+          width:300,
+          color: Colors.amber,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -28,6 +32,7 @@ class _taskpage_aState extends State<taskpage_a> {
           ],
         ),
       ),
+      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         onPressed: () {
@@ -39,3 +44,4 @@ class _taskpage_aState extends State<taskpage_a> {
     );
   }
 }
+

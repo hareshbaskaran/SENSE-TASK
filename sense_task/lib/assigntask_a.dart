@@ -7,9 +7,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 TextEditingController tasktitle = new TextEditingController();
 TextEditingController taskdescription = new TextEditingController();
 
-TextEditingController weightValue = TextEditingController();
-TextEditingController dobValue = TextEditingController();
-TextEditingController heightValue = TextEditingController();
+TextEditingController weightValue =new TextEditingController();
+TextEditingController dobValue =new TextEditingController();
+TextEditingController heightValue =new TextEditingController();
 
 String startDateInString = '';
 DateTime startDate = DateTime.now();
@@ -60,7 +60,6 @@ String height = heightValue.text;
 // bool isTaskthere = false;
 
 class taskassign_a extends StatefulWidget {
-  // set grey(bool grey) {}
   bool grey = true;
 
   @override
