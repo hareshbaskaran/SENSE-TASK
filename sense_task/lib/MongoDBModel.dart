@@ -1,9 +1,4 @@
-// To parse this JSON data, do
-//
-//     final mangoDbModel = mangoDbModelFromJson(jsonString);
-
 import 'dart:convert';
-
 import 'package:mongo_dart/mongo_dart.dart';
 
 MangoDbModel mangoDbModelFromJson(String str) => MangoDbModel.fromJson(json.decode(str));
@@ -18,8 +13,8 @@ class MangoDbModel {
   });
 
   ObjectId id;
-  ObjectId username;
-  ObjectId password;
+  String username;
+  String password;
 
   factory MangoDbModel.fromJson(Map<String, dynamic> json) => MangoDbModel(
     id: json["_id"],

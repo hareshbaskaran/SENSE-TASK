@@ -1,4 +1,5 @@
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:sense_task/MongoDBModel.dart';
 import 'dart:developer';
 import 'constant.dart';
 
@@ -10,10 +11,11 @@ class MongoDatabase{
     var status = db.serverStatus();
     print(status);
     var collection = db.collection(COLLECTION_NAME);
-    await collection.insertOne({
-      "username":"haresh7",
-      "name":"haresh",
-    });
-    print(await collection.find().toList());
+  }
+  static Future<void> insert(MangoDbModel data) async{
+    try{
+    } catch (e){
+      print(e.toString());
+    }
   }
 }

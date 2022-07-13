@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mongo_dart/mongo_dart.dart' as M;
+import 'package:sense_task/MongoDBModel.dart';
+import 'package:sense_task/mangodb.dart';
 TextEditingController usernamevalue = new TextEditingController();
 TextEditingController passwordvalue = new TextEditingController();
+String username = usernamevalue.text;
+String password = passwordvalue.text;
 bool grey = true;
 class loginpage extends StatefulWidget {
   const loginpage({Key? key}) : super(key: key);
@@ -137,20 +142,39 @@ class _loginpageState extends State<loginpage> {
           ),
           SizedBox( height: MediaQuery.of(context).size.height * 0.025),
           Center(
-            child: Container(
-    width: MediaQuery.of(context).size.width * 0.9,
-    decoration: new BoxDecoration(
-    color: Color(0xFFF7F8F8),
-    shape: BoxShape.rectangle,
-    border: Border.all(width: 2.0),
-    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            child: ElevatedButton(
+                onPressed: () {
+                  _insertData(usernamevalue.text, passwordvalue.text);
+                },
+                child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    decoration: new BoxDecoration(
+                      color: Color(0xFFF7F8F8),
+                      shape: BoxShape.rectangle,
+                      border: Border.all(width: 2.0),
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    )
+                )
             ),
-
           ),
-          )
         ],
       ),
-      )
-    );
+    ));
   }
 }
+Future<void> _insertData (String name,String pass) async{
+  var _id = M.ObjectId();
+  final data = MangoDbModel(id: _id, username: name, password: pass);
+  var result = await MongoDatabase.insert(data);
+  ///add a snack bar for ID insertion
+  //_clearall();
+}
+/*
+String nameController = username;
+String passController = password;
+void _clearall(){
+ nameController = "";
+ passController = "";
+}
+*/
+
