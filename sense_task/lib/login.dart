@@ -27,27 +27,27 @@ class _loginpageState extends State<loginpage> {
         children: [
           Container(
            padding: EdgeInsets.fromLTRB(
-               MediaQuery.of(context).size.width * 0.1, 0, MediaQuery.of(context).size.width *0.02, MediaQuery.of(context).size.width * 0.1),
+               0, 0, 0, MediaQuery.of(context).size.width * 0.1),
             child:
             Text(
               'SENSE TASK MANAGEMENT',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
-                fontSize: MediaQuery.of(context).size.width * 0.06
+                fontSize: MediaQuery.of(context).size.width * 0.075
               ),
             ),
           ),
-         SizedBox( height: MediaQuery.of(context).size.height * 0.05),
+         SizedBox( height: MediaQuery.of(context).size.height * 0.025),
           Container(
               height: MediaQuery.of(context).size.height * 0.3,
               width: MediaQuery.of(context).size.width * 0.75,
               child:
           Image(image:AssetImage('assets/images/vit-logo.png') )),
-          SizedBox( height: MediaQuery.of(context).size.height * 0.05),
+          SizedBox( height: MediaQuery.of(context).size.height * 0.2),
           Container(
             padding: EdgeInsets.fromLTRB(
-                0, 0, MediaQuery.of(context).size.width * 0.7, 2),
+                0, 0, MediaQuery.of(context).size.width * 0.7, 0),
             child: Text(
               'username',
               style: TextStyle(
@@ -71,20 +71,18 @@ class _loginpageState extends State<loginpage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      height: 60,
+                      constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height * 0.05),
                       child: TextField(
+                        maxLines: 1,
                         onChanged: (_) {
                           setState(() {});
                         },
                         decoration: InputDecoration(
-                            fillColor: Colors.black,
-                            border: InputBorder.none,
-                            labelText: 'username',
-                            labelStyle: TextStyle(color: Colors.black)),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: 20,
+                          fillColor: Colors.black,
+                          border: InputBorder.none,
+                        ),
                         cursorColor: Colors.black,
-                        controller: usernamevalue,
+                        controller:usernamevalue,
                       ),
                     ),
                   ),
@@ -95,7 +93,7 @@ class _loginpageState extends State<loginpage> {
           SizedBox( height: MediaQuery.of(context).size.height * 0.025),
           Container(
             padding: EdgeInsets.fromLTRB(
-                0, 0, MediaQuery.of(context).size.width * 0.7, 2),
+                0, 0, MediaQuery.of(context).size.width * 0.7, 0),
             child: Text(
               'password',
               style: TextStyle(
@@ -118,19 +116,16 @@ class _loginpageState extends State<loginpage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      constraints: BoxConstraints(minHeight: 60),
+                      constraints: BoxConstraints(minHeight: MediaQuery.of(context).size.height * 0.05),
                       child: TextField(
-                        maxLines: null,
+                        maxLines: 1,
                         onChanged: (_) {
                           setState(() {});
                         },
                         decoration: InputDecoration(
                             fillColor: Colors.black,
                             border: InputBorder.none,
-                            labelText: 'password',
-                            labelStyle: TextStyle(color: Colors.black)),
-                        //keyboardType: TextInputType.multiline,
-                        // maxLines: 20,
+                        ),
                         cursorColor: Colors.black,
                         controller:passwordvalue,
                       ),
@@ -147,13 +142,22 @@ class _loginpageState extends State<loginpage> {
                   _insertData(usernamevalue.text, passwordvalue.text);
                 },
                 child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
+                  height: MediaQuery.of(context).size.height*0.05,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     decoration: new BoxDecoration(
-                      color: Color(0xFFF7F8F8),
+                      color: Colors.black,
                       shape: BoxShape.rectangle,
                       border: Border.all(width: 2.0),
                       borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    )
+                    ),
+                  child: Center(
+                    child: Text(
+                      "Login ",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 )
             ),
           ),
