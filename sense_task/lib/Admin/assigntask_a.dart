@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sense_task/main.dart';
-import 'package:sense_task/taskpage_a.dart';
+import 'package:sense_task/Admin/taskpage_a.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 TextEditingController tasktitle = new TextEditingController();
 TextEditingController taskdescription = new TextEditingController();
 
-TextEditingController weightValue =new TextEditingController();
-TextEditingController dobValue =new TextEditingController();
-TextEditingController heightValue =new TextEditingController();
+TextEditingController weightValue = new TextEditingController();
+TextEditingController dobValue = new TextEditingController();
+TextEditingController heightValue = new TextEditingController();
 
 String startDateInString = '';
 DateTime startDate = DateTime.now();
@@ -66,26 +66,26 @@ class taskassign_a extends StatefulWidget {
   State<taskassign_a> createState() => _taskassign_aState();
 }
 
-Box<dynamic> Hive_box = Hive.box('myBox');
+// Box<dynamic> Hive_box = Hive.box('myBox');
 bool isDateSelected = false;
 bool isRegister = true;
 
 class _taskassign_aState extends State<taskassign_a> {
   @override
-  void initState() {
-    if (Hive_box.get('assigntask') != null) {
-      categoryvalue = Hive_box.get('categoryvalue');
-      startDateInString = startDate.toString().substring(0, 10);
-      endDateInString = endDate.toString().substring(0, 10);
-      dueDateInString = dueDate.toString().substring(0, 10);
-      heightValue.text = Hive_box.get('height');
-      // assignTaskList = Hive_box.get('assigntask');
-      // if (assignTaskList.length > 0) {
-      //   isTaskthere = true;
-      // }
-    }
-    super.initState();
-  }
+  // void initState() {
+  //   if (Hive_box.get('assigntask') != null) {
+  //     categoryvalue = Hive_box.get('categoryvalue');
+  //     startDateInString = startDate.toString().substring(0, 10);
+  //     endDateInString = endDate.toString().substring(0, 10);
+  //     dueDateInString = dueDate.toString().substring(0, 10);
+  //     heightValue.text = Hive_box.get('height');
+  //     // assignTaskList = Hive_box.get('assigntask');
+  //     // if (assignTaskList.length > 0) {
+  //     //   isTaskthere = true;
+  //     // }
+  //   }
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {

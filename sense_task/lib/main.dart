@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sense_task/login.dart';
-import 'package:sense_task/assigntask_a.dart';
+import 'package:sense_task/Admin/assigntask_a.dart';
 import 'package:sense_task/staffpage_a.dart';
-import 'package:sense_task/taskpage_a.dart';
+import 'package:sense_task/Admin/taskpage_a.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'mangodb.dart';
+import 'models/MongoDBFunctions.dart';
+
 class SizeConfig {
   static MediaQueryData _mediaQueryData = const MediaQueryData();
   static double screenWidth = 0;
@@ -23,24 +24,24 @@ class SizeConfig {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MongoDatabase.connect();
-  await Hive.initFlutter();
-  // Hive.registerAdapter(CalorieDataAdapter());
-  Box<dynamic> Hive_box = await Hive.openBox('myBox');
-  WidgetsFlutterBinding.ensureInitialized();
+  // await Hive.initFlutter();
+  // // Hive.registerAdapter(CalorieDataAdapter());
+  // Box<dynamic> Hive_box = await Hive.openBox('myBox');
+  // WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-     home: loginpage(),
-    //  home: const TabsScreen(),
+      home: Scaffold(
+        body: Center(child: Text('hello')),
+      ),
+      //home: loginpage(),
     );
   }
 }
@@ -53,28 +54,22 @@ class TabsScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar:PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child:AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle:false,
-          backgroundColor: Colors.black,
-          bottom: const TabBar(
-            indicatorColor: Colors.white,
-            tabs: [
-              Tab( text: 'task'),
-              Tab( text: 'staff')
-            ],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: false,
+            backgroundColor: Colors.black,
+            bottom: const TabBar(
+              indicatorColor: Colors.white,
+              tabs: [Tab(text: 'task'), Tab(text: 'staff')],
+            ),
           ),
         ),
-        ),
         body: const TabBarView(
-          children: [taskpage_a(),staffpage_a()],
+          children: [taskpage_a(), staffpage_a()],
         ),
       ),
     );
   }
 }
-
-
-
