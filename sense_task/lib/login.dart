@@ -139,7 +139,7 @@ class _loginpageState extends State<loginpage> {
           Center(
             child: ElevatedButton(
                 onPressed: () {
-                  _insertData(usernamevalue.text, passwordvalue.text);
+                  _insertData(usernamevalue.text, passwordvalue.text);///polymorphism
                 },
                 child: Container(
                   height: MediaQuery.of(context).size.height*0.05,
@@ -166,11 +166,12 @@ class _loginpageState extends State<loginpage> {
     ));
   }
 }
+///future class of providing id and catching data from  username and password and passing to mangodbmodel class
 Future<void> _insertData (String name,String pass) async{
-  var _id = M.ObjectId();
-  final data = MangoDbModel(id: _id, username: name, password: pass);
+  var _id = M.ObjectId();///from MANGODBMODEL created a object id here we calling it as variable as each objectID carries user information
+  final data = MangoDbModel(id: _id, username: name, password: pass);///parameterised class changed class members to input changed strings and objectID
   var result = await MongoDatabase.insert(data);
-  ///add a snack bar for ID insertion
+  ///TODO:add a snack bar for ID insertion
   //_clearall();
 }
 /*
@@ -181,4 +182,4 @@ void _clearall(){
  passController = "";
 }
 */
-
+///todo: provide a ckear all function to login button so that once clicked all the given strings get cleared
