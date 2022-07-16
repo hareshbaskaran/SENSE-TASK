@@ -341,7 +341,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           final datePick = await showDatePicker(
                             context: context,
                             initialDate: endDate,
-                            firstDate: startDate,
+                            firstDate: new DateTime(1900),
                             lastDate: new DateTime.now(),
                             builder: (context, child) {
                               return Theme(
@@ -426,7 +426,7 @@ class _taskassign_aState extends State<taskassign_a> {
                     final datePick = await showDatePicker(
                       context: context,
                       initialDate: dueDate,
-                      firstDate: startDate,
+                      firstDate: new DateTime(1900),
                       lastDate: DateTime.now().add(new Duration(days: 90)),
                       builder: (context, child) {
                         return Theme(
@@ -453,7 +453,7 @@ class _taskassign_aState extends State<taskassign_a> {
 
                         // put it here
                         dueDateInString =
-                            "${dueDate.month}/${dueDate.day}/${dueDate.year}";
+                            "${dueDate.day}/${dueDate.month}/${dueDate.year}";
                         print(dueDateInString); // 08/14/2019
                       });
                     }
