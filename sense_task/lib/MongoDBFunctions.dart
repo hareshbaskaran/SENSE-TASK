@@ -1,5 +1,5 @@
 import 'package:mongo_dart/mongo_dart.dart';
-import 'package:sense_task/models/MongoDBModel.dart';
+import 'package:sense_task/MongoDBModel.dart';
 import 'dart:developer';
 import 'constant.dart';
 
@@ -15,9 +15,8 @@ class MongoDatabase {
     inspect(db);
     var status = db.serverStatus();
     print(status);
-    usercollection = db.collection(COLLECTION_NAME);
+    usercollection = db.collection(USER_COLLECTION);
 
-    ///usercollection driven from constant.dart constant
   }
 
   static Future<String> insert(MongoDbModel data) async {
