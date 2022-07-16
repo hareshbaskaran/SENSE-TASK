@@ -8,11 +8,11 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 TaskMango taskMangoFromJson(String str) => TaskMango.fromJson(json.decode(str));
 
-String taskMangoToJson(TaskMango data) => json.encode(data.toJson());
+String MangoDBModelToJson(TaskMango data) => json.encode(data.toJson());
 
 class TaskMango {
   TaskMango({
-    required this.id,
+    required this.id_t,
     required this.categorydb,
     required this.titledb,
     required this.descriptiondb,
@@ -23,7 +23,7 @@ class TaskMango {
     required this.facultydb,
   });
 
-  ObjectId id;
+  ObjectId id_t;
   String categorydb;
   String titledb;
   String descriptiondb;
@@ -34,7 +34,7 @@ class TaskMango {
   String facultydb;
 
   factory TaskMango.fromJson(Map<String, dynamic> json) => TaskMango(
-    id: json["_id"],
+    id_t: json["_id"],
     categorydb: json["category"],
     titledb: json["title"],
     descriptiondb: json["description"],
@@ -47,7 +47,7 @@ class TaskMango {
 
   Map<String, dynamic> toJson() =>
       {
-        "_id": id,
+        "_id": id_t,
         "category": categorydb,
         "title": titledb,
         "description": descriptiondb,

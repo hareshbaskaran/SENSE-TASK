@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:mongo_dart/mongo_dart.dart';
 ///formatted json to a dart class from quicktype.io
-UserMango UserMangoFromJson(String str) => UserMango.fromJson(json.decode(str));
+UserMongo UserMangoFromJson(String str) => UserMongo.fromJson(json.decode(str));
 
-String mangoDbModelToJson(UserMango data) => json.encode(data.toJson());
+String mangoDbModelToJson(UserMongo data) => json.encode(data.toJson());
 
-class UserMango {
-  UserMango({
+class UserMongo {
+  UserMongo({
     required this.id,
     required this.username,
     required this.password,
@@ -16,12 +16,10 @@ class UserMango {
   String username;
   String password;
 
-  factory UserMango.fromJson(Map<String, dynamic> json) => UserMango(
+  factory UserMongo.fromJson(Map<String, dynamic> json) => UserMongo(
     id: json["_id"],
     username: json["username"],
     password: json["password"],
-    /// TODO : ADD THE GIVEN STRINGS LIKE ID,USERNAME,PASSWORD as given
-    /// TODO: ALSO MAP TO JSON
   );
 
   Map<String, dynamic> toJson() => {

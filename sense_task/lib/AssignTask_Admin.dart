@@ -5,7 +5,7 @@ import 'package:sense_task/TaskMango.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/main.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:mongo_dart/mongo_dart.dart' as T;
+import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'mangodb.dart';
 List<Widget> allTasks = [];
 
@@ -645,10 +645,25 @@ void _clearassignpage() {
   facultyvalue = "Ishu";
 }
 
-Future<void> _inserttask(String category1, String title1,String description1,String startdate1,String enddate1,String duedate1,String duetime1,String faculty1) async {
-  var id_task = T.ObjectId();
-  final task_data = TaskMango(id: id_task, categorydb: category1, titledb: title1, descriptiondb: description1, startdatedb: startdate1, enddatedb: enddate1, duedatedb: duedate1, duetimedb: duetime1, facultydb: faculty1);
+Future<void> _inserttask(
+    String category1,
+    String title1,
+    String description1,
+    String startdate1,
+    String enddate1,
+    String duedate1,
+    String duetime1,
+    String faculty1) async {
+  var id_task = M.ObjectId();
+  final task_data = TaskMango(
+      id_t: id_task,
+      categorydb: category1,
+      titledb: title1,
+      descriptiondb: description1,
+      startdatedb: startdate1,
+      enddatedb: enddate1,
+      duedatedb: duedate1,
+      duetimedb: duetime1,
+      facultydb: faculty1);
   var taskresult = await TaskMangoDB.insert_task(task_data);
 }
-
-

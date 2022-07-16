@@ -240,12 +240,10 @@ class _loginpageState extends State<loginpage> {
     var _id = M.ObjectId();
 
     ///from MANGODBMODEL created a object id here we calling it as variable as each objectID carries user information
-    final data = UserMango(id: _id, username: name, password: pass);
+    final data = UserMongo(id: _id, username: name, password: pass);
 
     ///parameterised class changed class members to input changed strings and objectID
     var result = await UserMangoDB.insert(data);
-
-    ///TODO:add a snack bar for ID insertion
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
             'User name and password inserted succesfully for this id : $_id ')));

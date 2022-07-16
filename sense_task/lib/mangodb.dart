@@ -15,7 +15,7 @@ class UserMangoDB{
     print(status);
      usercollection = db.collection(USER_COLLECTION);///usercollection driven from constant.dart constant
   }
-  static Future<String> insert(UserMango data) async{
+  static Future<String> insert(UserMongo data) async{
     ///now the given data will be inserted from mangodbmodel cloass to mangodb
     try{
       var result = await usercollection.insertOne(data.toJson());
@@ -43,7 +43,7 @@ class TaskMangoDB{
     taskcollection = db.collection(TASK_COLLECTION);
   }
   static Future<String> insert_task(TaskMango task_data) async{
-    ///now the given data will be inserted from mangodbmodel cloass to mangodb
+    print(task_data);
     try{
       var result = await taskcollection.insertOne(task_data.toJson());
       if(result.isSuccess){

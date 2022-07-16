@@ -24,6 +24,7 @@ class SizeConfig {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await UserMangoDB.connect();
+  await TaskMangoDB.connect();
   await Hive.initFlutter();
   Box<dynamic> Hive_box = await Hive.openBox('myBox');
   WidgetsFlutterBinding.ensureInitialized();
