@@ -22,11 +22,11 @@ class _taskpage_aState extends State<taskpage_a> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(categoryvalue),
+              Text(tasktitle.text),
+              Text(taskdescription.text),
               Text(startDateInString),
               Text(endDateInString),
               Text(dueDateInString),
-              Text(tasktitle.text),
-              Text(taskdescription.text),
               Text(facultyvalue)
             ],
           ),

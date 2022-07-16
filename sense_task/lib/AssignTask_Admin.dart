@@ -40,24 +40,6 @@ var facultylist = [
   'Shobi',
 ];
 
-String height = heightValue.text;
-
-// class Task {
-//   String category;
-//   String title;
-//   String description;
-//   String eventdate;
-//   String duedate;
-//   String eventtime;
-//   String duetime;
-//   String faculty;
-//   Task(this.category, this.title, this.description, this.eventdate,
-//       this.duedate, this.eventtime, this.duetime, this.faculty);
-// }
-
-// List<Task> assignTaskList = [];
-// bool isTaskthere = false;
-
 class taskassign_a extends StatefulWidget {
   bool grey = true;
 
@@ -71,20 +53,6 @@ bool isRegister = true;
 
 class _taskassign_aState extends State<taskassign_a> {
   @override
-  // void initState() {
-  //   if (Hive_box.get('assigntask') != null) {
-  //     categoryvalue = Hive_box.get('categoryvalue');
-  //     startDateInString = startDate.toString().substring(0, 10);
-  //     endDateInString = endDate.toString().substring(0, 10);
-  //     dueDateInString = dueDate.toString().substring(0, 10);
-  //     heightValue.text = Hive_box.get('height');
-  //     // assignTaskList = Hive_box.get('assigntask');
-  //     // if (assignTaskList.length > 0) {
-  //     //   isTaskthere = true;
-  //     // }
-  //   }
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +84,7 @@ class _taskassign_aState extends State<taskassign_a> {
                 'Task Category',
                 style: TextStyle(
                   color: Colors.black,
+                  fontWeight: FontWeight.bold,
                   fontSize: MediaQuery.of(context).size.width * 0.03,
                 ),
               ),
@@ -125,7 +94,7 @@ class _taskassign_aState extends State<taskassign_a> {
                 height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width * 0.9,
                 decoration: new BoxDecoration(
-                  color: Color(0xFFF7F8F8),
+                  color: Colors.white,
                   shape: BoxShape.rectangle,
                   border: Border.all(width: 2.0),
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -142,12 +111,12 @@ class _taskassign_aState extends State<taskassign_a> {
                           child: DropdownButton(
                             icon: Icon(
                               Icons.arrow_drop_down,
-                              color: Color(0xFF7b6f72),
+                              color: Colors.black,
                               size: 20.09,
                             ),
                             alignment: Alignment.centerLeft,
                             dropdownColor: Colors.white,
-                            value: categoryvalue,
+                            value: categoryvalue,///Task Catdgory
                             items: items.map((String items) {
                               return DropdownMenuItem(
                                 value: items,
@@ -163,7 +132,7 @@ class _taskassign_aState extends State<taskassign_a> {
                             },
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
-                              color: Color(0xFFada4a5),
+                              color: Colors.black,
                               fontSize: 15,
                             ),
                           ),
@@ -193,7 +162,7 @@ class _taskassign_aState extends State<taskassign_a> {
               child: Container(
                 width: MediaQuery.of(context).size.width * 0.9,
                 decoration: new BoxDecoration(
-                  color: Color(0xFFF7F8F8),
+                  color: Colors.white,
                   shape: BoxShape.rectangle,
                   border: Border.all(width: 2.0),
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -215,12 +184,12 @@ class _taskassign_aState extends State<taskassign_a> {
                           decoration: InputDecoration(
                               fillColor: Colors.black,
                               border: InputBorder.none,
-                              labelText: 'Enter title',
-                              labelStyle: TextStyle(color: Colors.black)),
+                              hintText: 'Enter title',
+                              hintStyle: TextStyle(color: Colors.black)),
                           keyboardType: TextInputType.multiline,
-                          maxLines: 20,
+                          maxLines: 2,
                           cursorColor: Colors.black,
-                          controller: tasktitle,
+                          controller: tasktitle,///enter title
                         ),
                       ),
                     ),
@@ -240,12 +209,12 @@ class _taskassign_aState extends State<taskassign_a> {
                           decoration: InputDecoration(
                               fillColor: Colors.black,
                               border: InputBorder.none,
-                              labelText: 'Enter Task description',
-                              labelStyle: TextStyle(color: Colors.black)),
+                              hintText: 'Enter Task description',
+                              hintStyle: TextStyle(color: Colors.black)),
                           //keyboardType: TextInputType.multiline,
                           // maxLines: 20,
                           cursorColor: Colors.black,
-                          controller: taskdescription,
+                          controller: taskdescription,///task description
                         ),
                       ),
                     ),
@@ -315,7 +284,7 @@ class _taskassign_aState extends State<taskassign_a> {
                         height: MediaQuery.of(context).size.height * 0.08,
                         width: MediaQuery.of(context).size.width * 0.45,
                         decoration: new BoxDecoration(
-                          color: Color(0xFFF7F8F8),
+                          color: Colors.white,
                           shape: BoxShape.rectangle,
                           border: Border.all(width: 2.0),
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -325,7 +294,7 @@ class _taskassign_aState extends State<taskassign_a> {
                             SizedBox(width: 5),
                             Icon(
                               Icons.calendar_month_sharp,
-                              color: Color(0xFF7b6f72),
+                              color: Colors.black,
                               size: 30,
                             ),
                             SizedBox(width: 10),
@@ -339,7 +308,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       color: (weightValue.text == '')
-                                          ? Color(0xFFada4a5)
+                                          ? Colors.black
                                           : Colors.transparent,
                                       fontSize: 15,
                                     ),
@@ -396,7 +365,7 @@ class _taskassign_aState extends State<taskassign_a> {
                         height: MediaQuery.of(context).size.height * 0.08,
                         width: MediaQuery.of(context).size.width * 0.45,
                         decoration: new BoxDecoration(
-                          color: Color(0xFFF7F8F8),
+                          color: Colors.white,
                           shape: BoxShape.rectangle,
                           border: Border.all(width: 2.0),
                           borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -406,21 +375,21 @@ class _taskassign_aState extends State<taskassign_a> {
                             SizedBox(width: 5),
                             Icon(
                               Icons.calendar_month_sharp,
-                              color: Color(0xFF7b6f72),
+                              color: Colors.black,
                               size: 30,
                             ),
                             SizedBox(width: 10),
                             (endDateInString != '')
                                 ? Text(
                                     endDateInString,
-                                    style: TextStyle(color: Colors.black38),
+                                    style: TextStyle(color: Colors.black),
                                   )
                                 : Text(
                                     "End date",
                                     style: TextStyle(
                                       fontWeight: FontWeight.normal,
                                       color: (weightValue.text == '')
-                                          ? Color(0xFFada4a5)
+                                          ? Colors.black
                                           : Colors.transparent,
                                       fontSize: 15,
                                     ),
@@ -479,7 +448,7 @@ class _taskassign_aState extends State<taskassign_a> {
                   height: MediaQuery.of(context).size.height * 0.08,
                   width: MediaQuery.of(context).size.width * 0.9,
                   decoration: new BoxDecoration(
-                    color: Color(0xFFF7F8F8),
+                    color: Colors.white,
                     shape: BoxShape.rectangle,
                     border: Border.all(width: 2.0),
                     borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -489,7 +458,7 @@ class _taskassign_aState extends State<taskassign_a> {
                       SizedBox(width: 20),
                       Icon(
                         Icons.calendar_month_sharp,
-                        color: Color(0xFF7b6f72),
+                        color: Colors.black,
                         size: 30,
                       ),
                       SizedBox(width: 30),
@@ -503,7 +472,7 @@ class _taskassign_aState extends State<taskassign_a> {
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 color: (weightValue.text == '')
-                                    ? Color(0xFFada4a5)
+                                    ? Colors.black
                                     : Colors.transparent,
                                 fontSize: 15,
                               ),
@@ -520,7 +489,7 @@ class _taskassign_aState extends State<taskassign_a> {
               padding: EdgeInsets.fromLTRB(
                   15, 0, MediaQuery.of(context).size.width * 0.7, 2),
               child: Text(
-                'Event Timings (optional)',
+                'Event Timings',
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: MediaQuery.of(context).size.width * 0.03,
@@ -557,11 +526,9 @@ class _taskassign_aState extends State<taskassign_a> {
                     setState(() {
                       dueDate = datePick;
                       isDateSelected = true;
-
-                      // put it here
                       dueDateInString =
                           "${dueDate.month}/${dueDate.day}/${dueDate.year}";
-                      print(dueDateInString); // 08/14/2019
+                      print(dueDateInString);
                     });
                   }
                   setState(() {});
@@ -580,21 +547,21 @@ class _taskassign_aState extends State<taskassign_a> {
                       SizedBox(width: 20),
                       Icon(
                         Icons.calendar_month_sharp,
-                        color: Color(0xFF7b6f72),
+                        color: Colors.black,
                         size: 30,
                       ),
                       SizedBox(width: 30),
                       (dueDateInString != '')
                           ? Text(
                               dueDateInString,
-                              style: TextStyle(color: Colors.black38),
+                              style: TextStyle(color: Colors.black),
                             )
                           : Text(
                               "Due Date",
                               style: TextStyle(
                                 fontWeight: FontWeight.normal,
                                 color: (weightValue.text == '')
-                                    ? Color(0xFFada4a5)
+                                    ? Colors.black
                                     : Colors.transparent,
                                 fontSize: 15,
                               ),
@@ -621,7 +588,7 @@ class _taskassign_aState extends State<taskassign_a> {
                 height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width * 0.9,
                 decoration: new BoxDecoration(
-                  color: Color(0xFFF7F8F8),
+                  color: Colors.white,
                   shape: BoxShape.rectangle,
                   border: Border.all(width: 2.0),
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
@@ -638,7 +605,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           child: DropdownButton(
                             icon: Icon(
                               Icons.arrow_drop_down,
-                              color: Color(0xFF7b6f72),
+                              color: Colors.black,
                               size: 20.09,
                             ),
                             alignment: Alignment.centerLeft,
@@ -659,7 +626,7 @@ class _taskassign_aState extends State<taskassign_a> {
                             },
                             style: TextStyle(
                               fontWeight: FontWeight.normal,
-                              color: Color(0xFFada4a5),
+                              color: Colors.black,
                               fontSize: 15,
                             ),
                           ),
@@ -670,57 +637,6 @@ class _taskassign_aState extends State<taskassign_a> {
                 ),
               ),
             ),
-
-            // Center(
-            //   child: Container(
-            //     height: 65,
-            //     width: 3005,
-            //     decoration: new BoxDecoration(
-            //       color: Color(0xFFF7F8F8),
-            //       shape: BoxShape.rectangle,
-            //       borderRadius: BorderRadius.all(Radius.circular(14.0)),
-            //     ),
-            //     child: Stack(children: [
-            //       Padding(
-            //         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-            //         child: TextField(
-            //           style: TextStyle(
-            //               fontWeight: FontWeight.normal,
-            //               color: Colors.black,
-            //               fontSize: 15),
-            //           keyboardType: TextInputType.number,
-            //           textAlign: TextAlign.left,
-            //           cursorColor: Colors.grey,
-            //           controller: heightValue,
-            //           inputFormatters: <TextInputFormatter>[
-            //             FilteringTextInputFormatter.singleLineFormatter
-            //           ],
-            //           decoration: InputDecoration(
-            //             border: InputBorder.none,
-            //             focusedBorder: InputBorder.none,
-            //             enabledBorder: InputBorder.none,
-            //             errorBorder: InputBorder.none,
-            //             disabledBorder: InputBorder.none,
-            //             // hintText: "Your Height",
-            //             hintText: 'Your Height',
-            //             hintStyle: TextStyle(
-            //               fontWeight: FontWeight.normal,
-            //               color: Colors.black,
-            //               fontSize: 15,
-            //             ),
-            //             icon: Icon(
-            //               Icons.height_sharp,
-            //               color: Color(0xFF7b6f72),
-            //               size: 30,
-            //             ),
-            //             fillColor: Colors.grey,
-            //           ),
-            //         ),
-            //       ),
-            //     ]),
-            //   ),
-            // ),
-
             ///TODO: Add task assigning datas with setting parameters
             ///try ov-ai profile page and try to implement according to ui design
           ],
