@@ -5,6 +5,7 @@ import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'mangodb.dart';
+
 class SizeConfig {
   static MediaQueryData _mediaQueryData = const MediaQueryData();
   static double screenWidth = 0;
@@ -32,14 +33,12 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-     //home: loginpage(),
-     home: const TabsScreen(),
+      //home: loginpage(),
+      home: const TabsScreen(),
     );
   }
 }
@@ -52,28 +51,22 @@ class TabsScreen extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar:PreferredSize(
-        preferredSize: Size.fromHeight(60.0),
-        child:AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle:false,
-          backgroundColor: Colors.black,
-          bottom: const TabBar(
-            indicatorColor: Colors.white,
-            tabs: [
-              Tab( text: 'task'),
-              Tab( text: 'staff')
-            ],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: false,
+            backgroundColor: Colors.black,
+            bottom: const TabBar(
+              indicatorColor: Colors.white,
+              tabs: [Tab(text: 'All Tasks'), Tab(text: 'Staff progress')],
+            ),
           ),
         ),
-        ),
         body: const TabBarView(
-          children: [taskpage_a(),staffpage_a()],
+          children: [taskpage_a(), staffpage_a()],
         ),
       ),
     );
   }
 }
-
-
-
