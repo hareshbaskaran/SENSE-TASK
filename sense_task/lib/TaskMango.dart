@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:mongo_dart/mongo_dart.dart';
+
 TaskMango taskMangoFromJson(String str) => TaskMango.fromJson(json.decode(str));
 
 String taskMangoToJson(TaskMango data) => json.encode(data.toJson());
@@ -11,47 +13,48 @@ String taskMangoToJson(TaskMango data) => json.encode(data.toJson());
 class TaskMango {
   TaskMango({
     required this.id,
-    required this.category,
-    required this.title,
-    required this.description,
-    required this.eventdate,
-    required this.duedate,
-    required this.eventtime,
-    required this.duetime,
-    required this.faculty,
+    required this.categorydb,
+    required this.titledb,
+    required this.descriptiondb,
+    required this.startdatedb,
+    required this.enddatedb,
+    required this.duedatedb,
+    required this.duetimedb,
+    required this.facultydb,
   });
 
-  String id;
-  String category;
-  String title;
-  String description;
-  String eventdate;
-  String duedate;
-  String eventtime;
-  String duetime;
-  String faculty;
+  ObjectId id;
+  String categorydb;
+  String titledb;
+  String descriptiondb;
+  String startdatedb;
+  String enddatedb;
+  String duedatedb;
+  String duetimedb;
+  String facultydb;
 
   factory TaskMango.fromJson(Map<String, dynamic> json) => TaskMango(
     id: json["_id"],
-    category: json["category"],
-    title: json["title"],
-    description: json["description"],
-    eventdate: json["eventdate"],
-    duedate: json["duedate"],
-    eventtime: json["eventtime"],
-    duetime: json["duetime"],
-    faculty: json["faculty"],
+    categorydb: json["category"],
+    titledb: json["title"],
+    descriptiondb: json["description"],
+    startdatedb: json["startdate"],
+    enddatedb: json["enddate"],
+    duedatedb: json["duedate"],
+    duetimedb: json["duetime"],
+    facultydb: json["faculty"],
   );
 
   Map<String, dynamic> toJson() =>
       {
         "_id": id,
-        "category": category,
-        "title": title,
-        "description": description,
-        "eventdate": eventdate,
-        "duedate": duedate,
-        "eventtime": eventtime,
-        "duetime": duetime,
+        "category": categorydb,
+        "title": titledb,
+        "description": descriptiondb,
+        "startdate": startdatedb,
+        "enddate": enddatedb,
+        "duedate": duedatedb,
+        "duetime": duetimedb,
+        "faculty":facultydb,
       };
 }

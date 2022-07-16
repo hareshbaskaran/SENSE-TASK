@@ -1,10 +1,12 @@
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sense_task/TaskMango.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/main.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
+import 'package:mongo_dart/mongo_dart.dart' as T;
+import 'mangodb.dart';
 List<Widget> allTasks = [];
 
 TextEditingController tasktitlecontroller = new TextEditingController();
@@ -601,6 +603,16 @@ class _taskassign_aState extends State<taskassign_a> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.black,
         onPressed: () {
+          _inserttask(
+              categoryvalue,
+              tasktitlecontroller.text,
+              taskdescriptioncontroller.text,
+              startDateInString,
+              endDateInString,
+              dueDateInString,
+              duetime,
+              facultyvalue,
+          );
           allTasks.add(Taskbox(
               category: categoryvalue,
               title: tasktitlecontroller.text,
@@ -633,6 +645,10 @@ void _clearassignpage() {
   facultyvalue = "Ishu";
 }
 
-///TODO : align properly and add start time, end time just like due time near the start and end dates.
-///TODO : put submit button for task description.Whenever we select date after finishing task description,keyboard cursor goes to description box
-///TODO :MINOR UI CHANGES
+Future<void> _inserttask(String category1, String title1,String description1,String startdate1,String enddate1,String duedate1,String duetime1,String faculty1) async {
+  var id_task = T.ObjectId();
+  final task_data = TaskMango(id: id_task, categorydb: category1, titledb: title1, descriptiondb: description1, startdatedb: startdate1, enddatedb: enddate1, duedatedb: duedate1, duetimedb: duetime1, facultydb: faculty1);
+  var taskresult = await TaskMangoDB.insert_task(task_data);
+}
+
+

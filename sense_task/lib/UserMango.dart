@@ -15,14 +15,6 @@ class UserMango {
   ObjectId id;
   String username;
   String password;
-  /*String category;
-  String title;
-   String description;
-   String eventdate;
-   String duedate;
-   String eventtime;
-   String duetime;
-  String faculty;*/
 
   factory UserMango.fromJson(Map<String, dynamic> json) => UserMango(
     id: json["_id"],
