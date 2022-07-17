@@ -37,6 +37,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        secondaryHeaderColor: Colors.black,
+        splashColor: Colors.black,
+      ),
       debugShowCheckedModeBanner: false,
       home: loginpage(),
       //home: const TabsScreen(),

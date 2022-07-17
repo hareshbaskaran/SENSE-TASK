@@ -4,11 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:sense_task/TaskMango.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/main.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'mangodb.dart';
 List<Widget> allTasks = [];
-
 TextEditingController tasktitlecontroller = new TextEditingController();
 String tasktitle = tasktitlecontroller.text;
 TextEditingController taskdescriptioncontroller = new TextEditingController();
@@ -163,6 +161,7 @@ class _taskassign_aState extends State<taskassign_a> {
                 child: Text(
                   'Task Description',
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                     fontSize: MediaQuery.of(context).size.width * 0.03,
                   ),
@@ -196,7 +195,9 @@ class _taskassign_aState extends State<taskassign_a> {
                                 fillColor: Colors.black,
                                 border: InputBorder.none,
                                 hintText: 'Enter title',
-                                hintStyle: TextStyle(color: Colors.black)),
+                                hintStyle: TextStyle(color: Colors.black,
+                                fontWeight: FontWeight.bold
+                                )),
                             keyboardType: TextInputType.multiline,
                             maxLines: 2,
                             cursorColor: Colors.black,
@@ -246,6 +247,7 @@ class _taskassign_aState extends State<taskassign_a> {
                 child: Text(
                   'Event Date',
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                     fontSize: MediaQuery.of(context).size.width * 0.03,
                   ),
@@ -255,6 +257,23 @@ class _taskassign_aState extends State<taskassign_a> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Container(
+                height: MediaQuery.of(context).size.height * 0.08,
+                width: MediaQuery.of(context).size.width * 0.175,
+                decoration: new BoxDecoration(
+                  color: Colors.black,
+                  shape: BoxShape.rectangle,
+                  border: Border.all(width: 2.0),
+                  borderRadius:
+                  BorderRadius.all(Radius.circular(15.0)),
+                    ),
+                      child: Icon(
+                        Icons.date_range,
+                        color: Colors.white,
+                        size: MediaQuery.of(context).size.width * 0.1,
+                      ),
+                    ),
+                    SizedBox(     width: MediaQuery.of(context).size.width * 0.025 ,),
                     Center(
                       child: GestureDetector(
                         onTap: () async {
@@ -299,7 +318,7 @@ class _taskassign_aState extends State<taskassign_a> {
                         },
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width * 0.45,
+                          width: MediaQuery.of(context).size.width * 0.35,
                           decoration: new BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.rectangle,
@@ -309,17 +328,17 @@ class _taskassign_aState extends State<taskassign_a> {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(width: 5),
+                              SizedBox(    width: MediaQuery.of(context).size.width * 0.025,),
                               Icon(
                                 Icons.calendar_month_sharp,
                                 color: Colors.black,
                                 size: 30,
                               ),
-                              SizedBox(width: 10),
+                              SizedBox(width: 5),
                               (startDateInString != '')
                                   ? Text(
                                       startDateInString,
-                                      style: TextStyle(color: Colors.black38),
+                                      style: TextStyle(color: Colors.black),
                                     )
                                   : Text(
                                       "Start date",
@@ -335,7 +354,7 @@ class _taskassign_aState extends State<taskassign_a> {
                       ),
                     ),
                     SizedBox(
-                      width: 10,
+                        width: MediaQuery.of(context).size.width * 0.025,
                     ),
                     Center(
                       child: GestureDetector(
@@ -381,7 +400,7 @@ class _taskassign_aState extends State<taskassign_a> {
                         },
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width * 0.45,
+                          width: MediaQuery.of(context).size.width * 0.35,
                           decoration: new BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.rectangle,
@@ -391,7 +410,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(width: 5),
+                              SizedBox(     width: MediaQuery.of(context).size.width * 0.025),
                               Icon(
                                 Icons.calendar_month_sharp,
                                 color: Colors.black,
@@ -422,112 +441,154 @@ class _taskassign_aState extends State<taskassign_a> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.02,
               ),
-              Center(
-                child: GestureDetector(
-                  onTap: () async {
-                    final datePick = await showDatePicker(
-                      context: context,
-                      initialDate: dueDate,
-                      firstDate: new DateTime(1900),
-                      lastDate: DateTime.now().add(new Duration(days: 90)),
-                      builder: (context, child) {
-                        return Theme(
-                          data: Theme.of(context).copyWith(
-                            colorScheme: ColorScheme.light(
-                              primary: Colors.black, // header background color
-                              onPrimary: Colors.white, // header text color
-                              onSurface: Colors.black, // body text color
-                            ),
-                            textButtonTheme: TextButtonThemeData(
-                              style: TextButton.styleFrom(
-                                primary: Colors.black, // button text color
-                              ),
-                            ),
-                          ),
-                          child: child!,
-                        );
-                      },
-                    );
-                    if (datePick != null && datePick != dueDate) {
-                      setState(() {
-                        dueDate = datePick;
-                        isDateSelected = true;
-
-                        // put it here
-                        dueDateInString =
-                            "${dueDate.day}/${dueDate.month}/${dueDate.year}";
-                        print(dueDateInString); // 08/14/2019
-                      });
-                    }
-                    setState(() {});
-                  },
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.08,
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    decoration: new BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.rectangle,
-                      border: Border.all(width: 2.0),
-                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 20),
-                        Icon(
-                          Icons.calendar_month_sharp,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        SizedBox(width: 30),
-                        (dueDateInString != '')
-                            ? Text(
-                                dueDateInString,
-                                style: TextStyle(color: Colors.black38),
-                              )
-                            : Text(
-                                "Due Date",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                ),
-                              )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.02,
-              ),
               Container(
                 padding: EdgeInsets.fromLTRB(
-                    15, 0, MediaQuery.of(context).size.width * 0.7, 2),
+                    0, 0, MediaQuery.of(context).size.width * 0.7, 2),
                 child: Text(
-                  'Event Timings',
+                  'Due Details',
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                     fontSize: MediaQuery.of(context).size.width * 0.03,
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Container(
-                    child: DateTimePicker(
-                  type: DateTimePickerType.time,
-                  textAlign: TextAlign.center,
-                  timeHintText: 'time',
-                  cursorColor: Colors.black,
-                  timeLabelText: "Time",
-                  onChanged: (value) {
-                    duetime = value;
-                    print('timeeeee');
-                    print(duetime);
-                  },
-                )),
+              Row(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.08,
+                    width: MediaQuery.of(context).size.width * 0.175,
+                    decoration: new BoxDecoration(
+                      color: Colors.black,
+                      shape: BoxShape.rectangle,
+                      border: Border.all(width: 2.0),
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(15.0)),
+                    ),
+                    child: Center(
+                      child: Text(
+                        'DUE',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: MediaQuery.of(context).size.width * 0.05
+                        ),
+                      ),
+                    )
+                  ),
+                  SizedBox(    width: MediaQuery.of(context).size.width * 0.025),
+                  Center(
+                    child: GestureDetector(
+                      onTap: () async {
+                        final datePick = await showDatePicker(
+                          context: context,
+                          initialDate: dueDate,
+                          firstDate: new DateTime(1900),
+                          lastDate: DateTime.now().add(new Duration(days: 90)),
+                          builder: (context, child) {
+                            return Theme(
+                              data: Theme.of(context).copyWith(
+                                colorScheme: ColorScheme.light(
+                                  primary: Colors.black, // header background color
+                                  onPrimary: Colors.white, // header text color
+                                  onSurface: Colors.black, // body text color
+                                ),
+                                textButtonTheme: TextButtonThemeData(
+                                  style: TextButton.styleFrom(
+                                    primary: Colors.black, // button text color
+                                  ),
+                                ),
+                              ),
+                              child: child!,
+                            );
+                          },
+                        );
+                        if (datePick != null && datePick != dueDate) {
+                          setState(() {
+                            dueDate = datePick;
+                            isDateSelected = true;
+
+                            // put it here
+                            dueDateInString =
+                                "${dueDate.day}/${dueDate.month}/${dueDate.year}";
+                            print(dueDateInString); // 08/14/2019
+                          });
+                        }
+                        setState(() {});
+                      },
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.08,
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.rectangle,
+                          border: Border.all(width: 2.0),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        ),
+                        child: Row(
+                          children: [
+                            SizedBox(width: 20),
+                            Icon(
+                              Icons.calendar_month_sharp,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            SizedBox(    width: MediaQuery.of(context).size.width * 0.025),
+                            (dueDateInString != '')
+                                ? Text(
+                                    dueDateInString,
+                                    style: TextStyle(color: Colors.black),
+                                  )
+                                : Text(
+                                    "Due Date",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),
+                                  )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width:  MediaQuery.of(context).size.width *0.025),
+                  Row(
+                    children: [
+                      Container(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          width: MediaQuery.of(context).size.width * 0.35,
+                          decoration: new BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.rectangle,
+                            border: Border.all(width: 2.0),
+                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          ),
+                          child: DateTimePicker(
+                            icon:     Icon(
+                              Icons.timelapse_outlined,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                            type: DateTimePickerType.time,
+                            textAlign: TextAlign.center,
+                            timeHintText: 'time',
+                            cursorColor: Colors.black,
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                            timeFieldWidth: 0,
+                            onChanged: (value) {
+                              duetime = value;
+                              print('timeeeee');
+                              print(duetime);
+                            },
+                          )),
+                    ],
+                  ),
+                ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.02),
               Container(
                 padding: EdgeInsets.fromLTRB(
                     0, 0, MediaQuery.of(context).size.width * 0.7, 2),
@@ -535,6 +596,7 @@ class _taskassign_aState extends State<taskassign_a> {
                   'Choose Faculty',
                   style: TextStyle(
                     color: Colors.black,
+                    fontWeight: FontWeight.bold,
                     fontSize: MediaQuery.of(context).size.width * 0.03,
                   ),
                 ),
@@ -613,7 +675,8 @@ class _taskassign_aState extends State<taskassign_a> {
               duetime,
               facultyvalue,
           );
-          allTasks.add(Taskbox(
+          allTasks.add(
+              Taskbox(
               category: categoryvalue,
               title: tasktitlecontroller.text,
               description: taskdescriptioncontroller.text,
