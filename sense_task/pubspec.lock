@@ -410,6 +410,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
+  rounded_expansion_tile:
+    dependency: "direct main"
+    description:
+      name: rounded_expansion_tile
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.13"
   sasl_scram:
     dependency: transitive
     description:

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sense_task/main.dart';
 import 'AssignTask_Admin.dart';
+import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 
 class taskpage_a extends StatefulWidget {
   const taskpage_a({Key? key}) : super(key: key);
@@ -60,44 +61,27 @@ class Taskbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        decoration: new BoxDecoration(
+        child: Card(
+          elevation: 0,
           color: Colors.white,
-          shape: BoxShape.rectangle,
-          border: Border.all(width: 2.0),
-          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            smalltext(text: 'Task Category'),
-            standardtext(text: category),
-            smalltext(text: 'Task Title'),
-            standardtext(text: title),
-            smalltext(text: 'Task Description'),
-            standardtext(text: description),
-            smalltext(text: 'Start date'),
-            standardtext(text: startdate),
-            smalltext(text: 'End date'),
-            standardtext(text: enddate),
-            smalltext(text: 'Due date'),
-            standardtext(text: duedate),
-            smalltext(text: 'Due time'),
-            standardtext(text: duetime),
-            smalltext(text: 'Faculty'),
-            standardtext(text: faculty),
-          ],
-        ),
-      ),
-    );
+          child: RoundedExpansionTile(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4)),
+            title: Text(category),
+            children: [
+              for (var i = 0; i < 5; i++)
+                ListTile(
+                  title: Text('Child $i'),
+                )
+            ],
+          ),
+        ));
   }
 }
 
 class standardtext extends StatelessWidget {
   String text;
+
   standardtext({required this.text});
 
   @override
@@ -117,6 +101,7 @@ class standardtext extends StatelessWidget {
 
 class smalltext extends StatelessWidget {
   String text;
+
   smalltext({required this.text});
 
   @override
@@ -133,3 +118,84 @@ class smalltext extends StatelessWidget {
     );
   }
 }
+/*            smalltext(text: 'Task Category'),
+            standardtext(text: category),
+            smalltext(text: 'Task Title'),
+            standardtext(text: title),
+            smalltext(text: 'Task Description'),
+            standardtext(text: description),
+            smalltext(text: 'Start date'),
+            standardtext(text: startdate),
+            smalltext(text: 'End date'),
+            standardtext(text: enddate),
+            smalltext(text: 'Due date'),
+            standardtext(text: duedate),
+            smalltext(text: 'Due time'),
+            standardtext(text: duetime),
+            smalltext(text: 'Faculty'),
+            standardtext(text: faculty),*/
+
+/* Widget _buildList(Menu list) {
+    if (list.subMenu.isEmpty)
+      return Builder(
+        builder: (context) {
+          return ListTile(
+              onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => SubCategory(list.name))),
+              leading: SizedBox(),
+              title: Text(list.name)
+          );
+        }
+      );
+    return ExpansionTile(
+      leading: Icon(list.icon),
+      title: Text(
+        list.name,
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      children: list.subMenu.map(_buildList).toList(),
+    );
+  }
+}*/
+
+/*  child:ExpansionTileCard(
+          //baseColor:
+            //expandedColor:
+            key: cardA,
+            title: Text(title),
+            subtitle: Row(
+              children: [
+                standardtext(text: category),
+                SizedBox(   width: MediaQuery.of(context).size.width * 0.025),
+                standardtext(text: duedate),
+                SizedBox(   width: MediaQuery.of(context).size.width * 0.025),
+                standardtext(text: duetime),
+
+              ],
+            ),
+            children: <Widget>[
+              Divider(
+                thickness: 1.0,
+                height: 1.0,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
+                  child: Text(
+                    description
+                  )
+                ),
+              ),
+              ButtonBar(
+                alignment: MainAxisAlignment.spaceAround,
+                buttonHeight: 52.0,
+                buttonMinWidth: 90.0,
+                children: <Widget>[
+                  ///implement edit view button and accept n reject button
+                ],
+              ),
+            ],
+          ),*/

@@ -42,8 +42,8 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.black,
       ),
       debugShowCheckedModeBanner: false,
-      home: loginpage(),
-      //home: const TabsScreen(),
+      //home: loginpage(),
+      home: const TabsScreen(),
     );
   }
 }
