@@ -4,7 +4,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sense_task/main.dart';
 import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
-
+bool admin = true;
+bool staff = false;
 class taskpage_a extends StatefulWidget {
   const taskpage_a({Key? key}) : super(key: key);
 
@@ -22,17 +23,15 @@ class _taskpage_aState extends State<taskpage_a> {
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-              child: allTasks[index],
+              child: Column(
+                children: [
+                  ///todo : add date pick,weekly or 3day picker and faculty querry with ternary for admin n staff
+                  allTasks[index],
+                ],
+              ),
             );
           }),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        onPressed: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => taskassign_a()));
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton:_floating(context)
     );
   }
 }
@@ -65,17 +64,165 @@ class Taskbox extends StatelessWidget {
           elevation: 0,
           color: Colors.white,
           child: RoundedExpansionTile(
+            trailing: Icon(Icons.arrow_drop_down_outlined,
+            color: Colors.black,
+            ),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(4)),
-            title: Text(category),
-            children: [
-              for (var i = 0; i < 5; i++)
-                ListTile(
-                  title: Text('Child $i'),
+            title: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                largetext(text: title),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    standardtext(text: category),
+                    (admin = true)?
+                    largetext(text: faculty):
+                        Container()
+                  ],
                 )
+              ],
+            ),
+            subtitle: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  standardtext(text: 'Due Date: $duedate'),
+                  standardtext(text: 'Due Time: $duetime'),
+                ],
+              ),
+            ),
+            children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                largetext(text: 'Description:'),
+                standardtext(text: description),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    standardtext(text: 'Event start Date: $startdate'),
+                    standardtext(text: 'Event end Date: $enddate'),
+                  ],
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                (admin = true)?
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 5.0,
+                                shape: StadiumBorder(),
+                                primary: Colors.black),
+                            onPressed: () {},///add edit onpressed
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  MediaQuery.of(context).size.height * 0.04,
+                                  12,
+                                  MediaQuery.of(context).size.height * 0.04,
+                                  12),
+                              child: Text(
+                                'Edit',
+                                style: GoogleFonts.lato(
+                                    color: Colors.white,
+                                    fontSize: MediaQuery.of(context).size.height *
+                                        0.02),
+                              ),
+                            )),
+                      ),
+                    ],
+                  ),
+                ):
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15.0),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              elevation: 5.0,
+                              shape: StadiumBorder(),
+                              primary: Colors.black),
+                          onPressed: () {},///add accept onpressed
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.height * 0.04,
+                                12,
+                                MediaQuery.of(context).size.height * 0.04,
+                                12),
+                            child: Text(
+                              'Accept',
+                              style: GoogleFonts.lato(
+                                  color: Colors.white,
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.02),
+                            ),
+                          )),
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              elevation: 5.0,
+                              shape: StadiumBorder(),
+                              primary: Colors.black),
+                          onPressed: () {},///add reject onpressed
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(
+                                MediaQuery.of(context).size.height * 0.048,
+                                12,
+                                MediaQuery.of(context).size.height * 0.048,
+                                12),
+                            child: Text(
+                              'Reject',
+                              style: GoogleFonts.lato(
+                                  color: Colors.white,
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.02),
+                            ),
+                          )),
+                    ),
+                  ],
+                )
+              ],
+            )
             ],
           ),
         ));
+  }
+}
+
+
+
+class largetext extends StatelessWidget {
+  String text;
+
+  largetext({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        text,
+        textAlign: TextAlign.left,
+        style: GoogleFonts.poppins(
+          fontWeight: FontWeight.bold,
+            color: Colors.black,
+            fontSize: MediaQuery.of(context).size.width * 0.045),
+      ),
+    );
   }
 }
 
@@ -91,9 +238,9 @@ class standardtext extends StatelessWidget {
       child: Text(
         text,
         textAlign: TextAlign.left,
-        style: GoogleFonts.lato(
+        style: GoogleFonts.poppins(
             color: Colors.black,
-            fontSize: MediaQuery.of(context).size.width * 0.05),
+            fontSize: MediaQuery.of(context).size.width * 0.035),
       ),
     );
   }
@@ -111,91 +258,24 @@ class smalltext extends StatelessWidget {
       child: Text(
         textAlign: TextAlign.center,
         text,
-        style: GoogleFonts.lato(
+        style: GoogleFonts.poppins(
             color: Colors.black,
             fontSize: MediaQuery.of(context).size.width * 0.03),
       ),
     );
   }
 }
-/*            smalltext(text: 'Task Category'),
-            standardtext(text: category),
-            smalltext(text: 'Task Title'),
-            standardtext(text: title),
-            smalltext(text: 'Task Description'),
-            standardtext(text: description),
-            smalltext(text: 'Start date'),
-            standardtext(text: startdate),
-            smalltext(text: 'End date'),
-            standardtext(text: enddate),
-            smalltext(text: 'Due date'),
-            standardtext(text: duedate),
-            smalltext(text: 'Due time'),
-            standardtext(text: duetime),
-            smalltext(text: 'Faculty'),
-            standardtext(text: faculty),*/
-
-/* Widget _buildList(Menu list) {
-    if (list.subMenu.isEmpty)
-      return Builder(
-        builder: (context) {
-          return ListTile(
-              onTap:() => Navigator.push(context, MaterialPageRoute(builder: (context) => SubCategory(list.name))),
-              leading: SizedBox(),
-              title: Text(list.name)
-          );
-        }
-      );
-    return ExpansionTile(
-      leading: Icon(list.icon),
-      title: Text(
-        list.name,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-      children: list.subMenu.map(_buildList).toList(),
+Widget _floating(BuildContext context) {
+  if (admin = true) {
+    return FloatingActionButton(
+      backgroundColor: Colors.black,
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => taskassign_a()));
+      },
+      child: const Icon(Icons.add),
     );
+  } else {
+    return Container() ;
   }
-}*/
-
-/*  child:ExpansionTileCard(
-          //baseColor:
-            //expandedColor:
-            key: cardA,
-            title: Text(title),
-            subtitle: Row(
-              children: [
-                standardtext(text: category),
-                SizedBox(   width: MediaQuery.of(context).size.width * 0.025),
-                standardtext(text: duedate),
-                SizedBox(   width: MediaQuery.of(context).size.width * 0.025),
-                standardtext(text: duetime),
-
-              ],
-            ),
-            children: <Widget>[
-              Divider(
-                thickness: 1.0,
-                height: 1.0,
-              ),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0,
-                    vertical: 8.0,
-                  ),
-                  child: Text(
-                    description
-                  )
-                ),
-              ),
-              ButtonBar(
-                alignment: MainAxisAlignment.spaceAround,
-                buttonHeight: 52.0,
-                buttonMinWidth: 90.0,
-                children: <Widget>[
-                  ///implement edit view button and accept n reject button
-                ],
-              ),
-            ],
-          ),*/
+}
