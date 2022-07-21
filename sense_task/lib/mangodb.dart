@@ -32,6 +32,9 @@ class UserMangoDB{
     }
   }
 }
+
+///
+
 class TaskMangoDB{
   static var db,taskcollection;
   static connect() async{
@@ -41,6 +44,10 @@ class TaskMangoDB{
     var status = db.serverStatus();
     print(status);
     taskcollection = db.collection(TASK_COLLECTION);
+  }
+  static Future<List<Map<String,dynamic>>>getTask()async{
+    final arrtask = await taskcollection.find().toList();
+    return arrtask;
   }
   static Future<String> insert_task(TaskMango task_data) async{
     print(task_data);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sense_task/main.dart';
+import 'package:sense_task/mangodb.dart';
 import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 
@@ -14,7 +15,7 @@ class taskpage_a extends StatefulWidget {
   State<taskpage_a> createState() => _taskpage_aState();
 }
 
-class _taskpage_aState extends State<taskpage_a> {
+/*class _taskpage_aState extends State<taskpage_a> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +35,38 @@ class _taskpage_aState extends State<taskpage_a> {
               );
             }),
         floatingActionButton: _floating(context));
+  }
+}*/
+class _taskpage_aState extends State<taskpage_a> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: SafeArea(
+          child: FutureBuilder(
+            future: TaskMangoDB.getTask(),
+            builder: (context,AsyncSnapshot snapshot){
+                if(snapshot.connectionState == ConnectionState.waiting){
+                  print('connection waiting');
+                 return Center(
+                    child: CircularProgressIndicator(),
+                  );}
+                  else {
+                    if(snapshot.hasData){
+                      var taskdata = snapshot.data.length;
+                      print('TOTAL TASK : ' + taskdata.toString());
+                      return Text('Data Found');
+                    }else{
+                      return Center(
+                        child: Text(
+                          'NO data Available'
+                        ),
+                      );
+                    }
+                }
+              }
+          ),
+        )
+    );
   }
 }
 
