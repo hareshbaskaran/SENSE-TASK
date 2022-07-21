@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sense_task/TaskMango.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/main.dart';
-import 'package:mongo_dart/mongo_dart.dart' as M;
+import 'package:mongo_dart/mongo_dart.dart' as T;
 import 'mangodb.dart';
+
 List<Widget> allTasks = [];
 TextEditingController tasktitlecontroller = new TextEditingController();
 String tasktitle = tasktitlecontroller.text;
@@ -22,6 +25,8 @@ DateTime endDate = DateTime.now();
 
 String dueDateInString = '';
 DateTime dueDate = DateTime.now();
+
+late TaskMango task_data;
 
 String categoryvalue = 'HR office duty';
 var items = [
@@ -195,9 +200,9 @@ class _taskassign_aState extends State<taskassign_a> {
                                 fillColor: Colors.black,
                                 border: InputBorder.none,
                                 hintText: 'Enter title',
-                                hintStyle: TextStyle(color: Colors.black,
-                                fontWeight: FontWeight.bold
-                                )),
+                                hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
                             keyboardType: TextInputType.multiline,
                             maxLines: 2,
                             cursorColor: Colors.black,
@@ -258,22 +263,23 @@ class _taskassign_aState extends State<taskassign_a> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                height: MediaQuery.of(context).size.height * 0.08,
-                width: MediaQuery.of(context).size.width * 0.175,
-                decoration: new BoxDecoration(
-                  color: Colors.black,
-                  shape: BoxShape.rectangle,
-                  border: Border.all(width: 2.0),
-                  borderRadius:
-                  BorderRadius.all(Radius.circular(15.0)),
-                    ),
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      width: MediaQuery.of(context).size.width * 0.175,
+                      decoration: new BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.rectangle,
+                        border: Border.all(width: 2.0),
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      ),
                       child: Icon(
                         Icons.date_range,
                         color: Colors.white,
                         size: MediaQuery.of(context).size.width * 0.1,
                       ),
                     ),
-                    SizedBox(     width: MediaQuery.of(context).size.width * 0.025 ,),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.025,
+                    ),
                     Center(
                       child: GestureDetector(
                         onTap: () async {
@@ -328,7 +334,10 @@ class _taskassign_aState extends State<taskassign_a> {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(    width: MediaQuery.of(context).size.width * 0.025,),
+                              SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.025,
+                              ),
                               Icon(
                                 Icons.calendar_month_sharp,
                                 color: Colors.black,
@@ -354,7 +363,7 @@ class _taskassign_aState extends State<taskassign_a> {
                       ),
                     ),
                     SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.025,
+                      width: MediaQuery.of(context).size.width * 0.025,
                     ),
                     Center(
                       child: GestureDetector(
@@ -410,7 +419,9 @@ class _taskassign_aState extends State<taskassign_a> {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(     width: MediaQuery.of(context).size.width * 0.025),
+                              SizedBox(
+                                  width: MediaQuery.of(context).size.width *
+                                      0.025),
                               Icon(
                                 Icons.calendar_month_sharp,
                                 color: Colors.black,
@@ -456,27 +467,25 @@ class _taskassign_aState extends State<taskassign_a> {
               Row(
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.08,
-                    width: MediaQuery.of(context).size.width * 0.175,
-                    decoration: new BoxDecoration(
-                      color: Colors.black,
-                      shape: BoxShape.rectangle,
-                      border: Border.all(width: 2.0),
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(15.0)),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'DUE',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: MediaQuery.of(context).size.width * 0.05
-                        ),
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      width: MediaQuery.of(context).size.width * 0.175,
+                      decoration: new BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.rectangle,
+                        border: Border.all(width: 2.0),
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
                       ),
-                    )
-                  ),
-                  SizedBox(    width: MediaQuery.of(context).size.width * 0.025),
+                      child: Center(
+                        child: Text(
+                          'DUE',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.05),
+                        ),
+                      )),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.025),
                   Center(
                     child: GestureDetector(
                       onTap: () async {
@@ -489,7 +498,8 @@ class _taskassign_aState extends State<taskassign_a> {
                             return Theme(
                               data: Theme.of(context).copyWith(
                                 colorScheme: ColorScheme.light(
-                                  primary: Colors.black, // header background color
+                                  primary:
+                                      Colors.black, // header background color
                                   onPrimary: Colors.white, // header text color
                                   onSurface: Colors.black, // body text color
                                 ),
@@ -533,7 +543,9 @@ class _taskassign_aState extends State<taskassign_a> {
                               color: Colors.black,
                               size: 30,
                             ),
-                            SizedBox(    width: MediaQuery.of(context).size.width * 0.025),
+                            SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.025),
                             (dueDateInString != '')
                                 ? Text(
                                     dueDateInString,
@@ -552,7 +564,7 @@ class _taskassign_aState extends State<taskassign_a> {
                       ),
                     ),
                   ),
-                  SizedBox(width:  MediaQuery.of(context).size.width *0.025),
+                  SizedBox(width: MediaQuery.of(context).size.width * 0.025),
                   Row(
                     children: [
                       Container(
@@ -562,10 +574,11 @@ class _taskassign_aState extends State<taskassign_a> {
                             color: Colors.white,
                             shape: BoxShape.rectangle,
                             border: Border.all(width: 2.0),
-                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(15.0)),
                           ),
                           child: DateTimePicker(
-                            icon:     Icon(
+                            icon: Icon(
                               Icons.timelapse_outlined,
                               color: Colors.black,
                               size: 30,
@@ -584,6 +597,7 @@ class _taskassign_aState extends State<taskassign_a> {
                               print(duetime);
                             },
                           )),
+
                       ///
                     ],
                   ),
@@ -667,17 +681,16 @@ class _taskassign_aState extends State<taskassign_a> {
         backgroundColor: Colors.black,
         onPressed: () {
           _inserttask(
-              categoryvalue,
-              tasktitlecontroller.text,
-              taskdescriptioncontroller.text,
-              startDateInString,
-              endDateInString,
-              dueDateInString,
-              duetime,
-              facultyvalue,
+            categoryvalue,
+            tasktitlecontroller.text,
+            taskdescriptioncontroller.text,
+            startDateInString,
+            endDateInString,
+            dueDateInString,
+            duetime,
+            facultyvalue,
           );
-          allTasks.add(
-              Taskbox(
+          allTasks.add(Taskbox(
               category: categoryvalue,
               title: tasktitlecontroller.text,
               description: taskdescriptioncontroller.text,
@@ -718,8 +731,8 @@ Future<void> _inserttask(
     String duedate1,
     String duetime1,
     String faculty1) async {
-  var id_task = M.ObjectId();
-  final task_data = TaskMango(
+  var id_task = T.ObjectId();
+  task_data = TaskMango(
       id_t: id_task,
       categorydb: category1,
       titledb: title1,
@@ -729,5 +742,7 @@ Future<void> _inserttask(
       duedatedb: duedate1,
       duetimedb: duetime1,
       facultydb: faculty1);
+  print(task_data.categorydb);
   var taskresult = await TaskMangoDB.insert_task(task_data);
+  print('inserted task');
 }
