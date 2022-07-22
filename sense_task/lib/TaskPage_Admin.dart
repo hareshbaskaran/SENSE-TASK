@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sense_task/TaskMango.dart';
@@ -35,10 +36,11 @@ class _taskpage_aState extends State<taskpage_a> {
                       print('Task has Data');
                       return ListView.builder(
                         reverse: true,
+                          scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: taskdata,
                           itemBuilder: (BuildContext context, int index) {
-                            return Center(child: TaskCard (TaskMango.fromJson(snapshot.data[index])));
+                            return Center(child: TaskCard (TaskMongo.fromJson(snapshot.data[index])));
                           });
                     }else{
                       return Center(
@@ -54,7 +56,7 @@ class _taskpage_aState extends State<taskpage_a> {
         floatingActionButton: _floating(context)
     );
   }
-  Widget TaskCard (TaskMango task_data){
+  Widget TaskCard (TaskMongo task_data){
     return Center(
         child: Card(
           elevation: 0,
@@ -121,9 +123,21 @@ class _taskpage_aState extends State<taskpage_a> {
                                   elevation: 5.0,
                                   shape: StadiumBorder(),
                                   primary: Colors.black),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder:(BuildContext context){
+                                  return taskassign_a();
+                                },
+                                  settings: RouteSettings(arguments: task_data)
+                                )
+                                ).then((value){
+                                  setState(() {
 
-                              ///add edit onpressed
+                                  });
+                                }
+                                );
+                              },
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(
                                     MediaQuery.of(context).size.height * 0.04,
@@ -140,10 +154,35 @@ class _taskpage_aState extends State<taskpage_a> {
                                 ),
                               )),
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 5.0,
+                                  shape: StadiumBorder(),
+                                  primary: Colors.black),
+                              onPressed: () {},
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    MediaQuery.of(context).size.height * 0.04,
+                                    12,
+                                    MediaQuery.of(context).size.height * 0.04,
+                                    12),
+                                child: Text(
+                                  'Delete',
+                                  style: GoogleFonts.lato(
+                                      color: Colors.white,
+                                      fontSize:
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                ),
+                              )),
+                        ),
                       ],
                     ),
                   )
-                      : Row(
+                      : (adminpage==0)?
+                  Row(
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(15.0),
@@ -199,7 +238,7 @@ class _taskpage_aState extends State<taskpage_a> {
                             )),
                       ),
                     ],
-                  )
+                  ):Container()
                 ],
               )
             ],
