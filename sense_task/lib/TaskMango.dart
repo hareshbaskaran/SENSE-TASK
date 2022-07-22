@@ -8,7 +8,7 @@ import 'package:mongo_dart/mongo_dart.dart';
 
 TaskMango taskMangoFromJson(String str) => TaskMango.fromJson(json.decode(str));
 
-String MangoDBModelToJson(TaskMango data) => json.encode(data.toJson());
+String taskMangoToJson(TaskMango data) => json.encode(data.toJson());
 
 class TaskMango {
   TaskMango({

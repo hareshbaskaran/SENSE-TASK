@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:sense_task/TaskMango.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
 import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
-
+import 'mangodb.dart';
 import 'LoginPage.dart';
 
 class taskpage_a extends StatefulWidget {
@@ -15,28 +16,6 @@ class taskpage_a extends StatefulWidget {
   State<taskpage_a> createState() => _taskpage_aState();
 }
 
-/*class _taskpage_aState extends State<taskpage_a> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        body: ListView.builder(
-            shrinkWrap: true,
-            itemCount: allTasks.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-                child: Column(
-                  children: [
-                    ///todo : add date pick,weekly or 3day picker and faculty querry with ternary for admin n staff
-                    allTasks[index],
-                  ],
-                ),
-              );
-            }),
-        floatingActionButton: _floating(context));
-  }
-}*/
 class _taskpage_aState extends State<taskpage_a> {
   @override
   Widget build(BuildContext context) {
@@ -53,8 +32,14 @@ class _taskpage_aState extends State<taskpage_a> {
                   else {
                     if(snapshot.hasData){
                       var taskdata = snapshot.data.length;
-                      print('TOTAL TASK : ' + taskdata.toString());
-                      return Text('Data Found');
+                      print('Task has Data');
+                      return ListView.builder(
+                        reverse: true,
+                          shrinkWrap: true,
+                          itemCount: taskdata,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Center(child: TaskCard (TaskMango.fromJson(snapshot.data[index])));
+                          });
                     }else{
                       return Center(
                         child: Text(
@@ -65,123 +50,69 @@ class _taskpage_aState extends State<taskpage_a> {
                 }
               }
           ),
-        )
+        ),
+        floatingActionButton: _floating(context)
     );
   }
-}
-
-class Taskbox extends StatelessWidget {
-  Taskbox({
-    required this.category,
-    required this.title,
-    required this.description,
-    required this.startdate,
-    required this.enddate,
-    required this.duedate,
-    required this.duetime,
-    required this.faculty,
-  });
-
-  String category;
-  String title;
-  String description;
-  String startdate;
-  String enddate;
-  String duedate;
-  String duetime;
-  String faculty;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget TaskCard (TaskMango task_data){
     return Center(
         child: Card(
-      elevation: 0,
-      color: Colors.white,
-      child: RoundedExpansionTile(
-        trailing: Icon(
-          Icons.arrow_drop_down_outlined,
-          color: Colors.black,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        title: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            largetext(text: title),
-            Column(
+          elevation: 0,
+          color: Colors.white,
+          child: RoundedExpansionTile(
+            trailing: Icon(
+              Icons.arrow_drop_down_outlined,
+              color: Colors.black,
+            ),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+            title: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                standardtext(text: category),
-                (adminpage == 1)
-                    ? largetext(text: faculty)
-                    : SizedBox(height: 0)
+                largetext(text:"${task_data.titledb} "),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    standardtext(text:"${task_data.categorydb}"),
+                    (adminpage == 1)
+                        ? largetext(text:"${task_data.facultydb}")
+                        : SizedBox(height: 0)
+                  ],
+                )
               ],
-            )
-          ],
-        ),
-        subtitle: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            subtitle: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  standardtext(text: 'Due Date: ${task_data.duedatedb}'),
+                  standardtext(text: 'Due Time: ${task_data.duetimedb}'),
+                ],
+              ),
+            ),
             children: [
-              standardtext(text: 'Due Date: $duedate'),
-              standardtext(text: 'Due Time: $duetime'),
-            ],
-          ),
-        ),
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              largetext(text: 'Description:'),
-              standardtext(text: description),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  standardtext(text: 'Event start Date: $startdate'),
-                  standardtext(text: 'Event end Date: $enddate'),
-                ],
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-              (adminpage == 1)
-                  ? Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(15.0),
-                            child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    elevation: 5.0,
-                                    shape: StadiumBorder(),
-                                    primary: Colors.black),
-                                onPressed: () {},
-
-                                ///add edit onpressed
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      MediaQuery.of(context).size.height * 0.04,
-                                      12,
-                                      MediaQuery.of(context).size.height * 0.04,
-                                      12),
-                                  child: Text(
-                                    'Edit',
-                                    style: GoogleFonts.lato(
-                                        color: Colors.white,
-                                        fontSize:
-                                            MediaQuery.of(context).size.height *
-                                                0.02),
-                                  ),
-                                )),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Row(
+                  largetext(text: 'Description:'),
+                  standardtext(text:"${task_data.descriptiondb}"),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      standardtext(text: 'Event start Date: ${task_data.startdatedb}'),
+                      standardtext(text: 'Event end Date: ${task_data.enddatedb}'),
+                    ],
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                  (adminpage == 1)
+                      ? Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(15.0),
@@ -192,7 +123,7 @@ class Taskbox extends StatelessWidget {
                                   primary: Colors.black),
                               onPressed: () {},
 
-                              ///add accept onpressed
+                              ///add edit onpressed
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(
                                     MediaQuery.of(context).size.height * 0.04,
@@ -200,49 +131,80 @@ class Taskbox extends StatelessWidget {
                                     MediaQuery.of(context).size.height * 0.04,
                                     12),
                                 child: Text(
-                                  'Accept',
+                                  'Edit',
                                   style: GoogleFonts.lato(
                                       color: Colors.white,
                                       fontSize:
-                                          MediaQuery.of(context).size.height *
-                                              0.02),
-                                ),
-                              )),
-                        ),
-                        Spacer(),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  elevation: 5.0,
-                                  shape: StadiumBorder(),
-                                  primary: Colors.black),
-                              onPressed: () {},
-
-                              ///add reject onpressed
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                    MediaQuery.of(context).size.height * 0.048,
-                                    12,
-                                    MediaQuery.of(context).size.height * 0.048,
-                                    12),
-                                child: Text(
-                                  'Reject',
-                                  style: GoogleFonts.lato(
-                                      color: Colors.white,
-                                      fontSize:
-                                          MediaQuery.of(context).size.height *
-                                              0.02),
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
                                 ),
                               )),
                         ),
                       ],
-                    )
+                    ),
+                  )
+                      : Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 5.0,
+                                shape: StadiumBorder(),
+                                primary: Colors.black),
+                            onPressed: () {},
+
+                            ///add accept onpressed
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  MediaQuery.of(context).size.height * 0.04,
+                                  12,
+                                  MediaQuery.of(context).size.height * 0.04,
+                                  12),
+                              child: Text(
+                                'Accept',
+                                style: GoogleFonts.lato(
+                                    color: Colors.white,
+                                    fontSize:
+                                    MediaQuery.of(context).size.height *
+                                        0.02),
+                              ),
+                            )),
+                      ),
+                      Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 5.0,
+                                shape: StadiumBorder(),
+                                primary: Colors.black),
+                            onPressed: () {},
+
+                            ///add reject onpressed
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  MediaQuery.of(context).size.height * 0.048,
+                                  12,
+                                  MediaQuery.of(context).size.height * 0.048,
+                                  12),
+                              child: Text(
+                                'Reject',
+                                style: GoogleFonts.lato(
+                                    color: Colors.white,
+                                    fontSize:
+                                    MediaQuery.of(context).size.height *
+                                        0.02),
+                              ),
+                            )),
+                      ),
+                    ],
+                  )
+                ],
+              )
             ],
-          )
-        ],
-      ),
-    ));
+          ),
+        ));
   }
 }
 

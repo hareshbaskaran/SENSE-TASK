@@ -15,7 +15,6 @@ String tasktitle = tasktitlecontroller.text;
 TextEditingController taskdescriptioncontroller = new TextEditingController();
 String taskdescription = taskdescriptioncontroller.text;
 
-//TextEditingController weightValue = new TextEditingController();
 
 String startDateInString = '';
 DateTime startDate = DateTime.now();
@@ -58,7 +57,6 @@ class taskassign_a extends StatefulWidget {
   State<taskassign_a> createState() => _taskassign_aState();
 }
 
-// Box<dynamic> Hive_box = Hive.box('myBox');
 bool isDateSelected = false;
 bool isRegister = true;
 
@@ -72,9 +70,6 @@ class _taskassign_aState extends State<taskassign_a> {
         child: Padding(
           padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
           child: ListView(
-            // mainAxisSize: MainAxisSize.max,
-            // mainAxisAlignment: MainAxisAlignment.start,
-            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Center(
@@ -690,15 +685,6 @@ class _taskassign_aState extends State<taskassign_a> {
             duetime,
             facultyvalue,
           );
-          allTasks.add(Taskbox(
-              category: categoryvalue,
-              title: tasktitlecontroller.text,
-              description: taskdescriptioncontroller.text,
-              startdate: startDateInString,
-              enddate: endDateInString,
-              duedate: dueDateInString,
-              duetime: duetime,
-              faculty: facultyvalue));
           _clearassignpage();
           Navigator.push(
             context,
