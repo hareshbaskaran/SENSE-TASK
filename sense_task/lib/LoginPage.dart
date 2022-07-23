@@ -570,7 +570,36 @@ class _loginpageState extends State<loginpage> {
                                     ),
                                   ],
                                 ),
-
+                                // Center(
+                                //   child: ElevatedButton(
+                                //       onPressed: () {
+                                //         _insertData(usernamevalue.text, passwordvalue.text);
+                                //         Navigator.push(
+                                //           context,
+                                //           MaterialPageRoute(builder: (context) => TabsScreen()),
+                                //         );
+                                //
+                                //         ///polymorphism
+                                //       },
+                                //       child: Container(
+                                //         height: MediaQuery.of(context).size.height * 0.05,
+                                //         width: MediaQuery.of(context).size.width * 0.6,
+                                //         decoration: new BoxDecoration(
+                                //           color: Colors.black,
+                                //           shape: BoxShape.rectangle,
+                                //           border: Border.all(width: 2.0),
+                                //           borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                                //         ),
+                                //         child: Center(
+                                //           child: Text(
+                                //             "Login ",
+                                //             style: TextStyle(
+                                //               color: Colors.white,
+                                //             ),
+                                //           ),
+                                //         ),
+                                //       )),
+                                // ),],);
                               ])
                             : Text('nothing')
               ],
@@ -578,9 +607,15 @@ class _loginpageState extends State<loginpage> {
           ),
         ));
   }
+
+  //future class of providing id and catching data from  username and password and passing to mangodbmodel class
   Future<void> _insertData(String name, String pass) async {
     var _id = M.ObjectId();
+
+    ///from MANGODBMODEL created a object id here we calling it as variable as each objectID carries user information
     final data = UserMongo(id: _id, username: name, password: pass);
+
+    ///parameterised class changed class members to input changed strings and objectID
     var result = await UserMangoDB.insert(data);
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
@@ -592,4 +627,7 @@ class _loginpageState extends State<loginpage> {
     username = "";
     password = "";
   }
+
+  ///todo: provide a ckear all function to login button so that once clicked all the given strings get cleared
+
 }
