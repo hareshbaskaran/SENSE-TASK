@@ -64,7 +64,7 @@ class TabsScreen extends StatelessWidget {
             backgroundColor: Colors.black,
             bottom: const TabBar(
               indicatorColor: Colors.white,
-              tabs: [Tab(text: 'All Tasks'), Tab(text: 'Staff progress')],
+              tabs: [Tab(text: 'Tasks'), Tab(text: 'Staff')],
             ),
           ),
         ),
