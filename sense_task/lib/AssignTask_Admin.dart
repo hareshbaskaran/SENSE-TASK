@@ -63,7 +63,7 @@ class _taskassign_aState extends State<taskassign_a> {
   @override
   @override
   Widget build(BuildContext context) {
-    TaskMongo task_data = ModalRoute.of(context)!.settings.arguments as TaskMongo;
+ /*   TaskMongo task_data = ModalRoute.of(context)!.settings.arguments as TaskMongo;
     if(task_data !=null){
       categoryvalue = task_data.categorydb;
     tasktitlecontroller.text=task_data.titledb;
@@ -74,7 +74,7 @@ class _taskassign_aState extends State<taskassign_a> {
     duetime=task_data.duetimedb;
     facultyvalue=task_data.facultydb;
     _checkInserttask = "update";
-    }
+    }*/
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
