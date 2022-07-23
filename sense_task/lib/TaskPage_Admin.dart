@@ -161,7 +161,13 @@ class _taskpage_aState extends State<taskpage_a> {
                                   elevation: 5.0,
                                   shape: StadiumBorder(),
                                   primary: Colors.black),
-                              onPressed: () {},
+                              onPressed: () async{
+                                print(task_data.id_t);
+                                await TaskMangoDB.delete_task(task_data);
+                                setState(() {
+
+                                });
+                              },
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(
                                     MediaQuery.of(context).size.height * 0.04,
@@ -181,7 +187,7 @@ class _taskpage_aState extends State<taskpage_a> {
                       ],
                     ),
                   )
-                      : (adminpage==0)?
+                      :
                   Row(
                     children: [
                       Padding(
@@ -238,7 +244,7 @@ class _taskpage_aState extends State<taskpage_a> {
                             )),
                       ),
                     ],
-                  ):Container()
+                  )
                 ],
               )
             ],
@@ -314,13 +320,13 @@ Widget _floating(BuildContext context) {
       backgroundColor: Colors.black,
       onPressed: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => taskassign_a()));
+            context,
+            MaterialPageRoute(builder: (context) => taskassign_a()));
       },
       child: const Icon(Icons.add),
     );
   } else {
     return Container(
-      child: Text('userrrrrrrrrr'),
     );
   }
 }

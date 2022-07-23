@@ -6,12 +6,12 @@ import 'dart:convert';
 
 import 'package:mongo_dart/mongo_dart.dart';
 
-TaskMango taskMangoFromJson(String str) => TaskMango.fromJson(json.decode(str));
+TaskMongo taskMangoFromJson(String str) => TaskMongo.fromJson(json.decode(str));
 
-String taskMangoToJson(TaskMango data) => json.encode(data.toJson());
+String taskMangoToJson(TaskMongo data) => json.encode(data.toJson());
 
-class TaskMango {
-  TaskMango({
+class TaskMongo {
+  TaskMongo({
     required this.id_t,
     required this.categorydb,
     required this.titledb,
@@ -33,7 +33,7 @@ class TaskMango {
   String duetimedb;
   String facultydb;
 
-  factory TaskMango.fromJson(Map<String, dynamic> json) => TaskMango(
+  factory TaskMongo.fromJson(Map<String, dynamic> json) => TaskMongo(
     id_t: json["_id"],
     categorydb: json["category"],
     titledb: json["title"],

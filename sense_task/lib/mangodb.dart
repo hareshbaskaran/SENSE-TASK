@@ -49,7 +49,26 @@ class TaskMangoDB{
     final arrtask = await taskcollection.find().toList();
     return arrtask;
   }
-  static Future<String> insert_task(TaskMango task_data) async{
+
+  static Future<void> update_task(TaskMongo updatetask)
+  async {
+    var result = await taskcollection
+        .findOne(task_data.toJson())({"_id": task_data.id_t});
+    result['category'] = task_data.categorydb;
+    result['title']=task_data.titledb;
+    result['description']=task_data.descriptiondb;
+    result['startdate']=task_data.startdatedb;
+    result['enddate']=task_data.enddatedb;
+    result['duetime']=task_data.duetimedb;
+    result['faculty']=task_data.facultydb;
+    var response = await taskcollection.save(result);
+    inspect(response);
+  }
+  static delete_task(TaskMongo task_delete)async{
+    await taskcollection.remove(where.id(task_delete.id_t));
+  }
+
+  static Future<String> insert_task(TaskMongo task_data) async{
     print(task_data);
     try{
       var result = await taskcollection.insertOne(task_data.toJson());
