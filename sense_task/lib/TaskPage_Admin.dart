@@ -9,7 +9,7 @@ import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'mangodb.dart';
 import 'LoginPage.dart';
-
+int isEdit=0;
 class taskpage_a extends StatefulWidget {
   const taskpage_a({Key? key}) : super(key: key);
 
@@ -32,13 +32,13 @@ class _taskpage_aState extends State<taskpage_a> {
                   );}
                   else {
                     if(snapshot.hasData){
-                      var taskdata = snapshot.data.length;
+                      var tasklength = snapshot.data.length;
                       print('Task has Data');
                       return ListView.builder(
                         reverse: true,
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: taskdata,
+                          itemCount: tasklength,
                           itemBuilder: (BuildContext context, int index) {
                             return Center(child: TaskCard (TaskMongo.fromJson(snapshot.data[index])));
                           });
@@ -124,6 +124,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                   shape: StadiumBorder(),
                                   primary: Colors.black),
                               onPressed: () {
+                                setState(() => isEdit = 1);
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(builder:(BuildContext context){

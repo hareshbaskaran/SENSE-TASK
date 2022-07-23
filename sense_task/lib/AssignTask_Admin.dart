@@ -1,4 +1,4 @@
-
+import 'TaskPage_Admin.dart';
 import 'package:sense_task/TaskMango.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import 'package:sense_task/main.dart';
 import 'package:mongo_dart/mongo_dart.dart' as T;
 import 'mangodb.dart';
 import 'TaskMango.dart';
+import 'package:google_fonts/google_fonts.dart';
 List<Widget> allTasks = [];
 TextEditingController tasktitlecontroller = new TextEditingController();
 String tasktitle = tasktitlecontroller.text;
@@ -63,8 +64,9 @@ class _taskassign_aState extends State<taskassign_a> {
   @override
   @override
   Widget build(BuildContext context) {
- /*   TaskMongo task_data = ModalRoute.of(context)!.settings.arguments as TaskMongo;
-    if(task_data !=null){
+/*  TaskMongo task_data = ModalRoute.of(context)!.settings.arguments as TaskMongo;
+    if (task_data != null)
+    {
       categoryvalue = task_data.categorydb;
     tasktitlecontroller.text=task_data.titledb;
     taskdescriptioncontroller.text=task_data.descriptiondb;
@@ -74,6 +76,9 @@ class _taskassign_aState extends State<taskassign_a> {
     duetime=task_data.duetimedb;
     facultyvalue=task_data.facultydb;
     _checkInserttask = "update";
+    }
+    else{
+
     }*/
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -83,20 +88,40 @@ class _taskassign_aState extends State<taskassign_a> {
           child: ListView(
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-              Text(_checkInserttask),
               Center(
-                child: Container(
+                child: Stack(
+                  children: [
+                Center(
+                  child: Container(
                   //padding: EdgeInsets.fromLTRB(80, 100, 100, 0),
                   child: Text(
-                    'Assign Task',
+                  'Assign Task',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                       fontSize: MediaQuery.of(context).size.width * 0.065,
                     ),
                   ),
-                ),
               ),
+                ),
+                    Container(
+                      alignment: Alignment.topLeft,
+                      child: BackButton(
+                          color: Colors.black,
+                          onPressed:(){
+                            Navigator.pop(
+                              context,
+                              MaterialPageRoute(builder: (context) => taskpage_a()),
+                            );
+                            setState(() =>  isEdit=0);
+                          }
+                      ),
+                    ),
+
+      ]
+      )
+              ),
+
               SizedBox(height: MediaQuery.of(context).size.height * 0.03),
               Container(
                 padding: EdgeInsets.fromLTRB(
@@ -673,54 +698,97 @@ class _taskassign_aState extends State<taskassign_a> {
                   ),
                 ),
               ),
-
               ///TODO: Add task assigning datas with setting parameters
               ///try ov-ai profile page and try to implement according to ui design
             ],
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black,
-        onPressed: () {
-         if(_checkInserttask=="update"){
-           _updateTask(
-               task_data.id_t,
-               task_data.categorydb,
-               task_data.titledb,
-               task_data.descriptiondb,
-               task_data.startdatedb,
-               task_data.enddatedb,
-               task_data.duedatedb,
-               task_data.duetimedb,
-               task_data.facultydb,
-           );
-           _clearassignpage();
-           Navigator.push(
-             context,
-             MaterialPageRoute(builder: (context) => TabsScreen()),
-           );
-         }
-         else{
-           _inserttask(
-             categoryvalue,
-             tasktitlecontroller.text,
-             taskdescriptioncontroller.text,
-             startDateInString,
-             endDateInString,
-             dueDateInString,
-             duetime,
-             facultyvalue,
-           );
-           _clearassignpage();
-           Navigator.push(
-             context,
-             MaterialPageRoute(builder: (context) => TabsScreen()),
-           );
-         }
-        },
-        child: const Icon(Icons.done),
-      ),
+    floatingActionButton:
+    (isEdit==1)?
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  elevation: 5.0,
+                  shape: StadiumBorder(),
+                  primary: Colors.black),
+              onPressed: () {
+                setState(() => isEdit = 0);
+                _updateTask(
+                  task_data.id_t,
+                  task_data.categorydb,
+                  task_data.titledb,
+                  task_data.descriptiondb,
+                  task_data.startdatedb,
+                  task_data.enddatedb,
+                  task_data.duedatedb,
+                  task_data.duetimedb,
+                  task_data.facultydb,
+                );
+                _clearassignpage();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TabsScreen()),
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.height * 0.04,
+                    12,
+                    MediaQuery.of(context).size.height * 0.04,
+                    12),
+                child: Text(
+                  'Update',
+                  style: GoogleFonts.lato(
+                      color: Colors.white,
+                      fontSize:
+                      MediaQuery.of(context).size.height *
+                          0.02),
+                ),
+              )),
+        ):
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  elevation: 5.0,
+                  shape: StadiumBorder(),
+                  primary: Colors.black),
+              onPressed: () {
+                setState(() => isEdit = 0);
+                _inserttask(
+                  categoryvalue,
+                  tasktitlecontroller.text,
+                  taskdescriptioncontroller.text,
+                  startDateInString,
+                  endDateInString,
+                  dueDateInString,
+                  duetime,
+                  facultyvalue,
+                );
+                _clearassignpage();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => TabsScreen()),
+                );
+              },
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.height * 0.04,
+                    12,
+                    MediaQuery.of(context).size.height * 0.04,
+                    12),
+                child: Text(
+                  'Add Task',
+                  style: GoogleFonts.lato(
+                      color: Colors.white,
+                      fontSize:
+                      MediaQuery.of(context).size.height *
+                          0.02),
+                ),
+              )),
+        )
     );
   }
 }
@@ -761,7 +829,7 @@ async{
   var result = await TaskMangoDB.update_task(updatetask);
 /*  .whenComplete(() => Navigator.pop(
      context
-  )
+  ),
   );*/
 
 }
