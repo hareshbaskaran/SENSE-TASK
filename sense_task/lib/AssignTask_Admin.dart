@@ -1,3 +1,4 @@
+
 import 'package:sense_task/TaskMango.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -759,8 +760,10 @@ async{
     facultydb: faculty_update,
   );
   var result = await TaskMangoDB.update_task(updatetask);
- /* .whenComplete(() => Navigator.pop(
-  ));*/
+  /*.whenComplete(() => Navigator.pop(
+     context
+  )
+  );*/
 
 }
 Future<void> _inserttask(
@@ -785,18 +788,3 @@ Future<void> _inserttask(
       facultydb: faculty1);
   var result = await TaskMangoDB.insert_task(task_data);
 }
-/* _inserttask(
-            categoryvalue,
-            tasktitlecontroller.text,
-            taskdescriptioncontroller.text,
-            startDateInString,
-            endDateInString,
-            dueDateInString,
-            duetime,
-            facultyvalue,
-          );
-          _clearassignpage();
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TabsScreen()),
-          );*/

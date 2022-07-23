@@ -127,7 +127,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(builder:(BuildContext context){
-                                  return taskassign_a();
+                                  return  taskassign_a();
                                 },
                                   settings: RouteSettings(arguments: task_data)
                                 )
@@ -320,7 +320,6 @@ Widget _floating(BuildContext context) {
     );
   } else {
     return Container(
-      child: Text('userrrrrrrrrr'),
     );
   }
 }
