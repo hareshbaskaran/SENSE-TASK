@@ -34,19 +34,18 @@ class TaskMongo {
   String facultydb;
 
   factory TaskMongo.fromJson(Map<String, dynamic> json) => TaskMongo(
-    id_t: json["_id"],
-    categorydb: json["category"],
-    titledb: json["title"],
-    descriptiondb: json["description"],
-    startdatedb: json["startdate"],
-    enddatedb: json["enddate"],
-    duedatedb: json["duedate"],
-    duetimedb: json["duetime"],
-    facultydb: json["faculty"],
-  );
+        id_t: json["_id"],
+        categorydb: json["category"],
+        titledb: json["title"],
+        descriptiondb: json["description"],
+        startdatedb: json["startdate"],
+        enddatedb: json["enddate"],
+        duedatedb: json["duedate"],
+        duetimedb: json["duetime"],
+        facultydb: json["faculty"],
+      );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "_id": id_t,
         "category": categorydb,
         "title": titledb,
@@ -55,6 +54,6 @@ class TaskMongo {
         "enddate": enddatedb,
         "duedate": duedatedb,
         "duetime": duetimedb,
-        "faculty":facultydb,
+        "faculty": facultydb,
       };
 }
