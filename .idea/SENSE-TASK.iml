@@ -25,6 +25,24 @@
       <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/path_provider_windows/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/linux/flutter/ephemeral/.plugin_symlinks/realm/tests/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/linux/flutter/ephemeral/.plugin_symlinks/realm/tests/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/linux/flutter/ephemeral/.plugin_symlinks/realm/tests/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/linux/flutter/ephemeral/.plugin_symlinks/realm/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/linux/flutter/ephemeral/.plugin_symlinks/realm/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/linux/flutter/ephemeral/.plugin_symlinks/realm/example/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/realm/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/realm/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/realm/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/realm/tests/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/realm/tests/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/realm/tests/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/linux/flutter/ephemeral/.plugin_symlinks/realm/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/linux/flutter/ephemeral/.plugin_symlinks/realm/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/linux/flutter/ephemeral/.plugin_symlinks/realm/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/realm/example/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/realm/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/sense_task/windows/flutter/ephemeral/.plugin_symlinks/realm/example/.dart_tool" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 28 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

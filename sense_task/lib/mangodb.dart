@@ -1,55 +1,45 @@
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/TaskMango.dart';
 import 'package:sense_task/UserMango.dart';
 import 'dart:developer';
 import 'constant.dart';
 import 'AssignTask_Admin.dart';
 
-class UserMangoDB{
-  static var db,usercollection;
+class MongoDbModel{
+  static var db,usercollection,taskcollection,admincollection;
   static connect() async{
-    var db = await Db.create(MONGO_URL);///url given as static variable as it changes for different databases created for our application
+    var db = await Db.create(MONGO_URL);
     await db.open();
     inspect(db);
     var status = db.serverStatus();
     print(status);
-     usercollection = db.collection(USER_COLLECTION);///usercollection driven from constant.dart constant
-  }
-  static Future<String> insert(UserMongo data) async{
-    ///now the given data will be inserted from mangodbmodel cloass to mangodb
-    try{
-      var result = await usercollection.insertOne(data.toJson());
-      if(result.isSuccess){
-        return "Data inserted";
-      }
-      else{
-        return "Something wrong while inserting data";
-      }
-      return result;
-    } catch (e){
-      print(e.toString());
-      return e.toString();///this method to resolve null issue and return the data to string
-    }
-  }
-}
-
-///
-
-class TaskMangoDB{
-  static var db,taskcollection;
-  static connect() async{
-    var db = await Db.create(MONGO_URL);///url given as static variable as it changes for different databases created for our application
-    await db.open();
-    inspect(db);
-    var status = db.serverStatus();
-    print(status);
+     usercollection = db.collection(USER_COLLECTION);
     taskcollection = db.collection(TASK_COLLECTION);
+    admincollection=db.collection(ADMIN_COLLECTION);
   }
   static Future<List<Map<String,dynamic>>>getTask()async{
     final arrtask = await taskcollection.find().toList();
     return arrtask;
   }
-
+  static Future<List<Map<String,dynamic>>> getQuerryTask() async{
+    final querry_data = await taskcollection.find(
+        where.eq('faculty','$username_admin')
+    ).toList();
+    return querry_data;
+  }
+  static Future<List<Map<String,dynamic>>> getAdmin() async{
+    final admin_data = await admincollection.find(
+        where.eq('username','$username_admin').eq('password','$password_admin')
+    ).toList();
+      return admin_data;
+  }
+  static Future<List<Map<String,dynamic>>> getUser() async{
+    final user_data = await usercollection.find(
+        where.eq('username','$username_user').eq('password','$password_user')
+    ).toList();
+    return user_data;
+  }
   static Future<void> update_task(TaskMongo updatetask)
   async {
     var result = await taskcollection
@@ -85,3 +75,4 @@ class TaskMangoDB{
     }
   }
 }
+

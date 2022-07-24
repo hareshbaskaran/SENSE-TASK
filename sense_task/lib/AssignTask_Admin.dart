@@ -826,7 +826,7 @@ async{
     duetimedb: duetime_update,
     facultydb: faculty_update,
   );
-  var result = await TaskMangoDB.update_task(updatetask);
+  var result = await MongoDbModel.update_task(updatetask);
 /*  .whenComplete(() => Navigator.pop(
      context
   ),
@@ -853,5 +853,5 @@ Future<void> _inserttask(
       duedatedb: duedate1,
       duetimedb: duetime1,
       facultydb: faculty1);
-  var result = await TaskMangoDB.insert_task(task_data);
+  var result = await MongoDbModel.insert_task(task_data);
 }

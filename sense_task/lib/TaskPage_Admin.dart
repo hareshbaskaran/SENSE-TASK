@@ -23,7 +23,11 @@ class _taskpage_aState extends State<taskpage_a> {
     return Scaffold(
         body: SafeArea(
           child: FutureBuilder(
-            future: TaskMangoDB.getTask(),
+              future: (adminpage==2)?
+              MongoDbModel.getQuerryTask():
+              (adminpage==1)?
+              MongoDbModel.getTask():
+              MongoDbModel.getUser(),
             builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   print('connection waiting');
@@ -164,7 +168,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                   primary: Colors.black),
                               onPressed: () async{
                                 print(task_data.id_t);
-                                await TaskMangoDB.delete_task(task_data);
+                                await MongoDbModel.delete_task(task_data);
                                 setState(() {
 
                                 });

@@ -5,7 +5,7 @@ import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'mangodb.dart';
-
+import 'package:realm/realm.dart'as realm;
 class SizeConfig {
   static MediaQueryData _mediaQueryData = const MediaQueryData();
   static double screenWidth = 0;
@@ -23,8 +23,7 @@ class SizeConfig {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await UserMangoDB.connect();
-  await TaskMangoDB.connect();
+  await MongoDbModel.connect();
   await Hive.initFlutter();
   Box<dynamic> Hive_box = await Hive.openBox('myBox');
   WidgetsFlutterBinding.ensureInitialized();

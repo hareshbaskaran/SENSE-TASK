@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
@@ -5,12 +6,15 @@ import 'package:sense_task/UserMango.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
 
-TextEditingController usernamevalue = new TextEditingController();
-TextEditingController passwordvalue = new TextEditingController();
-String username = usernamevalue.text;
-String password = passwordvalue.text;
+TextEditingController usernamevalue_admin = new TextEditingController();
+TextEditingController passwordvalue_admin = new TextEditingController();
+String username_admin = usernamevalue_admin.text;
+String password_admin = passwordvalue_admin.text;
+TextEditingController usernamevalue_user = new TextEditingController();
+TextEditingController passwordvalue_user = new TextEditingController();
+String username_user = usernamevalue_user.text;
+String password_user = passwordvalue_user.text;
 bool grey = true;
-
 int adminpage = 0;
 
 class loginpage extends StatefulWidget {
@@ -90,6 +94,7 @@ class _loginpageState extends State<loginpage> {
                                     shape: StadiumBorder(),
                                     primary: Colors.black),
                                 onPressed: () {
+
                                   setState(() {
                                     adminpage = 2;
                                   });
@@ -183,7 +188,7 @@ class _loginpageState extends State<loginpage> {
                                             border: InputBorder.none,
                                           ),
                                           cursorColor: Colors.black,
-                                          controller: usernamevalue,
+                                          controller: usernamevalue_admin,
                                         ),
                                       ),
                                     ),
@@ -236,7 +241,7 @@ class _loginpageState extends State<loginpage> {
                                             border: InputBorder.none,
                                           ),
                                           cursorColor: Colors.black,
-                                          controller: passwordvalue,
+                                          controller: passwordvalue_admin,
                                         ),
                                       ),
                                     ),
@@ -285,14 +290,19 @@ class _loginpageState extends State<loginpage> {
                                           shape: StadiumBorder(),
                                           primary: Colors.black),
                                       onPressed: () {
-                                        _insertData(usernamevalue.text,
-                                            passwordvalue.text);
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  TabsScreen()),
-                                        );
+                                        ///todo: implement querry check on admin
+                                        if (MongoDbModel.getAdmin() != null) {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TabsScreen()),
+                                          );
+ }
+                                        else{
+
+                                        }
+
                                       },
                                       child: Padding(
                                         padding: EdgeInsets.fromLTRB(
@@ -423,7 +433,7 @@ class _loginpageState extends State<loginpage> {
                                                 border: InputBorder.none,
                                               ),
                                               cursorColor: Colors.black,
-                                              controller: usernamevalue,
+                                              controller: usernamevalue_user,
                                             ),
                                           ),
                                         ),
@@ -481,7 +491,7 @@ class _loginpageState extends State<loginpage> {
                                                 border: InputBorder.none,
                                               ),
                                               cursorColor: Colors.black,
-                                              controller: passwordvalue,
+                                              controller: passwordvalue_user,
                                             ),
                                           ),
                                         ),
@@ -535,14 +545,18 @@ class _loginpageState extends State<loginpage> {
                                               shape: StadiumBorder(),
                                               primary: Colors.black),
                                           onPressed: () {
-                                            _insertData(usernamevalue.text,
-                                                passwordvalue.text);
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      TabsScreen()),
-                                            );
+                                            ///todo: implement querry check on admin
+                                            if (MongoDbModel.getUser() !=
+                                                null) {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        TabsScreen()),
+                                              );
+                                            } else {
+
+                                            }
                                           },
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(
@@ -570,36 +584,6 @@ class _loginpageState extends State<loginpage> {
                                     ),
                                   ],
                                 ),
-                                // Center(
-                                //   child: ElevatedButton(
-                                //       onPressed: () {
-                                //         _insertData(usernamevalue.text, passwordvalue.text);
-                                //         Navigator.push(
-                                //           context,
-                                //           MaterialPageRoute(builder: (context) => TabsScreen()),
-                                //         );
-                                //
-                                //         ///polymorphism
-                                //       },
-                                //       child: Container(
-                                //         height: MediaQuery.of(context).size.height * 0.05,
-                                //         width: MediaQuery.of(context).size.width * 0.6,
-                                //         decoration: new BoxDecoration(
-                                //           color: Colors.black,
-                                //           shape: BoxShape.rectangle,
-                                //           border: Border.all(width: 2.0),
-                                //           borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                                //         ),
-                                //         child: Center(
-                                //           child: Text(
-                                //             "Login ",
-                                //             style: TextStyle(
-                                //               color: Colors.white,
-                                //             ),
-                                //           ),
-                                //         ),
-                                //       )),
-                                // ),],);
                               ])
                             : Text('nothing')
               ],
@@ -607,27 +591,10 @@ class _loginpageState extends State<loginpage> {
           ),
         ));
   }
-
-  //future class of providing id and catching data from  username and password and passing to mangodbmodel class
-  Future<void> _insertData(String name, String pass) async {
-    var _id = M.ObjectId();
-
-    ///from MANGODBMODEL created a object id here we calling it as variable as each objectID carries user information
-    final data = UserMongo(id: _id, username: name, password: pass);
-
-    ///parameterised class changed class members to input changed strings and objectID
-    var result = await UserMangoDB.insert(data);
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(
-            'User name and password inserted succesfully for this id : $_id ')));
-    _clearall();
-  }
-
   void _clearall() {
-    username = "";
-    password = "";
+    username_admin = "";
+    username_user = "";
+    password_admin = "";
+    password_user="";
   }
-
-  ///todo: provide a ckear all function to login button so that once clicked all the given strings get cleared
-
 }
