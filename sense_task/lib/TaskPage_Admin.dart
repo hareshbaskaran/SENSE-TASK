@@ -3,7 +3,6 @@ import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sense_task/TaskMango.dart';
-import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
 import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
@@ -23,11 +22,10 @@ class _taskpage_aState extends State<taskpage_a> {
     return Scaffold(
         body: SafeArea(
           child: FutureBuilder(
-              future: (adminpage==2)?
-              MongoDbModel.getQuerryTask():
+              future:
               (adminpage==1)?
               MongoDbModel.getTask():
-              MongoDbModel.getUser(),
+                  MongoDbModel.getQuerryTask(),
             builder: (context,AsyncSnapshot snapshot){
                 if(snapshot.connectionState == ConnectionState.waiting){
                   print('connection waiting');
@@ -37,6 +35,7 @@ class _taskpage_aState extends State<taskpage_a> {
                   else {
                     if(snapshot.hasData){
                       var tasklength = snapshot.data.length;
+                      print(tasklength);///todo: this is where querry check happen if task length = 0
                       print('Task has Data');
                       return ListView.builder(
                         reverse: true,
@@ -83,7 +82,7 @@ class _taskpage_aState extends State<taskpage_a> {
                     standardtext(text:"${task_data.categorydb}"),
                     (adminpage == 1)
                         ? largetext(text:"${task_data.facultydb}")
-                        : SizedBox(height: 0)
+                        : standardtext(text: "${task_data.facultydb}")
                   ],
                 )
               ],

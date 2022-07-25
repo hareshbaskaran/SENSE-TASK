@@ -26,7 +26,7 @@ class MongoDbModel {
 
   static Future<List<Map<String, dynamic>>> getQuerryTask() async {
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '$username_admin'))
+        .find(where.eq('faculty', '$username_user'))
         .toList();
     return querry_data;
   }
