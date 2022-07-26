@@ -254,7 +254,7 @@ class _loginpageState extends State<loginpage> {
                                     MediaQuery.of(context).size.height * 0.025),
                             Row(
                               children: [
-                                Padding(
+                                /*Padding(
                                   padding: const EdgeInsets.all(15.0),
                                   child: ElevatedButton(
                                       style: ElevatedButton.styleFrom(
@@ -281,7 +281,7 @@ class _loginpageState extends State<loginpage> {
                                         ),
                                       )),
                                 ),
-                                Spacer(),
+                                Spacer(),*/
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: ElevatedButton(
@@ -504,7 +504,7 @@ class _loginpageState extends State<loginpage> {
                                         0.025),
                                 Row(
                                   children: [
-                                    Padding(
+                                    /*Padding(
                                       padding: const EdgeInsets.all(15.0),
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
@@ -536,7 +536,7 @@ class _loginpageState extends State<loginpage> {
                                             ),
                                           )),
                                     ),
-                                    Spacer(),
+                                    Spacer(),*/
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: ElevatedButton(
