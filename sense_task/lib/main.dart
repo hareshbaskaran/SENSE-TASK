@@ -5,8 +5,8 @@ import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'mangodb.dart';
-import 'package:realm/realm.dart' as realm;
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class SizeConfig {
   static MediaQueryData _mediaQueryData = const MediaQueryData();
   static double screenWidth = 0;
@@ -21,13 +21,26 @@ class SizeConfig {
     blockSizeVertical = screenHeight / 100;
   }
 }
-
+bool already_sign_in = false;
+CheckloggedIn() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  int? intValue = prefs.getInt('intValue');
+  if (intValue == 1) {
+    already_sign_in = true;
+    print("true");
+  } else {
+    already_sign_in = false;
+    print("false");
+  }
+}
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MongoDbModel.connect();
   await Hive.initFlutter();
   Box<dynamic> Hive_box = await Hive.openBox('myBox');
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await CheckloggedIn();
   runApp(MyApp());
 }
 
@@ -42,8 +55,8 @@ class MyApp extends StatelessWidget {
         splashColor: Colors.black,
       ),
       debugShowCheckedModeBanner: false,
-      home: loginpage(),
-      //home: const TabsScreen(),
+      home: (already_sign_in)?TabsScreen():
+          loginpage(Hive_box)
     );
   }
 }

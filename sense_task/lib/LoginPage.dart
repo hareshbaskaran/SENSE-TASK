@@ -1,11 +1,24 @@
+
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
-import 'package:sense_task/UserMango.dart';
 import 'package:sense_task/main.dart';
-import 'package:sense_task/mangodb.dart';
 import 'StaffPage_Admin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'main.dart';
 
+Box<dynamic> Hive_box = Hive.box('myBox');
+bool isButtonDisabled=true;
+late User user;
+bool checkbox_value = false;
+Prefsetsignin() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setInt('intValue', 1);
+}
 TextEditingController usernamevalue_admin = new TextEditingController();
 TextEditingController passwordvalue_admin = new TextEditingController();
 String username_admin = usernamevalue_admin.text;
@@ -17,17 +30,70 @@ String password_user = passwordvalue_user.text;
 bool grey = true;
 int adminpage = 0;
 
-class loginpage extends StatefulWidget {
-  const loginpage({Key? key}) : super(key: key);
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final GoogleSignIn googleSignIn = GoogleSignIn();
+// final fbLogin = FacebookLogin();
+bool isLoggedIn = false;
+var det = "";
+
+Future<String?> signInWithGoogle() async {
+  await Firebase.initializeApp();
+
+  final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+  final GoogleSignInAuthentication? googleSignInAuthentication =
+  await googleSignInAccount?.authentication;
+
+  final AuthCredential credential = GoogleAuthProvider.credential(
+    accessToken: googleSignInAuthentication!.accessToken,
+    idToken: googleSignInAuthentication.idToken,
+  );
+
+  final UserCredential authResult =
+  await _auth.signInWithCredential(credential);
+  user = authResult.user!;
+
+  if (user != null) {
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final User? currentUser = _auth.currentUser;
+    assert(user.uid == currentUser?.uid);
+
+    print('signInWithGoogle succeeded: ${user}');
+    det = (await user.displayName)!;
+    print(det);
+    Prefsetsignin();
+    return '${user.displayName}';
+  }
+
+  return null;
+}
+
+void signOutGoogle() async {
+  await googleSignIn.signOut();
+
+  print("User Signed Out");
+}
+class loginpage extends StatefulWidget {
+  late final Box<dynamic> box;
+  loginpage(this.box);
   @override
   State<loginpage> createState() => _loginpageState();
 }
 
 class _loginpageState extends State<loginpage> {
+  void onLoginStatusChanged(bool isLoggedIn) {
+    setState(() {
+      isLoggedIn = isLoggedIn;
+    });
+  }
+  var loggedIn = false;
+  var firebaseAuth = FirebaseAuth.instance;
   bool grey = true;
   @override
   Widget build(BuildContext context) {
+    Hive_box = widget.box;
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -198,7 +264,7 @@ class _loginpageState extends State<loginpage> {
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.025),
-                            /*   Container(
+                               Container(
                               padding: EdgeInsets.fromLTRB(0, 0,
                                   MediaQuery.of(context).size.width * 0.7, 0),
                               child: Text(
@@ -250,7 +316,7 @@ class _loginpageState extends State<loginpage> {
                             ),
                             SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.025),*/
+                                    MediaQuery.of(context).size.height * 0.025),
                             Row(
                               children: [
                                 Padding(
@@ -474,9 +540,9 @@ class _loginpageState extends State<loginpage> {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.025),*/
-                                Row(
+                            /*    Row(
                                   children: [
-                                    /*Padding(
+                                    Padding(
                                       padding: const EdgeInsets.all(15.0),
                                       child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
@@ -508,7 +574,7 @@ class _loginpageState extends State<loginpage> {
                                             ),
                                           )),
                                     ),
-                                    Spacer(),*/
+                                    Spacer(),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: ElevatedButton(
@@ -554,13 +620,16 @@ class _loginpageState extends State<loginpage> {
                                           )),
                                     ),
                                   ],
-                                ),
+                                ),*/
+                  _googleSignInButton()
                               ])
                             : Text('nothing')
               ],
             ),
           ),
-        ));
+        )
+    );
+
   }
 
   void _clearall() {
@@ -568,6 +637,78 @@ class _loginpageState extends State<loginpage> {
     username_user = "";
     password_admin = "";
     password_user = "";
+  }
+  Widget _googleSignInButton() {
+    return Container(
+      height: 60,
+      width: 340,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+        gradient:(usernamevalue_user.text.length>0)?LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [Colors.black]
+        ):
+        LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [Colors.grey.shade400,Colors.grey.shade400],
+        ),
+      ),
+      child: MaterialButton(
+        color: Colors.black,
+        onPressed: () async {
+          signInWithGoogle().then((result) {
+            if (result != null &&  usernamevalue_user.text.length>0) {
+              Hive_box.put('name', usernamevalue_user.text);
+               Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) {
+                  return loginpage(Hive_box);
+                },
+              ),
+            );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        TabsScreen()),
+              );
+            }
+          });
+        },
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        highlightElevation: 0,
+        height: 60,
+        minWidth: 320,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                height: 20,
+                width: 20,
+               /* child: Image(
+                  image: AssetImage('assets/images/googleicon.png'),
+                ),*/
+              ),
+              SizedBox(width: 20,),
+              Text(
+                'Sign in with Google',
+                style: TextStyle(
+
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -588,3 +729,5 @@ class ErrorCred extends StatelessWidget {
     );
   }
 }
+///login widget
+///

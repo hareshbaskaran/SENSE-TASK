@@ -27,6 +27,7 @@ class MongoDbModel {
   }
 
   static Future<List<Map<String, dynamic>>> getQuerryTask() async {
+   /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
         .find(where.eq('faculty', '${username_user.trim()}'))
         .toList();
@@ -35,17 +36,16 @@ class MongoDbModel {
   }
 
   static Future<List<Map<String, dynamic>>> getAdmin() async {
-    final admin_data = await admincollection
+    var admin_data = await admincollection
         .find(where
             .eq('username', '$username_admin')
             .eq('password', '$password_admin'))
-        .toList();
-    print(" alone saavu $admin_data");
+        .toArray();
     return admin_data;
   }
 
   static Future<List<Map<String, dynamic>>> getUser() async {
-    final user_data = await usercollection
+    var user_data = await usercollection
         .find(where
             .eq('username', '$username_user')
             .eq('password', '$password_user'))
