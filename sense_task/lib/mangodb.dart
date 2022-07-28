@@ -7,6 +7,7 @@ import 'package:sense_task/UserMango.dart';
 import 'dart:developer';
 import 'constant.dart';
 import 'AssignTask_Admin.dart';
+
 class MongoDbModel {
   static var db, usercollection, taskcollection, admincollection;
   static connect() async {
@@ -27,7 +28,7 @@ class MongoDbModel {
 
   static Future<List<Map<String, dynamic>>> getQuerryTask() async {
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '$username_user'))
+        .find(where.eq('faculty', '${username_user.trim()}'))
         .toList();
     print(querry_data);
     return querry_data;
@@ -36,12 +37,13 @@ class MongoDbModel {
   static Future<List<Map<String, dynamic>>> getAdmin() async {
     final admin_data = await admincollection
         .find(where
-        .eq('username', '$username_admin')
-        .eq('password', '$password_admin'))
-        .count;
+            .eq('username', '$username_admin')
+            .eq('password', '$password_admin'))
+        .toList();
     print(" alone saavu $admin_data");
     return admin_data;
   }
+
   static Future<List<Map<String, dynamic>>> getUser() async {
     final user_data = await usercollection
         .find(where
@@ -62,6 +64,8 @@ class MongoDbModel {
     result['duedate'] = task_data?.duedatedb;
     result['duetime'] = task_data?.duetimedb;
     result['faculty'] = task_data?.facultydb;
+    result['status'] = task_data?.statusdb;
+    result['reason'] = task_data?.reasondb;
     var response = await taskcollection.save(result);
 
     inspect(response);
@@ -88,6 +92,7 @@ class MongoDbModel {
       ///this method to resolve null issue and return the data to string
     }
   }
+
   static Future<String> insert_user(UserMongo user_data) async {
     print(task_data);
     try {
@@ -105,6 +110,7 @@ class MongoDbModel {
       ///this method to resolve null issue and return the data to string
     }
   }
+
   static Future<String> insert_admin(AdminMongo admin_data) async {
     print(task_data);
     try {

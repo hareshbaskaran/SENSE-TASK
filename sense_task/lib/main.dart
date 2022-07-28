@@ -5,7 +5,8 @@ import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'mangodb.dart';
-import 'package:realm/realm.dart'as realm;
+import 'package:realm/realm.dart' as realm;
+
 class SizeConfig {
   static MediaQueryData _mediaQueryData = const MediaQueryData();
   static double screenWidth = 0;
@@ -67,7 +68,7 @@ class TabsScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: const TabBarView(
+        body: TabBarView(
           children: [taskpage_a(), staffpage_a()],
         ),
       ),

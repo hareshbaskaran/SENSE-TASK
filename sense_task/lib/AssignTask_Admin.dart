@@ -51,6 +51,10 @@ var facultylist = [
 
 String duetime = '';
 
+int status = 0;
+
+String reason = '';
+
 class taskassign_a extends StatefulWidget {
   bool grey = true;
 
@@ -745,16 +749,17 @@ class _taskassign_aState extends State<taskassign_a> {
                       print(duetime);
                       print(facultyvalue);
                       await _updateTask(
-                        task_data!.id_t,
-                        categoryvalue,
-                        tasktitlecontroller.text,
-                        taskdescriptioncontroller.text,
-                        startDateInString,
-                        endDateInString,
-                        dueDateInString,
-                        duetime,
-                        facultyvalue,
-                      );
+                          task_data!.id_t,
+                          categoryvalue,
+                          tasktitlecontroller.text,
+                          taskdescriptioncontroller.text,
+                          startDateInString,
+                          endDateInString,
+                          dueDateInString,
+                          duetime,
+                          facultyvalue,
+                          status,
+                          reason);
 
                       _clearassignpage();
 
@@ -789,15 +794,16 @@ class _taskassign_aState extends State<taskassign_a> {
                     onPressed: () {
                       setState(() => isEdit = 0);
                       _inserttask(
-                        categoryvalue,
-                        tasktitlecontroller.text,
-                        taskdescriptioncontroller.text,
-                        startDateInString,
-                        endDateInString,
-                        dueDateInString,
-                        duetime,
-                        facultyvalue,
-                      );
+                          categoryvalue,
+                          tasktitlecontroller.text,
+                          taskdescriptioncontroller.text,
+                          startDateInString,
+                          endDateInString,
+                          dueDateInString,
+                          duetime,
+                          facultyvalue,
+                          status,
+                          reason);
                       _clearassignpage();
                       Navigator.push(
                         context,
@@ -833,27 +839,29 @@ class _taskassign_aState extends State<taskassign_a> {
   }
 
   Future<void> _updateTask(
-    var id,
-    String category_update,
-    String title_update,
-    String description_update,
-    String startdate_update,
-    String enddate_update,
-    String duedate_update,
-    String duetime_update,
-    String faculty_update,
-  ) async {
+      var id,
+      String category_update,
+      String title_update,
+      String description_update,
+      String startdate_update,
+      String enddate_update,
+      String duedate_update,
+      String duetime_update,
+      String faculty_update,
+      int status_update,
+      String reason_update) async {
     final updatetask = TaskMongo(
-      id_t: id,
-      categorydb: category_update,
-      titledb: title_update,
-      descriptiondb: description_update,
-      startdatedb: startdate_update,
-      enddatedb: enddate_update,
-      duedatedb: duedate_update,
-      duetimedb: duetime_update,
-      facultydb: faculty_update,
-    );
+        id_t: id,
+        categorydb: category_update,
+        titledb: title_update,
+        descriptiondb: description_update,
+        startdatedb: startdate_update,
+        enddatedb: enddate_update,
+        duedatedb: duedate_update,
+        duetimedb: duetime_update,
+        facultydb: faculty_update,
+        statusdb: status_update,
+        reasondb: reason_update);
     print('in update task function');
     print(categoryvalue);
     print(tasktitlecontroller.text);
@@ -880,7 +888,9 @@ class _taskassign_aState extends State<taskassign_a> {
       String enddate1,
       String duedate1,
       String duetime1,
-      String faculty1) async {
+      String faculty1,
+      int status1,
+      String reason1) async {
     var id_task = T.ObjectId();
     task_data = TaskMongo(
         id_t: id_task,
@@ -891,7 +901,9 @@ class _taskassign_aState extends State<taskassign_a> {
         enddatedb: enddate1,
         duedatedb: duedate1,
         duetimedb: duetime1,
-        facultydb: faculty1);
+        facultydb: faculty1,
+        statusdb: status1,
+        reasondb: reason1);
     var result = await MongoDbModel.insert_task(task_data!);
   }
 }

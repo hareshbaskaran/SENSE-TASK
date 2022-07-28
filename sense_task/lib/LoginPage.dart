@@ -5,6 +5,7 @@ import 'package:sense_task/UserMango.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
 import 'StaffPage_Admin.dart';
+
 TextEditingController usernamevalue_admin = new TextEditingController();
 TextEditingController passwordvalue_admin = new TextEditingController();
 String username_admin = usernamevalue_admin.text;
@@ -93,7 +94,6 @@ class _loginpageState extends State<loginpage> {
                                     shape: StadiumBorder(),
                                     primary: Colors.black),
                                 onPressed: () {
-
                                   setState(() {
                                     adminpage = 2;
                                   });
@@ -198,7 +198,7 @@ class _loginpageState extends State<loginpage> {
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.025),
-                         /*   Container(
+                            /*   Container(
                               padding: EdgeInsets.fromLTRB(0, 0,
                                   MediaQuery.of(context).size.width * 0.7, 0),
                               child: Text(
@@ -253,34 +253,6 @@ class _loginpageState extends State<loginpage> {
                                     MediaQuery.of(context).size.height * 0.025),*/
                             Row(
                               children: [
-                                /*Padding(
-                                  padding: const EdgeInsets.all(15.0),
-                                  child: ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          elevation: 5.0,
-                                          shape: StadiumBorder(),
-                                          primary: Colors.black),
-                                      onPressed: () {},
-                                      child: Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            MediaQuery.of(context).size.height *
-                                                0.04,
-                                            12,
-                                            MediaQuery.of(context).size.height *
-                                                0.04,
-                                            12),
-                                        child: Text(
-                                          'Register',
-                                          style: GoogleFonts.lato(
-                                              color: Colors.white,
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.02),
-                                        ),
-                                      )),
-                                ),
-                                Spacer(),*/
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: ElevatedButton(
@@ -297,12 +269,12 @@ class _loginpageState extends State<loginpage> {
                                                 builder: (context) =>
                                                     TabsScreen()),
                                           );
-                                          print("supeerstar $AdminQuerryLength");
+                                          print(
+                                              "supeerstar $AdminQuerryLength");
+                                        } else {
+                                          print(
+                                              "poweerstar $AdminQuerryLength");
                                         }
-                                        else{
-                                          print("poweerstar $AdminQuerryLength");
-                                        }
-
                                       },
                                       child: Padding(
                                         padding: EdgeInsets.fromLTRB(
@@ -444,7 +416,7 @@ class _loginpageState extends State<loginpage> {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.025),
-                     /*           Container(
+                                /*           Container(
                                   padding: EdgeInsets.fromLTRB(
                                       0,
                                       0,
@@ -553,9 +525,9 @@ class _loginpageState extends State<loginpage> {
                                                     builder: (context) =>
                                                         TabsScreen()),
                                               );
-                                              print(' powerstar $UserQuerryLength');
-                                            } else {
-                                            }
+                                              print(
+                                                  ' powerstar $UserQuerryLength');
+                                            } else {}
                                           },
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(
@@ -590,13 +562,15 @@ class _loginpageState extends State<loginpage> {
           ),
         ));
   }
+
   void _clearall() {
     username_admin = "";
     username_user = "";
     password_admin = "";
-    password_user="";
+    password_user = "";
   }
 }
+
 ///todo:implement this in onpressed else in login page
 class ErrorCred extends StatelessWidget {
   const ErrorCred({Key? key}) : super(key: key);
