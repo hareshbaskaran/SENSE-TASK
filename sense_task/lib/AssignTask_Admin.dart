@@ -10,12 +10,12 @@ import 'TaskMango.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 List<Widget> allTasks = [];
-TextEditingController tasktitlecontroller = new TextEditingController();
-String tasktitle = tasktitlecontroller.text;
-TextEditingController taskdescriptioncontroller = new TextEditingController();
-String taskdescription = taskdescriptioncontroller.text;
 
-var _checkInserttask = "task Insert";
+TextEditingController tasktitlecontroller = new TextEditingController();
+
+TextEditingController taskdescriptioncontroller = new TextEditingController();
+
+var checkInserttask = "Assign";
 
 String startDateInString = '';
 DateTime startDate = DateTime.now();
@@ -62,27 +62,39 @@ bool isDateSelected = false;
 bool isRegister = true;
 
 class _taskassign_aState extends State<taskassign_a> {
-  int ct = 0;
-  @override
   @override
   Widget build(BuildContext context) {
     TaskMongo? task_data =
         ModalRoute.of(context)!.settings.arguments as TaskMongo?;
-    ct += 1;
-    if (task_data != null && ct == 1) {
-      print('entered');
-      print(ct);
-      categoryvalue = task_data.categorydb;
-      tasktitlecontroller.text = task_data.titledb;
-      taskdescriptioncontroller.text = task_data.descriptiondb;
-      startDateInString = task_data.startdatedb;
-      endDateInString = task_data.enddatedb;
-      dueDateInString = task_data.duedatedb;
-      duetime = task_data.duetimedb;
-      facultyvalue = task_data.facultydb;
-      _checkInserttask = "update";
-      setState(() {});
-    } else {}
+    // void initState() {
+    //   super.initState();
+    //   if (task_data != null) {
+    //     print('Updating UI');
+    //     categoryvalue = task_data.categorydb;
+    //     tasktitlecontroller.text = task_data.titledb;
+    //     taskdescriptioncontroller.text = task_data.descriptiondb;
+    //     startDateInString = task_data.startdatedb;
+    //     endDateInString = task_data.enddatedb;
+    //     dueDateInString = task_data.duedatedb;
+    //     duetime = task_data.duetimedb;
+    //     facultyvalue = task_data.facultydb;
+    //     _checkInserttask = "update";
+    //     print(categoryvalue);
+    //     print(tasktitlecontroller.text);
+    //
+    //     print(taskdescriptioncontroller.text);
+    //     print(startDate);
+    //     print(startDateInString);
+    //     print(endDate);
+    //     print(endDateInString);
+    //     print(dueDate);
+    //     print(dueDateInString);
+    //     print(duetime);
+    //     print(facultyvalue);
+    //   }
+    //   ;
+    // }
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Center(
@@ -97,7 +109,7 @@ class _taskassign_aState extends State<taskassign_a> {
                     child: Container(
                       //padding: EdgeInsets.fromLTRB(80, 100, 100, 0),
                       child: Text(
-                        'Assign Task',
+                        checkInserttask + 'Task',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -162,10 +174,10 @@ class _taskassign_aState extends State<taskassign_a> {
                                 alignment: Alignment.centerLeft,
                                 dropdownColor: Colors.white,
                                 value: categoryvalue,
-                                items: items.map((String items) {
+                                items: items.map((String item) {
                                   return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
+                                    value: item,
+                                    child: Text(item),
                                   );
                                 }).toList(),
                                 // After selecting the desired option,it will
@@ -234,7 +246,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                   hintStyle: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold)),
-                              keyboardType: TextInputType.multiline,
+                              keyboardType: TextInputType.text,
                               maxLines: 2,
                               cursorColor: Colors.black,
                               controller: tasktitlecontroller,
@@ -261,7 +273,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                   border: InputBorder.none,
                                   hintText: 'Enter Task description',
                                   hintStyle: TextStyle(color: Colors.black)),
-                              //keyboardType: TextInputType.multiline,
+                              keyboardType: TextInputType.text,
                               // maxLines: 20,
                               cursorColor: Colors.black,
                               controller: taskdescriptioncontroller,
@@ -526,8 +538,7 @@ class _taskassign_aState extends State<taskassign_a> {
                             context: context,
                             initialDate: dueDate,
                             firstDate: new DateTime(1900),
-                            lastDate:
-                                DateTime.now().add(new Duration(days: 90)),
+                            lastDate: new DateTime.now(),
                             builder: (context, child) {
                               return Theme(
                                 data: Theme.of(context).copyWith(
@@ -574,22 +585,23 @@ class _taskassign_aState extends State<taskassign_a> {
                           ),
                           child: Row(
                             children: [
-                              SizedBox(width: 20),
+                              SizedBox(
+                                width:
+                                    MediaQuery.of(context).size.width * 0.025,
+                              ),
                               Icon(
                                 Icons.calendar_month_sharp,
                                 color: Colors.black,
                                 size: 30,
                               ),
-                              SizedBox(
-                                  width: MediaQuery.of(context).size.width *
-                                      0.025),
+                              SizedBox(width: 5),
                               (dueDateInString != '')
                                   ? Text(
                                       dueDateInString,
                                       style: TextStyle(color: Colors.black),
                                     )
                                   : Text(
-                                      "Due Date",
+                                      "Due date",
                                       style: TextStyle(
                                         fontWeight: FontWeight.normal,
                                         color: Colors.black,
@@ -719,18 +731,33 @@ class _taskassign_aState extends State<taskassign_a> {
                         shape: StadiumBorder(),
                         primary: Colors.black),
                     onPressed: () async {
+                      print('before updating in db');
+                      print(categoryvalue);
+                      print(tasktitlecontroller.text);
+
+                      print(taskdescriptioncontroller.text);
+                      print(startDate);
+                      print(startDateInString);
+                      print(endDate);
+                      print(endDateInString);
+                      print(dueDate);
+                      print(dueDateInString);
+                      print(duetime);
+                      print(facultyvalue);
                       await _updateTask(
                         task_data!.id_t,
-                        task_data!.categorydb,
-                        tasktitle,
-                        taskdescription,
+                        categoryvalue,
+                        tasktitlecontroller.text,
+                        taskdescriptioncontroller.text,
                         startDateInString,
                         endDateInString,
                         dueDateInString,
                         duetime,
                         facultyvalue,
                       );
+
                       _clearassignpage();
+
                       print('updateeeeeeeeee');
                       Navigator.push(
                         context,
@@ -827,6 +854,19 @@ class _taskassign_aState extends State<taskassign_a> {
       duetimedb: duetime_update,
       facultydb: faculty_update,
     );
+    print('in update task function');
+    print(categoryvalue);
+    print(tasktitlecontroller.text);
+
+    print(taskdescriptioncontroller.text);
+    print(startDate);
+    print(startDateInString);
+    print(endDate);
+    print(endDateInString);
+    print(dueDate);
+    print(dueDateInString);
+    print(duetime);
+    print(facultyvalue);
     await MongoDbModel.update_task(updatetask).whenComplete(
       () => Navigator.pop(context),
     );
