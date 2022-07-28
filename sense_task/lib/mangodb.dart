@@ -57,6 +57,7 @@ class MongoDbModel {
     result['description'] = task_data?.descriptiondb;
     result['startdate'] = task_data?.startdatedb;
     result['enddate'] = task_data?.enddatedb;
+    result['duedate'] = task_data?.duedatedb;
     result['duetime'] = task_data?.duetimedb;
     result['faculty'] = task_data?.facultydb;
     var response = await taskcollection.save(result);
