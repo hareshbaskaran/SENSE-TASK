@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:sense_task/UserMango.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
-
+import 'StaffPage_Admin.dart';
 TextEditingController usernamevalue_admin = new TextEditingController();
 TextEditingController passwordvalue_admin = new TextEditingController();
 String username_admin = usernamevalue_admin.text;
@@ -291,16 +290,17 @@ class _loginpageState extends State<loginpage> {
                                           primary: Colors.black),
                                       onPressed: () {
                                         ///todo: implement querry check on admin
-                                        if (MongoDbModel.getAdmin() != null) {
+                                        if (AdminQuerryLength != "null") {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     TabsScreen()),
                                           );
- }
+                                          print("supeerstar $AdminQuerryLength");
+                                        }
                                         else{
-
+                                          print("poweerstar $AdminQuerryLength");
                                         }
 
                                       },
@@ -545,17 +545,16 @@ class _loginpageState extends State<loginpage> {
                                               shape: StadiumBorder(),
                                               primary: Colors.black),
                                           onPressed: () {
-                                            ///todo: implement querry check on admin
-                                            if (MongoDbModel.getUser() !=
-                                                null) {
+                                            ///todo :on pressed snapshot.length
+                                            if (UserQuerryLength != 0) {
                                               Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         TabsScreen()),
                                               );
+                                              print(' powerstar $UserQuerryLength');
                                             } else {
-
                                             }
                                           },
                                           child: Padding(
@@ -596,5 +595,22 @@ class _loginpageState extends State<loginpage> {
     username_user = "";
     password_admin = "";
     password_user="";
+  }
+}
+///todo:implement this in onpressed else in login page
+class ErrorCred extends StatelessWidget {
+  const ErrorCred({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text(
+        "The given Credentials are wrong",
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 12,
+        ),
+      ),
+    );
   }
 }

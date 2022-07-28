@@ -9,6 +9,7 @@ import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'mangodb.dart';
 import 'LoginPage.dart';
 int isEdit=0;
+var tasklength;
 class taskpage_a extends StatefulWidget {
   const taskpage_a({Key? key}) : super(key: key);
 
@@ -34,7 +35,7 @@ class _taskpage_aState extends State<taskpage_a> {
                   );}
                   else {
                     if(snapshot.hasData){
-                      var tasklength = snapshot.data.length;
+                      tasklength = snapshot.data.length;
                       print(tasklength);///todo: this is where querry check happen if task length = 0
                       print('Task has Data');
                       return ListView.builder(
@@ -43,6 +44,7 @@ class _taskpage_aState extends State<taskpage_a> {
                           shrinkWrap: true,
                           itemCount: tasklength,
                           itemBuilder: (BuildContext context, int index) {
+                          print(snapshot.data[index]);
                             return Center(child: TaskCard (TaskMongo.fromJson(snapshot.data[index])));
                           });
                     }else{
@@ -334,3 +336,5 @@ Widget _floating(BuildContext context) {
     );
   }
 }
+
+

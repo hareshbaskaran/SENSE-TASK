@@ -1,11 +1,12 @@
 import 'package:mongo_dart/mongo_dart.dart';
+import 'package:sense_task/AdminMongo.dart';
 import 'package:sense_task/LoginPage.dart';
+import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskMango.dart';
 import 'package:sense_task/UserMango.dart';
 import 'dart:developer';
 import 'constant.dart';
 import 'AssignTask_Admin.dart';
-
 class MongoDbModel {
   static var db, usercollection, taskcollection, admincollection;
   static connect() async {
@@ -28,18 +29,19 @@ class MongoDbModel {
     final querry_data = await taskcollection
         .find(where.eq('faculty', '$username_user'))
         .toList();
+    print(querry_data);
     return querry_data;
   }
 
   static Future<List<Map<String, dynamic>>> getAdmin() async {
     final admin_data = await admincollection
         .find(where
-            .eq('username', '$username_admin')
-            .eq('password', '$password_admin'))
-        .toList();
+        .eq('username', '$username_admin')
+        .eq('password', '$password_admin'))
+        .count;
+    print(" alone saavu $admin_data");
     return admin_data;
   }
-
   static Future<List<Map<String, dynamic>>> getUser() async {
     final user_data = await usercollection
         .find(where
@@ -72,6 +74,40 @@ class MongoDbModel {
     print(task_data);
     try {
       var result = await taskcollection.insertOne(task_data.toJson());
+      if (result.isSuccess) {
+        return "Data inserted";
+      } else {
+        return "Something wrong while inserting data";
+      }
+      return result;
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+
+      ///this method to resolve null issue and return the data to string
+    }
+  }
+  static Future<String> insert_user(UserMongo user_data) async {
+    print(task_data);
+    try {
+      var result = await usercollection.insertOne(user_data.toJson());
+      if (result.isSuccess) {
+        return "Data inserted";
+      } else {
+        return "Something wrong while inserting data";
+      }
+      return result;
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
+
+      ///this method to resolve null issue and return the data to string
+    }
+  }
+  static Future<String> insert_admin(AdminMongo admin_data) async {
+    print(task_data);
+    try {
+      var result = await admincollection.insertOne(admin_data.toJson());
       if (result.isSuccess) {
         return "Data inserted";
       } else {
