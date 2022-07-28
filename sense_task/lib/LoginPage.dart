@@ -198,7 +198,7 @@ class _loginpageState extends State<loginpage> {
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.025),
-                            Container(
+                         /*   Container(
                               padding: EdgeInsets.fromLTRB(0, 0,
                                   MediaQuery.of(context).size.width * 0.7, 0),
                               child: Text(
@@ -250,7 +250,7 @@ class _loginpageState extends State<loginpage> {
                             ),
                             SizedBox(
                                 height:
-                                    MediaQuery.of(context).size.height * 0.025),
+                                    MediaQuery.of(context).size.height * 0.025),*/
                             Row(
                               children: [
                                 /*Padding(
@@ -444,7 +444,7 @@ class _loginpageState extends State<loginpage> {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.025),
-                                Container(
+                     /*           Container(
                                   padding: EdgeInsets.fromLTRB(
                                       0,
                                       0,
@@ -501,7 +501,7 @@ class _loginpageState extends State<loginpage> {
                                 ),
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
-                                        0.025),
+                                        0.025),*/
                                 Row(
                                   children: [
                                     /*Padding(
