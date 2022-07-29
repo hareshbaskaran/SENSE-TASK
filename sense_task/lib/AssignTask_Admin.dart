@@ -100,6 +100,7 @@ class _taskassign_aState extends State<taskassign_a> {
     // }
 
     return Scaffold(
+      backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: Center(
           child: Padding(
@@ -309,7 +310,7 @@ class _taskassign_aState extends State<taskassign_a> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      /*Container(
                         height: MediaQuery.of(context).size.height * 0.08,
                         width: MediaQuery.of(context).size.width * 0.175,
                         decoration: new BoxDecoration(
@@ -326,7 +327,7 @@ class _taskassign_aState extends State<taskassign_a> {
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.025,
-                      ),
+                      ),*/
                       Center(
                         child: GestureDetector(
                           onTap: () async {
@@ -515,7 +516,7 @@ class _taskassign_aState extends State<taskassign_a> {
                 ),
                 Row(
                   children: [
-                    Container(
+                    /*Container(
                         height: MediaQuery.of(context).size.height * 0.08,
                         width: MediaQuery.of(context).size.width * 0.175,
                         decoration: new BoxDecoration(
@@ -534,7 +535,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                     MediaQuery.of(context).size.width * 0.05),
                           ),
                         )),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.025),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.025),*/
                     Center(
                       child: GestureDetector(
                         onTap: () async {

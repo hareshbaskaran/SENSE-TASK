@@ -718,5 +718,4 @@ class ErrorCred extends StatelessWidget {
     );
   }
 }
-///login widget
-///
+

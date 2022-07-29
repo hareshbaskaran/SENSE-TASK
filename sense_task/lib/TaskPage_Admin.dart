@@ -61,7 +61,9 @@ class _taskpage_aState extends State<taskpage_a> {
 
   Widget TaskCard(TaskMongo task_data) {
     return Center(
-        child: Card(
+        child: Stack(
+          children: <Widget>[
+        Card(
       elevation: 0,
       color: Colors.white,
       child: RoundedExpansionTile(
@@ -397,7 +399,11 @@ class _taskpage_aState extends State<taskpage_a> {
           )
         ],
       ),
-    ));
+    ),
+
+  ]
+        )
+    );
   }
 
   Future<void> _updateTask(
