@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:sense_task/main.dart';
+import 'package:sense_task/mangodb.dart';
 import 'StaffPage_Admin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -327,20 +328,13 @@ class _loginpageState extends State<loginpage> {
                                           shape: StadiumBorder(),
                                           primary: Colors.black),
                                       onPressed: () {
-                                        ///todo: implement querry check on admin
-                                        if (AdminQuerryLength != "null") {
+                                        MongoDbModel.getAdmin();
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     TabsScreen()),
                                           );
-                                          print(
-                                              "supeerstar $AdminQuerryLength");
-                                        } else {
-                                          print(
-                                              "poweerstar $AdminQuerryLength");
-                                        }
                                       },
                                       child: Padding(
                                         padding: EdgeInsets.fromLTRB(

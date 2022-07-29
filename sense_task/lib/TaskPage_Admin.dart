@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -400,7 +401,25 @@ class _taskpage_aState extends State<taskpage_a> {
         ],
       ),
     ),
-
+        /*    (status==0)?
+            Container(
+              color: Colors.black,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.circle,
+              ),
+            ):(status==1)?
+            Container(
+              color: Colors.green,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.circle
+              ),
+            ):
+            Container(
+              color: Colors.red,
+              decoration: new BoxDecoration(
+                  shape: BoxShape.circle
+              ),
+            ),*/
   ]
         )
     );
