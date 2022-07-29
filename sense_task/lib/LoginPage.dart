@@ -644,23 +644,12 @@ class _loginpageState extends State<loginpage> {
       width: 340,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15)),
-        gradient:(usernamevalue_user.text.length>0)?LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [Colors.black]
-        ):
-        LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [Colors.grey.shade400,Colors.grey.shade400],
-        ),
       ),
       child: MaterialButton(
         color: Colors.black,
         onPressed: () async {
           signInWithGoogle().then((result) {
-            if (result != null &&  usernamevalue_user.text.length>0) {
-              Hive_box.put('name', usernamevalue_user.text);
+            if (result!= null  && usernamevalue_user.text.length>0) {
                Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) {
