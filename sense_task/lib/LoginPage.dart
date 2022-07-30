@@ -188,6 +188,7 @@ class _loginpageState extends State<loginpage> {
                             Row(
                               children: [
                                 Container(
+                                  color: Colors.transparent,
                                   padding: EdgeInsets.all(3),
                                   alignment: Alignment.centerLeft,
                                   child: TextButton(
@@ -213,6 +214,7 @@ class _loginpageState extends State<loginpage> {
                               ],
                             ),
                             Container(
+                              color: Colors.transparent,
                               padding: EdgeInsets.fromLTRB(0, 0,
                                   MediaQuery.of(context).size.width * 0.7, 0),
                               child: Text(
@@ -226,6 +228,7 @@ class _loginpageState extends State<loginpage> {
                             ),
                             Center(
                               child: Container(
+                                color: Colors.transparent,
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 decoration: new BoxDecoration(
                                   color: Color(0xFFF7F8F8),
@@ -239,6 +242,7 @@ class _loginpageState extends State<loginpage> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
+                                        color: Colors.transparent,
                                         constraints: BoxConstraints(
                                             minHeight: MediaQuery.of(context)
                                                     .size
@@ -266,6 +270,7 @@ class _loginpageState extends State<loginpage> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.025),
                                Container(
+                                 color: Colors.transparent,
                               padding: EdgeInsets.fromLTRB(0, 0,
                                   MediaQuery.of(context).size.width * 0.7, 0),
                               child: Text(
@@ -279,6 +284,7 @@ class _loginpageState extends State<loginpage> {
                             ),
                             Center(
                               child: Container(
+                                color: Colors.transparent,
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 decoration: new BoxDecoration(
                                   color: Color(0xFFF7F8F8),
@@ -292,6 +298,7 @@ class _loginpageState extends State<loginpage> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
+                                        color: Colors.transparent,
                                         constraints: BoxConstraints(
                                             minHeight: MediaQuery.of(context)
                                                     .size
@@ -369,6 +376,7 @@ class _loginpageState extends State<loginpage> {
                             //         ///polymorphism
                             //       },
                             //       child: Container(
+                                       // color: Colors.transparent,
                             //         height: MediaQuery.of(context).size.height * 0.05,
                             //         width: MediaQuery.of(context).size.width * 0.6,
                             //         decoration: new BoxDecoration(
@@ -393,6 +401,7 @@ class _loginpageState extends State<loginpage> {
                                 Row(
                                   children: [
                                     Container(
+                                      color: Colors.transparent,
                                       padding: EdgeInsets.all(3),
                                       alignment: Alignment.centerLeft,
                                       child: TextButton(
@@ -419,6 +428,7 @@ class _loginpageState extends State<loginpage> {
                                   ],
                                 ),
                                 Container(
+                                  color: Colors.transparent,
                                   padding: EdgeInsets.fromLTRB(
                                       0,
                                       0,
@@ -435,6 +445,7 @@ class _loginpageState extends State<loginpage> {
                                 ),
                                 Center(
                                   child: Container(
+                                    color: Colors.transparent,
                                     width:
                                         MediaQuery.of(context).size.width * 0.9,
                                     decoration: new BoxDecoration(
@@ -449,6 +460,7 @@ class _loginpageState extends State<loginpage> {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Container(
+                                            color: Colors.transparent,
                                             constraints: BoxConstraints(
                                                 minHeight:
                                                     MediaQuery.of(context)
@@ -477,6 +489,7 @@ class _loginpageState extends State<loginpage> {
                                     height: MediaQuery.of(context).size.height *
                                         0.025),
                                 /*           Container(
+                                  color: Colors.transparent,
                                   padding: EdgeInsets.fromLTRB(
                                       0,
                                       0,
@@ -493,6 +506,7 @@ class _loginpageState extends State<loginpage> {
                                 ),
                                 Center(
                                   child: Container(
+                                    color: Colors.transparent,
                                     width:
                                         MediaQuery.of(context).size.width * 0.9,
                                     decoration: new BoxDecoration(
@@ -507,6 +521,7 @@ class _loginpageState extends State<loginpage> {
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Container(
+                                            color: Colors.transparent,
                                             constraints: BoxConstraints(
                                                 minHeight:
                                                     MediaQuery.of(context)
@@ -634,6 +649,7 @@ class _loginpageState extends State<loginpage> {
   }
   Widget _googleSignInButton() {
     return Container(
+      color: Colors.transparent,
       height: 60,
       width: 340,
       decoration: BoxDecoration(
@@ -671,6 +687,7 @@ class _loginpageState extends State<loginpage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
+                color: Colors.transparent,
                 alignment: Alignment.centerLeft,
                 height: 20,
                 width: 20,
@@ -702,6 +719,7 @@ class ErrorCred extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.transparent,
       child: Text(
         "The given Credentials are wrong",
         style: TextStyle(
