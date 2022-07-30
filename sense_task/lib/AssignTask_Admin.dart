@@ -100,7 +100,7 @@ class _taskassign_aState extends State<taskassign_a> {
     // }
 
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
         body: Center(
           child: Padding(
@@ -112,7 +112,6 @@ class _taskassign_aState extends State<taskassign_a> {
                     child: Stack(children: [
                   Center(
                     child: Container(
-                      color: Colors.transparent,
                       //padding: EdgeInsets.fromLTRB(80, 100, 100, 0),
                       child: Text(
                         checkInserttask + 'Task',
@@ -125,7 +124,6 @@ class _taskassign_aState extends State<taskassign_a> {
                     ),
                   ),
                   Container(
-                    color: Colors.transparent,
                     alignment: Alignment.topLeft,
                     child: BackButton(
                         color: Colors.black,
@@ -142,7 +140,6 @@ class _taskassign_aState extends State<taskassign_a> {
 
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 Container(
-                  color: Colors.transparent,
                   padding: EdgeInsets.fromLTRB(
                       0, 0, MediaQuery.of(context).size.width * 0.7, 2),
                   child: Text(
@@ -156,7 +153,6 @@ class _taskassign_aState extends State<taskassign_a> {
                 ),
                 Center(
                   child: Container(
-                    color: Colors.transparent,
                     height: MediaQuery.of(context).size.height * 0.08,
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: new BoxDecoration(
@@ -213,7 +209,6 @@ class _taskassign_aState extends State<taskassign_a> {
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Container(
-                  color: Colors.transparent,
                   padding: EdgeInsets.fromLTRB(
                       0, 0, MediaQuery.of(context).size.width * 0.7, 2),
                   child: Text(
@@ -228,7 +223,6 @@ class _taskassign_aState extends State<taskassign_a> {
 
                 Center(
                   child: Container(
-                    color: Colors.transparent,
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: new BoxDecoration(
                       color: Colors.white,
@@ -241,7 +235,6 @@ class _taskassign_aState extends State<taskassign_a> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            color: Colors.transparent,
                             height: 60,
                             child: TextField(
                               onChanged: (_) {
@@ -270,7 +263,6 @@ class _taskassign_aState extends State<taskassign_a> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            color: Colors.transparent,
                             constraints: BoxConstraints(minHeight: 60),
                             child: TextField(
                               maxLines: null,
@@ -303,7 +295,6 @@ class _taskassign_aState extends State<taskassign_a> {
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Container(
-                  color: Colors.transparent,
                   padding: EdgeInsets.fromLTRB(
                       0, 0, MediaQuery.of(context).size.width * 0.7, 2),
                   child: Text(
@@ -382,7 +373,6 @@ class _taskassign_aState extends State<taskassign_a> {
                             setState(() {});
                           },
                           child: Container(
-                            color: Colors.transparent,
                             height: MediaQuery.of(context).size.height * 0.08,
                             width: MediaQuery.of(context).size.width * 0.35,
                             decoration: new BoxDecoration(
@@ -469,7 +459,6 @@ class _taskassign_aState extends State<taskassign_a> {
                             setState(() {});
                           },
                           child: Container(
-                            color: Colors.transparent,
                             height: MediaQuery.of(context).size.height * 0.08,
                             width: MediaQuery.of(context).size.width * 0.35,
                             decoration: new BoxDecoration(
@@ -515,7 +504,6 @@ class _taskassign_aState extends State<taskassign_a> {
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 Container(
-                  color: Colors.transparent,
                   padding: EdgeInsets.fromLTRB(
                       0, 0, MediaQuery.of(context).size.width * 0.7, 2),
                   child: Text(
@@ -593,7 +581,6 @@ class _taskassign_aState extends State<taskassign_a> {
                           setState(() {});
                         },
                         child: Container(
-                          color: Colors.transparent,
                           height: MediaQuery.of(context).size.height * 0.08,
                           width: MediaQuery.of(context).size.width * 0.35,
                           decoration: new BoxDecoration(
@@ -637,7 +624,6 @@ class _taskassign_aState extends State<taskassign_a> {
                     Row(
                       children: [
                         Container(
-                            color: Colors.transparent,
                             height: MediaQuery.of(context).size.height * 0.08,
                             width: MediaQuery.of(context).size.width * 0.35,
                             decoration: new BoxDecoration(
@@ -673,7 +659,6 @@ class _taskassign_aState extends State<taskassign_a> {
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Container(
-                  color: Colors.transparent,
                   padding: EdgeInsets.fromLTRB(
                       0, 0, MediaQuery.of(context).size.width * 0.7, 2),
                   child: Text(
@@ -687,7 +672,6 @@ class _taskassign_aState extends State<taskassign_a> {
                 ),
                 Center(
                   child: Container(
-                    color: Colors.transparent,
                     height: MediaQuery.of(context).size.height * 0.08,
                     width: MediaQuery.of(context).size.width * 0.9,
                     decoration: new BoxDecoration(

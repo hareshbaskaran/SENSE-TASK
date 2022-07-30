@@ -7,7 +7,9 @@ import 'package:sense_task/UserMango.dart';
 import 'dart:developer';
 import 'constant.dart';
 import 'AssignTask_Admin.dart';
+
 var isAdminLogin;
+
 class MongoDbModel {
   static var db, usercollection, taskcollection, admincollection;
   static connect() async {
@@ -27,32 +29,29 @@ class MongoDbModel {
   }
 
   static Future<List<Map<String, dynamic>>> getQuerryTask() async {
-   /* var querry_data = await taskcollection*/
+    /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '${username_user.trim()}').eq('status',0)
-    )
+        .find(where.eq('faculty', '${username_user.trim()}').eq('status', 0))
         .toList();
     print(querry_data);
     return querry_data;
   }
+
   static Future<List<Map<String, dynamic>>> getQuerryTaskStatus() async {
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '${username_user.trim()}').eq('status',1)
-    )
+        .find(where.eq('faculty', '${username_user.trim()}').eq('status', 1))
         .toList();
     print(querry_data);
     return querry_data;
   }
 
   static Future<List<Map<String, dynamic>>> getAdmin() async {
-    var admin_data = await admincollection
-        .find().toList();
-    var AdminLogin ='${admin_data['username']}';
-    if(AdminLogin==username_admin){
-      isAdminLogin=1;
-    }
-    else{
-      isAdminLogin=0;
+    var admin_data = await admincollection.find().toList();
+    var AdminLogin = '${admin_data['username']}';
+    if (AdminLogin == username_admin) {
+      isAdminLogin = 1;
+    } else {
+      isAdminLogin = 0;
     }
     print(admin_data);
     print(isAdminLogin);
@@ -81,6 +80,7 @@ class MongoDbModel {
     result['faculty'] = task_data?.facultydb;
     result['status'] = task_data?.statusdb;
     result['reason'] = task_data?.reasondb;
+
     var response = await taskcollection.save(result);
 
     inspect(response);

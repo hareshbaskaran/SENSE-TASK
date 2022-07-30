@@ -7,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'mangodb.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class SizeConfig {
   static MediaQueryData _mediaQueryData = const MediaQueryData();
   static double screenWidth = 0;
@@ -21,6 +22,7 @@ class SizeConfig {
     blockSizeVertical = screenHeight / 100;
   }
 }
+
 bool already_sign_in = false;
 CheckloggedIn() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -33,6 +35,7 @@ CheckloggedIn() async {
     print("false");
   }
 }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await MongoDbModel.connect();
@@ -50,14 +53,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        secondaryHeaderColor: Colors.black,
-        splashColor: Colors.black,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: (already_sign_in)?TabsScreen():
-          loginpage(Hive_box)
-    );
+        theme: ThemeData(
+          secondaryHeaderColor: Colors.black,
+          splashColor: Colors.black,
+        ),
+        debugShowCheckedModeBanner: false,
+        // home: (already_sign_in)?TabsScreen()
+        // :
+        home: loginpage(Hive_box));
   }
 }
 

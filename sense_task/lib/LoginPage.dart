@@ -1,4 +1,3 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,13 +12,14 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'main.dart';
 
 Box<dynamic> Hive_box = Hive.box('myBox');
-bool isButtonDisabled=true;
+bool isButtonDisabled = true;
 late User user;
 bool checkbox_value = false;
 Prefsetsignin() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setInt('intValue', 1);
 }
+
 TextEditingController usernamevalue_admin = new TextEditingController();
 TextEditingController passwordvalue_admin = new TextEditingController();
 String username_admin = usernamevalue_admin.text;
@@ -30,7 +30,6 @@ String username_user = usernamevalue_user.text;
 String password_user = passwordvalue_user.text;
 bool grey = true;
 int adminpage = 0;
-
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -43,7 +42,7 @@ Future<String?> signInWithGoogle() async {
 
   final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
   final GoogleSignInAuthentication? googleSignInAuthentication =
-  await googleSignInAccount?.authentication;
+      await googleSignInAccount?.authentication;
 
   final AuthCredential credential = GoogleAuthProvider.credential(
     accessToken: googleSignInAuthentication!.accessToken,
@@ -51,7 +50,7 @@ Future<String?> signInWithGoogle() async {
   );
 
   final UserCredential authResult =
-  await _auth.signInWithCredential(credential);
+      await _auth.signInWithCredential(credential);
   user = authResult.user!;
 
   if (user != null) {
@@ -76,6 +75,7 @@ void signOutGoogle() async {
 
   print("User Signed Out");
 }
+
 class loginpage extends StatefulWidget {
   late final Box<dynamic> box;
   loginpage(this.box);
@@ -89,6 +89,7 @@ class _loginpageState extends State<loginpage> {
       isLoggedIn = isLoggedIn;
     });
   }
+
   var loggedIn = false;
   var firebaseAuth = FirebaseAuth.instance;
   bool grey = true;
@@ -228,7 +229,6 @@ class _loginpageState extends State<loginpage> {
                             ),
                             Center(
                               child: Container(
-                                color: Colors.transparent,
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 decoration: new BoxDecoration(
                                   color: Color(0xFFF7F8F8),
@@ -269,8 +269,8 @@ class _loginpageState extends State<loginpage> {
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.025),
-                               Container(
-                                 color: Colors.transparent,
+                            Container(
+                              color: Colors.transparent,
                               padding: EdgeInsets.fromLTRB(0, 0,
                                   MediaQuery.of(context).size.width * 0.7, 0),
                               child: Text(
@@ -284,7 +284,6 @@ class _loginpageState extends State<loginpage> {
                             ),
                             Center(
                               child: Container(
-                                color: Colors.transparent,
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 decoration: new BoxDecoration(
                                   color: Color(0xFFF7F8F8),
@@ -336,12 +335,12 @@ class _loginpageState extends State<loginpage> {
                                           primary: Colors.black),
                                       onPressed: () {
                                         MongoDbModel.getAdmin();
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TabsScreen()),
-                                          );
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TabsScreen()),
+                                        );
                                       },
                                       child: Padding(
                                         padding: EdgeInsets.fromLTRB(
@@ -376,7 +375,7 @@ class _loginpageState extends State<loginpage> {
                             //         ///polymorphism
                             //       },
                             //       child: Container(
-                                       // color: Colors.transparent,
+                            // color: Colors.transparent,
                             //         height: MediaQuery.of(context).size.height * 0.05,
                             //         width: MediaQuery.of(context).size.width * 0.6,
                             //         decoration: new BoxDecoration(
@@ -401,7 +400,6 @@ class _loginpageState extends State<loginpage> {
                                 Row(
                                   children: [
                                     Container(
-                                      color: Colors.transparent,
                                       padding: EdgeInsets.all(3),
                                       alignment: Alignment.centerLeft,
                                       child: TextButton(
@@ -445,7 +443,6 @@ class _loginpageState extends State<loginpage> {
                                 ),
                                 Center(
                                   child: Container(
-                                    color: Colors.transparent,
                                     width:
                                         MediaQuery.of(context).size.width * 0.9,
                                     decoration: new BoxDecoration(
@@ -549,7 +546,7 @@ class _loginpageState extends State<loginpage> {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.025),*/
-                            /*    Row(
+                                /*    Row(
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(15.0),
@@ -630,15 +627,13 @@ class _loginpageState extends State<loginpage> {
                                     ),
                                   ],
                                 ),*/
-                  _googleSignInButton()
+                                _googleSignInButton()
                               ])
                             : Text('nothing')
               ],
             ),
           ),
-        )
-    );
-
+        ));
   }
 
   void _clearall() {
@@ -647,9 +642,9 @@ class _loginpageState extends State<loginpage> {
     password_admin = "";
     password_user = "";
   }
+
   Widget _googleSignInButton() {
     return Container(
-      color: Colors.transparent,
       height: 60,
       width: 340,
       decoration: BoxDecoration(
@@ -659,19 +654,17 @@ class _loginpageState extends State<loginpage> {
         color: Colors.black,
         onPressed: () async {
           signInWithGoogle().then((result) {
-            if (result!= null  && usernamevalue_user.text.length>0) {
-               Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) {
-                  return loginpage(Hive_box);
-                },
-              ),
-            );
+            if (result != null && usernamevalue_user.text.length > 0) {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) {
+                    return loginpage(Hive_box);
+                  },
+                ),
+              );
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        TabsScreen()),
+                MaterialPageRoute(builder: (context) => TabsScreen()),
               );
             }
           });
@@ -691,15 +684,16 @@ class _loginpageState extends State<loginpage> {
                 alignment: Alignment.centerLeft,
                 height: 20,
                 width: 20,
-               /* child: Image(
+                /* child: Image(
                   image: AssetImage('assets/images/googleicon.png'),
                 ),*/
               ),
-              SizedBox(width: 20,),
+              SizedBox(
+                width: 20,
+              ),
               Text(
                 'Sign in with Google',
                 style: TextStyle(
-
                   fontSize: 20,
                   color: Colors.white,
                 ),
@@ -730,4 +724,3 @@ class ErrorCred extends StatelessWidget {
     );
   }
 }
-
