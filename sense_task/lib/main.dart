@@ -58,11 +58,11 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        // home: (already_sign_in)?TabsScreen()
-        // :
-        home: loginpage(Hive_box));
+         home: (already_sign_in)?taskpage_a():
+  loginpage(Hive_box));
   }
 }
+/*
 
 class TabsScreen extends StatelessWidget {
   const TabsScreen({Key? key}) : super(key: key);
@@ -91,3 +91,4 @@ class TabsScreen extends StatelessWidget {
     );
   }
 }
+*/
