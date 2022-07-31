@@ -340,7 +340,7 @@ class _loginpageState extends State<loginpage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  taskpage_a()),
+                                                  TabsScreen()),
                                         );
                                       },
                                       child: Padding(
@@ -665,7 +665,7 @@ class _loginpageState extends State<loginpage> {
               );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => taskpage_a()),
+                MaterialPageRoute(builder: (context) => TabsScreen()),
               );
             }
           });

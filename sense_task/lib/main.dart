@@ -58,11 +58,11 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-         home: (already_sign_in)?taskpage_a():
+         home: (already_sign_in)?TabsScreen():
   loginpage(Hive_box));
   }
 }
-/*
+
 
 class TabsScreen extends StatelessWidget {
   const TabsScreen({Key? key}) : super(key: key);
@@ -80,6 +80,8 @@ class TabsScreen extends StatelessWidget {
             backgroundColor: Colors.black,
             bottom: const TabBar(
               indicatorColor: Colors.white,
+              isScrollable: false,
+              ///todo:provide true for scrollable physics
               tabs: [Tab(text: 'Tasks'), Tab(text: 'Staff')],
             ),
           ),
@@ -91,4 +93,4 @@ class TabsScreen extends StatelessWidget {
     );
   }
 }
-*/
+
