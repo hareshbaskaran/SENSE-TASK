@@ -107,11 +107,30 @@ class _taskassign_aState extends State<taskassign_a> {
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
             child: ListView(
               children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 Center(
-                    child: Stack(children: [
+                    child: Row(
+                        children: [
+                          Container(
+                            decoration: new BoxDecoration(
+                              color: Colors.black,
+                              shape: BoxShape.circle,
+                            ),
+                            alignment: Alignment.topLeft,
+                            child: BackButton(
+                                color: Colors.white,
+                                onPressed: () {
+                                  Navigator.pop(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => taskpage_a()),
+                                  );
+                                  setState(() => isEdit = 0);
+                                }),
+                          ),
+                  SizedBox(width:MediaQuery.of(context).size.width*0.2),
                   Center(
                     child: Container(
+                      alignment: Alignment.topCenter,
                       //padding: EdgeInsets.fromLTRB(80, 100, 100, 0),
                       child: Text(
                         checkInserttask + 'Task',
@@ -122,19 +141,6 @@ class _taskassign_aState extends State<taskassign_a> {
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: BackButton(
-                        color: Colors.black,
-                        onPressed: () {
-                          Navigator.pop(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => taskpage_a()),
-                          );
-                          setState(() => isEdit = 0);
-                        }),
                   ),
                 ])),
 
@@ -307,197 +313,188 @@ class _taskassign_aState extends State<taskassign_a> {
                   ),
                 ),
                 Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      /*Container(
-                        color: Colors.transparent,
-                        height: MediaQuery.of(context).size.height * 0.08,
-                        width: MediaQuery.of(context).size.width * 0.175,
-                        decoration: new BoxDecoration(
-                          color: Colors.black,
-                          shape: BoxShape.rectangle,
-                          border: Border.all(width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.08,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    decoration: new BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.rectangle,
+                      border: Border.all(width: 2.0),
+                      borderRadius:
+                      BorderRadius.all(Radius.circular(15.0)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.center,
+                          height: MediaQuery.of(context).size.height * 0.09,
+                          width: MediaQuery.of(context).size.width * 0.175,
+                          decoration: new BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.rectangle,
+                            border: Border.all(width: 2.0),
+                            borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                          ),
+                          child: Icon(
+                            Icons.date_range,
+                            color: Colors.white,
+                            size: MediaQuery.of(context).size.width * 0.07,
+                          ),
                         ),
-                        child: Icon(
-                          Icons.date_range,
-                          color: Colors.white,
-                          size: MediaQuery.of(context).size.width * 0.1,
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.025,
                         ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.025,
-                      ),*/
-                      Center(
-                        child: GestureDetector(
-                          onTap: () async {
-                            final datePick = await showDatePicker(
-                              context: context,
-                              initialDate: startDate,
-                              firstDate: new DateTime(1900),
-                              lastDate: new DateTime.now(),
-                              builder: (context, child) {
-                                return Theme(
-                                  data: Theme.of(context).copyWith(
-                                    colorScheme: ColorScheme.light(
-                                      primary: Colors
-                                          .black, // header background color
-                                      onPrimary:
-                                          Colors.white, // header text color
-                                      onSurface:
-                                          Colors.black, // body text color
-                                    ),
-                                    textButtonTheme: TextButtonThemeData(
-                                      style: TextButton.styleFrom(
-                                        primary:
-                                            Colors.black, // button text color
+                        Center(
+                          child: GestureDetector(
+                            onTap: () async {
+                              final datePick = await showDatePicker(
+                                context: context,
+                                initialDate: startDate,
+                                firstDate: new DateTime(1900),
+                                lastDate: new DateTime.now(),
+                                builder: (context, child) {
+                                  return Theme(
+                                    data: Theme.of(context).copyWith(
+                                      colorScheme: ColorScheme.light(
+                                        primary: Colors
+                                            .black, // header background color
+                                        onPrimary:
+                                            Colors.white, // header text color
+                                        onSurface:
+                                            Colors.black, // body text color
+                                      ),
+                                      textButtonTheme: TextButtonThemeData(
+                                        style: TextButton.styleFrom(
+                                          primary:
+                                              Colors.black, // button text color
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  child: child!,
-                                );
-                              },
-                            );
-                            if (datePick != null && datePick != startDate) {
-                              setState(() {
-                                startDate = datePick;
-                                isDateSelected = true;
+                                    child: child!,
+                                  );
+                                },
+                              );
+                              if (datePick != null && datePick != startDate) {
+                                setState(() {
+                                  startDate = datePick;
+                                  isDateSelected = true;
 
-                                // put it here
-                                startDateInString =
-                                    "${startDate.day}/${startDate.month}/${startDate.year}";
-                                print(startDateInString); // 08/14/2019
-                              });
-                            }
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.08,
-                            width: MediaQuery.of(context).size.width * 0.35,
-                            decoration: new BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              border: Border.all(width: 2.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.025,
-                                ),
-                                Icon(
-                                  Icons.calendar_month_sharp,
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
-                                SizedBox(width: 5),
-                                (startDateInString != '')
-                                    ? Text(
-                                        startDateInString,
-                                        style: TextStyle(color: Colors.black),
-                                      )
-                                    : Text(
-                                        "Start date",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                          fontSize: 15,
+                                  // put it here
+                                  startDateInString =
+                                      "${startDate.day}/${startDate.month}/${startDate.year}";
+                                  print(startDateInString); // 08/14/2019
+                                });
+                              }
+                              setState(() {});
+                            },
+                            child: Container(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.025,
+                                  ),
+                                  SizedBox(width: 5),
+                                  (startDateInString != '')
+                                      ? Text(
+                                          startDateInString,
+                                          style: TextStyle(color: Colors.black),
+                                        )
+                                      : Text(
+                                          "Start date",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                          ),
                                         ),
-                                      )
-                              ],
+                                  SizedBox(width: 25),
+                                  Text(':',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 28,
+                                    color: Colors.black
+                                  ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.025,
-                      ),
-                      Center(
-                        child: GestureDetector(
-                          onTap: () async {
-                            final datePick = await showDatePicker(
-                              context: context,
-                              initialDate: endDate,
-                              firstDate: new DateTime(1900),
-                              lastDate: new DateTime.now(),
-                              builder: (context, child) {
-                                return Theme(
-                                  data: Theme.of(context).copyWith(
-                                    colorScheme: ColorScheme.light(
-                                      primary: Colors
-                                          .black, // header background color
-                                      onPrimary:
-                                          Colors.white, // header text color
-                                      onSurface:
-                                          Colors.black, // body text color
-                                    ),
-                                    textButtonTheme: TextButtonThemeData(
-                                      style: TextButton.styleFrom(
-                                        primary:
-                                            Colors.black, // button text color
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.025,
+                        ),
+                        Center(
+                          child: GestureDetector(
+                            onTap: () async {
+                              final datePick = await showDatePicker(
+                                context: context,
+                                initialDate: endDate,
+                                firstDate: new DateTime(1900),
+                                lastDate: new DateTime.now(),
+                                builder: (context, child) {
+                                  return Theme(
+                                    data: Theme.of(context).copyWith(
+                                      colorScheme: ColorScheme.light(
+                                        primary: Colors
+                                            .black, // header background color
+                                        onPrimary:
+                                            Colors.white, // header text color
+                                        onSurface:
+                                            Colors.black, // body text color
+                                      ),
+                                      textButtonTheme: TextButtonThemeData(
+                                        style: TextButton.styleFrom(
+                                          primary:
+                                              Colors.black, // button text color
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  child: child!,
-                                );
-                              },
-                            );
-                            if (datePick != null && datePick != endDate) {
-                              setState(() {
-                                endDate = datePick;
-                                isDateSelected = true;
+                                    child: child!,
+                                  );
+                                },
+                              );
+                              if (datePick != null && datePick != endDate) {
+                                setState(() {
+                                  endDate = datePick;
+                                  isDateSelected = true;
 
-                                // put it here
-                                endDateInString =
-                                    "${endDate.day}/${endDate.month}/${endDate.year}";
-                                print(endDateInString); // 08/14/2019
-                              });
-                            }
-                            setState(() {});
-                          },
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.08,
-                            width: MediaQuery.of(context).size.width * 0.35,
-                            decoration: new BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              border: Border.all(width: 2.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            child: Row(
-                              children: [
-                                SizedBox(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.025),
-                                Icon(
-                                  Icons.calendar_month_sharp,
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
-                                SizedBox(width: 10),
-                                (endDateInString != '')
-                                    ? Text(
-                                        endDateInString,
-                                        style: TextStyle(color: Colors.black),
-                                      )
-                                    : Text(
-                                        "End date",
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.normal,
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                        ),
-                                      )
-                              ],
+                                  // put it here
+                                  endDateInString =
+                                      "${endDate.day}/${endDate.month}/${endDate.year}";
+                                  print(endDateInString); // 08/14/2019
+                                });
+                              }
+                              setState(() {});
+                            },
+                            child: Container(
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.025),
+                                  SizedBox(width: 10),
+                                  (endDateInString != '')
+                                      ? Text(
+                                          endDateInString,
+                                          style: TextStyle(color: Colors.black),
+                                        )
+                                      : Text(
+                                          "End date",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                          ),
+                                        )
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -515,29 +512,39 @@ class _taskassign_aState extends State<taskassign_a> {
                     ),
                   ),
                 ),
-                Row(
-                  children: [
-                    /*Container(
-                      color: Colors.transparent,
-                        height: MediaQuery.of(context).size.height * 0.08,
-                        width: MediaQuery.of(context).size.width * 0.175,
-                        decoration: new BoxDecoration(
-                          color: Colors.black,
-                          shape: BoxShape.rectangle,
-                          border: Border.all(width: 2.0),
-                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'DUE',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.05),
+                Center(
+                    child: Container(
+                  height: MediaQuery.of(context).size.height * 0.08,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  decoration: new BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    border: Border.all(width: 2.0),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                          height: MediaQuery.of(context).size.height * 0.08,
+                          width: MediaQuery.of(context).size.width * 0.175,
+                          decoration: new BoxDecoration(
+                            color: Colors.black,
+                            shape: BoxShape.rectangle,
+                            border: Border.all(width: 2.0),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12.0)),
                           ),
-                        )),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.025),*/
+                          child: Center(
+                            child: Text(
+                              'DUE',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.05),
+                            ),
+                          )),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.025),
                     Center(
                       child: GestureDetector(
                         onTap: () async {
@@ -581,25 +588,11 @@ class _taskassign_aState extends State<taskassign_a> {
                           setState(() {});
                         },
                         child: Container(
-                          height: MediaQuery.of(context).size.height * 0.08,
-                          width: MediaQuery.of(context).size.width * 0.35,
-                          decoration: new BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.rectangle,
-                            border: Border.all(width: 2.0),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15.0)),
-                          ),
                           child: Row(
                             children: [
                               SizedBox(
                                 width:
                                     MediaQuery.of(context).size.width * 0.025,
-                              ),
-                              Icon(
-                                Icons.calendar_month_sharp,
-                                color: Colors.black,
-                                size: 30,
                               ),
                               SizedBox(width: 5),
                               (dueDateInString != '')
@@ -614,31 +607,24 @@ class _taskassign_aState extends State<taskassign_a> {
                                         color: Colors.black,
                                         fontSize: 15,
                                       ),
-                                    )
+                                    ),
+                              SizedBox(width: 30),
+                              Text(':',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 28,
+                                    color: Colors.black
+                                ),
+                              )
                             ],
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.025),
-                    Row(
-                      children: [
                         Container(
                             height: MediaQuery.of(context).size.height * 0.08,
                             width: MediaQuery.of(context).size.width * 0.35,
-                            decoration: new BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              border: Border.all(width: 2.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
-                            ),
                             child: DateTimePicker(
-                              icon: Icon(
-                                Icons.timelapse_outlined,
-                                color: Colors.black,
-                                size: 30,
-                              ),
                               type: DateTimePickerType.time,
                               textAlign: TextAlign.center,
                               timeHintText: 'time',
@@ -649,13 +635,14 @@ class _taskassign_aState extends State<taskassign_a> {
                               timeFieldWidth: 0,
                               onChanged: (value) {
                                 duetime = value;
-                                print('timeeeee');
                                 print(duetime);
                               },
-                            )),
+                            )
+                        ),
                       ],
-                    ),
-                  ],
+
+                ),
+                )
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                 Container(
@@ -732,7 +719,9 @@ class _taskassign_aState extends State<taskassign_a> {
         floatingActionButton: (isEdit == 1)
             ? Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: ElevatedButton(
+                child: Expanded(
+                  child:
+                  ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 5.0,
                         shape: StadiumBorder(),
@@ -785,14 +774,20 @@ class _taskassign_aState extends State<taskassign_a> {
                             fontSize:
                                 MediaQuery.of(context).size.height * 0.02),
                       ),
-                    )),
+                    )
+                  ),
+                ),
               )
             : Padding(
                 padding: const EdgeInsets.all(15.0),
-                child: ElevatedButton(
+                child: Expanded(
+                    child:
+                    ElevatedButton(
                     style: ElevatedButton.styleFrom(
                         elevation: 5.0,
-                        shape: StadiumBorder(),
+                        shape: StadiumBorder(
+                          side: BorderSide.none
+                        ),
                         primary: Colors.black),
                     onPressed: () {
                       setState(() => isEdit = 0);
@@ -826,8 +821,11 @@ class _taskassign_aState extends State<taskassign_a> {
                             fontSize:
                                 MediaQuery.of(context).size.height * 0.02),
                       ),
-                    )),
-              ));
+                    )
+    )
+                )
+              )
+    );
   }
 
   void _clearassignpage() {
