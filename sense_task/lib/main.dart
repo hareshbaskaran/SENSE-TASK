@@ -80,8 +80,6 @@ class TabsScreen extends StatelessWidget {
             backgroundColor: Colors.black,
             bottom: const TabBar(
               indicatorColor: Colors.white,
-              isScrollable: false,
-              ///todo:provide true for scrollable physics
               tabs: [Tab(text: 'Tasks'), Tab(text: 'Staff')],
             ),
           ),
