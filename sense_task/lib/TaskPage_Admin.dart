@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:sense_task/TaskMango.dart';
+import 'package:sense_task/Models/TaskMango.dart';
 import 'package:sense_task/mangodb.dart';
 import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
@@ -23,7 +23,14 @@ class _taskpage_aState extends State<taskpage_a> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
+        body: RefreshIndicator(
+          color: Colors.black,
+          onRefresh: ()async{
+            await Future.delayed(Duration(seconds: 1));
+            (adminpage == 1)
+                ? await MongoDbModel.getTask()
+                : await MongoDbModel.getQuerryTask();
+          },
           child: FutureBuilder(
               future: (adminpage == 1)
                   ? MongoDbModel.getTask()

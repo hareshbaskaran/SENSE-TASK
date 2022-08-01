@@ -16,7 +16,7 @@ Box<dynamic> Hive_box = Hive.box('myBox');
 bool isButtonDisabled = true;
 late User user;
 bool checkbox_value = false;
-Prefsetsignin() async {
+Prefsetsignin() async { 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setInt('intValue', 1);
 }
