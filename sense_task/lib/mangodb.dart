@@ -32,7 +32,7 @@ class MongoDbModel {
     /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
         .find(where
-            .eq('faculty', '${username_user.trim()}')
+            .eq('faculty', '${usernamevalue_user.text.trim()}')
             .eq('status', 0)) //username_user.trim()}
         .toList();
     print(querry_data);
@@ -43,7 +43,7 @@ class MongoDbModel {
     /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
         .find(where
-            .eq('faculty', '${username_user.trim()}')
+            .eq('faculty', '${usernamevalue_user.text.trim()}')
             .eq('status', 1)) //username_user.trim()}
         .toList();
     print(querry_data);
@@ -52,7 +52,9 @@ class MongoDbModel {
 
   static Future<List<Map<String, dynamic>>> getAllRejectedTasks() async {
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '${username_user.trim()}').eq('status', -1))
+        .find(where
+            .eq('faculty', '${usernamevalue_user.text.trim()}')
+            .eq('status', -1))
 
         ///todo:changed querry data for checking
         .toList();
@@ -64,7 +66,7 @@ class MongoDbModel {
     /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
         .find(where
-            .eq('faculty', '${username_user.trim()}')
+            .eq('faculty', '${usernamevalue_user.text.trim()}')
             .eq('status', 2)) //username_user.trim()}
         .toList();
     print(querry_data);

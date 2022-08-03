@@ -64,7 +64,7 @@ class _taskpage_aState extends State<taskpage_a> {
                   if (snapshot.hasData) {
                     var tasklength = snapshot.data.length;
                     //print(tasklength);///todo: this is where querry check happen if task length = 0
-                    print('Task has Data');
+                    if (tasklength == 0) return Center(child: Text('No tasks'));
                     return ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
