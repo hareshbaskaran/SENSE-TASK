@@ -16,7 +16,7 @@ Box<dynamic> Hive_box = Hive.box('myBox');
 bool isButtonDisabled = true;
 late User user;
 bool checkbox_value = false;
-Prefsetsignin() async { 
+Prefsetsignin() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setInt('intValue', 1);
 }
@@ -30,7 +30,10 @@ TextEditingController passwordvalue_user = new TextEditingController();
 String username_user = usernamevalue_user.text;
 String password_user = passwordvalue_user.text;
 bool grey = true;
-int adminpage = 0;
+int pageview = 0;
+// pageview = 0 displays the login page
+// pageview = 1 displays the admin view
+// pageview = 2 displays the user view
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -124,7 +127,7 @@ class _loginpageState extends State<loginpage> {
                           image: AssetImage('assets/images/loginpic.png'))),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                (adminpage == 0)
+                (pageview == 0)
                     ? Column(
                         children: [
                           Padding(
@@ -136,7 +139,7 @@ class _loginpageState extends State<loginpage> {
                                     primary: Colors.black),
                                 onPressed: () {
                                   setState(() {
-                                    adminpage = 1;
+                                    pageview = 1;
                                   });
                                 },
                                 child: Padding(
@@ -164,7 +167,7 @@ class _loginpageState extends State<loginpage> {
                                     primary: Colors.black),
                                 onPressed: () {
                                   setState(() {
-                                    adminpage = 2;
+                                    pageview = 2;
                                   });
                                 },
                                 child: Padding(
@@ -185,7 +188,7 @@ class _loginpageState extends State<loginpage> {
                           )
                         ],
                       )
-                    : (adminpage == 1)
+                    : (pageview == 1)
                         ? Column(children: [
                             Row(
                               children: [
@@ -196,7 +199,7 @@ class _loginpageState extends State<loginpage> {
                                   child: TextButton(
                                       onPressed: () {
                                         setState(() {
-                                          adminpage = 0;
+                                          pageview = 0;
                                         });
                                       },
                                       child: Icon(
@@ -396,7 +399,7 @@ class _loginpageState extends State<loginpage> {
                             //       )),
                             // ),],);
                           ])
-                        : (adminpage == 2)
+                        : (pageview == 2)
                             ? Column(children: [
                                 Row(
                                   children: [
@@ -406,7 +409,7 @@ class _loginpageState extends State<loginpage> {
                                       child: TextButton(
                                           onPressed: () {
                                             setState(() {
-                                              adminpage = 0;
+                                              pageview = 0;
                                             });
                                           },
                                           child: Icon(
@@ -637,12 +640,12 @@ class _loginpageState extends State<loginpage> {
         ));
   }
 
-  void _clearall() {
-    username_admin = "";
-    username_user = "";
-    password_admin = "";
-    password_user = "";
-  }
+  // void _clearall() {
+  //   username_admin = "";
+  //   username_user = "";
+  //   password_admin = "";
+  //   password_user = "";
+  // }
 
   Widget _googleSignInButton() {
     return Container(

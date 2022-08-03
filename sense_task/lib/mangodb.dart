@@ -23,40 +23,71 @@ class MongoDbModel {
     admincollection = db.collection(ADMIN_COLLECTION);
   }
 
-  static Future<List<Map<String, dynamic>>> getTask() async {
+  static Future<List<Map<String, dynamic>>> getAllTasks() async {
     final arrtask = await taskcollection.find().toList();
     return arrtask;
   }
 
-  static Future<List<Map<String, dynamic>>> getQuerryTask() async {
+  static Future<List<Map<String, dynamic>>> getAllAssignedTasks() async {
     /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '${usernamevalue_user.text.trim()}').eq('status', 0))//username_user.trim()}
+        .find(where
+            .eq('faculty', '${username_user.trim()}')
+            .eq('status', 0)) //username_user.trim()}
         .toList();
     print(querry_data);
     return querry_data;
   }
 
-  static Future<List<Map<String, dynamic>>> getQuerryTaskStatus() async {
+  static Future<List<Map<String, dynamic>>> getAllAcceptedTasks() async {
+    /* var querry_data = await taskcollection*/
+    final querry_data = await taskcollection
+        .find(where
+            .eq('faculty', '${username_user.trim()}')
+            .eq('status', 1)) //username_user.trim()}
+        .toList();
+    print(querry_data);
+    return querry_data;
+  }
+
+  static Future<List<Map<String, dynamic>>> getAllRejectedTasks() async {
     final querry_data = await taskcollection
         .find(where.eq('faculty', '${username_user.trim()}').eq('status', -1))
-    ///todo:changed querry data for checking
+
+        ///todo:changed querry data for checking
+        .toList();
+    print(querry_data);
+    return querry_data;
+  }
+
+  static Future<List<Map<String, dynamic>>> getAllOverdueTasks() async {
+    /* var querry_data = await taskcollection*/
+    final querry_data = await taskcollection
+        .find(where
+            .eq('faculty', '${username_user.trim()}')
+            .eq('status', 2)) //username_user.trim()}
         .toList();
     print(querry_data);
     return querry_data;
   }
 
   static Future<List<Map<String, dynamic>>> getAdmin() async {
-    var admin_data = await admincollection.find().toList();
-    var AdminLogin = '${admin_data['username']}';
-    if (AdminLogin == username_admin) {
-      isAdminLogin = 1;
-    } else {
-      isAdminLogin = 0;
-    }
-    print(admin_data);
-    print(isAdminLogin);
+    var admin_data = await admincollection
+        .find(where
+            .eq('username', '$username_admin')
+            .eq('password', '$password_admin'))
+        .toArray();
     return admin_data;
+    // var admin_data = await admincollection.find().toList();
+    // var AdminLogin = '${admin_data['username']}';
+    // if (AdminLogin == username_admin) {
+    //   isAdminLogin = 1;
+    // } else {
+    //   isAdminLogin = 0;
+    // }
+    // print(admin_data);
+    // print(isAdminLogin);
+    // return admin_data;
   }
 
   static Future<List<Map<String, dynamic>>> getUser() async {
