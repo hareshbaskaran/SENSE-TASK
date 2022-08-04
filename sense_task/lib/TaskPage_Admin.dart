@@ -245,7 +245,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                                   child: Text('No')),
                                               ElevatedButton(
                                                   onPressed: () async {
-                                                    status = 1;
+                                                      status==1;
                                                     await _updateTask(
                                                         task_data!.id_t,
                                                         task_data.categorydb,
@@ -336,7 +336,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                                             taskreasoncontroller,
                                                         onSubmitted:
                                                             (helo) async {
-                                                          status = -1;
+                                                            status==-1;
                                                           await _updateTask(
                                                               task_data!.id_t,
                                                               task_data
@@ -400,7 +400,33 @@ class _taskpage_aState extends State<taskpage_a> {
         ],
       ),
     ),
-
+            (task_data.statusdb == 0)
+                ? Container(
+              padding: const EdgeInsets.only(right: 20),
+              alignment: Alignment.topRight,
+              child: Icon(
+                Icons.circle_rounded,
+                color: Colors.black,
+              ),
+            )
+                : (task_data.statusdb == 1)?
+            Container(
+              padding: const EdgeInsets.only(right: 20),
+              alignment: Alignment.topRight,
+              child: Icon(
+                Icons.circle_rounded,
+                color: Colors.green,
+              ),
+            ):(task_data.statusdb == -1)?
+            Container(
+              padding: const EdgeInsets.only(right: 20),
+              alignment: Alignment.topRight,
+              child: Icon(
+                Icons.circle_rounded,
+                color: Colors.red,
+              ),
+            ):
+                SizedBox()
   ]
         )
     );

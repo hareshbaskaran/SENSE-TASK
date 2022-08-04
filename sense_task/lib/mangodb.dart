@@ -39,7 +39,7 @@ class MongoDbModel {
 
   static Future<List<Map<String, dynamic>>> getQuerryTaskStatus() async {
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '${username_user.trim()}').eq('status', 1))
+        .find(where/*.eq('faculty', '${username_user.trim()}')*/.eq('status', -1))
         .toList();
     print(querry_data);
     return querry_data;

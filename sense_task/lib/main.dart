@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/AssignTask_Admin.dart';
@@ -7,6 +8,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'mangodb.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+final tabsList = ['All Tasks', 'Assigned', 'Accepted', 'Rejected', 'Overdue'];
 
 class SizeConfig {
   static MediaQueryData _mediaQueryData = const MediaQueryData();
@@ -58,19 +61,74 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-         home: (already_sign_in)?TabsScreen():
-  loginpage(Hive_box));
+        home:  /*(already_sign_in)?TabsScreen():*/
+            loginpage(Hive_box));
   }
 }
 
+class TabsScreen extends StatefulWidget {
+  @override
+  State<TabsScreen> createState() => _TabsScreenState();
+}
 
-class TabsScreen extends StatelessWidget {
-  const TabsScreen({Key? key}) : super(key: key);
+class _TabsScreenState extends State<TabsScreen> {
+  int tabView = 1;
 
   @override
   Widget build(BuildContext context) {
+    print('Just entered : $tabView');
+    // return Scaffold(
+    //     appBar: PreferredSize(
+    //       preferredSize: Size.fromHeight(65.0),
+    //       child: AppBar(
+    //         elevation: 0.3,
+    //         automaticallyImplyLeading: false,
+    //         backgroundColor: Colors.white,
+    //         bottom: PreferredSize(
+    //           preferredSize: Size.fromHeight(65),
+    //           child: Padding(
+    //             padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+    //             child: CarouselSlider(
+    //               options: CarouselOptions(
+    //                 height: 50,
+    //                 viewportFraction: 0.4,
+    //                 enlargeCenterPage: true,
+    //               ),
+    //               items: tabsList
+    //                   .map(
+    //                     (item) => ElevatedButton(
+    //                       style: ButtonStyle(
+    //                           elevation: MaterialStateProperty.all(3),
+    //                           backgroundColor:
+    //                               MaterialStateProperty.all(Colors.black),
+    //                           shape: MaterialStateProperty.all<
+    //                                   RoundedRectangleBorder>(
+    //                               RoundedRectangleBorder(
+    //                             borderRadius: BorderRadius.circular(18.0),
+    //                           ))),
+    //                       onPressed: () {
+    //                         tabView = tabsList.indexOf(item) + 1;
+    //                         print(tabView);
+    //                         setState(() {});
+    //                       },
+    //                       child: Container(
+    //                         width: MediaQuery.of(context).size.width * 0.4,
+    //                         child: Text('$item', textAlign: TextAlign.center),
+    //                       ),
+    //                     ),
+    //                   )
+    //                   .toList(),
+    //             ),
+    //           ),
+    //         ),
+    //       ),
+    //     ),
+    //     body: (taskpage_a(
+    //       tabView: tabView,
+    //     )));
+
     return DefaultTabController(
-      length: 2,
+      length:2,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
@@ -78,17 +136,23 @@ class TabsScreen extends StatelessWidget {
             automaticallyImplyLeading: false,
             centerTitle: false,
             backgroundColor: Colors.black,
-            bottom: const TabBar(
+            bottom: TabBar(
               indicatorColor: Colors.white,
-              tabs: [Tab(text: 'Tasks'), Tab(text: 'Staff')],
+              tabs: [
+                Tab(text: 'All Tasks'),
+                Tab(text: 'Completed Tasks'),
+              ],
             ),
           ),
         ),
         body: TabBarView(
-          children: [taskpage_a(), staffpage_a()],
+          children: [
+            taskpage_a(
+            ),
+            staffpage_a()
+          ],
         ),
       ),
     );
   }
 }
-
