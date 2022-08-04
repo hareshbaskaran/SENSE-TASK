@@ -19,7 +19,7 @@ class _staffpage_aState extends State<staffpage_a> {
         body: SafeArea(
           child: FutureBuilder(
               future:
-              (adminpage==1)?
+              (pageview==1)?
               MongoDbModel.getAdmin():
               MongoDbModel.getQuerryTask(),
               builder: (context,AsyncSnapshot snapshot){
@@ -30,13 +30,13 @@ class _staffpage_aState extends State<staffpage_a> {
                   );}
                 else {
                   if(snapshot.hasData){
-                    (adminpage==1)?
+                    (pageview==1)?
                     AdminQuerryLength=snapshot.data.length:
                     UserQuerryLength=snapshot.data.length;
                     print(AdminQuerryLength);///todo: this is where querry check happen if task length = 0
                     print('Task has Data');
                     return
-                      (adminpage==1)?
+                      (pageview==1)?
                       ListView.builder(
                         reverse: true,
                         scrollDirection: Axis.vertical,

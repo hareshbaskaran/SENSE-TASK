@@ -25,7 +25,7 @@ class _taskpage_aState extends State<taskpage_a> {
     return Scaffold(
         body: SafeArea(
           child: FutureBuilder(
-              future: (adminpage == 1)
+              future: (pageview == 1)
                   ? MongoDbModel.getTask()
                   : MongoDbModel.getQuerryTask(),
               builder: (context, AsyncSnapshot snapshot) {
@@ -82,7 +82,7 @@ class _taskpage_aState extends State<taskpage_a> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 standardtext(text: "${task_data.categorydb}"),
-                (adminpage == 1)
+                (pageview == 1)
                     ? Column(
                         children: [
                           standardtext(text: "${task_data.reasondb}"),
@@ -123,7 +123,7 @@ class _taskpage_aState extends State<taskpage_a> {
                 ],
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-              (adminpage == 1)
+              (pageview == 1)
                   ? Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -511,7 +511,7 @@ class smalltext extends StatelessWidget {
 }
 
 Widget _floating(BuildContext context) {
-  if (adminpage == 1) {
+  if (pageview == 1) {
     return FloatingActionButton(
       backgroundColor: Colors.black,
       onPressed: () {
