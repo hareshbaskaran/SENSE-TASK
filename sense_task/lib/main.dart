@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/AssignTask_Admin.dart';
-import 'package:sense_task/StaffPage_Admin.dart';
+import 'package:sense_task/Filterpage.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'mangodb.dart';
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home:  /*(already_sign_in)?TabsScreen():*/
+        home: /*(already_sign_in)?TabsScreen():*/
             loginpage(Hive_box));
   }
 }
@@ -128,7 +128,7 @@ class _TabsScreenState extends State<TabsScreen> {
     //     )));
 
     return DefaultTabController(
-      length:2,
+      length: 2,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
@@ -146,11 +146,7 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
         ),
         body: TabBarView(
-          children: [
-            taskpage_a(
-            ),
-            staffpage_a()
-          ],
+          children: [taskpage_a(), filtertasks()],
         ),
       ),
     );

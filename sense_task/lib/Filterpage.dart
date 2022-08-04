@@ -1,80 +1,217 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:sense_task/TaskMango.dart';
-import 'package:sense_task/mangodb.dart';
-import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
-import 'mangodb.dart';
+import 'AdminMongo.dart';
+import 'AssignTask_Admin.dart';
 import 'LoginPage.dart';
+import 'TaskMango.dart';
+import 'TaskPage_Admin.dart';
+import 'UserMango.dart';
+import 'mangodb.dart';
 
-var statuslist = [
-  [
-    1,
-    ['Accepted', Colors.green]
-  ],
-  [
-    -1,
-    ['Rejected', Colors.red]
-  ],
-  [
-    0,
-    ['Assigned', Colors.yellow]
-  ],
-  [
-    2,
-    ['Overdue', Colors.black]
-  ]
-];
-int isEdit = 0;
-TextEditingController taskreasoncontroller = new TextEditingController();
+bool isfacultyChecked = false;
+bool isdateChecked = false;
+bool iscategoryChecked = false;
+bool istaskChecked = false;
 
-class taskpage_a extends StatefulWidget {
+String filterfaculty = '';
+
+class filtertasks extends StatefulWidget {
   bool grey = true;
 
   @override
-  State<taskpage_a> createState() => _taskpage_aState();
+  State<filtertasks> createState() => _filtertasksState();
 }
 
-class _taskpage_aState extends State<taskpage_a> {
+class _filtertasksState extends State<filtertasks> {
   @override
+  bool _value = false;
+  int selectedIndex = 0;
+
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SafeArea(
-          child: FutureBuilder(
-              future: (pageview == 1)
-                  ? MongoDbModel.getTask()
-                  : MongoDbModel.getQuerryTask(),
-              builder: (context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  print('connection waiting');
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  if (snapshot.hasData) {
-                    var tasklength = snapshot.data.length;
-                    //print(tasklength);///todo: this is where querry check happen if task length = 0
-                    print('Task has Data');
-                    return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: tasklength,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Center(
-                              child: TaskCard(TaskMongo.fromJson(
-                                  snapshot.data[tasklength - index - 1])));
-                        });
-                  } else {
+      body: SafeArea(
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Text('Filter by'),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: isfacultyChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isfacultyChecked = value!;
+                            });
+                          },
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              (isfacultyChecked == true)
+                                  ? showDialog(
+                                      context: context,
+                                      builder: (_) => Container(
+                                            height: 200,
+                                            child: Column(
+                                              children: [
+                                                ListView.builder(
+                                                    physics:
+                                                        NeverScrollableScrollPhysics(),
+                                                    shrinkWrap: true,
+                                                    itemCount:
+                                                        facultylist.length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int index) {
+                                                      return ListTile(
+                                                          title: Text(
+                                                              facultylist[
+                                                                  index]),
+                                                          tileColor:
+                                                              selectedIndex ==
+                                                                      index
+                                                                  ? Colors.blue
+                                                                  : null,
+                                                          onTap: () {
+                                                            setState(() {
+                                                              selectedIndex =
+                                                                  index;
+                                                            });
+                                                          });
+                                                    }),
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      filterfaculty =
+                                                          facultylist[
+                                                              selectedIndex];
+                                                      Navigator.pop(context);
+                                                    },
+                                                    child: Text('Done'))
+                                              ],
+                                            ),
+                                          ))
+                                  : null;
+                            },
+                            child: Text('Choose Faculty')),
+                        Checkbox(
+                          value: isdateChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isdateChecked = value!;
+                            });
+                          },
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              (isdateChecked == true)
+                                  ? showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                          title: Text('Date'),
+                                          alignment: Alignment.topLeft,
+                                          actions: []),
+                                      barrierDismissible: false)
+                                  : null;
+                            },
+                            child: Text('Choose Date'))
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Checkbox(
+                          value: iscategoryChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              iscategoryChecked = value!;
+                            });
+                          },
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              (iscategoryChecked == true)
+                                  ? showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                          title: Text('Category'),
+                                          alignment: Alignment.topLeft,
+                                          actions: []),
+                                      barrierDismissible: false)
+                                  : null;
+                            },
+                            child: Text('Choose Category')),
+                        Checkbox(
+                          value: istaskChecked,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              istaskChecked = value!;
+                            });
+                          },
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              (istaskChecked == true)
+                                  ? showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                          title: Text('Task Status'),
+                                          alignment: Alignment.topLeft,
+                                          actions: []),
+                                      barrierDismissible: false)
+                                  : null;
+                            },
+                            child: Text('Choose Task Status'))
+                      ],
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          if (isfacultyChecked == true)
+                            filterquery["faculty"] = filterfaculty;
+                        },
+                        child: Text('Filter'))
+                  ],
+                ),
+              ),
+            ),
+            FutureBuilder(
+                future: MongoDbModel.getQuerryTaskStatus(),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    print('connection waiting');
                     return Center(
-                      child: Text('NO data Available'),
+                      child: CircularProgressIndicator(),
                     );
+                  } else {
+                    if (snapshot.hasData) {
+                      var Statuslength = snapshot.data.length;
+
+                      ///todo: this is where querry check happen if task length = 0
+                      print('Task has Data');
+                      return ListView.builder(
+                          reverse: true,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: Statuslength,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Center(
+                                child: TaskCard(
+                                    TaskMongo.fromJson(snapshot.data[index])));
+                          });
+                    } else {
+                      return Center(
+                        child: Text('NO data Available'),
+                      );
+                    }
                   }
-                }
-              }),
+                }),
+          ],
         ),
-        floatingActionButton: _floating(context));
+      ),
+    );
   }
 
   Widget TaskCard(TaskMongo task_data) {
@@ -505,48 +642,47 @@ class _taskpage_aState extends State<taskpage_a> {
                     )
     ]));
   }
+}
 
-  Future<void> _updateTask(
-      var id,
-      String category_update,
-      String title_update,
-      String description_update,
-      String startdate_update,
-      String enddate_update,
-      String duedate_update,
-      String duetime_update,
-      String faculty_update,
-      int status_update,
-      String reason_update) async {
-    final updatetask = TaskMongo(
-        id_t: id,
-        categorydb: category_update,
-        titledb: title_update,
-        descriptiondb: description_update,
-        startdatedb: startdate_update,
-        enddatedb: enddate_update,
-        duedatedb: duedate_update,
-        duetimedb: duetime_update,
-        facultydb: faculty_update,
-        statusdb: status_update,
-        reasondb: reason_update);
-    print('in update task function');
-    print(categoryvalue);
-    print(tasktitlecontroller.text);
+Future<void> _updateTask(
+    var id,
+    String category_update,
+    String title_update,
+    String description_update,
+    String startdate_update,
+    String enddate_update,
+    String duedate_update,
+    String duetime_update,
+    String faculty_update,
+    int status_update,
+    String reason_update) async {
+  final updatetask = TaskMongo(
+      id_t: id,
+      categorydb: category_update,
+      titledb: title_update,
+      descriptiondb: description_update,
+      startdatedb: startdate_update,
+      enddatedb: enddate_update,
+      duedatedb: duedate_update,
+      duetimedb: duetime_update,
+      facultydb: faculty_update,
+      statusdb: status_update,
+      reasondb: reason_update);
+  print('in update task function');
+  print(categoryvalue);
+  print(tasktitlecontroller.text);
 
-    print(taskdescriptioncontroller.text);
-    print(startDate);
-    print(startDateInString);
-    print(endDate);
-    print(endDateInString);
-    print(dueDate);
-    print(dueDateInString);
-    print(duetime);
-    print(facultyvalue);
-    await MongoDbModel.update_task(updatetask).whenComplete(
-      () => Navigator.pop(context),
-    );
-  }
+  print(taskdescriptioncontroller.text);
+  print(startDate);
+  print(startDateInString);
+  print(endDate);
+  print(endDateInString);
+  print(dueDate);
+  print(dueDateInString);
+  print(duetime);
+  print(facultyvalue);
+  BuildContext context;
+  await MongoDbModel.update_task(updatetask);
 }
 
 class largetext extends StatelessWidget {

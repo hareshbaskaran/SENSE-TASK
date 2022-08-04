@@ -1,7 +1,7 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:sense_task/AdminMongo.dart';
 import 'package:sense_task/LoginPage.dart';
-import 'package:sense_task/StaffPage_Admin.dart';
+import 'package:sense_task/Filterpage.dart';
 import 'package:sense_task/TaskMango.dart';
 import 'package:sense_task/UserMango.dart';
 import 'dart:developer';
@@ -9,6 +9,7 @@ import 'constant.dart';
 import 'AssignTask_Admin.dart';
 
 var isAdminLogin;
+var filterquery = {};
 
 class MongoDbModel {
   static var db, usercollection, taskcollection, admincollection;
@@ -31,16 +32,16 @@ class MongoDbModel {
   static Future<List<Map<String, dynamic>>> getQuerryTask() async {
     /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '${usernamevalue_user.text.trim()}').eq('status', 0))//username_user.trim()}
+        .find(where
+            .eq('faculty', '${usernamevalue_user.text.trim()}')
+            .eq('status', 0)) //username_user.trim()}
         .toList();
     print(querry_data);
     return querry_data;
   }
 
   static Future<List<Map<String, dynamic>>> getQuerryTaskStatus() async {
-    final querry_data = await taskcollection
-        .find(where/*.eq('faculty', '${username_user.trim()}')*/.eq('status', -1))
-        .toList();
+    final querry_data = await taskcollection.find(filterquery).toList();
     print(querry_data);
     return querry_data;
   }
