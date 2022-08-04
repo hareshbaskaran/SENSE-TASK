@@ -33,24 +33,12 @@ class _taskpage_aState extends State<taskpage_a> {
           onRefresh: () async {
             await Future.delayed(Duration(seconds: 1));
             (widget.tabView == 1)
-                ? await MongoDbModel.getAllTasks()
-                : (widget.tabView == 2)
-                    ? await MongoDbModel.getAllAssignedTasks()
-                    : (widget.tabView == 3)
-                        ? await MongoDbModel.getAllAcceptedTasks()
-                        : (widget.tabView == 4)
-                            ? await MongoDbModel.getAllRejectedTasks()
+                ? await MongoDbModel.getAllAssignedTasks()
                             : await MongoDbModel.getAllOverdueTasks();
           },
           child: FutureBuilder(
               future: (widget.tabView == 1)
-                  ? MongoDbModel.getAllTasks()
-                  : (widget.tabView == 2)
-                      ? MongoDbModel.getAllAssignedTasks()
-                      : (widget.tabView == 3)
-                          ? MongoDbModel.getAllAcceptedTasks()
-                          : (widget.tabView == 4)
-                              ? MongoDbModel.getAllRejectedTasks()
+                  ? MongoDbModel.getAllAssignedTasks()
                               : MongoDbModel.getAllOverdueTasks(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {

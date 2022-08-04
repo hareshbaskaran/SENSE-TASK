@@ -9,7 +9,6 @@ import 'Models/constant.dart';
 import 'AssignTask_Admin.dart';
 
 var isAdminLogin;
-
 class MongoDbModel {
   static var db, usercollection, taskcollection, admincollection;
   static connect() async {
@@ -29,10 +28,9 @@ class MongoDbModel {
   }
 
   static Future<List<Map<String, dynamic>>> getAllAssignedTasks() async {
-    /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
         .find(where
-            .eq('faculty', '${usernamevalue_user.text.trim()}')
+            .eq('faculty', '${usernamevalue_user.text}')
             .eq('status', 0)) //username_user.trim()}
         .toList();
     print(querry_data);
@@ -40,34 +38,32 @@ class MongoDbModel {
   }
 
   static Future<List<Map<String, dynamic>>> getAllAcceptedTasks() async {
-    /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
         .find(where
-            .eq('faculty', '${usernamevalue_user.text.trim()}')
-            .eq('status', 1)) //username_user.trim()}
+            .eq('faculty', '${usernamevalue_user.text}')
+            .eq('status', 1)
+    )
         .toList();
     print(querry_data);
     return querry_data;
   }
 
-  static Future<List<Map<String, dynamic>>> getAllRejectedTasks() async {
+/*  static Future<List<Map<String, dynamic>>> getAllRejectedTasks() async {
     final querry_data = await taskcollection
         .find(where
             .eq('faculty', '${usernamevalue_user.text.trim()}')
             .eq('status', -1))
-
-        ///todo:changed querry data for checking
         .toList();
     print(querry_data);
     return querry_data;
-  }
+  }*/
 
   static Future<List<Map<String, dynamic>>> getAllOverdueTasks() async {
     /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
         .find(where
             .eq('faculty', '${usernamevalue_user.text.trim()}')
-            .eq('status', 2)) //username_user.trim()}
+            .eq('status', 2))
         .toList();
     print(querry_data);
     return querry_data;

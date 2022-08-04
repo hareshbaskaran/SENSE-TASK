@@ -22,7 +22,7 @@ class _staffpage_aState extends State<staffpage_a> {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
-            future: MongoDbModel.getAllRejectedTasks(),
+            future: MongoDbModel.getAllAcceptedTasks(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 print('connection waiting');
