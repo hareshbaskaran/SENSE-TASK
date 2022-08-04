@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home: /* (already_sign_in)?TabsScreen():*/
+        home:  /*(already_sign_in)?TabsScreen():*/
             loginpage(Hive_box));
   }
 }
@@ -77,95 +77,82 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     print('Just entered : $tabView');
-    return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(65.0),
-          child: AppBar(
-            elevation: 0.3,
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(65),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    height: 50,
-                    viewportFraction: 0.4,
-                    enlargeCenterPage: true,
-                  ),
-                  items: tabsList
-                      .map(
-                        (item) => ElevatedButton(
-                          style: ButtonStyle(
-                              elevation: MaterialStateProperty.all(3),
-                              backgroundColor:
-                                  MaterialStateProperty.all(Colors.black),
-                              shape: MaterialStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                              ))),
-                          onPressed: () {
-                            tabView = tabsList.indexOf(item) + 1;
-                            print(tabView);
-                            setState(() {});
-                          },
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.4,
-                            child: Text('$item', textAlign: TextAlign.center),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ),
-          ),
-        ),
-        body: (taskpage_a(
-          tabView: tabView,
-        )));
-
-    // return DefaultTabController(
-    //   length: 5,
-    //   child: Scaffold(
+    // return Scaffold(
     //     appBar: PreferredSize(
-    //       preferredSize: Size.fromHeight(60.0),
+    //       preferredSize: Size.fromHeight(65.0),
     //       child: AppBar(
+    //         elevation: 0.3,
     //         automaticallyImplyLeading: false,
-    //         centerTitle: false,
-    //         backgroundColor: Colors.black,
-    //         bottom: TabBar(
-    //           indicatorColor: Colors.white,
-    //           tabs: [
-    //             Tab(text: 'All Tasks'),
-    //             Tab(text: 'Assigned Tasks'),
-    //             Tab(text: 'Completed Tasks'),
-    //             Tab(text: 'Rejected Tasks'),
-    //             Tab(text: 'Overdue Tasks')
-    //           ],
+    //         backgroundColor: Colors.white,
+    //         bottom: PreferredSize(
+    //           preferredSize: Size.fromHeight(65),
+    //           child: Padding(
+    //             padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+    //             child: CarouselSlider(
+    //               options: CarouselOptions(
+    //                 height: 50,
+    //                 viewportFraction: 0.4,
+    //                 enlargeCenterPage: true,
+    //               ),
+    //               items: tabsList
+    //                   .map(
+    //                     (item) => ElevatedButton(
+    //                       style: ButtonStyle(
+    //                           elevation: MaterialStateProperty.all(3),
+    //                           backgroundColor:
+    //                               MaterialStateProperty.all(Colors.black),
+    //                           shape: MaterialStateProperty.all<
+    //                                   RoundedRectangleBorder>(
+    //                               RoundedRectangleBorder(
+    //                             borderRadius: BorderRadius.circular(18.0),
+    //                           ))),
+    //                       onPressed: () {
+    //                         tabView = tabsList.indexOf(item) + 1;
+    //                         print(tabView);
+    //                         setState(() {});
+    //                       },
+    //                       child: Container(
+    //                         width: MediaQuery.of(context).size.width * 0.4,
+    //                         child: Text('$item', textAlign: TextAlign.center),
+    //                       ),
+    //                     ),
+    //                   )
+    //                   .toList(),
+    //             ),
+    //           ),
     //         ),
     //       ),
     //     ),
-    //     body: TabBarView(
-    //       children: [
-    //         taskpage_a(
-    //           tabView: 1,
-    //         ),
-    //         taskpage_a(
-    //           tabView: 2,
-    //         ),
-    //         taskpage_a(
-    //           tabView: 3,
-    //         ),
-    //         taskpage_a(
-    //           tabView: 4,
-    //         ),
-    //         taskpage_a(tabView: 5),
-    //       ],
-    //     ),
-    //   ),
-    // );
+    //     body: (taskpage_a(
+    //       tabView: tabView,
+    //     )));
+
+    return DefaultTabController(
+      length:2,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(60.0),
+          child: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: false,
+            backgroundColor: Colors.black,
+            bottom: TabBar(
+              indicatorColor: Colors.white,
+              tabs: [
+                Tab(text: 'All Tasks'),
+                Tab(text: 'Completed Tasks'),
+              ],
+            ),
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            taskpage_a(
+            ),
+            staffpage_a()
+          ],
+        ),
+      ),
+    );
   }
 }
