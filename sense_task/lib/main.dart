@@ -77,56 +77,6 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     print('Just entered : $tabView');
-    // return Scaffold(
-    //     appBar: PreferredSize(
-    //       preferredSize: Size.fromHeight(65.0),
-    //       child: AppBar(
-    //         elevation: 0.3,
-    //         automaticallyImplyLeading: false,
-    //         backgroundColor: Colors.white,
-    //         bottom: PreferredSize(
-    //           preferredSize: Size.fromHeight(65),
-    //           child: Padding(
-    //             padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-    //             child: CarouselSlider(
-    //               options: CarouselOptions(
-    //                 height: 50,
-    //                 viewportFraction: 0.4,
-    //                 enlargeCenterPage: true,
-    //               ),
-    //               items: tabsList
-    //                   .map(
-    //                     (item) => ElevatedButton(
-    //                       style: ButtonStyle(
-    //                           elevation: MaterialStateProperty.all(3),
-    //                           backgroundColor:
-    //                               MaterialStateProperty.all(Colors.black),
-    //                           shape: MaterialStateProperty.all<
-    //                                   RoundedRectangleBorder>(
-    //                               RoundedRectangleBorder(
-    //                             borderRadius: BorderRadius.circular(18.0),
-    //                           ))),
-    //                       onPressed: () {
-    //                         tabView = tabsList.indexOf(item) + 1;
-    //                         print(tabView);
-    //                         setState(() {});
-    //                       },
-    //                       child: Container(
-    //                         width: MediaQuery.of(context).size.width * 0.4,
-    //                         child: Text('$item', textAlign: TextAlign.center),
-    //                       ),
-    //                     ),
-    //                   )
-    //                   .toList(),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //     body: (taskpage_a(
-    //       tabView: tabView,
-    //     )));
-
     return DefaultTabController(
       length:2,
       child: Scaffold(

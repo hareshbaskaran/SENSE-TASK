@@ -97,8 +97,11 @@ class _staffpage_aState extends State<staffpage_a> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    standardtext(text: 'Due Date: ${task_data.duedatedb}'),
-                    standardtext(text: 'Due Time: ${task_data.duetimedb}'),
+                    Text('${task_data.duedatedb} , ${task_data.duetimedb}',
+                style: GoogleFonts.poppins(
+                color: Colors.red,
+                fontSize: MediaQuery.of(context).size.width * 0.03),
+                    ),
                   ],
                 ),
               ),
@@ -114,7 +117,6 @@ class _staffpage_aState extends State<staffpage_a> {
                         text: 'Reason : \n '
                             '${task_data.reasondb}') :
                             SizedBox(),
-
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,

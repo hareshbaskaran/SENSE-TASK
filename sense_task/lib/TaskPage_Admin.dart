@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sense_task/TaskMango.dart';
+import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
 import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
@@ -76,7 +77,7 @@ class _taskpage_aState extends State<taskpage_a> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            largetext(text: "${task_data.titledb} "),
+            largetext(text: "${task_data.titledb}"),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,8 +102,11 @@ class _taskpage_aState extends State<taskpage_a> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              standardtext(text: 'Due Date: ${task_data.duedatedb}'),
-              standardtext(text: 'Due Time: ${task_data.duetimedb}'),
+              Text('${task_data.duedatedb}  ,   ${task_data.duetimedb}',
+                style: GoogleFonts.poppins(
+                    color: Colors.red,
+                    fontSize: MediaQuery.of(context).size.width * 0.03),
+              ),
             ],
           ),
         ),
@@ -241,7 +245,10 @@ class _taskpage_aState extends State<taskpage_a> {
                                                 'Do you wish to Accept the Task ?'),
                                             actions: [
                                               ElevatedButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                        context, MaterialPageRoute(builder: (context) => TabsScreen()));
+                                                  },
                                                   child: Text('No')),
                                               ElevatedButton(
                                                   onPressed: () async {
@@ -259,6 +266,8 @@ class _taskpage_aState extends State<taskpage_a> {
                                                         status,
                                                         taskreasoncontroller
                                                             .text);
+                                                      Navigator.push(
+                                                          context, MaterialPageRoute(builder: (context) => TabsScreen()));
                                                   },
                                                   child: Text("Yes"))
                                             ]),
@@ -404,27 +413,49 @@ class _taskpage_aState extends State<taskpage_a> {
                 ? Container(
               padding: const EdgeInsets.only(right: 20),
               alignment: Alignment.topRight,
-              child: Icon(
-                Icons.circle_rounded,
-                color: Colors.black,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.circle_rounded,
+                    color: Colors.black,
+                    size: 18,
+                  ),
+                  Text('Assigned',
+                    style: GoogleFonts.poppins(
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.03),
+                  ),
+                ],
               ),
             )
                 : (task_data.statusdb == 1)?
-            Container(
-              padding: const EdgeInsets.only(right: 20),
-              alignment: Alignment.topRight,
-              child: Icon(
-                Icons.circle_rounded,
-                color: Colors.green,
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.circle_rounded,
+                  color: Colors.black,
+                ),
+                Text('Compeleted',
+                  style: GoogleFonts.poppins(
+                      color: Colors.green,
+                      fontSize: MediaQuery.of(context).size.width * 0.03),
+                ),
+              ],
             ):(task_data.statusdb == -1)?
-            Container(
-              padding: const EdgeInsets.only(right: 20),
-              alignment: Alignment.topRight,
-              child: Icon(
-                Icons.circle_rounded,
-                color: Colors.red,
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.circle_rounded,
+                  color: Colors.black,
+                ),
+                Text('Rejected',
+                  style: GoogleFonts.poppins(
+                      color: Colors.red,
+                      fontSize: MediaQuery.of(context).size.width * 0.03),
+                ),
+              ],
             ):
                 SizedBox()
   ]

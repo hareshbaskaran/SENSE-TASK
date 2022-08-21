@@ -36,10 +36,10 @@ class MongoDbModel {
     print(querry_data);
     return querry_data;
   }
-
+///todo:querry changes to be done
   static Future<List<Map<String, dynamic>>> getQuerryTaskStatus() async {
     final querry_data = await taskcollection
-        .find(where/*.eq('faculty', '${username_user.trim()}')*/.eq('status', -1))
+        .find(where.eq('faculty', '${username_user.trim()}').eq('status', -1 ))
         .toList();
     print(querry_data);
     return querry_data;
@@ -55,6 +55,7 @@ class MongoDbModel {
     }
     print(admin_data);
     print(isAdminLogin);
+    print(admin_data);
     return admin_data;
   }
 
@@ -103,7 +104,6 @@ class MongoDbModel {
       print(e.toString());
       return e.toString();
 
-      ///this method to resolve null issue and return the data to string
     }
   }
 
@@ -121,7 +121,6 @@ class MongoDbModel {
       print(e.toString());
       return e.toString();
 
-      ///this method to resolve null issue and return the data to string
     }
   }
 
@@ -139,7 +138,6 @@ class MongoDbModel {
       print(e.toString());
       return e.toString();
 
-      ///this method to resolve null issue and return the data to string
     }
   }
 }
