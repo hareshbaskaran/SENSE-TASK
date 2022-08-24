@@ -29,7 +29,6 @@ class MongoDbModel {
   }
 
   static Future<List<Map<String, dynamic>>> getQuerryTask() async {
-    /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
         .find(where.eq('faculty', '${usernamevalue_user.text.trim()}').eq('status', 0))//username_user.trim()}
         .toList();
@@ -59,11 +58,11 @@ class MongoDbModel {
     return admin_data;
   }
 
-  static Future<List<Map<String, dynamic>>> getUser() async {
+ static Future<List<Map<String, dynamic>>> getUser() async {
     var user_data = await usercollection
         .find(where
             .eq('username', '$username_user')
-            .eq('password', '$password_user'))
+    )
         .toList();
     return user_data;
   }
@@ -133,7 +132,6 @@ class MongoDbModel {
       } else {
         return "Something wrong while inserting data";
       }
-      return result;
     } catch (e) {
       print(e.toString());
       return e.toString();
