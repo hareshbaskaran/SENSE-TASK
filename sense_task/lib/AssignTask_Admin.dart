@@ -720,7 +720,12 @@ class _taskassign_aState extends State<taskassign_a> {
             ),
           ),
         ),
-        floatingActionButton: (isEdit == 1)
+        floatingActionButton: (isEdit == 1 &&
+            tasktitlecontroller.text.length>0 &&
+            taskdescriptioncontroller.text.length>0 &&
+            startDateInString.length>0 &&
+            dueDateInString.length>0
+        )
             ? Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Expanded(
@@ -730,19 +735,6 @@ class _taskassign_aState extends State<taskassign_a> {
                           shape: StadiumBorder(),
                           primary: Colors.black),
                       onPressed: () async {
-                        print('before updating in db');
-                        print(categoryvalue);
-                        print(tasktitlecontroller.text);
-
-                        print(taskdescriptioncontroller.text);
-                        print(startDate);
-                        print(startDateInString);
-                        print(endDate);
-                        print(endDateInString);
-                        print(dueDate);
-                        print(dueDateInString);
-                        print(duetime);
-                        print(facultyvalue);
                         await _updateTask(
                             task_data!.id_t,
                             categoryvalue,
@@ -780,7 +772,12 @@ class _taskassign_aState extends State<taskassign_a> {
                       )),
                 ),
               )
-            : Padding(
+            :(tasktitlecontroller.text.length>0 &&
+            taskdescriptioncontroller.text.length>0 &&
+            startDateInString.length>0 &&
+            dueDateInString.length>0
+        ) ?
+         Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Expanded(
                     child: ElevatedButton(
@@ -821,7 +818,8 @@ class _taskassign_aState extends State<taskassign_a> {
                                 fontSize:
                                     MediaQuery.of(context).size.height * 0.02),
                           ),
-                        )))));
+                            ))))
+                : SizedBox());
   }
 
   void _clearassignpage() {

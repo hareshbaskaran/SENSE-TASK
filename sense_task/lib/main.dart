@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/AssignTask_Admin.dart';
-import 'package:sense_task/Filterpage.dart';
+import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'mangodb.dart';
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home: /*(already_sign_in)?TabsScreen():*/
+        home: /* (already_sign_in)?TabsScreen():*/
             loginpage(Hive_box));
   }
 }
@@ -77,58 +77,8 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     print('Just entered : $tabView');
-    // return Scaffold(
-    //     appBar: PreferredSize(
-    //       preferredSize: Size.fromHeight(65.0),
-    //       child: AppBar(
-    //         elevation: 0.3,
-    //         automaticallyImplyLeading: false,
-    //         backgroundColor: Colors.white,
-    //         bottom: PreferredSize(
-    //           preferredSize: Size.fromHeight(65),
-    //           child: Padding(
-    //             padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-    //             child: CarouselSlider(
-    //               options: CarouselOptions(
-    //                 height: 50,
-    //                 viewportFraction: 0.4,
-    //                 enlargeCenterPage: true,
-    //               ),
-    //               items: tabsList
-    //                   .map(
-    //                     (item) => ElevatedButton(
-    //                       style: ButtonStyle(
-    //                           elevation: MaterialStateProperty.all(3),
-    //                           backgroundColor:
-    //                               MaterialStateProperty.all(Colors.black),
-    //                           shape: MaterialStateProperty.all<
-    //                                   RoundedRectangleBorder>(
-    //                               RoundedRectangleBorder(
-    //                             borderRadius: BorderRadius.circular(18.0),
-    //                           ))),
-    //                       onPressed: () {
-    //                         tabView = tabsList.indexOf(item) + 1;
-    //                         print(tabView);
-    //                         setState(() {});
-    //                       },
-    //                       child: Container(
-    //                         width: MediaQuery.of(context).size.width * 0.4,
-    //                         child: Text('$item', textAlign: TextAlign.center),
-    //                       ),
-    //                     ),
-    //                   )
-    //                   .toList(),
-    //             ),
-    //           ),
-    //         ),
-    //       ),
-    //     ),
-    //     body: (taskpage_a(
-    //       tabView: tabView,
-    //     )));
-
     return DefaultTabController(
-      length: 2,
+      length:2,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
@@ -146,7 +96,11 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
         ),
         body: TabBarView(
-          children: [taskpage_a(), filtertasks()],
+          children: [
+            taskpage_a(
+            ),
+            staffpage_a()
+          ],
         ),
       ),
     );

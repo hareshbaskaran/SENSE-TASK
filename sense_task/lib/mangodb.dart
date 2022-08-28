@@ -1,7 +1,7 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:sense_task/AdminMongo.dart';
 import 'package:sense_task/LoginPage.dart';
-import 'package:sense_task/Filterpage.dart';
+import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskMango.dart';
 import 'package:sense_task/UserMango.dart';
 import 'dart:developer';
@@ -9,7 +9,6 @@ import 'constant.dart';
 import 'AssignTask_Admin.dart';
 
 var isAdminLogin;
-var filterquery = {};
 
 class MongoDbModel {
   static var db, usercollection, taskcollection, admincollection;
@@ -30,18 +29,17 @@ class MongoDbModel {
   }
 
   static Future<List<Map<String, dynamic>>> getQuerryTask() async {
-    /* var querry_data = await taskcollection*/
     final querry_data = await taskcollection
-        .find(where
-            .eq('faculty', '${usernamevalue_user.text.trim()}')
-            .eq('status', 0)) //username_user.trim()}
+        .find(where.eq('faculty', '${usernamevalue_user.text.trim()}').eq('status', 0))//username_user.trim()}
         .toList();
     print(querry_data);
     return querry_data;
   }
-
+///todo:querry changes to be done
   static Future<List<Map<String, dynamic>>> getQuerryTaskStatus() async {
-    final querry_data = await taskcollection.find(filterquery).toList();
+    final querry_data = await taskcollection
+        .find(where.eq('faculty', '${username_user.trim()}').eq('status', -1 ))
+        .toList();
     print(querry_data);
     return querry_data;
   }
@@ -56,14 +54,15 @@ class MongoDbModel {
     }
     print(admin_data);
     print(isAdminLogin);
+    print(admin_data);
     return admin_data;
   }
 
-  static Future<List<Map<String, dynamic>>> getUser() async {
+ static Future<List<Map<String, dynamic>>> getUser() async {
     var user_data = await usercollection
         .find(where
-            .eq('username', '$username_user')
-            .eq('password', '$password_user'))
+            .eq('username', '${usernamevalue_user.text.trim()}')
+    )
         .toList();
     return user_data;
   }
@@ -104,7 +103,6 @@ class MongoDbModel {
       print(e.toString());
       return e.toString();
 
-      ///this method to resolve null issue and return the data to string
     }
   }
 
@@ -122,7 +120,6 @@ class MongoDbModel {
       print(e.toString());
       return e.toString();
 
-      ///this method to resolve null issue and return the data to string
     }
   }
 
@@ -135,12 +132,10 @@ class MongoDbModel {
       } else {
         return "Something wrong while inserting data";
       }
-      return result;
     } catch (e) {
       print(e.toString());
       return e.toString();
 
-      ///this method to resolve null issue and return the data to string
     }
   }
 }
