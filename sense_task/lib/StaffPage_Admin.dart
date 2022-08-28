@@ -7,6 +7,7 @@ import 'LoginPage.dart';
 import 'TaskMango.dart';
 import 'TaskPage_Admin.dart';
 import 'UserMango.dart';
+import 'main.dart';
 import 'mangodb.dart';
 
 class staffpage_a extends StatefulWidget {
@@ -22,7 +23,9 @@ class _staffpage_aState extends State<staffpage_a> {
     return Scaffold(
       body: SafeArea(
         child: FutureBuilder(
-            future: MongoDbModel.getQuerryTaskStatus(),
+            future: (PageView ==1)?
+            MongoDbModel.getAdmin():
+            MongoDbModel.getUserAll(),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 print('connection waiting');
@@ -57,154 +60,640 @@ class _staffpage_aState extends State<staffpage_a> {
   }
 
   Widget StatusCard(TaskMongo task_data) {
-    return Center(
+    return Align(
         child: Stack(children: <Widget>[
           Card(
             elevation: 0,
             color: Colors.white,
             child: RoundedExpansionTile(
-              trailing: Icon(
-                Icons.arrow_drop_down_outlined,
-                color: Colors.black,
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.arrow_drop_down_outlined,
+                    color: Colors.black,
+                  ),
+                ],
               ),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
               title: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  largetext(text: "${task_data.titledb} "),
+                  largetext(text: "${task_data.titledb}"),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      standardtext(text: "${task_data.categorydb}"),
-                      (pageview == 1)
-                          ? Column(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          standardtext(text: "${task_data.reasondb}"),
-                          largetext(text: "${task_data.facultydb}")
+                          standardtext(text: 'Date:  '),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              " ${task_data.startdatedb}",
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.poppins(
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                  MediaQuery.of(context).size.width * 0.04),
+                            ),
+                          ),
+                          SizedBox(width: MediaQuery.of(context).size.width * 0.15),
+                          /*  standardtext(text: 'Due :  '),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: Text(
+                        " ${task_data.duedatedb}",
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.poppins(
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.04),
+                      ),
+                    )*/
+                        ],
+                      ),
+                      SizedBox(height: MediaQuery.of(context).size.width * 0.01),
+                      (pageview == 1)
+                          ? Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          standardtext(text: 'Faculty     :  '),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              " ${task_data.facultydb}",
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                  MediaQuery.of(context).size.width *
+                                      0.04),
+                            ),
+                          )
+                          /*  standardtext(text: " ${task_data.facultydb}"),*/
                         ],
                       )
-                          : SizedBox(
-                        height: 0,
-                      )
+                          : Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          '${task_data.duedatedb}  ,   ${task_data.duetimedb}',
+                          style: GoogleFonts.poppins(
+                              color: Colors.red,
+                              fontSize:
+                              MediaQuery.of(context).size.width * 0.03),
+                        ),
+                      ),
                     ],
                   )
                 ],
-              ),
-              subtitle: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('${task_data.duedatedb} , ${task_data.duetimedb}',
-                style: GoogleFonts.poppins(
-                color: Colors.red,
-                fontSize: MediaQuery.of(context).size.width * 0.03),
-                    ),
-                  ],
-                ),
               ),
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    largetext(text: 'Description:'),
-                    standardtext(text: "${task_data.descriptiondb}"),
-                      (status==-1)?
-                    standardtext(
-                        text: 'Reason : \n '
-                            '${task_data.reasondb}') :
-                            SizedBox(),
-                    Column(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        standardtext(
-                            text: 'Event start Date: ${task_data.startdatedb}'),
-                        standardtext(
-                            text: 'Event end Date: ${task_data.enddatedb}'),
+                        ///todo: category have to replaced in the heading or is it same update i  next commit
+                        standardtext(text: 'Category :  '),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            " ${task_data.categorydb} ",
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.width * 0.04),
+                          ),
+                        )
+                        /*  standardtext(text: " ${task_data.facultydb}"),*/
                       ],
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                    standardtext(text: 'Event Description:'),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        "${task_data.descriptiondb}",
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.04),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        standardtext(text: 'Due :  '),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            " ${task_data.duedatedb}",
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.poppins(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.width * 0.04),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        standardtext(text: 'Time left:  '),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: (int.parse(task_data.duedatedb.split("/")[0]) -
+                                DateTime.now().day !=
+                                0)
+                                ? Text(
+                              "${int.parse(task_data.duedatedb.split("/")[0]) - DateTime.now().day} days , ${task_data.duetimedb.split(":")[0]} hours ${task_data.duetimedb.split(":")[1]} mins  ",
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.poppins(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                  MediaQuery.of(context).size.width *
+                                      0.04),
+                            )
+                                :(int.parse(task_data.duedatedb.split("/")[0]) -
+                                DateTime.now().minute == -1) ?
+                            Text(
+                              "Task overDue",
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.poppins(
+                                  color: Colors.deepOrange,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                  MediaQuery.of(context).size.width *
+                                      0.04),
+                            )
+                                :Text(
+                              " ${int.parse(task_data.duetimedb.split(":")[0]) - DateTime.now().hour} hours ${int.parse(task_data.duetimedb.split(":")[1]) - DateTime.now().minute} mins  ",
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.poppins(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                  MediaQuery.of(context).size.width *
+                                      0.04),
+                            )
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.008),
+                    (pageview == 1)
+                        ? Column(
+                      children: [
+                        standardtext(text: "${task_data.reasondb}"),
+                      ],
+                    )
+                        : SizedBox(
+                      height: 0,
+                    ),
+                    (pageview == 1)
+                        ? Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 5.0,
+                                    shape: StadiumBorder(),
+                                    primary: Colors.black),
+                                onPressed: () {
+                                  setState(() => isEdit = 1);
+                                  if (task_data != null) {
+                                    print('Updating UI');
+                                    categoryvalue = task_data.categorydb;
+                                    tasktitlecontroller.text =
+                                        task_data.titledb;
+                                    taskdescriptioncontroller.text =
+                                        task_data.descriptiondb;
+                                    startDateInString = task_data.startdatedb;
+                                    endDateInString = task_data.enddatedb;
+                                    dueDateInString = task_data.duedatedb;
+                                    duetime = task_data.duetimedb;
+                                    facultyvalue = task_data.facultydb;
+                                    checkInserttask = "update";
+                                    print(categoryvalue);
+                                    print(tasktitlecontroller.text);
+                                    print(taskdescriptioncontroller.text);
+                                    print(startDate);
+                                    print(startDateInString);
+                                    print(endDate);
+                                    print(endDateInString);
+                                    print(dueDate);
+                                    print(dueDateInString);
+                                    print(duetime);
+                                    print(facultyvalue);
+                                  }
+                                  ;
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder:
+                                              (BuildContext context) {
+                                            return taskassign_a();
+                                          },
+                                          settings: RouteSettings(
+                                              arguments: task_data)))
+                                      .then((value) {
+                                    setState(() {});
+                                  });
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.height *
+                                          0.04,
+                                      12,
+                                      MediaQuery.of(context).size.height *
+                                          0.04,
+                                      12),
+                                  child: Text(
+                                    'Edit',
+                                    style: GoogleFonts.lato(
+                                        color: Colors.white,
+                                        fontSize: MediaQuery.of(context)
+                                            .size
+                                            .height *
+                                            0.02),
+                                  ),
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 5.0,
+                                    shape: StadiumBorder(),
+                                    primary: Colors.black),
+                                onPressed: () async {
+                                  print(task_data.id_t);
+                                  await MongoDbModel.delete_task(task_data);
+                                  setState(() {});
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.height *
+                                          0.04,
+                                      12,
+                                      MediaQuery.of(context).size.height *
+                                          0.04,
+                                      12),
+                                  child: Text(
+                                    'Delete',
+                                    style: GoogleFonts.lato(
+                                        color: Colors.white,
+                                        fontSize: MediaQuery.of(context)
+                                            .size
+                                            .height *
+                                            0.02),
+                                  ),
+                                )),
+                          ),
+                        ],
+                      ),
+                    )
+                        : Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 5.0,
+                                  shape: StadiumBorder(),
+                                  primary: Colors.black),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                        title: Text(
+                                            'Do you wish to Accept the Task ?'),
+                                        actions: [
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TabsScreen()));
+                                              },
+                                              child: Text('No')),
+                                          ElevatedButton(
+                                              onPressed: () async {
+                                                status = 1;
+                                                await _updateTask(
+                                                    task_data!.id_t,
+                                                    task_data.categorydb,
+                                                    task_data.titledb,
+                                                    task_data
+                                                        .descriptiondb,
+                                                    task_data.startdatedb,
+                                                    task_data.enddatedb,
+                                                    task_data.duedatedb,
+                                                    task_data.duetimedb,
+                                                    task_data.facultydb,
+                                                    status,
+                                                    taskreasoncontroller
+                                                        .text);
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            TabsScreen()));
+                                              },
+                                              child: Text("Yes"))
+                                        ]),
+                                    barrierDismissible: false);
+                              },
+
+                              ///add accept onpressed
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    MediaQuery.of(context).size.height * 0.04,
+                                    12,
+                                    MediaQuery.of(context).size.height * 0.04,
+                                    12),
+                                child: Text(
+                                  'Accept',
+                                  style: GoogleFonts.lato(
+                                      color: Colors.white,
+                                      fontSize:
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                ),
+                              )),
+                        ),
+                        Spacer(),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 5.0,
+                                  shape: StadiumBorder(),
+                                  primary: Colors.black),
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                        title: Text(
+                                            'Do you wish to Decline the Task ?'),
+                                        actionsAlignment:
+                                        MainAxisAlignment.center,
+                                        actions: [
+                                          Column(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                const EdgeInsets.all(
+                                                    8.0),
+                                                child: Container(
+                                                  height: 60,
+                                                  child: TextField(
+                                                    onChanged: (_) {
+                                                      if (_.length > 0)
+                                                        widget.grey =
+                                                        false;
+                                                      else
+                                                        widget.grey =
+                                                        true;
+                                                      setState(() {});
+                                                    },
+                                                    decoration:
+                                                    InputDecoration(
+                                                        fillColor:
+                                                        Colors
+                                                            .black,
+                                                        hintText:
+                                                        'Type the reason to decline...',
+                                                        hintStyle:
+                                                        TextStyle(
+                                                          color: Colors
+                                                              .black,
+                                                        )),
+                                                    keyboardType:
+                                                    TextInputType
+                                                        .text,
+                                                    maxLines: 2,
+                                                    cursorColor:
+                                                    Colors.black,
+                                                    controller:
+                                                    taskreasoncontroller,
+                                                    onSubmitted:
+                                                        (helo) async {
+                                                      status = -1;
+                                                      await _updateTask(
+                                                          task_data!.id_t,
+                                                          task_data
+                                                              .categorydb,
+                                                          task_data
+                                                              .titledb,
+                                                          task_data
+                                                              .descriptiondb,
+                                                          task_data
+                                                              .startdatedb,
+                                                          task_data
+                                                              .enddatedb,
+                                                          task_data
+                                                              .duedatedb,
+                                                          task_data
+                                                              .duetimedb,
+                                                          task_data
+                                                              .facultydb,
+                                                          status,
+                                                          taskreasoncontroller
+                                                              .text);
+                                                    },
+
+                                                    ///enter title
+                                                  ),
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                  onPressed: () {
+                                                    taskreasoncontroller
+                                                        .clear();
+                                                    Navigator.pop(
+                                                        context);
+                                                  },
+                                                  child: Text('Close')),
+                                            ],
+                                          ),
+                                        ]),
+                                    barrierDismissible: false);
+                              },
+
+                              ///add reject onpressed
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    MediaQuery.of(context).size.height *
+                                        0.048,
+                                    12,
+                                    MediaQuery.of(context).size.height *
+                                        0.048,
+                                    12),
+                                child: Text(
+                                  'Reject',
+                                  style: GoogleFonts.lato(
+                                      color: Colors.white,
+                                      fontSize:
+                                      MediaQuery.of(context).size.height *
+                                          0.02),
+                                ),
+                              )),
+                        ),
+                      ],
+                    )
                   ],
                 )
               ],
             ),
           ),
-          (status == 0)
+          (task_data.statusdb == 0)
               ? Container(
             padding: const EdgeInsets.only(right: 20),
             alignment: Alignment.topRight,
-            child: Icon(
-              Icons.circle_rounded,
-              color: Colors.black,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Icon(
+                  Icons.circle_rounded,
+                  color: Colors.black,
+                  size: 18,
+                ),
+                Text(
+                  'Assigned',
+                  style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontSize: MediaQuery.of(context).size.width * 0.03),
+                ),
+              ],
             ),
           )
-              : (status == 1)?
-          Container(
+              : (task_data.statusdb == 1)
+              ? Container(
             padding: const EdgeInsets.only(right: 20),
             alignment: Alignment.topRight,
-            child: Icon(
-              Icons.circle_rounded,
-              color: Colors.green,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Icon(
+                  Icons.circle_rounded,
+                  color: Colors.green,
+                  size: 18,
+                ),
+                Text(
+                  'Compeleted',
+                  style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontSize: MediaQuery.of(context).size.width * 0.03),
+                ),
+              ],
             ),
-          ):(status == -1)?
-          Container(
+          )
+              : (task_data.statusdb == -1)
+              ? Container(
             padding: const EdgeInsets.only(right: 20),
             alignment: Alignment.topRight,
-            child: Icon(
-              Icons.circle_rounded,
-              color: Colors.red,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Icon(
+                  Icons.circle_rounded,
+                  color: Colors.red,
+                  size: 18,
+                ),
+                Text(
+                  'Rejected',
+                  style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontSize:
+                      MediaQuery.of(context).size.width * 0.03),
+                ),
+              ],
             ),
-          ):
+          )
+              : (task_data.statusdb == 2)
+              ? Container(
+            padding: const EdgeInsets.only(right: 20),
+            alignment: Alignment.topRight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Icon(
+                  Icons.circle_rounded,
+                  color: Colors.red,
+                  size: 18,
+                ),
+                Text(
+                  'overdue',
+                  style: GoogleFonts.poppins(
+                      color: Colors.black,
+                      fontSize:
+                      MediaQuery.of(context).size.width * 0.03),
+                ),
+              ],
+            ),
+          )
+              :
           SizedBox()
-        ]
-        )
+        ]));
+  }
+
+  Future<void> _updateTask(
+      var id,
+      String category_update,
+      String title_update,
+      String description_update,
+      String startdate_update,
+      String enddate_update,
+      String duedate_update,
+      String duetime_update,
+      String faculty_update,
+      int status_update,
+      String reason_update) async {
+    final updatetask = TaskMongo(
+        id_t: id,
+        categorydb: category_update,
+        titledb: title_update,
+        descriptiondb: description_update,
+        startdatedb: startdate_update,
+        enddatedb: enddate_update,
+        duedatedb: duedate_update,
+        duetimedb: duetime_update,
+        facultydb: faculty_update,
+        statusdb: status_update,
+        reasondb: reason_update);
+/*    if ((int.parse(task_data!.duedatedb.split("/")[0]) -
+        DateTime.now().minute == -1)){
+      setState(() {
+        status == 2;
+      });
+    }*/
+    await MongoDbModel.update_task(updatetask).whenComplete(
+          () => Navigator.pop(context),
     );
   }
-}
-
-Future<void> _updateTask(
-    var id,
-    String category_update,
-    String title_update,
-    String description_update,
-    String startdate_update,
-    String enddate_update,
-    String duedate_update,
-    String duetime_update,
-    String faculty_update,
-    int status_update,
-    String reason_update) async {
-  final updatetask = TaskMongo(
-      id_t: id,
-      categorydb: category_update,
-      titledb: title_update,
-      descriptiondb: description_update,
-      startdatedb: startdate_update,
-      enddatedb: enddate_update,
-      duedatedb: duedate_update,
-      duetimedb: duetime_update,
-      facultydb: faculty_update,
-      statusdb: status_update,
-      reasondb: reason_update);
-  print('in update task function');
-  print(categoryvalue);
-  print(tasktitlecontroller.text);
-
-  print(taskdescriptioncontroller.text);
-  print(startDate);
-  print(startDateInString);
-  print(endDate);
-  print(endDateInString);
-  print(dueDate);
-  print(dueDateInString);
-  print(duetime);
-  print(facultyvalue);
-  BuildContext context;
-  await MongoDbModel.update_task(updatetask);
 }
 
 class largetext extends StatelessWidget {
@@ -215,13 +704,13 @@ class largetext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Text(
         text,
         textAlign: TextAlign.left,
         style: GoogleFonts.poppins(
             fontWeight: FontWeight.bold,
-            color: Colors.black,
+            color: b,
             fontSize: MediaQuery.of(context).size.width * 0.045),
       ),
     );
@@ -235,14 +724,15 @@ class standardtext extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return Align(
+      alignment: Alignment.topLeft,
       child: Text(
         text,
         textAlign: TextAlign.left,
         style: GoogleFonts.poppins(
-            color: Colors.black,
-            fontSize: MediaQuery.of(context).size.width * 0.035),
+            color: bb,
+            fontWeight: FontWeight.w600,
+            fontSize: MediaQuery.of(context).size.width * 0.04),
       ),
     );
   }
@@ -256,13 +746,12 @@ class smalltext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Text(
         textAlign: TextAlign.center,
         text,
         style: GoogleFonts.poppins(
-            color: Colors.black,
-            fontSize: MediaQuery.of(context).size.width * 0.03),
+            color: bb, fontSize: MediaQuery.of(context).size.width * 0.02),
       ),
     );
   }

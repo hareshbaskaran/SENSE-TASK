@@ -9,7 +9,6 @@ import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'mangodb.dart';
 import 'LoginPage.dart';
-
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 int isEdit = 0;
@@ -31,7 +30,7 @@ class _taskpage_aState extends State<taskpage_a> {
           child: FutureBuilder(
               future: (pageview == 1)
                   ? MongoDbModel.getTask()
-                  : MongoDbModel.getQuerryTaskStatus(),
+                  : MongoDbModel.getQuerryTask(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   print('connection waiting');
@@ -52,7 +51,8 @@ class _taskpage_aState extends State<taskpage_a> {
                               child: TaskCard(TaskMongo.fromJson(
                                   snapshot.data[tasklength - index - 1])));
                         });
-                  } else {
+                  }
+                  else {
                     return Center(
                       child: Text('NO data Available'),
                     );
@@ -223,7 +223,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                     DateTime.now().day !=
                                 0)
                             ? Text(
-                                "${int.parse(task_data.duedatedb.split("/")[0]) - DateTime.now().day} days, ${task_data.duetimedb.split(":")[0]} hours ${task_data.duetimedb.split(":")[1]} mins  ",
+                                "${int.parse(task_data.duedatedb.split("/")[0]) - DateTime.now().day} days , ${task_data.duetimedb.split(":")[0]} hours ${task_data.duetimedb.split(":")[1]} mins  ",
                                 textAlign: TextAlign.left,
                                 style: GoogleFonts.poppins(
                                     color: Colors.redAccent,
@@ -232,7 +232,19 @@ class _taskpage_aState extends State<taskpage_a> {
                                         MediaQuery.of(context).size.width *
                                             0.04),
                               )
-                            : Text(
+                            :(int.parse(task_data.duedatedb.split("/")[0]) -
+                            DateTime.now().minute == -1) ?
+                        Text(
+                          "Task overDue",
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.poppins(
+                              color: Colors.deepOrange,
+                              fontWeight: FontWeight.bold,
+                              fontSize:
+                              MediaQuery.of(context).size.width *
+                                  0.04),
+                        )
+                        :Text(
                                 " ${int.parse(task_data.duetimedb.split(":")[0]) - DateTime.now().hour} hours ${int.parse(task_data.duetimedb.split(":")[1]) - DateTime.now().minute} mins  ",
                                 textAlign: TextAlign.left,
                                 style: GoogleFonts.poppins(
@@ -241,7 +253,8 @@ class _taskpage_aState extends State<taskpage_a> {
                                     fontSize:
                                         MediaQuery.of(context).size.width *
                                             0.04),
-                              )),
+                              )
+                    ),
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.width * 0.008),
@@ -623,7 +636,31 @@ class _taskpage_aState extends State<taskpage_a> {
                         ],
                       ),
                     )
-                  : SizedBox()
+                  : (task_data.statusdb == 2)
+          ? Container(
+        padding: const EdgeInsets.only(right: 20),
+        alignment: Alignment.topRight,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Icon(
+              Icons.circle_rounded,
+              color: Colors.red,
+              size: 18,
+            ),
+            Text(
+              'overdue',
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontSize:
+                  MediaQuery.of(context).size.width * 0.03),
+            ),
+          ],
+        ),
+      )
+          :
+      SizedBox()
     ]));
   }
 
@@ -651,19 +688,12 @@ class _taskpage_aState extends State<taskpage_a> {
         facultydb: faculty_update,
         statusdb: status_update,
         reasondb: reason_update);
-    print('in update task function');
-    print(categoryvalue);
-    print(tasktitlecontroller.text);
-
-    print(taskdescriptioncontroller.text);
-    print(startDate);
-    print(startDateInString);
-    print(endDate);
-    print(endDateInString);
-    print(dueDate);
-    print(dueDateInString);
-    print(duetime);
-    print(facultyvalue);
+/*    if ((int.parse(task_data!.duedatedb.split("/")[0]) -
+        DateTime.now().minute == -1)){
+      setState(() {
+        status == 2;
+      });
+    }*/
     await MongoDbModel.update_task(updatetask).whenComplete(
       () => Navigator.pop(context),
     );

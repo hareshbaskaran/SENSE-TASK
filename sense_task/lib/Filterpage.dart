@@ -178,7 +178,7 @@ class _filtertasksState extends State<filtertasks> {
               ),
             ),
             FutureBuilder(
-                future: MongoDbModel.getQuerryTaskStatus(),
+                future: MongoDbModel.GetUserReject(),
                 builder: (context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     print('connection waiting');

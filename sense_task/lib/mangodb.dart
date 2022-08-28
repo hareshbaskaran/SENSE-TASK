@@ -36,7 +36,7 @@ class MongoDbModel {
     return querry_data;
   }
 ///todo:querry changes to be done
-  static Future<List<Map<String, dynamic>>> getQuerryTaskStatus() async {
+  static Future<List<Map<String, dynamic>>> GetUserReject() async {
     final querry_data = await taskcollection
         .find(where.eq('faculty', '${username_user.trim()}').eq('status', -1 ))
         .toList();
@@ -58,11 +58,10 @@ class MongoDbModel {
     return admin_data;
   }
 
- static Future<List<Map<String, dynamic>>> getUser() async {
-    var user_data = await usercollection
+ static Future<List<Map<String, dynamic>>> getUserAll() async {
+    var user_data = await taskcollection
         .find(where
-            .eq('username', '${usernamevalue_user.text.trim()}')
-    )
+            .eq('faculty', '${username_user.trim()}'))
         .toList();
     return user_data;
   }
