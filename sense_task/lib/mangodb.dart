@@ -61,7 +61,7 @@ class MongoDbModel {
  static Future<List<Map<String, dynamic>>> getUser() async {
     var user_data = await usercollection
         .find(where
-            .eq('username', '$username_user')
+            .eq('username', '${usernamevalue_user.text.trim()}')
     )
         .toList();
     return user_data;

@@ -56,7 +56,8 @@ class _taskpage_aState extends State<taskpage_a> {
                     );
                   }
                 }
-              }),
+              }
+              ),
         ),
         floatingActionButton: _floating(context));
   }
@@ -221,6 +222,7 @@ class _taskpage_aState extends State<taskpage_a> {
                     : SizedBox(
                         height: 0,
                       ),
+
               (pageview == 1)
                   ? Center(
                       child: Row(
@@ -251,7 +253,6 @@ class _taskpage_aState extends State<taskpage_a> {
                                     checkInserttask = "update";
                                     print(categoryvalue);
                                     print(tasktitlecontroller.text);
-
                                     print(taskdescriptioncontroller.text);
                                     print(startDate);
                                     print(startDateInString);
@@ -261,21 +262,21 @@ class _taskpage_aState extends State<taskpage_a> {
                                     print(dueDateInString);
                                     print(duetime);
                                     print(facultyvalue);
-                                  }
-                                  ;
-                                  Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) {
-                                                return taskassign_a();
-                                              },
-                                              settings: RouteSettings(
-                                                  arguments: task_data)))
-                                      .then((value) {
-                                    setState(() {});
-                                  });
-                                },
-                                child: Padding(
+                                  };
+                                    Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return taskassign_a();
+                                                },
+                                                settings: RouteSettings(
+                                                    arguments: task_data)))
+                                        .then((value) {
+                                      setState(() {});
+                                    });
+                                  },
+                                  child: Padding(
                                   padding: EdgeInsets.fromLTRB(
                                       MediaQuery.of(context).size.height * 0.04,
                                       12,
