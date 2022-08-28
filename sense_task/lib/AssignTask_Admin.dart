@@ -721,11 +721,11 @@ class _taskassign_aState extends State<taskassign_a> {
           ),
         ),
         floatingActionButton: (isEdit == 1 &&
-            tasktitlecontroller.text.length>0 &&
-            taskdescriptioncontroller.text.length>0 &&
-            startDateInString.length>0 &&
-            dueDateInString.length>0
-        )
+                tasktitlecontroller.text.length > 0 &&
+                taskdescriptioncontroller.text.length > 0 &&
+                startDateInString.length > 0 &&
+                dueDateInString.length > 0 &&
+                duetime.length > 0)
             ? Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Expanded(
@@ -772,52 +772,53 @@ class _taskassign_aState extends State<taskassign_a> {
                       )),
                 ),
               )
-            :(tasktitlecontroller.text.length>0 &&
-            taskdescriptioncontroller.text.length>0 &&
-            startDateInString.length>0 &&
-            dueDateInString.length>0
-        ) ?
-         Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Expanded(
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            elevation: 5.0,
-                            shape: StadiumBorder(side: BorderSide.none),
-                            primary: Colors.black),
-                        onPressed: () {
-                          setState(() => isEdit = 0);
-                          _inserttask(
-                              categoryvalue,
-                              tasktitlecontroller.text,
-                              taskdescriptioncontroller.text,
-                              startDateInString,
-                              endDateInString,
-                              dueDateInString,
-                              duetime,
-                              facultyvalue,
-                              status,
-                              reason);
-                          _clearassignpage();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => TabsScreen()),
-                          );
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              MediaQuery.of(context).size.height * 0.04,
-                              12,
-                              MediaQuery.of(context).size.height * 0.04,
-                              12),
-                          child: Text(
-                            'Add Task',
-                            style: GoogleFonts.lato(
-                                color: Colors.white,
-                                fontSize:
-                                    MediaQuery.of(context).size.height * 0.02),
-                          ),
+            : (tasktitlecontroller.text.length > 0 &&
+                    taskdescriptioncontroller.text.length > 0 &&
+                    startDateInString.length > 0 &&
+                    dueDateInString.length > 0 &&
+                    duetime.length > 0)
+                ? Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Expanded(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                elevation: 5.0,
+                                shape: StadiumBorder(side: BorderSide.none),
+                                primary: Colors.black),
+                            onPressed: () {
+                              setState(() => isEdit = 0);
+                              _inserttask(
+                                  categoryvalue,
+                                  tasktitlecontroller.text,
+                                  taskdescriptioncontroller.text,
+                                  startDateInString,
+                                  endDateInString,
+                                  dueDateInString,
+                                  duetime,
+                                  facultyvalue,
+                                  status,
+                                  reason);
+                              _clearassignpage();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => TabsScreen()),
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                  MediaQuery.of(context).size.height * 0.04,
+                                  12,
+                                  MediaQuery.of(context).size.height * 0.04,
+                                  12),
+                              child: Text(
+                                'Add Task',
+                                style: GoogleFonts.lato(
+                                    color: Colors.white,
+                                    fontSize:
+                                        MediaQuery.of(context).size.height *
+                                            0.02),
+                              ),
                             ))))
                 : SizedBox());
   }

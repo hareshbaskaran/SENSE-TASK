@@ -169,8 +169,8 @@ class _filtertasksState extends State<filtertasks> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          if (isfacultyChecked == true)
-                            filterquery["faculty"] = filterfaculty;
+                          // if (isfacultyChecked == true)
+                          //filterquery["faculty"] = filterfaculty;
                         },
                         child: Text('Filter'))
                   ],
