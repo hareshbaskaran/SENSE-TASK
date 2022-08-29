@@ -1,12 +1,12 @@
 import 'TaskPage_Admin.dart';
-import 'package:sense_task/TaskMango.dart';
+import 'package:sense_task/Models/TaskMango.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sense_task/main.dart';
 import 'package:mongo_dart/mongo_dart.dart' as T;
 import 'mangodb.dart';
-import 'TaskMango.dart';
+import 'Models/TaskMango.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 List<Widget> allTasks = [];

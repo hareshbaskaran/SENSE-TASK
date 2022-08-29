@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:sense_task/TaskMango.dart';
+import 'package:sense_task/Models/TaskMango.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
 import 'AssignTask_Admin.dart';

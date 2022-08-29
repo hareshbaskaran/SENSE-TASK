@@ -4,9 +4,9 @@ import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'AdminMongo.dart';
 import 'AssignTask_Admin.dart';
 import 'LoginPage.dart';
-import 'TaskMango.dart';
+import 'Models/TaskMango.dart';
 import 'TaskPage_Admin.dart';
-import 'UserMango.dart';
+import 'Models/UserMango.dart';
 import 'main.dart';
 import 'mangodb.dart';
 

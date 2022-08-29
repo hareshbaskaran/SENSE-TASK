@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
+import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
@@ -10,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'main.dart';
 
 Box<dynamic> Hive_box = Hive.box('myBox');
@@ -223,61 +225,6 @@ class _loginpageState extends State<loginpage> {
                               padding: EdgeInsets.fromLTRB(0, 0,
                                   MediaQuery.of(context).size.width * 0.7, 0),
                               child: Text(
-                                'username',
-                                style: GoogleFonts.lato(
-                                    color: Colors.black,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.03),
-                              ),
-                            ),
-                            Center(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                decoration: new BoxDecoration(
-                                  color: Color(0xFFF7F8F8),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(width: 2.0),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15.0)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        color: Colors.transparent,
-                                        constraints: BoxConstraints(
-                                            minHeight: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.05),
-                                        child: TextField(
-                                          maxLines: 1,
-                                          onChanged: (_) {
-                                            setState(() {});
-                                          },
-                                          decoration: InputDecoration(
-                                            fillColor: Colors.black,
-                                            border: InputBorder.none,
-                                          ),
-                                          cursorColor: Colors.black,
-                                          controller: usernamevalue_admin,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.025),
-                            Container(
-                              color: Colors.transparent,
-                              padding: EdgeInsets.fromLTRB(0, 0,
-                                  MediaQuery.of(context).size.width * 0.7, 0),
-                              child: Text(
                                 'password',
                                 style: GoogleFonts.lato(
                                     color: Colors.black,
@@ -310,7 +257,9 @@ class _loginpageState extends State<loginpage> {
                                         child: TextField(
                                           maxLines: 1,
                                           onChanged: (_) {
-                                            setState(() {});
+                                            setState(() {
+
+                                            });
                                           },
                                           decoration: InputDecoration(
                                             fillColor: Colors.black,
@@ -338,6 +287,8 @@ class _loginpageState extends State<loginpage> {
                                           shape: StadiumBorder(),
                                           primary: Colors.black),
                                       onPressed: () {
+                                        ///todo:firebase collection push is given in admin login - changed in user but have to check
+                                        FirebaseCrud.addUserDetails(username: password_admin);
                                         MongoDbModel.getAdmin();
                                         Navigator.push(
                                           context,
@@ -367,37 +318,6 @@ class _loginpageState extends State<loginpage> {
                                 ),
                               ],
                             ),
-                            // Center(
-                            //   child: ElevatedButton(
-                            //       onPressed: () {
-                            //         _insertData(usernamevalue.text, passwordvalue.text);
-                            //         Navigator.push(
-                            //           context,
-                            //           MaterialPageRoute(builder: (context) => TabsScreen()),
-                            //         );
-                            //
-                            //         ///polymorphism
-                            //       },
-                            //       child: Container(
-                            // color: Colors.transparent,
-                            //         height: MediaQuery.of(context).size.height * 0.05,
-                            //         width: MediaQuery.of(context).size.width * 0.6,
-                            //         decoration: new BoxDecoration(
-                            //           color: Colors.black,
-                            //           shape: BoxShape.rectangle,
-                            //           border: Border.all(width: 2.0),
-                            //           borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                            //         ),
-                            //         child: Center(
-                            //           child: Text(
-                            //             "Login ",
-                            //             style: TextStyle(
-                            //               color: Colors.white,
-                            //             ),
-                            //           ),
-                            //         ),
-                            //       )),
-                            // ),],);
                           ])
                         : (pageview == 2)
                             ? Column(children: [
@@ -489,148 +409,6 @@ class _loginpageState extends State<loginpage> {
                                 SizedBox(
                                     height: MediaQuery.of(context).size.height *
                                         0.025),
-                                /*           Container(
-                                  color: Colors.transparent,
-                                  padding: EdgeInsets.fromLTRB(
-                                      0,
-                                      0,
-                                      MediaQuery.of(context).size.width * 0.7,
-                                      0),
-                                  child: Text(
-                                    'password',
-                                    style: GoogleFonts.lato(
-                                        color: Colors.black,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.03),
-                                  ),
-                                ),
-                                Center(
-                                  child: Container(
-                                    color: Colors.transparent,
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.9,
-                                    decoration: new BoxDecoration(
-                                      color: Color(0xFFF7F8F8),
-                                      shape: BoxShape.rectangle,
-                                      border: Border.all(width: 2.0),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15.0)),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            color: Colors.transparent,
-                                            constraints: BoxConstraints(
-                                                minHeight:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                        0.05),
-                                            child: TextField(
-                                              maxLines: 1,
-                                              onChanged: (_) {
-                                                setState(() {});
-                                              },
-                                              decoration: InputDecoration(
-                                                fillColor: Colors.black,
-                                                border: InputBorder.none,
-                                              ),
-                                              cursorColor: Colors.black,
-                                              controller: passwordvalue_user,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.025),*/
-                                /*    Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(15.0),
-                                      child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 5.0,
-                                              shape: StadiumBorder(),
-                                              primary: Colors.black),
-                                          onPressed: () {},
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.04,
-                                                12,
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.04,
-                                                12),
-                                            child: Text(
-                                              'Register',
-                                              style: GoogleFonts.lato(
-                                                  color: Colors.white,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.02),
-                                            ),
-                                          )),
-                                    ),
-                                    Spacer(),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              elevation: 5.0,
-                                              shape: StadiumBorder(),
-                                              primary: Colors.black),
-                                          onPressed: () {
-                                            ///todo :on pressed snapshot.length
-                                            if (UserQuerryLength != 0) {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        TabsScreen()),
-                                              );
-                                              print(
-                                                  ' powerstar $UserQuerryLength');
-                                            } else {}
-                                          },
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.048,
-                                                12,
-                                                MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.048,
-                                                12),
-                                            child: Text(
-                                              'Login',
-                                              style: GoogleFonts.lato(
-                                                  color: Colors.white,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .height *
-                                                          0.02),
-                                            ),
-                                          )),
-                                    ),
-                                  ],
-                                ),*/
                                 _googleSignInButton()
                               ])
                             : Text('nothing')
@@ -657,6 +435,8 @@ class _loginpageState extends State<loginpage> {
       child: MaterialButton(
         color: Colors.black,
         onPressed: () async {
+          ///todo:have to check testing
+          FirebaseCrud.addUserDetails(username: username_user);
           signInWithGoogle().then((result) {
             if (result != null && usernamevalue_user.text.length > 0) {
               Navigator.of(context).push(
