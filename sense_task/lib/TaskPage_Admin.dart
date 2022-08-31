@@ -9,6 +9,10 @@ import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'mangodb.dart';
 import 'LoginPage.dart';
+List<int> neghours = [-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24];
+List<int> negmins = [-1,-2,-3,-4,-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,-20,-21,-22,-23,-24,-25,
+-26,-27,-28,-29,-30
+];
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 int isEdit = 0;
@@ -34,6 +38,7 @@ class _taskpage_aState extends State<taskpage_a> {
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   print('connection waiting');
+                  print(negmins);
                   return Center(
                     child: CircularProgressIndicator(),
                   );
@@ -233,7 +238,10 @@ class _taskpage_aState extends State<taskpage_a> {
                                             0.04),
                               )
                             :(int.parse(task_data.duedatedb.split("/")[0]) -
-                            DateTime.now().minute == -1) ?
+                            DateTime.now().minute == negmins ||
+                            int.parse(task_data.duedatedb.split("/")[0]) -
+                                DateTime.now().hour == neghours
+                        ) ?
                         Text(
                           "Task overDue",
                           textAlign: TextAlign.left,
@@ -663,7 +671,6 @@ class _taskpage_aState extends State<taskpage_a> {
       SizedBox()
     ]));
   }
-
   Future<void> _updateTask(
       var id,
       String category_update,

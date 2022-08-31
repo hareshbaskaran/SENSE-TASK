@@ -27,7 +27,6 @@ String dueDateInString = '';
 DateTime dueDate = DateTime.now();
 
 TaskMongo? task_data;
-
 String categoryvalue = 'HR office duty';
 var items = [
   'HR office duty',
@@ -70,6 +69,7 @@ class _taskassign_aState extends State<taskassign_a> {
   Widget build(BuildContext context) {
     TaskMongo? task_data =
         ModalRoute.of(context)!.settings.arguments as TaskMongo?;
+    print(items);
     // void initState() {
     //   super.initState();
     //   if (task_data != null) {

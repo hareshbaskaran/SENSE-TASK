@@ -29,4 +29,10 @@ class FirebaseCrud {
 
     return response;
   }
+  static Stream<QuerySnapshot> readItems() {
+    CollectionReference notesItemCollection =
+    _Collection.doc().collection('SenseTask');
+print(notesItemCollection.snapshots());
+    return notesItemCollection.snapshots();
+  }
 }
