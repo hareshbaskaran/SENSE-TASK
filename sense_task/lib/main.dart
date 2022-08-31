@@ -61,8 +61,8 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home:  (already_sign_in)?TabsScreen():
-            loginpage(Hive_box));
+        // home:  (already_sign_in)?TabsScreen():
+        home: loginpage(Hive_box));
   }
 }
 
@@ -78,7 +78,7 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     print('Just entered : $tabView');
     return DefaultTabController(
-      length:2,
+      length: 2,
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
@@ -96,11 +96,7 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
         ),
         body: TabBarView(
-          children: [
-            taskpage_a(
-            ),
-            staffpage_a()
-          ],
+          children: [taskpage_a(), staffpage_a()],
         ),
       ),
     );

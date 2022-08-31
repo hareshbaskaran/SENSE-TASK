@@ -30,23 +30,26 @@ class MongoDbModel {
 
   static Future<List<Map<String, dynamic>>> getQuerryTask() async {
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '${usernamevalue_user.text.trim()}').eq('status', 0))//username_user.trim()}
+        .find(where
+            .eq('faculty', '${usernamevalue_user.text.trim()}')
+            .eq('status', 0)) //username_user.trim()}
         .toList();
     print(querry_data);
     return querry_data;
   }
-///todo:querry changes to be done
+
+  ///todo:querry changes to be done
   static Future<List<Map<String, dynamic>>> GetUserReject() async {
     final querry_data = await taskcollection
-        .find(where.eq('faculty', '${username_user.trim()}').eq('status', -1 ))
+        .find(where.eq('faculty', '${username_user.trim()}').eq('status', -1))
         .toList();
     print(querry_data);
     return querry_data;
   }
 
   static Future<List<Map<String, dynamic>>> getAdmin() async {
-    var admin_data = await admincollection.find().toList();
-    var AdminLogin = '${admin_data['username']}';
+    final admin_data = await admincollection.find().toList();
+    final AdminLogin = '${admin_data['username']}';
     if (AdminLogin == username_admin) {
       isAdminLogin = 1;
     } else {
@@ -58,10 +61,9 @@ class MongoDbModel {
     return admin_data;
   }
 
- static Future<List<Map<String, dynamic>>> getUserAll() async {
+  static Future<List<Map<String, dynamic>>> getUserAll() async {
     var user_data = await taskcollection
-        .find(where
-            .eq('faculty', '${username_user.trim()}'))
+        .find(where.eq('faculty', '${username_user.trim()}'))
         .toList();
     return user_data;
   }
@@ -101,7 +103,6 @@ class MongoDbModel {
     } catch (e) {
       print(e.toString());
       return e.toString();
-
     }
   }
 
@@ -118,7 +119,6 @@ class MongoDbModel {
     } catch (e) {
       print(e.toString());
       return e.toString();
-
     }
   }
 
@@ -134,7 +134,6 @@ class MongoDbModel {
     } catch (e) {
       print(e.toString());
       return e.toString();
-
     }
   }
 }
