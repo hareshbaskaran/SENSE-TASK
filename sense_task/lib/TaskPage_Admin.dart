@@ -9,6 +9,7 @@ import 'AssignTask_Admin.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'mangodb.dart';
 import 'LoginPage.dart';
+
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 int isEdit = 0;
@@ -51,8 +52,7 @@ class _taskpage_aState extends State<taskpage_a> {
                               child: TaskCard(TaskMongo.fromJson(
                                   snapshot.data[tasklength - index - 1])));
                         });
-                  }
-                  else {
+                  } else {
                     return Center(
                       child: Text('NO data Available'),
                     );
@@ -64,6 +64,16 @@ class _taskpage_aState extends State<taskpage_a> {
   }
 
   Widget TaskCard(TaskMongo task_data) {
+    int hrleft =
+        int.parse(task_data.duetimedb.split(":")[0]) - DateTime.now().hour;
+    int minleft =
+        int.parse(task_data.duetimedb.split(":")[1]) - DateTime.now().minute;
+    if (int.parse(task_data.duedatedb.split("/")[0]) - DateTime.now().day <=
+            0 &&
+        (hrleft < 0 || minleft <= 0)) {
+      task_data.statusdb = 2;
+    }
+
     return Align(
         child: Stack(children: <Widget>[
       Card(
@@ -232,20 +242,8 @@ class _taskpage_aState extends State<taskpage_a> {
                                         MediaQuery.of(context).size.width *
                                             0.04),
                               )
-                            :(int.parse(task_data.duedatedb.split("/")[0]) -
-                            DateTime.now().minute == -1) ?
-                        Text(
-                          "Task overDue",
-                          textAlign: TextAlign.left,
-                          style: GoogleFonts.poppins(
-                              color: Colors.deepOrange,
-                              fontWeight: FontWeight.bold,
-                              fontSize:
-                              MediaQuery.of(context).size.width *
-                                  0.04),
-                        )
-                        :Text(
-                                " ${int.parse(task_data.duetimedb.split(":")[0]) - DateTime.now().hour} hours ${int.parse(task_data.duetimedb.split(":")[1]) - DateTime.now().minute} mins  ",
+                            : Text(
+                                " ${hrleft} hours ${minleft} mins  ",
                                 textAlign: TextAlign.left,
                                 style: GoogleFonts.poppins(
                                     color: Colors.redAccent,
@@ -253,8 +251,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                     fontSize:
                                         MediaQuery.of(context).size.width *
                                             0.04),
-                              )
-                    ),
+                              )),
                   ],
                 ),
                 SizedBox(height: MediaQuery.of(context).size.width * 0.008),
@@ -605,7 +602,7 @@ class _taskpage_aState extends State<taskpage_a> {
                         size: 18,
                       ),
                       Text(
-                        'Compeleted',
+                        'Completed',
                         style: GoogleFonts.poppins(
                             color: Colors.black,
                             fontSize: MediaQuery.of(context).size.width * 0.03),
@@ -637,30 +634,30 @@ class _taskpage_aState extends State<taskpage_a> {
                       ),
                     )
                   : (task_data.statusdb == 2)
-          ? Container(
-        padding: const EdgeInsets.only(right: 20),
-        alignment: Alignment.topRight,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Icon(
-              Icons.circle_rounded,
-              color: Colors.red,
-              size: 18,
-            ),
-            Text(
-              'overdue',
-              style: GoogleFonts.poppins(
-                  color: Colors.black,
-                  fontSize:
-                  MediaQuery.of(context).size.width * 0.03),
-            ),
-          ],
-        ),
-      )
-          :
-      SizedBox()
+                      ? Container(
+                          padding: const EdgeInsets.only(right: 20),
+                          alignment: Alignment.topRight,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Icon(
+                                Icons.circle_rounded,
+                                color: Colors.red,
+                                size: 18,
+                              ),
+                              Text(
+                                'Overdue',
+                                style: GoogleFonts.poppins(
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.03),
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox()
     ]));
   }
 
