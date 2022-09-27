@@ -51,7 +51,8 @@ class _taskpage_aState extends State<taskpage_a> {
                           return Center(
                               child: TaskCard(TaskMongo.fromJson(
                                   snapshot.data[tasklength - index - 1])));
-                        });
+                        }
+                        );
                   } else {
                     return Center(
                       child: Text('NO data Available'),

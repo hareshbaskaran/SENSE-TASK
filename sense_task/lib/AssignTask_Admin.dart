@@ -112,7 +112,8 @@ class _taskassign_aState extends State<taskassign_a> {
             child: ListView(
               children: [
                 Center(
-                    child: Row(children: [
+                    child: Row(
+                        children: [
                   Container(
                     decoration: new BoxDecoration(
                       color: Colors.black,
