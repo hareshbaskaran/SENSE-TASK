@@ -1,3 +1,5 @@
+import 'package:sense_task/Services/firebase_crud.dart';
+
 import 'TaskPage_Admin.dart';
 import 'package:sense_task/Models/TaskMango.dart';
 import 'package:date_time_picker/date_time_picker.dart';
@@ -747,7 +749,20 @@ class _taskassign_aState extends State<taskassign_a> {
                             duetime,
                             facultyvalue,
                             status,
-                            reason);
+                            reason
+                        );
+                   /*     await FirebaseTask.updateEmployee(
+                            categorydb: categoryvalue,
+                            titledb: tasktitlecontroller.text,
+                            descriptiondb: taskdescriptioncontroller.text,
+                            startdatedb: startDateInString,
+                            enddatedb: endDateInString,
+                            duedatedb: dueDateInString,
+                            duetimedb: duetime,
+                            facultydb: facultyvalue,
+                            statusdb: status,
+                            reasondb: reason
+                        );*/
 
                         _clearassignpage();
 
@@ -788,6 +803,18 @@ class _taskassign_aState extends State<taskassign_a> {
                                 primary: Colors.black),
                             onPressed: () {
                               setState(() => isEdit = 0);
+                                  FirebaseTask.addTask(
+                                  categorydb: categoryvalue,
+                                  titledb: tasktitlecontroller.text,
+                                  descriptiondb: taskdescriptioncontroller.text,
+                                  startdatedb: startDateInString,
+                                  enddatedb: endDateInString,
+                                  duedatedb: dueDateInString,
+                                  duetimedb: duetime,
+                                  facultydb: facultyvalue,
+                                  statusdb: status,
+                                  reasondb: reason
+                              );
                               _inserttask(
                                   categoryvalue,
                                   tasktitlecontroller.text,
@@ -798,7 +825,8 @@ class _taskassign_aState extends State<taskassign_a> {
                                   duetime,
                                   facultyvalue,
                                   status,
-                                  reason);
+                                  reason
+                              );
                               _clearassignpage();
                               Navigator.push(
                                 context,
@@ -846,7 +874,8 @@ class _taskassign_aState extends State<taskassign_a> {
       String duetime_update,
       String faculty_update,
       int status_update,
-      String reason_update) async {
+      String reason_update
+      ) async {
     final updatetask = TaskMongo(
         id_t: id,
         categorydb: category_update,

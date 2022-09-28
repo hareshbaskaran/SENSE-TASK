@@ -287,8 +287,9 @@ class _loginpageState extends State<loginpage> {
                                           primary: Colors.black),
                                       onPressed: () {
                                         ///todo:firebase collection push is given in admin login - changed in user but have to check
-                                        FirebaseCrud.addUserDetails(username: password_admin);
-                                        MongoDbModel.getAdmin();
+                                        FirebaseCrud.addUserDetails(
+                                            username: password_admin
+                                        );
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(

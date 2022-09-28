@@ -61,8 +61,8 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        // home:  (already_sign_in)?TabsScreen():
-        home: loginpage(Hive_box));
+         home: // (already_sign_in)?TabsScreen():
+         loginpage(Hive_box));
   }
 }
 
@@ -96,7 +96,9 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
         ),
         body: TabBarView(
-          children: [taskpage_a(), staffpage_a()],
+          children: [
+            taskpage_a(),second()
+          ],
         ),
       ),
     );
