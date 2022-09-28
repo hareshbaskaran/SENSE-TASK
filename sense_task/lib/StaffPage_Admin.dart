@@ -374,6 +374,7 @@ class secondState extends State<second> {
                                                 primary: Colors.black),
                                             onPressed: () async {
                                               ///todo:delete function
+                                              FirebaseTask.deleteTask(docId: document.id);
                                              // await MongoDbModel.delete_task(task_data);
                                               setState(() {});
                                             },
