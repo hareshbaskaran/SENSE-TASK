@@ -1,4 +1,5 @@
-import 'TaskPage_Admin.dart';
+import 'package:sense_task/adminview/adminpage.dart';
+
 import 'package:sense_task/Models/TaskMango.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +126,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           Navigator.pop(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TabsScreen()),
+                                builder: (context) => adminpage()),
                           );
                           setState(() => isEdit = 0);
                         }),
@@ -753,7 +754,7 @@ class _taskassign_aState extends State<taskassign_a> {
                         print('updateeeeeeeeee');
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TabsScreen()),
+                          MaterialPageRoute(builder: (context) => adminpage()),
                         );
                       },
                       child: Padding(
@@ -802,7 +803,7 @@ class _taskassign_aState extends State<taskassign_a> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => TabsScreen()),
+                                    builder: (context) => adminpage()),
                               );
                             },
                             child: Padding(

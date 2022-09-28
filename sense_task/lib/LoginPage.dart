@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
+import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
 import 'Filterpage.dart';
@@ -257,9 +258,7 @@ class _loginpageState extends State<loginpage> {
                                         child: TextField(
                                           maxLines: 1,
                                           onChanged: (_) {
-                                            setState(() {
-
-                                            });
+                                            setState(() {});
                                           },
                                           decoration: InputDecoration(
                                             fillColor: Colors.black,
@@ -288,13 +287,14 @@ class _loginpageState extends State<loginpage> {
                                           primary: Colors.black),
                                       onPressed: () {
                                         ///todo:firebase collection push is given in admin login - changed in user but have to check
-                                        FirebaseCrud.addUserDetails(username: password_admin);
+                                        FirebaseCrud.addUserDetails(
+                                            username: password_admin);
                                         MongoDbModel.getAdmin();
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  TabsScreen()),
+                                                  adminpage()),
                                         );
                                       },
                                       child: Padding(
@@ -448,7 +448,7 @@ class _loginpageState extends State<loginpage> {
               );
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TabsScreen()),
+                MaterialPageRoute(builder: (context) => adminpage()),
               );
             }
           });

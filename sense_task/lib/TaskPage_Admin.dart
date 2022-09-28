@@ -12,7 +12,7 @@ import 'LoginPage.dart';
 
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
-int isEdit = 0;
+
 TextEditingController taskreasoncontroller = new TextEditingController();
 TextEditingController taskreasonblah = new TextEditingController();
 
@@ -41,7 +41,7 @@ class _taskpage_aState extends State<taskpage_a> {
                 } else {
                   if (snapshot.hasData) {
                     var tasklength = snapshot.data.length;
-                    //print(tasklength);///todo: this is where querry check happen if task length = 0
+
                     print('Task has Data');
                     return ListView.builder(
                         scrollDirection: Axis.vertical,
@@ -278,7 +278,8 @@ class _taskpage_aState extends State<taskpage_a> {
                                       shape: StadiumBorder(),
                                       primary: Colors.black),
                                   onPressed: () {
-                                    setState(() => isEdit = 1);
+                                    setState(() {});
+                                    setState(() {});
                                     if (task_data != null) {
                                       print('Updating UI');
                                       categoryvalue = task_data.categorydb;
@@ -393,7 +394,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                                           context,
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  TabsScreen()));
+                                                                  taskpage_a()));
                                                     },
                                                     child: Text('No')),
                                                 ElevatedButton(
@@ -417,7 +418,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                                           context,
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  TabsScreen()));
+                                                                  taskpage_a()));
                                                     },
                                                     child: Text("Yes"))
                                               ]),
