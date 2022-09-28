@@ -69,7 +69,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                     _isSigningOut = true;
                   });
                   ///todo:sign-in method
-                 // await signInWithGoogle.signOut(context: context);
+                  await signOut(context: context);
                   setState(() {
                     _isSigningOut = false;
                   });

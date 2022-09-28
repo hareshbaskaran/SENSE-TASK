@@ -46,7 +46,6 @@ var det = "";
  Future<User?> signInWithGoogle({required BuildContext context}) async {
 FirebaseAuth auth = FirebaseAuth.instance;
 User? user;
-
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
 final GoogleSignInAccount? googleSignInAccount =
@@ -60,7 +59,6 @@ final AuthCredential credential = GoogleAuthProvider.credential(
 accessToken: googleSignInAuthentication.accessToken,
 idToken: googleSignInAuthentication.idToken,
 );
-
 try {
 final UserCredential userCredential =
 await auth.signInWithCredential(credential);
@@ -506,6 +504,27 @@ class ErrorCred extends StatelessWidget {
           color: Colors.red,
           fontSize: 12,
         ),
+      ),
+    );
+  }
+}
+SnackBar customSnackBar({required String content}) {
+return SnackBar(
+backgroundColor: Colors.black,
+content: Text(
+content,
+style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
+),
+);
+}
+Future<void> signOut({required BuildContext context}) async {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  try {
+    await FirebaseAuth.instance.signOut();
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      customSnackBar(
+        content: 'Error signing out. Try again.',
       ),
     );
   }
