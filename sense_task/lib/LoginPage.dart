@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
+import 'package:sense_task/UserInfo.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
 import 'Filterpage.dart';
@@ -42,39 +43,43 @@ final GoogleSignIn googleSignIn = GoogleSignIn();
 bool isLoggedIn = false;
 var det = "";
 
-Future<String?> signInWithGoogle() async {
-  await Firebase.initializeApp();
+ Future<User?> signInWithGoogle({required BuildContext context}) async {
+FirebaseAuth auth = FirebaseAuth.instance;
+User? user;
 
-  final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-  final GoogleSignInAuthentication? googleSignInAuthentication =
-      await googleSignInAccount?.authentication;
+final GoogleSignIn googleSignIn = GoogleSignIn();
 
-  final AuthCredential credential = GoogleAuthProvider.credential(
-    accessToken: googleSignInAuthentication!.accessToken,
-    idToken: googleSignInAuthentication.idToken,
-  );
+final GoogleSignInAccount? googleSignInAccount =
+    await googleSignIn.signIn();
 
-  final UserCredential authResult =
-      await _auth.signInWithCredential(credential);
-  user = authResult.user!;
+if (googleSignInAccount != null) {
+final GoogleSignInAuthentication googleSignInAuthentication =
+await googleSignInAccount.authentication;
 
-  if (user != null) {
-    assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
+final AuthCredential credential = GoogleAuthProvider.credential(
+accessToken: googleSignInAuthentication.accessToken,
+idToken: googleSignInAuthentication.idToken,
+);
 
-    final User? currentUser = _auth.currentUser;
-    assert(user.uid == currentUser?.uid);
+try {
+final UserCredential userCredential =
+await auth.signInWithCredential(credential);
 
-    print('signInWithGoogle succeeded: ${user}');
-    det = (await user.displayName)!;
-    print(det);
-    Prefsetsignin();
-    return '${user.displayName}';
-  }
-
-  return null;
+user = userCredential.user;
+} on FirebaseAuthException catch (e) {
+if (e.code == 'account-exists-with-different-credential') {
+// handle the error here
+}
+else if (e.code == 'invalid-credential') {
+// handle the error here
+}
+} catch (e) {
+// handle the error here
+}
 }
 
+return user;
+}
 void signOutGoogle() async {
   await googleSignIn.signOut();
 
@@ -418,13 +423,6 @@ class _loginpageState extends State<loginpage> {
         ));
   }
 
-  // void _clearall() {
-  //   username_admin = "";
-  //   username_user = "";
-  //   password_admin = "";
-  //   password_user = "";
-  // }
-
   Widget _googleSignInButton() {
     return Container(
       height: 60,
@@ -435,24 +433,28 @@ class _loginpageState extends State<loginpage> {
       child: MaterialButton(
         color: Colors.black,
         onPressed: () async {
-          ///todo:have to check testing
-          FirebaseCrud.addUserDetails(username: username_user);
-          signInWithGoogle().then((result) {
-            if (result != null && usernamevalue_user.text.length > 0) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return loginpage(Hive_box);
-                  },
-                ),
-              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => TabsScreen()),
-              );
-            }
-          });
-        },
+      setState(() {
+      already_sign_in = true;
+      });
+
+      User? user =
+      await signInWithGoogle(context: context);
+
+      setState(() {
+        already_sign_in = false;
+      });
+
+      if (user != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  TabsScreen()
+                 // UserInfoScreen(user: user)
+          ),
+        );
+      }
+      },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         highlightElevation: 0,
         height: 60,

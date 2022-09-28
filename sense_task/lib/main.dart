@@ -5,6 +5,7 @@ import 'package:sense_task/AssignTask_Admin.dart';
 import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:sense_task/UserInfo.dart';
 import 'mangodb.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-         home: // (already_sign_in)?TabsScreen():
+         home:  (already_sign_in)?TabsScreen():
          loginpage(Hive_box));
   }
 }
@@ -97,7 +98,9 @@ class _TabsScreenState extends State<TabsScreen> {
         ),
         body: TabBarView(
           children: [
-            taskpage_a(),second()
+            second(),
+            taskpage_a()
+            //UserInfoScreen(user: user)
           ],
         ),
       ),
