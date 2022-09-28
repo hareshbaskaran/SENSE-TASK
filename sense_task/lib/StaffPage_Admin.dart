@@ -1,3 +1,5 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -87,7 +89,7 @@ class secondState extends State<second> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: null,
+        floatingActionButton: _floating(context),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance.collection('Tasks').snapshots(),
           builder:
@@ -146,18 +148,6 @@ class secondState extends State<second> {
                                         ),
                                       ),
                                       SizedBox(width: MediaQuery.of(context).size.width * 0.15),
-                                      /*  standardtext(text: 'Due :  '),
-                    Align(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        " ${task_data.duedatedb}",
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.poppins(
-                            color: Colors.redAccent,
-                            fontWeight: FontWeight.bold,
-                            fontSize: MediaQuery.of(context).size.width * 0.04),
-                      ),
-                    )*/
                                     ],
                                   ),
                                   SizedBox(height: MediaQuery.of(context).size.width * 0.01),
@@ -307,31 +297,15 @@ class secondState extends State<second> {
                                                 primary: Colors.black),
                                             onPressed: () {
                                               setState(() => isEdit = 1);
-                                              if (task_data != null) {
-                                                print('Updating UI');
                                                 categoryvalue = document['category'];
-                                                tasktitlecontroller.text =
-                                                document['title'];
-                                                taskdescriptioncontroller.text =
-                                                    document['description'];
+                                                tasktitlecontroller.text = document['title'];
+                                                taskdescriptioncontroller.text = document['description'];
                                                 startDateInString = document['startdate'];
                                                 endDateInString = document['enddate'];
                                                 dueDateInString = document['duedate'];
                                                 duetime = document['duetime'];
                                                 facultyvalue = document['faculty'];
                                                 checkInserttask = "update";
-                                                print(categoryvalue);
-                                                print(tasktitlecontroller.text);
-                                                print(taskdescriptioncontroller.text);
-                                                print(startDate);
-                                                print(startDateInString);
-                                                print(endDate);
-                                                print(endDateInString);
-                                                print(dueDate);
-                                                print(dueDateInString);
-                                                print(duetime);
-                                                print(facultyvalue);
-                                              }
                                               ;
                                               Navigator.push(
                                                   context,
@@ -428,21 +402,20 @@ class secondState extends State<second> {
                                                       ElevatedButton(
                                                           onPressed: () async {
                                                             status = 1;
-                                                            /*await _updateTask(
-                                                                task_data!.id_t,
-                                                                task_data.categorydb,
-                                                                task_data.titledb,
-                                                                task_data
-                                                                    .descriptiondb,
-                                                                task_data.startdatedb,
-                                                                task_data.enddatedb,
-                                                                task_data.duedatedb,
-                                                                task_data.duetimedb,
-                                                                task_data.facultydb,
+                                                            await _updateTask(
+                                                                document.id,
+                                                                document['category'],
+                                                                document['title'],
+                                                                document['description'],
+                                                                document['startdate'],
+                                                                document['enddate'],
+                                                                document['duedate'],
+                                                                document['duetime'],
+                                                                document['faculty'],
                                                                 status,
                                                                 taskreasoncontroller
                                                                     .text
-                                                            );*/
+                                                            );
                                                             Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
@@ -529,7 +502,7 @@ class secondState extends State<second> {
                                                                 onSubmitted:
                                                                     (helo) async {
                                                                   status = -1;
-                                                             /*     await _updateTask(
+                                                                  await _updateTask(
                                                                             document.id,
                                                                       document['category'],
                                                                       document['title'],
@@ -541,7 +514,7 @@ class secondState extends State<second> {
                                                                       document['faculty'],
                                                                             status,
                                                                             taskreasoncontroller.text
-                                                                  );*/
+                                                                  );
                                                                       },
 
                                                                 ///enter title
@@ -682,8 +655,51 @@ class secondState extends State<second> {
                           : SizedBox()
                     ]));
               }).toList(),
+
             );
           }),
     );
+  }
+  Future<void> _updateTask(
+      var id,
+      String category_update,
+      String title_update,
+      String description_update,
+      String startdate_update,
+      String enddate_update,
+      String duedate_update,
+      String duetime_update,
+      String faculty_update,
+      int status_update,
+      String reason_update) async {
+    await FirebaseTask.updateTask(
+        docId: id,
+        categorydb: category_update,
+        titledb: title_update,
+        descriptiondb: description_update,
+        startdatedb: startdate_update,
+        enddatedb: enddate_update,
+        duedatedb: duedate_update,
+        duetimedb: duetime_update,
+        facultydb: faculty_update,
+        statusdb: status_update,
+        reasondb: reason_update
+    ).whenComplete(
+          () => Navigator.pop(context),
+    );
+  }
+}
+Widget _floating(BuildContext context) {
+  if (pageview == 1) {
+    return FloatingActionButton(
+      backgroundColor: Colors.black,
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => taskassign_a()));
+      },
+      child: const Icon(Icons.add),
+    );
+  } else {
+    return Container();
   }
 }

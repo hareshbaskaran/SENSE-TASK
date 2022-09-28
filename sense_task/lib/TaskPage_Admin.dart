@@ -412,7 +412,8 @@ class _taskpage_aState extends State<taskpage_a> {
                                                     task_data.facultydb,
                                                     status,
                                                     taskreasoncontroller
-                                                        .text);
+                                                        .text
+                                                );
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -772,3 +773,15 @@ Widget _floating(BuildContext context) {
     return Container();
   }
 }
+/*categorydb: document['category'],
+                                                                titledb: document['title'],
+                                                                descriptiondb: document['description'],
+                                                                startdatedb: document['startdatedb'],
+                                                                enddatedb: document['enddate'],
+                                                                duedatedb: document['duedate'],
+                                                                duetimedb: document['duetime'],
+                                                                facultydb: document['faculty'],
+                                                                statusdb: document['status'],
+                                                                reasondb: document['reason'],
+                                                                docId: document.id
+                                                                */
