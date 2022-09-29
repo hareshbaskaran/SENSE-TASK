@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/Models/UserLoginModel.dart';
+import 'package:sense_task/main.dart';
+String googleuser="haredfgf";
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({Key? key, required User user})
       : _user = user,
@@ -67,6 +69,11 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                 onPressed: () async {
                   setState(() {
                     _isSigningOut = true;
+                    googleuser = _user.displayName!;
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => TabsScreen()
+                    )
+                    );
                   });
                   ///todo:sign-in method
                   await signOut(context: context);

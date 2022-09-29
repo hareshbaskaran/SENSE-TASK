@@ -100,7 +100,6 @@ class secondState extends State<second> {
                 child: CircularProgressIndicator(),
               );
             }
-
             return ListView(
               children: snapshot.data!.docs.map((document) {
                 return Align(
