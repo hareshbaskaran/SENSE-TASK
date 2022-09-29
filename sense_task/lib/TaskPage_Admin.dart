@@ -279,7 +279,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                       primary: Colors.black),
                                   onPressed: () {
                                     setState(() {});
-                                    setState(() {});
+
                                     if (task_data != null) {
                                       print('Updating UI');
                                       categoryvalue = task_data.categorydb;

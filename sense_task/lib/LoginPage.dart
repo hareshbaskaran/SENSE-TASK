@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
-import 'package:sense_task/Models/userview/userpage.dart';
+import 'package:sense_task/userview/userpage.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/adminview/adminpage.dart';

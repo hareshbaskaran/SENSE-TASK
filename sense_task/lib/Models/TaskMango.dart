@@ -33,7 +33,7 @@ class TaskMongo {
   String duedatedb;
   String duetimedb;
   String facultydb;
-  int? statusdb;
+  int statusdb;
   String? reasondb;
   factory TaskMongo.fromJson(Map<String, dynamic> json) => TaskMongo(
       id_t: json["_id"],
