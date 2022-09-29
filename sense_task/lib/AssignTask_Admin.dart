@@ -129,6 +129,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                 builder: (context) => adminpage()),
                           );
                           setState(() => isEdit = 0);
+                          _clearassignpage();
                         }),
                   ),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.2),
@@ -137,7 +138,7 @@ class _taskassign_aState extends State<taskassign_a> {
                       alignment: Alignment.topCenter,
                       //padding: EdgeInsets.fromLTRB(80, 100, 100, 0),
                       child: Text(
-                        checkInserttask + 'Task',
+                        checkInserttask + ' Task',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -825,6 +826,7 @@ class _taskassign_aState extends State<taskassign_a> {
   }
 
   void _clearassignpage() {
+    checkInserttask = 'Assign';
     categoryvalue = "HR office duty";
     tasktitlecontroller.clear();
     taskdescriptioncontroller.clear();

@@ -22,7 +22,7 @@ class TaskMongo {
       required this.duetimedb,
       required this.facultydb,
       required this.statusdb,
-      required this.reasondb});
+      this.reasondb});
 
   ObjectId id_t;
   String categorydb;

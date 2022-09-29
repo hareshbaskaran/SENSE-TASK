@@ -12,6 +12,19 @@ import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'package:sense_task/mangodb.dart';
 import 'package:sense_task/LoginPage.dart';
 
+String filterDateInString = '';
+DateTime filterDate = DateTime.now();
+bool isDateSelectedforfilter = false;
+
+var filterlist = [
+  'Tasks for Today',
+  'Assigned Tasks',
+  'Completed Tasks',
+  'Rejected Tasks',
+  'Overdued Tasks',
+  'Select Date'
+];
+
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 int isEdit = 0;
@@ -144,7 +157,12 @@ class _adminpageState extends State<adminpage> {
                             Align(
                               alignment: Alignment.centerRight,
                               child: IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (_) => FunkyOverlay(),
+                                    );
+                                  },
                                   icon: Icon(Icons.filter_alt_sharp)),
                             )
                           ],
@@ -153,9 +171,7 @@ class _adminpageState extends State<adminpage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: FutureBuilder(
-                            future: (pageview == 1)
-                                ? MongoDbModel.getTask()
-                                : MongoDbModel.getQuerryTask(),
+                            future: MongoDbModel.getTask(),
                             builder: (context, AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
                                   ConnectionState.waiting) {
@@ -420,258 +436,104 @@ class _adminpageState extends State<adminpage> {
                       : SizedBox(
                           height: 0,
                         ),
-                  (pageview == 1)
-                      ? Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 5.0,
-                                        shape: StadiumBorder(),
-                                        primary: Colors.black),
-                                    onPressed: () {
-                                      setState(() => isEdit = 1);
-                                      if (task_data != null) {
-                                        print('Updating UI');
-                                        categoryvalue = task_data.categorydb;
-                                        tasktitlecontroller.text =
-                                            task_data.titledb;
-                                        taskdescriptioncontroller.text =
-                                            task_data.descriptiondb;
-                                        startDateInString =
-                                            task_data.startdatedb;
-                                        endDateInString = task_data.enddatedb;
-                                        dueDateInString = task_data.duedatedb;
-                                        duetime = task_data.duetimedb;
-                                        facultyvalue = task_data.facultydb;
-                                        checkInserttask = "update";
-                                        print(categoryvalue);
-                                        print(tasktitlecontroller.text);
-                                        print(taskdescriptioncontroller.text);
-                                        print(startDate);
-                                        print(startDateInString);
-                                        print(endDate);
-                                        print(endDateInString);
-                                        print(dueDate);
-                                        print(dueDateInString);
-                                        print(duetime);
-                                        print(facultyvalue);
-                                      }
-                                      ;
-                                      Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return taskassign_a();
-                                                  },
-                                                  settings: RouteSettings(
-                                                      arguments: task_data)))
-                                          .then((value) {
-                                        setState(() {});
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 5.0,
+                                  shape: StadiumBorder(),
+                                  primary: Colors.black),
+                              onPressed: () {
+                                setState(() => isEdit = 1);
+                                if (task_data != null) {
+                                  print('Updating UI');
+                                  categoryvalue = task_data.categorydb;
+                                  tasktitlecontroller.text = task_data.titledb;
+                                  taskdescriptioncontroller.text =
+                                      task_data.descriptiondb;
+                                  startDateInString = task_data.startdatedb;
+                                  endDateInString = task_data.enddatedb;
+                                  dueDateInString = task_data.duedatedb;
+                                  duetime = task_data.duetimedb;
+                                  facultyvalue = task_data.facultydb;
+                                  checkInserttask = "Update";
+                                  print(categoryvalue);
+                                  print(tasktitlecontroller.text);
+                                  print(taskdescriptioncontroller.text);
+                                  print(startDate);
+                                  print(startDateInString);
+                                  print(endDate);
+                                  print(endDateInString);
+                                  print(dueDate);
+                                  print(dueDateInString);
+                                  print(duetime);
+                                  print(facultyvalue);
+                                }
+                                ;
+                                Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) {
+                                              return taskassign_a();
+                                            },
+                                            settings: RouteSettings(
+                                                arguments: task_data)))
+                                    .then((value) {
+                                  setState(() {});
+                                });
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    MediaQuery.of(context).size.height * 0.04,
+                                    12,
+                                    MediaQuery.of(context).size.height * 0.04,
+                                    12),
+                                child: Text(
+                                  'Edit',
+                                  style: GoogleFonts.lato(
+                                      color: Colors.white,
+                                      fontSize:
                                           MediaQuery.of(context).size.height *
-                                              0.04,
-                                          12,
-                                          MediaQuery.of(context).size.height *
-                                              0.04,
-                                          12),
-                                      child: Text(
-                                        'Edit',
-                                        style: GoogleFonts.lato(
-                                            color: Colors.white,
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.02),
-                                      ),
-                                    )),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        elevation: 5.0,
-                                        shape: StadiumBorder(),
-                                        primary: Colors.black),
-                                    onPressed: () async {
-                                      print(task_data.id_t);
-                                      await MongoDbModel.delete_task(task_data);
-                                      setState(() {});
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                          MediaQuery.of(context).size.height *
-                                              0.04,
-                                          12,
-                                          MediaQuery.of(context).size.height *
-                                              0.04,
-                                          12),
-                                      child: Text(
-                                        'Delete',
-                                        style: GoogleFonts.lato(
-                                            color: Colors.white,
-                                            fontSize: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.02),
-                                      ),
-                                    )),
-                              ),
-                            ],
-                          ),
-                        )
-                      : Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(15.0),
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      elevation: 5.0,
-                                      shape: StadiumBorder(),
-                                      primary: Colors.black),
-                                  onPressed: () {},
-
-                                  ///add accept onpressed
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        MediaQuery.of(context).size.height *
-                                            0.04,
-                                        12,
-                                        MediaQuery.of(context).size.height *
-                                            0.04,
-                                        12),
-                                    child: Text(
-                                      'Accept',
-                                      style: GoogleFonts.lato(
-                                          color: Colors.white,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
                                               0.02),
-                                    ),
-                                  )),
-                            ),
-                            Spacer(),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      elevation: 5.0,
-                                      shape: StadiumBorder(),
-                                      primary: Colors.black),
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (_) => AlertDialog(
-                                                title: Text(
-                                                    'Do you wish to Decline the Task ?'),
-                                                actionsAlignment:
-                                                    MainAxisAlignment.center,
-                                                actions: [
-                                                  Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Container(
-                                                          height: 60,
-                                                          child: TextField(
-                                                            decoration:
-                                                                InputDecoration(
-                                                                    fillColor:
-                                                                        Colors
-                                                                            .black,
-                                                                    hintText:
-                                                                        'Type the reason to decline...',
-                                                                    hintStyle:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .black,
-                                                                    )),
-                                                            keyboardType:
-                                                                TextInputType
-                                                                    .text,
-                                                            maxLines: 2,
-                                                            cursorColor:
-                                                                Colors.black,
-                                                            controller:
-                                                                taskreasoncontroller,
-                                                            onSubmitted:
-                                                                (helo) async {
-                                                              status = -1;
-                                                              await _updateTask(
-                                                                  task_data!
-                                                                      .id_t,
-                                                                  task_data
-                                                                      .categorydb,
-                                                                  task_data
-                                                                      .titledb,
-                                                                  task_data
-                                                                      .descriptiondb,
-                                                                  task_data
-                                                                      .startdatedb,
-                                                                  task_data
-                                                                      .enddatedb,
-                                                                  task_data
-                                                                      .duedatedb,
-                                                                  task_data
-                                                                      .duetimedb,
-                                                                  task_data
-                                                                      .facultydb,
-                                                                  status,
-                                                                  taskreasoncontroller
-                                                                      .text);
-                                                            },
-
-                                                            ///enter title
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      ElevatedButton(
-                                                          onPressed: () {
-                                                            taskreasoncontroller
-                                                                .clear();
-                                                            Navigator.pop(
-                                                                context);
-                                                          },
-                                                          child: Text('Close')),
-                                                    ],
-                                                  ),
-                                                ]),
-                                        barrierDismissible: false);
-                                  },
-
-                                  ///add reject onpressed
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        MediaQuery.of(context).size.height *
-                                            0.048,
-                                        12,
-                                        MediaQuery.of(context).size.height *
-                                            0.048,
-                                        12),
-                                    child: Text(
-                                      'Reject',
-                                      style: GoogleFonts.lato(
-                                          color: Colors.white,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
+                                ),
+                              )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  elevation: 5.0,
+                                  shape: StadiumBorder(),
+                                  primary: Colors.black),
+                              onPressed: () async {
+                                print(task_data.id_t);
+                                await MongoDbModel.delete_task(task_data);
+                                setState(() {});
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    MediaQuery.of(context).size.height * 0.04,
+                                    12,
+                                    MediaQuery.of(context).size.height * 0.04,
+                                    12),
+                                child: Text(
+                                  'Delete',
+                                  style: GoogleFonts.lato(
+                                      color: Colors.white,
+                                      fontSize:
+                                          MediaQuery.of(context).size.height *
                                               0.02),
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        )
+                                ),
+                              )),
+                        ),
+                      ],
+                    ),
+                  )
                 ],
               )
             ],
@@ -890,5 +752,161 @@ Widget _floating(BuildContext context) {
     );
   } else {
     return Container();
+  }
+}
+
+class FunkyOverlay extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => FunkyOverlayState();
+}
+
+class FunkyOverlayState extends State<FunkyOverlay>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.6,
+            width: MediaQuery.of(context).size.width * 0.7,
+            decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Filter by',
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.045),
+                        ),
+                      ),
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: filterlist.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return (filterlist[index]) != 'Select Date'
+                              ? Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15)),
+                                  ),
+                                  child: MaterialButton(
+                                    color: Colors.black,
+                                    onPressed: () {},
+                                    child: Text(
+                                      style: TextStyle(color: Colors.white),
+                                      filterlist[index],
+                                    ),
+                                  ),
+                                )
+                              : Row(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        final datePick = await showDatePicker(
+                                          context: context,
+                                          initialDate: filterDate,
+                                          firstDate: new DateTime(1900),
+                                          lastDate: new DateTime.now(),
+                                          builder: (context, child) {
+                                            return Theme(
+                                              data: Theme.of(context).copyWith(
+                                                colorScheme: ColorScheme.light(
+                                                  primary: Colors
+                                                      .black, // header background color
+                                                  onPrimary: Colors
+                                                      .white, // header text color
+                                                  onSurface: Colors
+                                                      .black, // body text color
+                                                ),
+                                                textButtonTheme:
+                                                    TextButtonThemeData(
+                                                  style: TextButton.styleFrom(
+                                                    primary: Colors
+                                                        .black, // button text color
+                                                  ),
+                                                ),
+                                              ),
+                                              child: child!,
+                                            );
+                                          },
+                                        );
+                                        if (datePick != null &&
+                                            datePick != filterDate) {
+                                          setState(() {
+                                            filterDate = datePick;
+                                            isDateSelectedforfilter = true;
+
+                                            // put it here
+                                            filterDateInString =
+                                                "${filterDate.day}/${filterDate.month}/${filterDate.year}";
+                                            print(
+                                                filterDateInString); // 08/14/2019
+                                          });
+                                        }
+                                        setState(() {});
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
+                                        ),
+                                        child: Text(
+                                          "Select date",
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.normal,
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                        }),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

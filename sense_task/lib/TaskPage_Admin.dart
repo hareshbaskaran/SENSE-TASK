@@ -292,7 +292,7 @@ class _taskpage_aState extends State<taskpage_a> {
                                       dueDateInString = task_data.duedatedb;
                                       duetime = task_data.duetimedb;
                                       facultyvalue = task_data.facultydb;
-                                      checkInserttask = "update";
+                                      checkInserttask = "Update";
                                       print(categoryvalue);
                                       print(tasktitlecontroller.text);
                                       print(taskdescriptioncontroller.text);
