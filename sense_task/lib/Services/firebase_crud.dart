@@ -91,11 +91,20 @@ class FirebaseTask {
 
 ///read
   static Stream<QuerySnapshot> readTask() {
-    CollectionReference notesItemCollection =
-    _taskCollection;
+    CollectionReference notesItemCollection = _taskCollection;
     return notesItemCollection.snapshots();
   }
 
+
+  ///querry results
+  static Stream<QuerySnapshot> QueryFaculty() {
+    CollectionReference notesItemCollection = _taskCollection;
+    return notesItemCollection.where(
+      "faculty",
+      ///todo:add querry search string inside equal to
+      isEqualTo: ""
+    ).snapshots();
+  }
 ///edit
   static Future<Response> updateTask({
     required String categorydb,
