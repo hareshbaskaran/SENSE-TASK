@@ -4,65 +4,65 @@
 // import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 // import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
-// import 'package:sense_task/Services/firebase_crud.dart';
-// import 'AdminMongo.dart';
-// import 'AssignTask_Admin.dart';
-// import 'LoginPage.dart';
-// import 'Models/TaskMango.dart';
-// import 'TaskPage_Admin.dart';
-// import 'Models/UserMango.dart';
+// import 'package:sense_task/services/firebase_crud.dart';
+// import 'adminmongo.dart';
+// import 'assigntask_admin.dart';
+// import 'loginpage.dart';
+// import 'models/taskmango.dart';
+// import 'taskpage_admin.dart';
+// import 'models/usermango.dart';
 // import 'main.dart';
 // import 'mangodb.dart';
 //
-// /*Text(e["category"]),
-//                                 Text(e["description"]),
-//                                 Text(e["startdate"]),
-//                                 Text(e["enddate"]),
-//                                 Text(e["duedate"]),
-//                                 Text(e["faculty"]),
-//                                 Text(e["status"]),
-//                                 Text(e["reason"]),*/
+// /*text(e["category"]),
+//                                 text(e["description"]),
+//                                 text(e["startdate"]),
+//                                 text(e["enddate"]),
+//                                 text(e["duedate"]),
+//                                 text(e["faculty"]),
+//                                 text(e["status"]),
+//                                 text(e["reason"]),*/
 //
-// /*class ItemList extends StatelessWidget {
-//   List<DocumentSnapshot> _task = [];
+// /*class itemlist extends statelesswidget {
+//   list<documentsnapshot> _task = [];
 //   @override
-//   Widget build(BuildContext context) {
-//     return StreamBuilder<QuerySnapshot>(
-//       stream: FirebaseTask.readItems(),
+//   widget build(buildcontext context) {
+//     return streambuilder<querysnapshot>(
+//       stream: firebasetask.readitems(),
 //       builder: (context, snapshot) {
-//         if (snapshot.hasError) {
-//           print(snapshot.toString());
-//           return Text('Something went wrong');
-//         } else if (snapshot.hasData || snapshot.data != null) {
-//           return ListView.separated(
-//             separatorBuilder: (context, index) => SizedBox(height: 16.0),
-//             itemCount: snapshot.data!.docs.length,
-//             itemBuilder: (context, index) {
-//               Map<String, dynamic> data = _task[index].data()!
-//               as Map<String, dynamic>;
-//               return Ink(
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.circular(8.0),
+//         if (snapshot.haserror) {
+//           print(snapshot.tostring());
+//           return text('something went wrong');
+//         } else if (snapshot.hasdata || snapshot.data != null) {
+//           return listview.separated(
+//             separatorbuilder: (context, index) => sizedbox(height: 16.0),
+//             itemcount: snapshot.data!.docs.length,
+//             itembuilder: (context, index) {
+//               map<string, dynamic> data = _task[index].data()!
+//               as map<string, dynamic>;
+//               return ink(
+//                 decoration: boxdecoration(
+//                   borderradius: borderradius.circular(8.0),
 //                 ),
-//                 child: ListTile(
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(8.0),
+//                 child: listtile(
+//                   shape: roundedrectangleborder(
+//                     borderradius: borderradius.circular(8.0),
 //                   ),
-//                   onTap: () => Navigator.of(context).push(
-//                     MaterialPageRoute(
+//                   ontap: () => navigator.of(context).push(
+//                     materialpageroute(
 //                       builder: (context) => taskassign_a(
 //                       ),
 //                     ),
 //                   ),
-//                   title: Text(
+//                   title: text(
 //                     data['title'],
-//                     maxLines: 1,
-//                     overflow: TextOverflow.ellipsis,
+//                     maxlines: 1,
+//                     overflow: textoverflow.ellipsis,
 //                   ),
-//                   subtitle: Text(
+//                   subtitle: text(
 //                     data['category'],
-//                     maxLines: 1,
-//                     overflow: TextOverflow.ellipsis,
+//                     maxlines: 1,
+//                     overflow: textoverflow.ellipsis,
 //                   ),
 //                 ),
 //               );
@@ -70,116 +70,116 @@
 //           );
 //         }
 //
-//         return Center(
-//           child: CircularProgressIndicator(
+//         return center(
+//           child: circularprogressindicator(
 //           ),
 //         );
 //       },
 //     );
 //   }
 // }*/
-// class second extends StatefulWidget {
+// class second extends statefulwidget {
 //   late bool grey;
 //   @override
-//   secondState createState() => secondState();
+//   secondstate createstate() => secondstate();
 // }
 //
-// class secondState extends State<second> {
-//   secondState();
+// class secondstate extends state<second> {
+//   secondstate();
 //
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         floatingActionButton: _floating(context),
-//       body: StreamBuilder(
-//           stream: FirebaseFirestore.instance.collection('Tasks').snapshots(),
+//   widget build(buildcontext context) {
+//     return scaffold(
+//         floatingactionbutton: _floating(context),
+//       body: streambuilder(
+//           stream: firebasefirestore.instance.collection('tasks').snapshots(),
 //           builder:
-//               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//             if (!snapshot.hasData) {
-//               print(FirebaseFirestore.instance.collection('Tasks').snapshots().toString());
-//               return Center(
-//                 child: CircularProgressIndicator(),
+//               (buildcontext context, asyncsnapshot<querysnapshot> snapshot) {
+//             if (!snapshot.hasdata) {
+//               print(firebasefirestore.instance.collection('tasks').snapshots().tostring());
+//               return center(
+//                 child: circularprogressindicator(),
 //               );
 //             }
-//             return ListView(
+//             return listview(
 //               children: snapshot.data!.docs.map((document) {
-//                 return Align(
-//                     child: Stack(children: <Widget>[
-//                       Card(
+//                 return align(
+//                     child: stack(children: <widget>[
+//                       card(
 //                         elevation: 0,
-//                         color: Colors.white,
-//                         child: RoundedExpansionTile(
-//                           trailing: Column(
-//                             mainAxisAlignment: MainAxisAlignment.end,
-//                             crossAxisAlignment: CrossAxisAlignment.end,
+//                         color: colors.white,
+//                         child: roundedexpansiontile(
+//                           trailing: column(
+//                             mainaxisalignment: mainaxisalignment.end,
+//                             crossaxisalignment: crossaxisalignment.end,
 //                             children: [
-//                               Icon(
-//                                 Icons.arrow_drop_down_outlined,
-//                                 color: Colors.black,
+//                               icon(
+//                                 icons.arrow_drop_down_outlined,
+//                                 color: colors.black,
 //                               ),
 //                             ],
 //                           ),
-//                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-//                           title: Column(
-//                             mainAxisAlignment: MainAxisAlignment.start,
-//                             crossAxisAlignment: CrossAxisAlignment.start,
+//                           shape: roundedrectangleborder(borderradius: borderradius.circular(4)),
+//                           title: column(
+//                             mainaxisalignment: mainaxisalignment.start,
+//                             crossaxisalignment: crossaxisalignment.start,
 //                             children: [
 //                               largetext(text: document['title']),
-//                               SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-//                               Column(
-//                                 mainAxisAlignment: MainAxisAlignment.start,
-//                                 crossAxisAlignment: CrossAxisAlignment.start,
+//                               sizedbox(height: mediaquery.of(context).size.height * 0.01),
+//                               column(
+//                                 mainaxisalignment: mainaxisalignment.start,
+//                                 crossaxisalignment: crossaxisalignment.start,
 //                                 children: [
-//                                   Row(
-//                                     mainAxisAlignment: MainAxisAlignment.start,
-//                                     crossAxisAlignment: CrossAxisAlignment.center,
+//                                   row(
+//                                     mainaxisalignment: mainaxisalignment.start,
+//                                     crossaxisalignment: crossaxisalignment.center,
 //                                     children: [
-//                                       standardtext(text: 'Date:  '),
-//                                       Align(
-//                                         alignment: Alignment.topLeft,
-//                                         child: Text(
+//                                       standardtext(text: 'date:  '),
+//                                       align(
+//                                         alignment: alignment.topleft,
+//                                         child: text(
 //                                           document['startdate'],
-//                                           textAlign: TextAlign.left,
-//                                           style: GoogleFonts.poppins(
-//                                               color: Colors.amber,
-//                                               fontWeight: FontWeight.bold,
-//                                               fontSize:
-//                                               MediaQuery.of(context).size.width * 0.04),
+//                                           textalign: textalign.left,
+//                                           style: googlefonts.poppins(
+//                                               color: colors.amber,
+//                                               fontweight: fontweight.bold,
+//                                               fontsize:
+//                                               mediaquery.of(context).size.width * 0.04),
 //                                         ),
 //                                       ),
-//                                       SizedBox(width: MediaQuery.of(context).size.width * 0.15),
+//                                       sizedbox(width: mediaquery.of(context).size.width * 0.15),
 //                                     ],
 //                                   ),
-//                                   SizedBox(height: MediaQuery.of(context).size.width * 0.01),
+//                                   sizedbox(height: mediaquery.of(context).size.width * 0.01),
 //                                   (pageview == 1)
-//                                       ? Row(
-//                                     mainAxisAlignment: MainAxisAlignment.start,
-//                                     crossAxisAlignment: CrossAxisAlignment.center,
+//                                       ? row(
+//                                     mainaxisalignment: mainaxisalignment.start,
+//                                     crossaxisalignment: crossaxisalignment.center,
 //                                     children: [
-//                                       standardtext(text: 'Faculty     :  '),
-//                                       Align(
-//                                         alignment: Alignment.topLeft,
-//                                         child: Text(
+//                                       standardtext(text: 'faculty     :  '),
+//                                       align(
+//                                         alignment: alignment.topleft,
+//                                         child: text(
 //                                           document['faculty'],
-//                                           textAlign: TextAlign.left,
-//                                           style: GoogleFonts.poppins(
-//                                               color: Colors.black,
-//                                               fontWeight: FontWeight.bold,
-//                                               fontSize:
-//                                               MediaQuery.of(context).size.width *
+//                                           textalign: textalign.left,
+//                                           style: googlefonts.poppins(
+//                                               color: colors.black,
+//                                               fontweight: fontweight.bold,
+//                                               fontsize:
+//                                               mediaquery.of(context).size.width *
 //                                                   0.04),
 //                                         ),
 //                                       )
 //                                       /*  standardtext(text: " ${task_data.facultydb}"),*/
 //                                     ],
 //                                   )
-//                                       : Align(
-//                                     alignment: Alignment.centerRight,
-//                                     child: Text(
+//                                       : align(
+//                                     alignment: alignment.centerright,
+//                                     child: text(
 //                                       document['duedate'] + " " +  document['duetime'],
-//                                       style: GoogleFonts.poppins(
-//                                           color: Colors.red,
-//                                           fontSize:
-//                                           MediaQuery.of(context).size.width * 0.03),
+//                                       style: googlefonts.poppins(
+//                                           color: colors.red,
+//                                           fontsize:
+//                                           mediaquery.of(context).size.width * 0.03),
 //                                     ),
 //                                   ),
 //                                 ],
@@ -187,183 +187,183 @@
 //                             ],
 //                           ),
 //                           children: [
-//                             Column(
-//                               mainAxisAlignment: MainAxisAlignment.start,
-//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                             column(
+//                               mainaxisalignment: mainaxisalignment.start,
+//                               crossaxisalignment: crossaxisalignment.start,
 //                               children: [
-//                                 Row(
-//                                   mainAxisAlignment: MainAxisAlignment.start,
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
+//                                 row(
+//                                   mainaxisalignment: mainaxisalignment.start,
+//                                   crossaxisalignment: crossaxisalignment.start,
 //                                   children: [
 //                                     ///todo: category have to replaced in the heading or is it same update i  next commit
-//                                     standardtext(text: 'Category :  '),
-//                                     Align(
-//                                       alignment: Alignment.topLeft,
-//                                       child: Text(
+//                                     standardtext(text: 'category :  '),
+//                                     align(
+//                                       alignment: alignment.topleft,
+//                                       child: text(
 //                                         document['category'],
-//                                         textAlign: TextAlign.left,
-//                                         style: GoogleFonts.poppins(
-//                                             color: Colors.black,
-//                                             fontWeight: FontWeight.bold,
-//                                             fontSize: MediaQuery.of(context).size.width * 0.04),
+//                                         textalign: textalign.left,
+//                                         style: googlefonts.poppins(
+//                                             color: colors.black,
+//                                             fontweight: fontweight.bold,
+//                                             fontsize: mediaquery.of(context).size.width * 0.04),
 //                                       ),
 //                                     )
 //                                     /*  standardtext(text: " ${task_data.facultydb}"),*/
 //                                   ],
 //                                 ),
-//                                 SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-//                                 standardtext(text: 'Event Description:'),
-//                                 Padding(
-//                                   padding: const EdgeInsets.all(20.0),
-//                                   child: Text(
+//                                 sizedbox(height: mediaquery.of(context).size.height * 0.01),
+//                                 standardtext(text: 'event description:'),
+//                                 padding(
+//                                   padding: const edgeinsets.all(20.0),
+//                                   child: text(
 //                                     document['description'],
-//                                     textAlign: TextAlign.left,
-//                                     style: GoogleFonts.poppins(
-//                                         color: Colors.black,
-//                                         fontWeight: FontWeight.bold,
-//                                         fontSize: MediaQuery.of(context).size.width * 0.04),
+//                                     textalign: textalign.left,
+//                                     style: googlefonts.poppins(
+//                                         color: colors.black,
+//                                         fontweight: fontweight.bold,
+//                                         fontsize: mediaquery.of(context).size.width * 0.04),
 //                                   ),
 //                                 ),
-//                                 Row(
+//                                 row(
 //                                   children: [
-//                                     standardtext(text: 'Due :  '),
-//                                     Padding(
-//                                       padding: const EdgeInsets.all(8.0),
-//                                       child: Text(
+//                                     standardtext(text: 'due :  '),
+//                                     padding(
+//                                       padding: const edgeinsets.all(8.0),
+//                                       child: text(
 //                                         document['duedate'],
-//                                         textAlign: TextAlign.left,
-//                                         style: GoogleFonts.poppins(
-//                                             color: Colors.redAccent,
-//                                             fontWeight: FontWeight.bold,
-//                                             fontSize: MediaQuery.of(context).size.width * 0.04),
+//                                         textalign: textalign.left,
+//                                         style: googlefonts.poppins(
+//                                             color: colors.redaccent,
+//                                             fontweight: fontweight.bold,
+//                                             fontsize: mediaquery.of(context).size.width * 0.04),
 //                                       ),
 //                                     ),
 //                                   ],
 //                                 ),
-//                                 Row(
+//                                 row(
 //                                   children: [
-//                                     standardtext(text: 'Time left:  '),
-//                                     // Padding(
-//                                     //     padding: const EdgeInsets.all(8.0),
+//                                     standardtext(text: 'time left:  '),
+//                                     // padding(
+//                                     //     padding: const edgeinsets.all(8.0),
 //                                     //     child: (int.parse(task_data.duedatedb.split("/")[0]) -
-//                                     //         DateTime.now().day !=
+//                                     //         datetime.now().day !=
 //                                     //         0)
-//                                     //         ? Text(
-//                                     //       "${int.parse(task_data.duedatedb.split("/")[0]) - DateTime.now().day} days , ${task_data.duetimedb.split(":")[0]} hours ${task_data.duetimedb.split(":")[1]} mins  ",
-//                                     //       textAlign: TextAlign.left,
-//                                     //       style: GoogleFonts.poppins(
-//                                     //           color: Colors.redAccent,
-//                                     //           fontWeight: FontWeight.bold,
-//                                     //           fontSize:
-//                                     //           MediaQuery.of(context).size.width *
+//                                     //         ? text(
+//                                     //       "${int.parse(task_data.duedatedb.split("/")[0]) - datetime.now().day} days , ${task_data.duetimedb.split(":")[0]} hours ${task_data.duetimedb.split(":")[1]} mins  ",
+//                                     //       textalign: textalign.left,
+//                                     //       style: googlefonts.poppins(
+//                                     //           color: colors.redaccent,
+//                                     //           fontweight: fontweight.bold,
+//                                     //           fontsize:
+//                                     //           mediaquery.of(context).size.width *
 //                                     //               0.04),
 //                                     //     )
-//                                     //         : Text(
+//                                     //         : text(
 //                                     //       " ${hrleft} hours ${minleft} mins  ",
-//                                     //       textAlign: TextAlign.left,
-//                                     //       style: GoogleFonts.poppins(
-//                                     //           color: Colors.redAccent,
-//                                     //           fontWeight: FontWeight.bold,
-//                                     //           fontSize:
-//                                     //           MediaQuery.of(context).size.width *
+//                                     //       textalign: textalign.left,
+//                                     //       style: googlefonts.poppins(
+//                                     //           color: colors.redaccent,
+//                                     //           fontweight: fontweight.bold,
+//                                     //           fontsize:
+//                                     //           mediaquery.of(context).size.width *
 //                                     //               0.04),
 //                                     //     )
 //                                     // ),
 //                                   ],
 //                                 ),
-//                                 SizedBox(height: MediaQuery.of(context).size.width * 0.008),
+//                                 sizedbox(height: mediaquery.of(context).size.width * 0.008),
 //                                 (pageview == 1)
-//                                     ? Column(
+//                                     ? column(
 //                                   children: [
 //                                     standardtext(text: document['reason']),
 //                                   ],
 //                                 )
-//                                     : SizedBox(
+//                                     : sizedbox(
 //                                   height: 0,
 //                                 ),
 //                                 (pageview == 1)
-//                                     ? Center(
-//                                   child: Row(
-//                                     mainAxisAlignment: MainAxisAlignment.center,
-//                                     crossAxisAlignment: CrossAxisAlignment.center,
+//                                     ? center(
+//                                   child: row(
+//                                     mainaxisalignment: mainaxisalignment.center,
+//                                     crossaxisalignment: crossaxisalignment.center,
 //                                     children: [
-//                                       Padding(
-//                                         padding: const EdgeInsets.all(15.0),
-//                                         child: ElevatedButton(
-//                                             style: ElevatedButton.styleFrom(
+//                                       padding(
+//                                         padding: const edgeinsets.all(15.0),
+//                                         child: elevatedbutton(
+//                                             style: elevatedbutton.stylefrom(
 //                                                 elevation: 5.0,
-//                                                 shape: StadiumBorder(),
-//                                                 primary: Colors.black),
-//                                             onPressed: () {
-//                                               setState(() => isEdit = 1);
+//                                                 shape: stadiumborder(),
+//                                                 primary: colors.black),
+//                                             onpressed: () {
+//                                               setstate(() => isedit = 1);
 //                                                 categoryvalue = document['category'];
 //                                                 tasktitlecontroller.text = document['title'];
 //                                                 taskdescriptioncontroller.text = document['description'];
-//                                                 startDateInString = document['startdate'];
-//                                                 endDateInString = document['enddate'];
-//                                                 dueDateInString = document['duedate'];
+//                                                 startdateinstring = document['startdate'];
+//                                                 enddateinstring = document['enddate'];
+//                                                 duedateinstring = document['duedate'];
 //                                                 duetime = document['duetime'];
 //                                                 facultyvalue = document['faculty'];
-//                                                 checkInserttask = "update";
+//                                                 checkinserttask = "update";
 //                                               ;
-//                                               Navigator.push(
+//                                               navigator.push(
 //                                                   context,
-//                                                   MaterialPageRoute(
+//                                                   materialpageroute(
 //                                                       builder:
-//                                                           (BuildContext context) {
+//                                                           (buildcontext context) {
 //                                                         return taskassign_a();
 //                                                       },
-//                                                       settings: RouteSettings(
+//                                                       settings: routesettings(
 //                                                           arguments: task_data)))
 //                                                   .then((value) {
-//                                                 setState(() {});
+//                                                 setstate(() {});
 //                                               });
 //                                             },
-//                                             child: Padding(
-//                                               padding: EdgeInsets.fromLTRB(
-//                                                   MediaQuery.of(context).size.height *
+//                                             child: padding(
+//                                               padding: edgeinsets.fromltrb(
+//                                                   mediaquery.of(context).size.height *
 //                                                       0.04,
 //                                                   12,
-//                                                   MediaQuery.of(context).size.height *
+//                                                   mediaquery.of(context).size.height *
 //                                                       0.04,
 //                                                   12),
-//                                               child: Text(
-//                                                 'Edit',
-//                                                 style: GoogleFonts.lato(
-//                                                     color: Colors.white,
-//                                                     fontSize: MediaQuery.of(context)
+//                                               child: text(
+//                                                 'edit',
+//                                                 style: googlefonts.lato(
+//                                                     color: colors.white,
+//                                                     fontsize: mediaquery.of(context)
 //                                                         .size
 //                                                         .height *
 //                                                         0.02),
 //                                               ),
 //                                             )),
 //                                       ),
-//                                       Padding(
-//                                         padding: const EdgeInsets.all(15.0),
-//                                         child: ElevatedButton(
-//                                             style: ElevatedButton.styleFrom(
+//                                       padding(
+//                                         padding: const edgeinsets.all(15.0),
+//                                         child: elevatedbutton(
+//                                             style: elevatedbutton.stylefrom(
 //                                                 elevation: 5.0,
-//                                                 shape: StadiumBorder(),
-//                                                 primary: Colors.black),
-//                                             onPressed: () async {
+//                                                 shape: stadiumborder(),
+//                                                 primary: colors.black),
+//                                             onpressed: () async {
 //                                               ///todo:delete function
-//                                               FirebaseTask.deleteTask(docId: document.id);
-//                                              // await MongoDbModel.delete_task(task_data);
-//                                               setState(() {});
+//                                               firebasetask.deletetask(docid: document.id);
+//                                              // await mongodbmodel.delete_task(task_data);
+//                                               setstate(() {});
 //                                             },
-//                                             child: Padding(
-//                                               padding: EdgeInsets.fromLTRB(
-//                                                   MediaQuery.of(context).size.height *
+//                                             child: padding(
+//                                               padding: edgeinsets.fromltrb(
+//                                                   mediaquery.of(context).size.height *
 //                                                       0.04,
 //                                                   12,
-//                                                   MediaQuery.of(context).size.height *
+//                                                   mediaquery.of(context).size.height *
 //                                                       0.04,
 //                                                   12),
-//                                               child: Text(
-//                                                 'Delete',
-//                                                 style: GoogleFonts.lato(
-//                                                     color: Colors.white,
-//                                                     fontSize: MediaQuery.of(context)
+//                                               child: text(
+//                                                 'delete',
+//                                                 style: googlefonts.lato(
+//                                                     color: colors.white,
+//                                                     fontsize: mediaquery.of(context)
 //                                                         .size
 //                                                         .height *
 //                                                         0.02),
@@ -373,35 +373,35 @@
 //                                     ],
 //                                   ),
 //                                 )
-//                                     : Row(
+//                                     : row(
 //                                   children: [
-//                                     Padding(
-//                                       padding: const EdgeInsets.all(15.0),
-//                                       child: ElevatedButton(
-//                                           style: ElevatedButton.styleFrom(
+//                                     padding(
+//                                       padding: const edgeinsets.all(15.0),
+//                                       child: elevatedbutton(
+//                                           style: elevatedbutton.stylefrom(
 //                                               elevation: 5.0,
-//                                               shape: StadiumBorder(),
-//                                               primary: Colors.black),
-//                                           onPressed: () {
-//                                             showDialog(
+//                                               shape: stadiumborder(),
+//                                               primary: colors.black),
+//                                           onpressed: () {
+//                                             showdialog(
 //                                                 context: context,
-//                                                 builder: (_) => AlertDialog(
-//                                                     title: Text(
-//                                                         'Do you wish to Accept the Task ?'),
+//                                                 builder: (_) => alertdialog(
+//                                                     title: text(
+//                                                         'do you wish to accept the task ?'),
 //                                                     actions: [
-//                                                       ElevatedButton(
-//                                                           onPressed: () {
-//                                                             Navigator.push(
+//                                                       elevatedbutton(
+//                                                           onpressed: () {
+//                                                             navigator.push(
 //                                                                 context,
-//                                                                 MaterialPageRoute(
+//                                                                 materialpageroute(
 //                                                                     builder: (context) =>
-//                                                                         TabsScreen()));
+//                                                                         tabsscreen()));
 //                                                           },
-//                                                           child: Text('No')),
-//                                                       ElevatedButton(
-//                                                           onPressed: () async {
+//                                                           child: text('no')),
+//                                                       elevatedbutton(
+//                                                           onpressed: () async {
 //                                                             status = 1;
-//                                                             await _updateTask(
+//                                                             await _updatetask(
 //                                                                 document.id,
 //                                                                 document['category'],
 //                                                                 document['title'],
@@ -415,93 +415,93 @@
 //                                                                 taskreasoncontroller
 //                                                                     .text
 //                                                             );
-//                                                             Navigator.push(
+//                                                             navigator.push(
 //                                                                 context,
-//                                                                 MaterialPageRoute(
+//                                                                 materialpageroute(
 //                                                                     builder: (context) =>
-//                                                                         TabsScreen()));
+//                                                                         tabsscreen()));
 //                                                           },
-//                                                           child: Text("Yes"))
+//                                                           child: text("yes"))
 //                                                     ]),
-//                                                 barrierDismissible: false);
+//                                                 barrierdismissible: false);
 //                                           },
 //
 //                                           ///add accept onpressed
-//                                           child: Padding(
-//                                             padding: EdgeInsets.fromLTRB(
-//                                                 MediaQuery.of(context).size.height * 0.04,
+//                                           child: padding(
+//                                             padding: edgeinsets.fromltrb(
+//                                                 mediaquery.of(context).size.height * 0.04,
 //                                                 12,
-//                                                 MediaQuery.of(context).size.height * 0.04,
+//                                                 mediaquery.of(context).size.height * 0.04,
 //                                                 12),
-//                                             child: Text(
-//                                               'Accept',
-//                                               style: GoogleFonts.lato(
-//                                                   color: Colors.white,
-//                                                   fontSize:
-//                                                   MediaQuery.of(context).size.height *
+//                                             child: text(
+//                                               'accept',
+//                                               style: googlefonts.lato(
+//                                                   color: colors.white,
+//                                                   fontsize:
+//                                                   mediaquery.of(context).size.height *
 //                                                       0.02),
 //                                             ),
 //                                           )),
 //                                     ),
-//                                     Spacer(),
-//                                     Padding(
-//                                       padding: const EdgeInsets.all(8.0),
-//                                       child: ElevatedButton(
-//                                           style: ElevatedButton.styleFrom(
+//                                     spacer(),
+//                                     padding(
+//                                       padding: const edgeinsets.all(8.0),
+//                                       child: elevatedbutton(
+//                                           style: elevatedbutton.stylefrom(
 //                                               elevation: 5.0,
-//                                               shape: StadiumBorder(),
-//                                               primary: Colors.black),
-//                                           onPressed: () {
-//                                             showDialog(
+//                                               shape: stadiumborder(),
+//                                               primary: colors.black),
+//                                           onpressed: () {
+//                                             showdialog(
 //                                                 context: context,
-//                                                 builder: (_) => AlertDialog(
-//                                                     title: Text(
-//                                                         'Do you wish to Decline the Task ?'),
-//                                                     actionsAlignment:
-//                                                     MainAxisAlignment.center,
+//                                                 builder: (_) => alertdialog(
+//                                                     title: text(
+//                                                         'do you wish to decline the task ?'),
+//                                                     actionsalignment:
+//                                                     mainaxisalignment.center,
 //                                                     actions: [
-//                                                       Column(
+//                                                       column(
 //                                                         children: [
-//                                                           Padding(
+//                                                           padding(
 //                                                             padding:
-//                                                             const EdgeInsets.all(
+//                                                             const edgeinsets.all(
 //                                                                 8.0),
-//                                                             child: Container(
+//                                                             child: container(
 //                                                               height: 60,
-//                                                               child: TextField(
-//                                                                 onChanged: (_) {
+//                                                               child: textfield(
+//                                                                 onchanged: (_) {
 //                                                                   if (_.length > 0)
 //                                                                     widget.grey =
 //                                                                     false;
 //                                                                   else
 //                                                                     widget.grey =
 //                                                                     true;
-//                                                                   setState(() {});
+//                                                                   setstate(() {});
 //                                                                 },
 //                                                                 decoration:
-//                                                                 InputDecoration(
-//                                                                     fillColor:
-//                                                                     Colors
+//                                                                 inputdecoration(
+//                                                                     fillcolor:
+//                                                                     colors
 //                                                                         .black,
-//                                                                     hintText:
-//                                                                     'Type the reason to decline...',
-//                                                                     hintStyle:
-//                                                                     TextStyle(
-//                                                                       color: Colors
+//                                                                     hinttext:
+//                                                                     'type the reason to decline...',
+//                                                                     hintstyle:
+//                                                                     textstyle(
+//                                                                       color: colors
 //                                                                           .black,
 //                                                                     )),
-//                                                                 keyboardType:
-//                                                                 TextInputType
+//                                                                 keyboardtype:
+//                                                                 textinputtype
 //                                                                     .text,
-//                                                                 maxLines: 2,
-//                                                                 cursorColor:
-//                                                                 Colors.black,
+//                                                                 maxlines: 2,
+//                                                                 cursorcolor:
+//                                                                 colors.black,
 //                                                                 controller:
 //                                                                 taskreasoncontroller,
-//                                                                 onSubmitted:
+//                                                                 onsubmitted:
 //                                                                     (helo) async {
 //                                                                   status = -1;
-//                                                                   await _updateTask(
+//                                                                   await _updatetask(
 //                                                                             document.id,
 //                                                                       document['category'],
 //                                                                       document['title'],
@@ -520,35 +520,35 @@
 //                                                               ),
 //                                                             ),
 //                                                           ),
-//                                                           ElevatedButton(
-//                                                               onPressed: () {
+//                                                           elevatedbutton(
+//                                                               onpressed: () {
 //                                                                 taskreasoncontroller
 //                                                                     .clear();
-//                                                                 Navigator.pop(
+//                                                                 navigator.pop(
 //                                                                     context);
 //                                                               },
-//                                                               child: Text('Close')),
+//                                                               child: text('close')),
 //                                                         ],
 //                                                       ),
 //                                                     ]),
-//                                                 barrierDismissible: false);
+//                                                 barrierdismissible: false);
 //                                           },
 //
 //                                           ///add reject onpressed
-//                                           child: Padding(
-//                                             padding: EdgeInsets.fromLTRB(
-//                                                 MediaQuery.of(context).size.height *
+//                                           child: padding(
+//                                             padding: edgeinsets.fromltrb(
+//                                                 mediaquery.of(context).size.height *
 //                                                     0.048,
 //                                                 12,
-//                                                 MediaQuery.of(context).size.height *
+//                                                 mediaquery.of(context).size.height *
 //                                                     0.048,
 //                                                 12),
-//                                             child: Text(
-//                                               'Reject',
-//                                               style: GoogleFonts.lato(
-//                                                   color: Colors.white,
-//                                                   fontSize:
-//                                                   MediaQuery.of(context).size.height *
+//                                             child: text(
+//                                               'reject',
+//                                               style: googlefonts.lato(
+//                                                   color: colors.white,
+//                                                   fontsize:
+//                                                   mediaquery.of(context).size.height *
 //                                                       0.02),
 //                                             ),
 //                                           )),
@@ -561,118 +561,118 @@
 //                         ),
 //                       ),
 //                       (document['status'] == 0)
-//                           ? Container(
-//                         padding: const EdgeInsets.only(right: 20),
-//                         alignment: Alignment.topRight,
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.end,
-//                           crossAxisAlignment: CrossAxisAlignment.end,
+//                           ? container(
+//                         padding: const edgeinsets.only(right: 20),
+//                         alignment: alignment.topright,
+//                         child: row(
+//                           mainaxisalignment: mainaxisalignment.end,
+//                           crossaxisalignment: crossaxisalignment.end,
 //                           children: [
-//                             Icon(
-//                               Icons.circle_rounded,
-//                               color: Colors.black,
+//                             icon(
+//                               icons.circle_rounded,
+//                               color: colors.black,
 //                               size: 18,
 //                             ),
-//                             Text(
-//                               'Assigned',
-//                               style: GoogleFonts.poppins(
-//                                   color: Colors.black,
-//                                   fontSize: MediaQuery.of(context).size.width * 0.03),
+//                             text(
+//                               'assigned',
+//                               style: googlefonts.poppins(
+//                                   color: colors.black,
+//                                   fontsize: mediaquery.of(context).size.width * 0.03),
 //                             ),
 //                           ],
 //                         ),
 //                       )
 //                           : (document['status'] == 1)
-//                           ? Container(
-//                         padding: const EdgeInsets.only(right: 20),
-//                         alignment: Alignment.topRight,
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.end,
-//                           crossAxisAlignment: CrossAxisAlignment.end,
+//                           ? container(
+//                         padding: const edgeinsets.only(right: 20),
+//                         alignment: alignment.topright,
+//                         child: row(
+//                           mainaxisalignment: mainaxisalignment.end,
+//                           crossaxisalignment: crossaxisalignment.end,
 //                           children: [
-//                             Icon(
-//                               Icons.circle_rounded,
-//                               color: Colors.green,
+//                             icon(
+//                               icons.circle_rounded,
+//                               color: colors.green,
 //                               size: 18,
 //                             ),
-//                             Text(
-//                               'Completed',
-//                               style: GoogleFonts.poppins(
-//                                   color: Colors.black,
-//                                   fontSize: MediaQuery.of(context).size.width * 0.03),
+//                             text(
+//                               'completed',
+//                               style: googlefonts.poppins(
+//                                   color: colors.black,
+//                                   fontsize: mediaquery.of(context).size.width * 0.03),
 //                             ),
 //                           ],
 //                         ),
 //                       )
 //                           : (document['status'] == -1)
-//                           ? Container(
-//                         padding: const EdgeInsets.only(right: 20),
-//                         alignment: Alignment.topRight,
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.end,
-//                           crossAxisAlignment: CrossAxisAlignment.end,
+//                           ? container(
+//                         padding: const edgeinsets.only(right: 20),
+//                         alignment: alignment.topright,
+//                         child: row(
+//                           mainaxisalignment: mainaxisalignment.end,
+//                           crossaxisalignment: crossaxisalignment.end,
 //                           children: [
-//                             Icon(
-//                               Icons.circle_rounded,
-//                               color: Colors.red,
+//                             icon(
+//                               icons.circle_rounded,
+//                               color: colors.red,
 //                               size: 18,
 //                             ),
-//                             Text(
-//                               'Rejected',
-//                               style: GoogleFonts.poppins(
-//                                   color: Colors.black,
-//                                   fontSize:
-//                                   MediaQuery.of(context).size.width * 0.03),
+//                             text(
+//                               'rejected',
+//                               style: googlefonts.poppins(
+//                                   color: colors.black,
+//                                   fontsize:
+//                                   mediaquery.of(context).size.width * 0.03),
 //                             ),
 //                           ],
 //                         ),
 //                       )
 //                           : (document['status'] == 2)
-//                           ? Container(
-//                         padding: const EdgeInsets.only(right: 20),
-//                         alignment: Alignment.topRight,
-//                         child: Row(
-//                           mainAxisAlignment: MainAxisAlignment.end,
-//                           crossAxisAlignment: CrossAxisAlignment.end,
+//                           ? container(
+//                         padding: const edgeinsets.only(right: 20),
+//                         alignment: alignment.topright,
+//                         child: row(
+//                           mainaxisalignment: mainaxisalignment.end,
+//                           crossaxisalignment: crossaxisalignment.end,
 //                           children: [
-//                             Icon(
-//                               Icons.circle_rounded,
-//                               color: Colors.red,
+//                             icon(
+//                               icons.circle_rounded,
+//                               color: colors.red,
 //                               size: 18,
 //                             ),
-//                             Text(
-//                               'Overdue',
-//                               style: GoogleFonts.poppins(
-//                                   color: Colors.black,
-//                                   fontSize:
-//                                   MediaQuery.of(context).size.width *
+//                             text(
+//                               'overdue',
+//                               style: googlefonts.poppins(
+//                                   color: colors.black,
+//                                   fontsize:
+//                                   mediaquery.of(context).size.width *
 //                                       0.03),
 //                             ),
 //                           ],
 //                         ),
 //                       )
-//                           : SizedBox()
+//                           : sizedbox()
 //                     ]));
-//               }).toList(),
+//               }).tolist(),
 //
 //             );
 //           }),
 //     );
 //   }
-//   Future<void> _updateTask(
+//   future<void> _updatetask(
 //       var id,
-//       String category_update,
-//       String title_update,
-//       String description_update,
-//       String startdate_update,
-//       String enddate_update,
-//       String duedate_update,
-//       String duetime_update,
-//       String faculty_update,
+//       string category_update,
+//       string title_update,
+//       string description_update,
+//       string startdate_update,
+//       string enddate_update,
+//       string duedate_update,
+//       string duetime_update,
+//       string faculty_update,
 //       int status_update,
-//       String reason_update) async {
-//     await FirebaseTask.updateTask(
-//         docId: id,
+//       string reason_update) async {
+//     await firebasetask.updatetask(
+//         docid: id,
 //         categorydb: category_update,
 //         titledb: title_update,
 //         descriptiondb: description_update,
@@ -683,22 +683,32 @@
 //         facultydb: faculty_update,
 //         statusdb: status_update,
 //         reasondb: reason_update
-//     ).whenComplete(
-//           () => Navigator.pop(context),
+//     ).whencomplete(
+//           () => navigator.pop(context),
 //     );
 //   }
 // }
-// Widget _floating(BuildContext context) {
+// widget _floating(buildcontext context) {
 //   if (pageview == 1) {
-//     return FloatingActionButton(
-//       backgroundColor: Colors.black,
-//       onPressed: () {
-//         Navigator.push(
-//             context, MaterialPageRoute(builder: (context) => taskassign_a()));
+//     return floatingactionbutton(
+//       backgroundcolor: colors.black,
+//       onpressed: () {
+//         navigator.push(
+//             context, materialpageroute(builder: (context) => taskassign_a()));
 //       },
-//       child: const Icon(Icons.add),
+//       child: const icon(icons.add),
 //     );
 //   } else {
-//     return Container();
+//     return container();
 //   }
 // }
+// /*
+// document['title']
+// document['category']
+// document['description']
+// document['startdate']
+// document['endate']
+// document['duedate']
+// document['duetime']
+// document['faculty']
+// */
