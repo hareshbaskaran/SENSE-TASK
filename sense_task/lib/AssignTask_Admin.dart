@@ -47,10 +47,9 @@ var items = [
 ];
 String facultyvalue = facultylist.first;
 var facultylist = [
-  'Ishu',
-  'Haresh',
-  'Mami',
-  'Shobi',
+  "lipsum",
+  "hbhj",
+  "hjj"
 ];
 
 String duetime = '';
@@ -75,6 +74,7 @@ class _taskassign_aState extends State<taskassign_a> {
     TaskMongo? task_data =
         ModalRoute.of(context)!.settings.arguments as TaskMongo?;
     print(items);
+
     // void initState() {
     //   super.initState();
     //   if (task_data != null) {

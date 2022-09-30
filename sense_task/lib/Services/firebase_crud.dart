@@ -102,7 +102,7 @@ class FirebaseTask {
     return notesItemCollection.where(
       "faculty",
       ///todo:add querry search string inside equal to
-      isEqualTo: ""
+      isEqualTo: "",
     ).snapshots();
   }
 ///edit

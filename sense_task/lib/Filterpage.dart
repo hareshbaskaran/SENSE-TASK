@@ -169,8 +169,7 @@ class _filtertasksState extends State<filtertasks> {
                     ),
                     ElevatedButton(
                         onPressed: () {
-                          // if (isfacultyChecked == true)
-                          //filterquery["faculty"] = filterfaculty;
+
                         },
                         child: Text('Filter'))
                   ],
@@ -427,7 +426,8 @@ class _filtertasksState extends State<filtertasks> {
                                                           task_data.facultydb,
                                                           status,
                                                           taskreasoncontroller
-                                                              .text);
+                                                              .text
+                                                      );
                                                     },
                                                     child: Text("Yes"))
                                               ]),
