@@ -5,7 +5,6 @@ import 'package:sense_task/AssignTask_Admin.dart';
 import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:sense_task/UserInfo.dart';
 import 'mangodb.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,48 +61,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-         home:  (already_sign_in)?TabsScreen():
-         loginpage(Hive_box));
-  }
-}
-
-class TabsScreen extends StatefulWidget {
-  @override
-  State<TabsScreen> createState() => _TabsScreenState();
-}
-
-class _TabsScreenState extends State<TabsScreen> {
-  int tabView = 1;
-
-  @override
-  Widget build(BuildContext context) {
-    print('Just entered : $tabView');
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60.0),
-          child: AppBar(
-            automaticallyImplyLeading: false,
-            centerTitle: false,
-            backgroundColor: Colors.black,
-            bottom: TabBar(
-              indicatorColor: Colors.white,
-              tabs: [
-                Tab(text: 'All Tasks'),
-                Tab(text: 'Completed Tasks'),
-              ],
-            ),
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            second(),
-            taskpage_a()
-            //UserInfoScreen(user: user)
-          ],
-        ),
-      ),
-    );
+        // home:  (already_sign_in)?TabsScreen():
+        home: loginpage(Hive_box));
   }
 }

@@ -1,9 +1,5 @@
+import 'package:sense_task/adminview/adminpage.dart';
 
-
-
-import 'package:sense_task/Services/firebase_crud.dart';
-
-import 'TaskPage_Admin.dart';
 import 'package:sense_task/Models/TaskMango.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +28,8 @@ String dueDateInString = '';
 DateTime dueDate = DateTime.now();
 
 TaskMongo? task_data;
-String categoryvalue = items.first;
+
+String categoryvalue = 'HR office duty';
 var items = [
   'HR office duty',
   'CTS office duty',
@@ -45,11 +42,12 @@ var items = [
   'Venue Preparation for TRB/TNPSC exams',
   'OTHERS'
 ];
-String facultyvalue = facultylist.first;
+String facultyvalue = 'Ishu';
 var facultylist = [
-  "lipsum",
-  "hbhj",
-  "hjj"
+  'Ishu',
+  'Haresh',
+  'Mami',
+  'Shobi',
 ];
 
 String duetime = '';
@@ -73,8 +71,6 @@ class _taskassign_aState extends State<taskassign_a> {
   Widget build(BuildContext context) {
     TaskMongo? task_data =
         ModalRoute.of(context)!.settings.arguments as TaskMongo?;
-    print(items);
-
     // void initState() {
     //   super.initState();
     //   if (task_data != null) {
@@ -117,8 +113,7 @@ class _taskassign_aState extends State<taskassign_a> {
             child: ListView(
               children: [
                 Center(
-                    child: Row(
-                        children: [
+                    child: Row(children: [
                   Container(
                     decoration: new BoxDecoration(
                       color: Colors.black,
@@ -131,9 +126,10 @@ class _taskassign_aState extends State<taskassign_a> {
                           Navigator.pop(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => TabsScreen()),
+                                builder: (context) => adminpage()),
                           );
                           setState(() => isEdit = 0);
+                          _clearassignpage();
                         }),
                   ),
                   SizedBox(width: MediaQuery.of(context).size.width * 0.2),
@@ -142,7 +138,7 @@ class _taskassign_aState extends State<taskassign_a> {
                       alignment: Alignment.topCenter,
                       //padding: EdgeInsets.fromLTRB(80, 100, 100, 0),
                       child: Text(
-                        checkInserttask + 'Task',
+                        checkInserttask + ' Task',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
@@ -741,9 +737,8 @@ class _taskassign_aState extends State<taskassign_a> {
                           shape: StadiumBorder(),
                           primary: Colors.black),
                       onPressed: () async {
-                        ///todo:update upon ur wish
-                   /*     await _updateTask(
-                            ,
+                        await _updateTask(
+                            task_data!.id_t,
                             categoryvalue,
                             tasktitlecontroller.text,
                             taskdescriptioncontroller.text,
@@ -753,15 +748,14 @@ class _taskassign_aState extends State<taskassign_a> {
                             duetime,
                             facultyvalue,
                             status,
-                            reason
-                        );*/
+                            reason);
 
                         _clearassignpage();
 
                         print('updateeeeeeeeee');
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => TabsScreen()),
+                          MaterialPageRoute(builder: (context) => adminpage()),
                         );
                       },
                       child: Padding(
@@ -795,23 +789,22 @@ class _taskassign_aState extends State<taskassign_a> {
                                 primary: Colors.black),
                             onPressed: () {
                               setState(() => isEdit = 0);
-                                  FirebaseTask.addTask(
-                                  categorydb: categoryvalue,
-                                  titledb: tasktitlecontroller.text,
-                                  descriptiondb: taskdescriptioncontroller.text,
-                                  startdatedb: startDateInString,
-                                  enddatedb: endDateInString,
-                                  duedatedb: dueDateInString,
-                                  duetimedb: duetime,
-                                  facultydb: facultyvalue,
-                                  statusdb: status,
-                                  reasondb: reason
-                              );
+                              _inserttask(
+                                  categoryvalue,
+                                  tasktitlecontroller.text,
+                                  taskdescriptioncontroller.text,
+                                  startDateInString,
+                                  endDateInString,
+                                  dueDateInString,
+                                  duetime,
+                                  facultyvalue,
+                                  status,
+                                  reason);
                               _clearassignpage();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => TabsScreen()),
+                                    builder: (context) => adminpage()),
                               );
                             },
                             child: Padding(
@@ -833,6 +826,7 @@ class _taskassign_aState extends State<taskassign_a> {
   }
 
   void _clearassignpage() {
+    checkInserttask = 'Assign';
     categoryvalue = "HR office duty";
     tasktitlecontroller.clear();
     taskdescriptioncontroller.clear();
@@ -854,11 +848,9 @@ class _taskassign_aState extends State<taskassign_a> {
       String duetime_update,
       String faculty_update,
       int status_update,
-      String reason_update
-      ) async {
-    print(facultyvalue);
-    await FirebaseTask.updateTask(
-        docId: id,
+      String reason_update) async {
+    final updatetask = TaskMongo(
+        id_t: id,
         categorydb: category_update,
         titledb: title_update,
         descriptiondb: description_update,
@@ -868,9 +860,49 @@ class _taskassign_aState extends State<taskassign_a> {
         duetimedb: duetime_update,
         facultydb: faculty_update,
         statusdb: status_update,
-        reasondb: reason_update
-    ).whenComplete(
+        reasondb: reason_update);
+    print('in update task function');
+    print(categoryvalue);
+    print(tasktitlecontroller.text);
+
+    print(taskdescriptioncontroller.text);
+    print(startDate);
+    print(startDateInString);
+    print(endDate);
+    print(endDateInString);
+    print(dueDate);
+    print(dueDateInString);
+    print(duetime);
+    print(facultyvalue);
+    await MongoDbModel.update_task(updatetask).whenComplete(
       () => Navigator.pop(context),
     );
+  }
+
+  Future<void> _inserttask(
+      String category1,
+      String title1,
+      String description1,
+      String startdate1,
+      String enddate1,
+      String duedate1,
+      String duetime1,
+      String faculty1,
+      int status1,
+      String reason1) async {
+    var id_task = T.ObjectId();
+    task_data = TaskMongo(
+        id_t: id_task,
+        categorydb: category1,
+        titledb: title1,
+        descriptiondb: description1,
+        startdatedb: startdate1,
+        enddatedb: enddate1,
+        duedatedb: duedate1,
+        duetimedb: duetime1,
+        facultydb: faculty1,
+        statusdb: status1,
+        reasondb: reason1);
+    var result = await MongoDbModel.insert_task(task_data!);
   }
 }
