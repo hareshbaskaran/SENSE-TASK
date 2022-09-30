@@ -193,7 +193,7 @@ class _adminpageState extends State<adminpage> {
                                   //document!['status'] = 2;
                                 }
                                 return Dismissible(
-                                  key: ValueKey(document.id.length),
+                                  key: ValueKey(document.id),
                                   background: Container(
                                     color: Theme.of(context).errorColor,
                                     child: Icon(
