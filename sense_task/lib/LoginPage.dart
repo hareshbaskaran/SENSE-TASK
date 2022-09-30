@@ -2,10 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
-import 'package:sense_task/userview/userpage.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
-import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
 import 'Filterpage.dart';
@@ -259,7 +257,9 @@ class _loginpageState extends State<loginpage> {
                                         child: TextField(
                                           maxLines: 1,
                                           onChanged: (_) {
-                                            setState(() {});
+                                            setState(() {
+
+                                            });
                                           },
                                           decoration: InputDecoration(
                                             fillColor: Colors.black,
@@ -290,12 +290,12 @@ class _loginpageState extends State<loginpage> {
                                         ///todo:firebase collection push is given in admin login - changed in user but have to check
                                         FirebaseCrud.addUserDetails(
                                             username: password_admin);
-                                        MongoDbModel.getAdmin();
+
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  adminpage()),
+                                                  TabsScreen()),
                                         );
                                       },
                                       child: Padding(
@@ -436,23 +436,27 @@ class _loginpageState extends State<loginpage> {
       child: MaterialButton(
         color: Colors.black,
         onPressed: () async {
-          ///todo:have to check testing
-          FirebaseCrud.addUserDetails(username: username_user);
-          signInWithGoogle().then((result) {
-            if (result != null && usernamevalue_user.text.length > 0) {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) {
-                    return loginpage(Hive_box);
-                  },
-                ),
-              );
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => userpage()),
-              );
-            }
+          setState(() {
+            already_sign_in = true;
           });
+
+          User? user =
+        //  await signInWithGoogle(context: context);
+
+          setState(() {
+            already_sign_in = false;
+          });
+
+          if (user != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      TabsScreen()
+                //UserInfoScreen(user: user)
+              ),
+            );
+          }
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         highlightElevation: 0,
@@ -505,6 +509,27 @@ class ErrorCred extends StatelessWidget {
           color: Colors.red,
           fontSize: 12,
         ),
+      ),
+    );
+  }
+}
+SnackBar customSnackBar({required String content}) {
+return SnackBar(
+backgroundColor: Colors.black,
+content: Text(
+content,
+style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
+),
+);
+}
+Future<void> signOut({required BuildContext context}) async {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  try {
+    await FirebaseAuth.instance.signOut();
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      customSnackBar(
+        content: 'Error signing out. Try again.',
       ),
     );
   }
