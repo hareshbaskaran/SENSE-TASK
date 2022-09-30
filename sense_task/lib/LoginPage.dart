@@ -4,8 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
+import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
+import 'package:sense_task/userview/userpage.dart';
 import 'Filterpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,37 +45,38 @@ final GoogleSignIn googleSignIn = GoogleSignIn();
 bool isLoggedIn = false;
 var det = "";
 
-Future<String?> signInWithGoogle() async {
-  await Firebase.initializeApp();
+Future<User?> signInWithGoogle({required BuildContext context}) async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  User? user;
+  final GoogleSignIn googleSignIn = GoogleSignIn();
 
   final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-  final GoogleSignInAuthentication? googleSignInAuthentication =
-      await googleSignInAccount?.authentication;
 
-  final AuthCredential credential = GoogleAuthProvider.credential(
-    accessToken: googleSignInAuthentication!.accessToken,
-    idToken: googleSignInAuthentication.idToken,
-  );
+  if (googleSignInAccount != null) {
+    final GoogleSignInAuthentication googleSignInAuthentication =
+        await googleSignInAccount.authentication;
 
-  final UserCredential authResult =
-      await _auth.signInWithCredential(credential);
-  user = authResult.user!;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleSignInAuthentication.accessToken,
+      idToken: googleSignInAuthentication.idToken,
+    );
+    try {
+      final UserCredential userCredential =
+          await auth.signInWithCredential(credential);
 
-  if (user != null) {
-    assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
-
-    final User? currentUser = _auth.currentUser;
-    assert(user.uid == currentUser?.uid);
-
-    print('signInWithGoogle succeeded: ${user}');
-    det = (await user.displayName)!;
-    print(det);
-    Prefsetsignin();
-    return '${user.displayName}';
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'account-exists-with-different-credential') {
+// handle the error here
+      } else if (e.code == 'invalid-credential') {
+// handle the error here
+      }
+    } catch (e) {
+// handle the error here
+    }
   }
 
-  return null;
+  return user;
 }
 
 void signOutGoogle() async {
@@ -257,9 +260,7 @@ class _loginpageState extends State<loginpage> {
                                         child: TextField(
                                           maxLines: 1,
                                           onChanged: (_) {
-                                            setState(() {
-
-                                            });
+                                            setState(() {});
                                           },
                                           decoration: InputDecoration(
                                             fillColor: Colors.black,
@@ -290,12 +291,11 @@ class _loginpageState extends State<loginpage> {
                                         ///todo:firebase collection push is given in admin login - changed in user but have to check
                                         FirebaseCrud.addUserDetails(
                                             username: password_admin);
-
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  TabsScreen()),
+                                                  adminpage()),
                                         );
                                       },
                                       child: Padding(
@@ -419,13 +419,6 @@ class _loginpageState extends State<loginpage> {
         ));
   }
 
-  // void _clearall() {
-  //   username_admin = "";
-  //   username_user = "";
-  //   password_admin = "";
-  //   password_user = "";
-  // }
-
   Widget _googleSignInButton() {
     return Container(
       height: 60,
@@ -440,8 +433,7 @@ class _loginpageState extends State<loginpage> {
             already_sign_in = true;
           });
 
-          User? user =
-        //  await signInWithGoogle(context: context);
+          User? user = await signInWithGoogle(context: context);
 
           setState(() {
             already_sign_in = false;
@@ -450,11 +442,9 @@ class _loginpageState extends State<loginpage> {
           if (user != null) {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      TabsScreen()
-                //UserInfoScreen(user: user)
-              ),
+              MaterialPageRoute(builder: (context) => userpage()
+                  //UserInfoScreen(user: user)
+                  ),
             );
           }
         },
@@ -513,15 +503,17 @@ class ErrorCred extends StatelessWidget {
     );
   }
 }
+
 SnackBar customSnackBar({required String content}) {
-return SnackBar(
-backgroundColor: Colors.black,
-content: Text(
-content,
-style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
-),
-);
+  return SnackBar(
+    backgroundColor: Colors.black,
+    content: Text(
+      content,
+      style: TextStyle(color: Colors.redAccent, letterSpacing: 0.5),
+    ),
+  );
 }
+
 Future<void> signOut({required BuildContext context}) async {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   try {

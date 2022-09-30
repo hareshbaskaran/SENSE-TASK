@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/Models/UserLoginModel.dart';
 import 'package:sense_task/main.dart';
-String googleuser="haredfgf";
+
+String googleuser = "haredfgf";
+
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({Key? key, required User user})
       : _user = user,
@@ -19,13 +21,13 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   late User _user;
   bool _isSigningOut = false;
 
-
   @override
   void initState() {
     _user = widget._user;
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,46 +55,47 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               SizedBox(height: 16.0),
               _isSigningOut
                   ? CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-              )
-                  : ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(
-                    Colors.black,
-                  ),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                onPressed: () async {
-                  setState(() {
-                    _isSigningOut = true;
-                    googleuser = _user.displayName!;
-                    Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => TabsScreen()
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
                     )
-                    );
-                  });
-                  ///todo:sign-in method
-                  await signOut(context: context);
-                  setState(() {
-                    _isSigningOut = false;
-                  });
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: Text(
-                    'Sign Out',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                  : ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Colors.black,
+                        ),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                      ),
+                      onPressed: () async {
+                        setState(() {
+                          _isSigningOut = true;
+                          googleuser = _user.displayName!;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => loginpage(Hive_box)));
+                        });
+
+                        ///todo:sign-in method
+                        await signOut(context: context);
+                        setState(() {
+                          _isSigningOut = false;
+                        });
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                        child: Text(
+                          'Sign Out',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ),
             ],
           ),
         ),
