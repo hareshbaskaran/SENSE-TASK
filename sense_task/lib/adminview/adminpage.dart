@@ -84,7 +84,8 @@ class _adminpageState extends State<adminpage> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       alignment: Alignment.topCenter,
-                      image: AssetImage('assets/images/bgnd.png'), // color: Colors.amber,
+                      image: AssetImage(
+                          'assets/images/bgnd.png'), // color: Colors.amber,
                     ),
                   ),
                   child: ListView(
@@ -171,520 +172,39 @@ class _adminpageState extends State<adminpage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                         child: StreamBuilder(
-                          stream:FirebaseFirestore.instance.collection('Tasks').snapshots(),
-                          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                            if (!snapshot.hasData) {
-                              print(FirebaseFirestore.instance.collection(
-                                  'Tasks').snapshots().toString());
-                              return Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                            return ListView(
-                              children: snapshot.data!.docs.map((document){
-                                int hrleft =
-                                    int.parse(document['duetime'].split(":")[0]) - DateTime.now().hour;
-                                int minleft =
-                                    int.parse(document['duetime'].split(":")[1]) - DateTime.now().minute;
-                                if (int.parse(document['duedate'].split("/")[0]) - DateTime.now().day <=
-                                    0 &&
-                                    (hrleft < 0 || minleft <= 0)) {
-                                  ///todo:status check
-                                  //document!['status'] = 2;
-                                }
-                                return Dismissible(
-                                  key: ValueKey(document.id.length),
-                                  background: Container(
-                                    color: Theme.of(context).errorColor,
-                                    child: Icon(
-                                      Icons.delete,
-                                      color: Colors.white,
-                                      size: 35,
-                                    ),
-                                    alignment: Alignment.centerLeft,
-                                    padding: EdgeInsets.only(left: 20),
-                                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                                  ),
-                                  secondaryBackground: Container(
-                                    color: Colors.green,
-                                    child: Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                      size: 35,
-                                    ),
-                                    alignment: Alignment.centerRight,
-                                    padding: EdgeInsets.only(right: 20),
-                                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-                                  ),
-                                  onDismissed: (direction) async {
-                                    if (direction == DismissDirection.endToStart) {
-                                      setState(() => isEdit = 1);
-                                      if (task_data != null) {
-                                        print('Updating UI');
-                                        categoryvalue = document['category'];
-                                        tasktitlecontroller.text = document['title'];
-                                        taskdescriptioncontroller.text = document['description'];
-                                        startDateInString = document['startdate'];
-                                        endDateInString = document['endate'];
-                                        dueDateInString = document['duedate'];
-                                        duetime = document['duetime'];
-                                        facultyvalue = document['faculty'];
-                                        checkInserttask = "Update";
-                                        print(categoryvalue);
-                                        print(tasktitlecontroller.text);
-                                        print(taskdescriptioncontroller.text);
-                                        print(startDate);
-                                        print(startDateInString);
-                                        print(endDate);
-                                        print(endDateInString);
-                                        print(dueDate);
-                                        print(dueDateInString);
-                                        print(duetime);
-                                        print(facultyvalue);
-                                      }
-                                      ;
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (BuildContext context) {
-                                                return taskassign_a();
-                                              },
-                                              settings: RouteSettings(arguments: task_data)))
-                                          .then((value) {
-                                        setState(() {});
-                                      });
-                                    } else {
-                                      print(document.id);
-                                      FirebaseTask.deleteTask(docId: document.id);
-                                      setState(() {});
-                                    }
-                                  },
-                                  child: Align(
-                                      child: Stack(children: <Widget>[
-                                        Container(
-                                          decoration: new BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.rectangle,
-                                            border: Border.all(width: 1.0),
-                                            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                                          ),
-                                          child: Card(
-                                            elevation: 0,
-                                            color: Colors.white,
-                                            child: RoundedExpansionTile(
-                                              rotateTrailing: false,
-                                              trailing: Column(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                children: [
-                                                  Icon(
-                                                    Icons.arrow_drop_down_outlined,
-                                                    color: Colors.black,
-                                                  ),
-                                                ],
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(4)),
-                                              title: Column(
-                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    document['title'],
-                                                    style: GoogleFonts.poppins(
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Colors.black,
-                                                        fontSize: MediaQuery.of(context).size.width * 0.05),
-                                                  ),
-                                                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                    children: [
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: [
-                                                          standardtext(text: 'Date:  '),
-                                                          Align(
-                                                            alignment: Alignment.topLeft,
-                                                            child: Text(
-                                                              document['startdate'],
-                                                              textAlign: TextAlign.left,
-                                                              style: GoogleFonts.poppins(
-                                                                  color: Colors.amber,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  fontSize:
-                                                                  MediaQuery.of(context).size.width * 0.04),
-                                                            ),
-                                                          ),
-                                                          SizedBox(
-                                                              width: MediaQuery.of(context).size.width * 0.15),
-                                                          /*  standardtext(text: 'Due :  '),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Text(
-                            " ${task_data.duedatedb}",
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.poppins(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width * 0.04),
-                          ),
-                        )*/
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                          height: MediaQuery.of(context).size.width * 0.01),
-                                                      (pageview == 1)
-                                                          ? Row(
-                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: [
-                                                          standardtext(text: 'Faculty     :  '),
-                                                          Align(
-                                                            alignment: Alignment.topLeft,
-                                                            child: Text(
-                                                              document['faculty'],
-                                                              textAlign: TextAlign.left,
-                                                              style: GoogleFonts.poppins(
-                                                                  color: Colors.black,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  fontSize:
-                                                                  MediaQuery.of(context).size.width *
-                                                                      0.04),
-                                                            ),
-                                                          )
-                                                          /*  standardtext(text: " ${task_data.facultydb}"),*/
-                                                        ],
-                                                      )
-                                                          : Align(
-                                                        alignment: Alignment.centerRight,
-                                                        child: Text(
-                                                            document['duedate']+" ,  "+document['duetime'],
-                                                          style: GoogleFonts.poppins(
-                                                              color: Colors.red,
-                                                              fontSize:
-                                                              MediaQuery.of(context).size.width *
-                                                                  0.03),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                              children: [
-                                                Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      children: [
-                                                        ///todo: category have to replaced in the heading or is it same update i  next commit
-                                                        standardtext(text: 'Category :  '),
-                                                        Align(
-                                                          alignment: Alignment.topLeft,
-                                                          child: Text(
-                                                            document['category'],
-                                                            textAlign: TextAlign.left,
-                                                            style: GoogleFonts.poppins(
-                                                                color: Colors.black,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize:
-                                                                MediaQuery.of(context).size.width * 0.04),
-                                                          ),
-                                                        )
-                                                        /*  standardtext(text: " ${task_data.facultydb}"),*/
-                                                      ],
-                                                    ),
-                                                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-                                                    standardtext(text: 'Event Description:'),
-                                                    Padding(
-                                                      padding: const EdgeInsets.all(20.0),
-                                                      child: Text(
-                                                        document['description'],
-                                                        textAlign: TextAlign.left,
-                                                        style: GoogleFonts.poppins(
-                                                            color: Colors.black,
-                                                            fontWeight: FontWeight.bold,
-                                                            fontSize: MediaQuery.of(context).size.width * 0.04),
-                                                      ),
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        standardtext(text: 'Due :  '),
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(8.0),
-                                                          child: Text(
-                                                            document['duedate'],
-                                                            textAlign: TextAlign.left,
-                                                            style: GoogleFonts.poppins(
-                                                                color: Colors.redAccent,
-                                                                fontWeight: FontWeight.bold,
-                                                                fontSize:
-                                                                MediaQuery.of(context).size.width * 0.04),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        standardtext(text: 'Time left:  '),
-                                                        Padding(
-                                                            padding: const EdgeInsets.all(8.0),
-                                                            child:
-                                                            (int.parse(
-                                                                document['duedate'].split("/")[0]) -
-                                                                DateTime.now().day !=
-                                                                0)
-                                                                ? Text(
-                                                              ///todo:check duedate given correct
-                                                              "${int.parse(
-                                                                  document['duedate'].split("/")[0]) - DateTime.now().day} days , "+"${document['duedate'].split(":")[0]}"+" hours "+"${document['duedate'].split(":")[1]} mins  ",
-                                                              textAlign: TextAlign.left,
-                                                              style: GoogleFonts.poppins(
-                                                                  color: Colors.redAccent,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  fontSize: MediaQuery.of(context)
-                                                                      .size
-                                                                      .width *
-                                                                      0.04),
-                                                            )
-                                                                : Text(
-                                                              " ${hrleft} hours ${minleft} mins  ",
-                                                              textAlign: TextAlign.left,
-                                                              style: GoogleFonts.poppins(
-                                                                  color: Colors.redAccent,
-                                                                  fontWeight: FontWeight.bold,
-                                                                  fontSize: MediaQuery.of(context)
-                                                                      .size
-                                                                      .width *
-                                                                      0.04),
-                                                            )),
-                                                      ],
-                                                    ),
-                                                    SizedBox(height: MediaQuery.of(context).size.width * 0.008),
-                                                    (pageview == 1)
-                                                        ? Column(
-                                                      children: [
-                                                        standardtext(text: document['reason']),
-                                                      ],
-                                                    )
-                                                        : SizedBox(
-                                                      height: 0,
-                                                    ),
-                                                    Center(
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.center,
-                                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                                        children: [
-                                                          Padding(
-                                                            padding: const EdgeInsets.all(15.0),
-                                                            child: ElevatedButton(
-                                                                style: ElevatedButton.styleFrom(
-                                                                    elevation: 5.0,
-                                                                    shape: StadiumBorder(),
-                                                                    primary: Colors.black),
-                                                                onPressed: () {
-                                                                  setState(() => isEdit = 1);
-                                                                  if (task_data != null) {
-                                                                    print('Updating UI');
-                                                                    categoryvalue = document['category'];
-                                                                    tasktitlecontroller.text =
-                                                                    document['title'];
-                                                                    taskdescriptioncontroller.text =
-                                                                    document['description'];
-                                                                    startDateInString = document['startdate'];
-                                                                    endDateInString = document['endate'];
-                                                                    dueDateInString = document['duedate'];
-                                                                    duetime = document['duetime'];
-                                                                    facultyvalue = document['faculty'];
-                                                                    checkInserttask = "Update";
-                                                                    print(categoryvalue);
-                                                                    print(tasktitlecontroller.text);
-                                                                    print(taskdescriptioncontroller.text);
-                                                                    print(startDate);
-                                                                    print(startDateInString);
-                                                                    print(endDate);
-                                                                    print(endDateInString);
-                                                                    print(dueDate);
-                                                                    print(dueDateInString);
-                                                                    print(duetime);
-                                                                    print(facultyvalue);
-                                                                  }
-                                                                  ;
-                                                                  Navigator.push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                          builder: (BuildContext context) {
-                                                                            return taskassign_a();
-                                                                          },
-                                                                          settings: RouteSettings(
-                                                                              arguments: task_data)))
-                                                                      .then((value) {
-                                                                    setState(() {});
-                                                                  });
-                                                                },
-                                                                child: Padding(
-                                                                  padding: EdgeInsets.fromLTRB(
-                                                                      MediaQuery.of(context).size.height * 0.04,
-                                                                      12,
-                                                                      MediaQuery.of(context).size.height * 0.04,
-                                                                      12),
-                                                                  child: Text(
-                                                                    'Edit',
-                                                                    style: GoogleFonts.lato(
-                                                                        color: Colors.white,
-                                                                        fontSize:
-                                                                        MediaQuery.of(context).size.height *
-                                                                            0.02),
-                                                                  ),
-                                                                )),
-                                                          ),
-                                                          Padding(
-                                                            padding: const EdgeInsets.all(15.0),
-                                                            child: ElevatedButton(
-                                                                style: ElevatedButton.styleFrom(
-                                                                    elevation: 5.0,
-                                                                    shape: StadiumBorder(),
-                                                                    primary: Colors.black),
-                                                                onPressed: () async {
-                                                                  print(document.id);
-                                                                  await FirebaseTask.deleteTask(docId: document.id);
-                                                                  setState(() {});
-                                                                },
-                                                                child: Padding(
-                                                                  padding: EdgeInsets.fromLTRB(
-                                                                      MediaQuery.of(context).size.height * 0.04,
-                                                                      12,
-                                                                      MediaQuery.of(context).size.height * 0.04,
-                                                                      12),
-                                                                  child: Text(
-                                                                    'Delete',
-                                                                    style: GoogleFonts.lato(
-                                                                        color: Colors.white,
-                                                                        fontSize:
-                                                                        MediaQuery.of(context).size.height *
-                                                                            0.02),
-                                                                  ),
-                                                                )),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        (document['status'] == 0)
-                                            ? Container(
-                                          padding: const EdgeInsets.only(right: 20, top: 20),
-                                          alignment: Alignment.topRight,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              Icon(
-                                                Icons.circle_rounded,
-                                                color: Colors.black,
-                                                size: 14,
-                                              ),
-                                              Padding(
-                                                padding: EdgeInsets.only(left: 8),
-                                                child: Text(
-                                                  'Assigned',
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.w500,
-                                                      fontSize:
-                                                      MediaQuery.of(context).size.width * 0.035),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                            : (document['status'] == 1)
-                                            ? Container(
-                                          padding: const EdgeInsets.only(right: 20, top: 20),
-                                          alignment: Alignment.topRight,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              Icon(
-                                                Icons.circle_rounded,
-                                                color: Colors.green,
-                                                size: 18,
-                                              ),
-                                              Text(
-                                                'Completed',
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize:
-                                                    MediaQuery.of(context).size.width * 0.03),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                            : (document['status']== -1)
-                                            ? Container(
-                                          padding: const EdgeInsets.only(right: 20, top: 20),
-                                          alignment: Alignment.topRight,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              Icon(
-                                                Icons.circle_rounded,
-                                                color: Colors.red,
-                                                size: 18,
-                                              ),
-                                              Text(
-                                                'Rejected',
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize:
-                                                    MediaQuery.of(context).size.width * 0.03),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                            : (document['status'] == 2)
-                                            ? Container(
-                                          padding: const EdgeInsets.only(right: 20, top: 20),
-                                          alignment: Alignment.topRight,
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            crossAxisAlignment: CrossAxisAlignment.end,
-                                            children: [
-                                              Icon(
-                                                Icons.circle_rounded,
-                                                color: Colors.red,
-                                                size: 18,
-                                              ),
-                                              Text(
-                                                'Overdue',
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize:
-                                                    MediaQuery.of(context).size.width *
-                                                        0.03),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                            : SizedBox()
-                                      ])),
+                            stream: FirebaseFirestore.instance
+                                .collection('Tasks')
+                                .snapshots(),
+                            builder: (BuildContext context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasError) {
+                                return Text('Something went wrong');
+                              }
+
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Text("Loading");
+                              }
+                              if (!snapshot.hasData) {
+                                print(FirebaseFirestore.instance
+                                    .collection('Tasks')
+                                    .snapshots()
+                                    .toString());
+                                return Center(
+                                  child: CircularProgressIndicator(),
                                 );
-                            }
-                            ).toList(),
-                            );
-                          }
-                        ),
+                              } else
+                                return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    itemCount: snapshot.data!.docs.length,
+                                    itemBuilder: (context, index) {
+                                      return TaskCard(snapshot.data!.docs[
+                                          snapshot.data!.docs.length -
+                                              index -
+                                              1]);
+                                    });
+                            }),
                       ),
                     ],
                   ),
@@ -692,7 +212,6 @@ class _adminpageState extends State<adminpage> {
               : facultystatus()),
     );
   }
-
 
   Future<void> _updateTask(
       var id,
@@ -726,6 +245,511 @@ class _adminpageState extends State<adminpage> {
     }*/
     await MongoDbModel.update_task(updatetask).whenComplete(
       () => Navigator.pop(context),
+    );
+  }
+
+  Widget TaskCard(DocumentSnapshot document) {
+    int hrleft =
+        int.parse(document['duetime'].split(":")[0]) - DateTime.now().hour;
+    int minleft =
+        int.parse(document['duetime'].split(":")[1]) - DateTime.now().minute;
+    if (int.parse(document['duedate'].split("/")[0]) - DateTime.now().day <=
+            0 &&
+        (hrleft < 0 || minleft <= 0)) {
+      ///todo:status check
+      //document!['status'] = 2;
+    }
+    return Dismissible(
+      key: ValueKey(document.id),
+      background: Container(
+        color: Theme.of(context).errorColor,
+        child: Icon(
+          Icons.delete,
+          color: Colors.white,
+          size: 35,
+        ),
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.only(left: 20),
+        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      ),
+      secondaryBackground: Container(
+        color: Colors.green,
+        child: Icon(
+          Icons.edit,
+          color: Colors.white,
+          size: 35,
+        ),
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.only(right: 20),
+        margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+      ),
+      onDismissed: (direction) async {
+        if (direction == DismissDirection.endToStart) {
+          setState(() => isEdit = 1);
+          if (document != null) {
+            print('Updating UI');
+            categoryvalue = document['category'];
+            tasktitlecontroller.text = document['title'];
+            taskdescriptioncontroller.text = document['description'];
+            startDateInString = document['startdate'];
+            endDateInString = document['endate'];
+            dueDateInString = document['duedate'];
+            duetime = document['duetime'];
+            facultyvalue = document['faculty'];
+            checkInserttask = "Update";
+            print(categoryvalue);
+            print(tasktitlecontroller.text);
+            print(taskdescriptioncontroller.text);
+            print(startDate);
+            print(startDateInString);
+            print(endDate);
+            print(endDateInString);
+            print(dueDate);
+            print(dueDateInString);
+            print(duetime);
+            print(facultyvalue);
+          }
+          ;
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) {
+                        return taskassign_a();
+                      },
+                      settings: RouteSettings(arguments: document)))
+              .then((value) {
+            setState(() {});
+          });
+        } else {
+          print(document.id);
+          FirebaseTask.deleteTask(docId: document.id);
+          setState(() {});
+        }
+      },
+      child: Align(
+          child: Stack(children: <Widget>[
+        Container(
+          decoration: new BoxDecoration(
+            color: Colors.white,
+            shape: BoxShape.rectangle,
+            border: Border.all(width: 1.0),
+            borderRadius: BorderRadius.all(Radius.circular(15.0)),
+          ),
+          child: Card(
+            elevation: 0,
+            color: Colors.white,
+            child: RoundedExpansionTile(
+              rotateTrailing: false,
+              trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.arrow_drop_down_outlined,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4)),
+              title: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    document['title'],
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.05),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          standardtext(text: 'Date:  '),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              document['startdate'],
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.poppins(
+                                  color: Colors.amber,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04),
+                            ),
+                          ),
+                          SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.15),
+                          /*  standardtext(text: 'Due :  '),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Text(
+                            " ${task_data.duedatedb}",
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.poppins(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: MediaQuery.of(context).size.width * 0.04),
+                          ),
+                        )*/
+                        ],
+                      ),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.width * 0.01),
+                      (pageview == 1)
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                standardtext(text: 'Faculty     :  '),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Text(
+                                    document['faculty'],
+                                    textAlign: TextAlign.left,
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.04),
+                                  ),
+                                )
+                                /*  standardtext(text: " ${task_data.facultydb}"),*/
+                              ],
+                            )
+                          : Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                document['duedate'] +
+                                    " ,  " +
+                                    document['duetime'],
+                                style: GoogleFonts.poppins(
+                                    color: Colors.red,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.03),
+                              ),
+                            ),
+                    ],
+                  )
+                ],
+              ),
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ///todo: category have to replaced in the heading or is it same update i  next commit
+                        standardtext(text: 'Category :  '),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            document['category'],
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04),
+                          ),
+                        )
+                        /*  standardtext(text: " ${task_data.facultydb}"),*/
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                    standardtext(text: 'Event Description:'),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Text(
+                        document['description'],
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: MediaQuery.of(context).size.width * 0.04),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        standardtext(text: 'Due :  '),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            document['duedate'],
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.poppins(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        standardtext(text: 'Time left:  '),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child:
+                                (int.parse(document['duedate'].split("/")[0]) -
+                                            DateTime.now().day !=
+                                        0)
+                                    ? Text(
+                                        ///todo:check duedate given correct
+                                        "${int.parse(document['duedate'].split("/")[0]) - DateTime.now().day} days , " +
+                                            "${document['duedate'].split(":")[0]}" +
+                                            " hours " +
+                                            "${document['duedate'].split(":")[1]} mins  ",
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.redAccent,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.04),
+                                      )
+                                    : Text(
+                                        " ${hrleft} hours ${minleft} mins  ",
+                                        textAlign: TextAlign.left,
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.redAccent,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.04),
+                                      )),
+                      ],
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.width * 0.008),
+                    (pageview == 1)
+                        ? Column(
+                            children: [
+                              standardtext(text: document['reason']),
+                            ],
+                          )
+                        : SizedBox(
+                            height: 0,
+                          ),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 5.0,
+                                    shape: StadiumBorder(),
+                                    primary: Colors.black),
+                                onPressed: () {
+                                  setState(() => isEdit = 1);
+                                  if (document != null) {
+                                    print('Updating UI');
+                                    categoryvalue = document['category'];
+                                    tasktitlecontroller.text =
+                                        document['title'];
+                                    taskdescriptioncontroller.text =
+                                        document['description'];
+                                    startDateInString = document['startdate'];
+                                    endDateInString = document['endate'];
+                                    dueDateInString = document['duedate'];
+                                    duetime = document['duetime'];
+                                    facultyvalue = document['faculty'];
+                                    checkInserttask = "Update";
+                                    print(categoryvalue);
+                                    print(tasktitlecontroller.text);
+                                    print(taskdescriptioncontroller.text);
+                                    print(startDate);
+                                    print(startDateInString);
+                                    print(endDate);
+                                    print(endDateInString);
+                                    print(dueDate);
+                                    print(dueDateInString);
+                                    print(duetime);
+                                    print(facultyvalue);
+                                  }
+                                  ;
+                                  Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (BuildContext context) {
+                                                return taskassign_a();
+                                              },
+                                              settings: RouteSettings(
+                                                  arguments: document)))
+                                      .then((value) {
+                                    setState(() {});
+                                  });
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.height * 0.04,
+                                      12,
+                                      MediaQuery.of(context).size.height * 0.04,
+                                      12),
+                                  child: Text(
+                                    'Edit',
+                                    style: GoogleFonts.lato(
+                                        color: Colors.white,
+                                        fontSize:
+                                            MediaQuery.of(context).size.height *
+                                                0.02),
+                                  ),
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    elevation: 5.0,
+                                    shape: StadiumBorder(),
+                                    primary: Colors.black),
+                                onPressed: () async {
+                                  print(document.id);
+                                  await FirebaseTask.deleteTask(
+                                      docId: document.id);
+                                  setState(() {});
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                      MediaQuery.of(context).size.height * 0.04,
+                                      12,
+                                      MediaQuery.of(context).size.height * 0.04,
+                                      12),
+                                  child: Text(
+                                    'Delete',
+                                    style: GoogleFonts.lato(
+                                        color: Colors.white,
+                                        fontSize:
+                                            MediaQuery.of(context).size.height *
+                                                0.02),
+                                  ),
+                                )),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+        (document['status'] == 0)
+            ? Container(
+                padding: const EdgeInsets.only(right: 20, top: 20),
+                alignment: Alignment.topRight,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Icon(
+                      Icons.circle_rounded,
+                      color: Colors.black,
+                      size: 14,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 8),
+                      child: Text(
+                        'Assigned',
+                        style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            fontSize:
+                                MediaQuery.of(context).size.width * 0.035),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : (document['status'] == 1)
+                ? Container(
+                    padding: const EdgeInsets.only(right: 20, top: 20),
+                    alignment: Alignment.topRight,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.circle_rounded,
+                          color: Colors.green,
+                          size: 18,
+                        ),
+                        Text(
+                          'Completed',
+                          style: GoogleFonts.poppins(
+                              color: Colors.black,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.03),
+                        ),
+                      ],
+                    ),
+                  )
+                : (document['status'] == -1)
+                    ? Container(
+                        padding: const EdgeInsets.only(right: 20, top: 20),
+                        alignment: Alignment.topRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.circle_rounded,
+                              color: Colors.red,
+                              size: 18,
+                            ),
+                            Text(
+                              'Rejected',
+                              style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.03),
+                            ),
+                          ],
+                        ),
+                      )
+                    : (document['status'] == 2)
+                        ? Container(
+                            padding: const EdgeInsets.only(right: 20, top: 20),
+                            alignment: Alignment.topRight,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Icon(
+                                  Icons.circle_rounded,
+                                  color: Colors.red,
+                                  size: 18,
+                                ),
+                                Text(
+                                  'Overdue',
+                                  style: GoogleFonts.poppins(
+                                      color: Colors.black,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.03),
+                                ),
+                              ],
+                            ),
+                          )
+                        : SizedBox()
+      ])),
     );
   }
 }
