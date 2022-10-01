@@ -110,7 +110,7 @@ class _adminpageState extends State<adminpage> {
                               Align(
                                 alignment: Alignment.bottomCenter,
                                 child: Text(
-                                  '$password_admin !',
+                                  'Admin',
                                   style: GoogleFonts.poppins(
                                       color: Colors.black,
                                       fontSize:
@@ -199,10 +199,7 @@ class _adminpageState extends State<adminpage> {
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount: snapshot.data!.docs.length,
                                     itemBuilder: (context, index) {
-                                      return TaskCard(snapshot.data!.docs[
-                                          snapshot.data!.docs.length -
-                                              index -
-                                              1]);
+                                      return TaskCard(snapshot.data!.docs[snapshot.data!.docs.length - index - 1]);
                                     });
                             }),
                       ),
@@ -225,8 +222,7 @@ class _adminpageState extends State<adminpage> {
       String faculty_update,
       int status_update,
       String reason_update) async {
-    final updatetask = TaskMongo(
-        id_t: id,
+    await FirebaseTask.updateTask(
         categorydb: category_update,
         titledb: title_update,
         descriptiondb: description_update,
@@ -236,14 +232,9 @@ class _adminpageState extends State<adminpage> {
         duetimedb: duetime_update,
         facultydb: faculty_update,
         statusdb: status_update,
-        reasondb: reason_update);
-/*    if ((int.parse(task_data!.duedatedb.split("/")[0]) -
-        DateTime.now().minute == -1)){
-      setState(() {
-        status == 2;
-      });
-    }*/
-    await MongoDbModel.update_task(updatetask).whenComplete(
+        reasondb: reason_update,
+        docId: id
+    ).whenComplete(
       () => Navigator.pop(context),
     );
   }
@@ -297,17 +288,6 @@ class _adminpageState extends State<adminpage> {
             duetime = document['duetime'];
             facultyvalue = document['faculty'];
             checkInserttask = "Update";
-            print(categoryvalue);
-            print(tasktitlecontroller.text);
-            print(taskdescriptioncontroller.text);
-            print(startDate);
-            print(startDateInString);
-            print(endDate);
-            print(endDateInString);
-            print(dueDate);
-            print(dueDateInString);
-            print(duetime);
-            print(facultyvalue);
           }
           ;
           Navigator.push(

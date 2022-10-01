@@ -105,6 +105,14 @@ class FirebaseTask {
       isEqualTo: "",
     ).snapshots();
   }
+  static Future<List<QuerySnapshot<Object?>>> DropdownFaculty(){
+    CollectionReference notesItemCollection = _taskCollection;
+    return notesItemCollection.where(
+      "faculty",
+      ///todo:add querry search string inside equal to
+      isEqualTo: "",
+    ).snapshots().toList();
+  }
 ///edit
   static Future<Response> updateTask({
     required String categorydb,
