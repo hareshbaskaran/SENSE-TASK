@@ -147,7 +147,7 @@ class _adminpageState extends State<adminpage> {
                         child: Row(
                           children: [
                             Text(
-                              'All Tasks',
+                              'All Tasks ',
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -248,7 +248,9 @@ class _adminpageState extends State<adminpage> {
             0 &&
         (hrleft < 0 || minleft <= 0)) {
       ///todo:status check
-      //document!['status'] = 2;
+      setState(() {
+        status =2;
+      });
     }
     return Dismissible(
       key: ValueKey(document.id),
@@ -512,7 +514,8 @@ class _adminpageState extends State<adminpage> {
                                                     .size
                                                     .width *
                                                 0.04),
-                                      )),
+                                      )
+                        ),
                       ],
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width * 0.008),

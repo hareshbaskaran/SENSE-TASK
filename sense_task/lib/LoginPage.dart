@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:sense_task/Services/firebase_crud.dart';
+import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/main.dart';
@@ -138,6 +139,27 @@ class _loginpageState extends State<loginpage> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.025),
                             _googleSignInButton(),
+            SizedBox(
+                height:
+                MediaQuery.of(context).size.height * 0.025),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: InkWell(
+                child: Text(
+                  'Login as User',
+                  style: GoogleFonts.lato(
+                      color: Colors.deepPurpleAccent,
+                      fontSize:
+                      MediaQuery.of(context).size.width *
+                          0.04),
+                ),
+                onTap: (){
+                  setState(() {
+                    pageview = 2;
+                  });
+                },
+              ),
+            ),
                           ])
                         : (pageview == 2)
                             ? Column(
@@ -156,10 +178,9 @@ class _loginpageState extends State<loginpage> {
                 child: Text(
                   'Login as admin',
                   style: GoogleFonts.lato(
-                      color: Colors.black,
-                      fontSize:
-                      MediaQuery.of(context).size.width *
-                          0.05),
+                      color: Colors.deepPurpleAccent,
+                      fontSize: MediaQuery.of(context).size.width * 0.04
+                  ),
                 ),
                 onTap: (){
                   setState(() {
@@ -199,7 +220,8 @@ class _loginpageState extends State<loginpage> {
           if (user != null) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => userpage()
+              MaterialPageRoute(builder: (context) =>
+              (pageview==2)?userpage():(pageview==1)?second() :userpage()
                   //UserInfoScreen(user: user)
                   ),
             );

@@ -1,3 +1,5 @@
+import 'package:sense_task/Services/firebase_crud.dart';
+import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/adminview/adminpage.dart';
 
 import 'package:sense_task/Models/TaskMango.dart';
@@ -126,7 +128,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           Navigator.pop(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => adminpage()),
+                                builder: (context) => second()),
                           );
                           setState(() => isEdit = 0);
                           _clearassignpage();
@@ -755,7 +757,7 @@ class _taskassign_aState extends State<taskassign_a> {
                         print('updateeeeeeeeee');
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => adminpage()),
+                          MaterialPageRoute(builder: (context) => second()),
                         );
                       },
                       child: Padding(
@@ -789,22 +791,23 @@ class _taskassign_aState extends State<taskassign_a> {
                                 primary: Colors.black),
                             onPressed: () {
                               setState(() => isEdit = 0);
-                              _inserttask(
-                                  categoryvalue,
-                                  tasktitlecontroller.text,
-                                  taskdescriptioncontroller.text,
-                                  startDateInString,
-                                  endDateInString,
-                                  dueDateInString,
-                                  duetime,
-                                  facultyvalue,
-                                  status,
-                                  reason);
+                              FirebaseTask.addTask(
+                                  categorydb: categoryvalue,
+                                  titledb: tasktitlecontroller.text,
+                                  descriptiondb: taskdescriptioncontroller.text,
+                                  startdatedb: startDateInString,
+                                  enddatedb: endDateInString,
+                                  duedatedb: dueDateInString,
+                                  duetimedb: duetime,
+                                  facultydb: facultyvalue,
+                                  statusdb: status,
+                                  reasondb: reason
+                              );
                               _clearassignpage();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => adminpage()),
+                                    builder: (context) => second()),
                               );
                             },
                             child: Padding(
@@ -849,18 +852,6 @@ class _taskassign_aState extends State<taskassign_a> {
       String faculty_update,
       int status_update,
       String reason_update) async {
-    final updatetask = TaskMongo(
-        id_t: id,
-        categorydb: category_update,
-        titledb: title_update,
-        descriptiondb: description_update,
-        startdatedb: startdate_update,
-        enddatedb: enddate_update,
-        duedatedb: duedate_update,
-        duetimedb: duetime_update,
-        facultydb: faculty_update,
-        statusdb: status_update,
-        reasondb: reason_update);
     print('in update task function');
     print(categoryvalue);
     print(tasktitlecontroller.text);
@@ -874,35 +865,22 @@ class _taskassign_aState extends State<taskassign_a> {
     print(dueDateInString);
     print(duetime);
     print(facultyvalue);
-    await MongoDbModel.update_task(updatetask).whenComplete(
+    await FirebaseTask.updateTask(
+        categorydb: category_update,
+        titledb: title_update,
+        descriptiondb: description_update,
+        startdatedb: startdate_update,
+        enddatedb: enddate_update,
+        duedatedb: duedate_update,
+        duetimedb: duetime_update,
+        facultydb: faculty_update,
+        statusdb: status_update,
+        reasondb: reason_update,
+        docId: id
+    )
+        .whenComplete(
       () => Navigator.pop(context),
     );
   }
 
-  Future<void> _inserttask(
-      String category1,
-      String title1,
-      String description1,
-      String startdate1,
-      String enddate1,
-      String duedate1,
-      String duetime1,
-      String faculty1,
-      int status1,
-      String reason1) async {
-    var id_task = T.ObjectId();
-    task_data = TaskMongo(
-        id_t: id_task,
-        categorydb: category1,
-        titledb: title1,
-        descriptiondb: description1,
-        startdatedb: startdate1,
-        enddatedb: enddate1,
-        duedatedb: duedate1,
-        duetimedb: duetime1,
-        facultydb: faculty1,
-        statusdb: status1,
-        reasondb: reason1);
-    var result = await MongoDbModel.insert_task(task_data!);
-  }
 }

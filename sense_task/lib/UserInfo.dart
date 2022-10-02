@@ -10,7 +10,6 @@ bool _isSigningOut = false;
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({Key? key, required User user}): _user = user,
         super(key: key);
-
   final User _user;
 
   @override

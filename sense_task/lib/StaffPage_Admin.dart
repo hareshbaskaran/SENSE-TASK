@@ -1,714 +1,1060 @@
-//
-//
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
-// import 'package:sense_task/services/firebase_crud.dart';
-// import 'adminmongo.dart';
-// import 'assigntask_admin.dart';
-// import 'loginpage.dart';
-// import 'models/taskmango.dart';
-// import 'taskpage_admin.dart';
-// import 'models/usermango.dart';
-// import 'main.dart';
-// import 'mangodb.dart';
-//
-// /*text(e["category"]),
-//                                 text(e["description"]),
-//                                 text(e["startdate"]),
-//                                 text(e["enddate"]),
-//                                 text(e["duedate"]),
-//                                 text(e["faculty"]),
-//                                 text(e["status"]),
-//                                 text(e["reason"]),*/
-//
-// /*class itemlist extends statelesswidget {
-//   list<documentsnapshot> _task = [];
-//   @override
-//   widget build(buildcontext context) {
-//     return streambuilder<querysnapshot>(
-//       stream: firebasetask.readitems(),
-//       builder: (context, snapshot) {
-//         if (snapshot.haserror) {
-//           print(snapshot.tostring());
-//           return text('something went wrong');
-//         } else if (snapshot.hasdata || snapshot.data != null) {
-//           return listview.separated(
-//             separatorbuilder: (context, index) => sizedbox(height: 16.0),
-//             itemcount: snapshot.data!.docs.length,
-//             itembuilder: (context, index) {
-//               map<string, dynamic> data = _task[index].data()!
-//               as map<string, dynamic>;
-//               return ink(
-//                 decoration: boxdecoration(
-//                   borderradius: borderradius.circular(8.0),
-//                 ),
-//                 child: listtile(
-//                   shape: roundedrectangleborder(
-//                     borderradius: borderradius.circular(8.0),
-//                   ),
-//                   ontap: () => navigator.of(context).push(
-//                     materialpageroute(
-//                       builder: (context) => taskassign_a(
-//                       ),
-//                     ),
-//                   ),
-//                   title: text(
-//                     data['title'],
-//                     maxlines: 1,
-//                     overflow: textoverflow.ellipsis,
-//                   ),
-//                   subtitle: text(
-//                     data['category'],
-//                     maxlines: 1,
-//                     overflow: textoverflow.ellipsis,
-//                   ),
-//                 ),
-//               );
-//             },
-//           );
-//         }
-//
-//         return center(
-//           child: circularprogressindicator(
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }*/
-// class second extends statefulwidget {
-//   late bool grey;
-//   @override
-//   secondstate createstate() => secondstate();
-// }
-//
-// class secondstate extends state<second> {
-//   secondstate();
-//
-//   widget build(buildcontext context) {
-//     return scaffold(
-//         floatingactionbutton: _floating(context),
-//       body: streambuilder(
-//           stream: firebasefirestore.instance.collection('tasks').snapshots(),
-//           builder:
-//               (buildcontext context, asyncsnapshot<querysnapshot> snapshot) {
-//             if (!snapshot.hasdata) {
-//               print(firebasefirestore.instance.collection('tasks').snapshots().tostring());
-//               return center(
-//                 child: circularprogressindicator(),
-//               );
-//             }
-//             return listview(
-//               children: snapshot.data!.docs.map((document) {
-//                 return align(
-//                     child: stack(children: <widget>[
-//                       card(
-//                         elevation: 0,
-//                         color: colors.white,
-//                         child: roundedexpansiontile(
-//                           trailing: column(
-//                             mainaxisalignment: mainaxisalignment.end,
-//                             crossaxisalignment: crossaxisalignment.end,
-//                             children: [
-//                               icon(
-//                                 icons.arrow_drop_down_outlined,
-//                                 color: colors.black,
-//                               ),
-//                             ],
-//                           ),
-//                           shape: roundedrectangleborder(borderradius: borderradius.circular(4)),
-//                           title: column(
-//                             mainaxisalignment: mainaxisalignment.start,
-//                             crossaxisalignment: crossaxisalignment.start,
-//                             children: [
-//                               largetext(text: document['title']),
-//                               sizedbox(height: mediaquery.of(context).size.height * 0.01),
-//                               column(
-//                                 mainaxisalignment: mainaxisalignment.start,
-//                                 crossaxisalignment: crossaxisalignment.start,
-//                                 children: [
-//                                   row(
-//                                     mainaxisalignment: mainaxisalignment.start,
-//                                     crossaxisalignment: crossaxisalignment.center,
-//                                     children: [
-//                                       standardtext(text: 'date:  '),
-//                                       align(
-//                                         alignment: alignment.topleft,
-//                                         child: text(
-//                                           document['startdate'],
-//                                           textalign: textalign.left,
-//                                           style: googlefonts.poppins(
-//                                               color: colors.amber,
-//                                               fontweight: fontweight.bold,
-//                                               fontsize:
-//                                               mediaquery.of(context).size.width * 0.04),
-//                                         ),
-//                                       ),
-//                                       sizedbox(width: mediaquery.of(context).size.width * 0.15),
-//                                     ],
-//                                   ),
-//                                   sizedbox(height: mediaquery.of(context).size.width * 0.01),
-//                                   (pageview == 1)
-//                                       ? row(
-//                                     mainaxisalignment: mainaxisalignment.start,
-//                                     crossaxisalignment: crossaxisalignment.center,
-//                                     children: [
-//                                       standardtext(text: 'faculty     :  '),
-//                                       align(
-//                                         alignment: alignment.topleft,
-//                                         child: text(
-//                                           document['faculty'],
-//                                           textalign: textalign.left,
-//                                           style: googlefonts.poppins(
-//                                               color: colors.black,
-//                                               fontweight: fontweight.bold,
-//                                               fontsize:
-//                                               mediaquery.of(context).size.width *
-//                                                   0.04),
-//                                         ),
-//                                       )
-//                                       /*  standardtext(text: " ${task_data.facultydb}"),*/
-//                                     ],
-//                                   )
-//                                       : align(
-//                                     alignment: alignment.centerright,
-//                                     child: text(
-//                                       document['duedate'] + " " +  document['duetime'],
-//                                       style: googlefonts.poppins(
-//                                           color: colors.red,
-//                                           fontsize:
-//                                           mediaquery.of(context).size.width * 0.03),
-//                                     ),
-//                                   ),
-//                                 ],
-//                               )
-//                             ],
-//                           ),
-//                           children: [
-//                             column(
-//                               mainaxisalignment: mainaxisalignment.start,
-//                               crossaxisalignment: crossaxisalignment.start,
-//                               children: [
-//                                 row(
-//                                   mainaxisalignment: mainaxisalignment.start,
-//                                   crossaxisalignment: crossaxisalignment.start,
-//                                   children: [
-//                                     ///todo: category have to replaced in the heading or is it same update i  next commit
-//                                     standardtext(text: 'category :  '),
-//                                     align(
-//                                       alignment: alignment.topleft,
-//                                       child: text(
-//                                         document['category'],
-//                                         textalign: textalign.left,
-//                                         style: googlefonts.poppins(
-//                                             color: colors.black,
-//                                             fontweight: fontweight.bold,
-//                                             fontsize: mediaquery.of(context).size.width * 0.04),
-//                                       ),
-//                                     )
-//                                     /*  standardtext(text: " ${task_data.facultydb}"),*/
-//                                   ],
-//                                 ),
-//                                 sizedbox(height: mediaquery.of(context).size.height * 0.01),
-//                                 standardtext(text: 'event description:'),
-//                                 padding(
-//                                   padding: const edgeinsets.all(20.0),
-//                                   child: text(
-//                                     document['description'],
-//                                     textalign: textalign.left,
-//                                     style: googlefonts.poppins(
-//                                         color: colors.black,
-//                                         fontweight: fontweight.bold,
-//                                         fontsize: mediaquery.of(context).size.width * 0.04),
-//                                   ),
-//                                 ),
-//                                 row(
-//                                   children: [
-//                                     standardtext(text: 'due :  '),
-//                                     padding(
-//                                       padding: const edgeinsets.all(8.0),
-//                                       child: text(
-//                                         document['duedate'],
-//                                         textalign: textalign.left,
-//                                         style: googlefonts.poppins(
-//                                             color: colors.redaccent,
-//                                             fontweight: fontweight.bold,
-//                                             fontsize: mediaquery.of(context).size.width * 0.04),
-//                                       ),
-//                                     ),
-//                                   ],
-//                                 ),
-//                                 row(
-//                                   children: [
-//                                     standardtext(text: 'time left:  '),
-//                                     // padding(
-//                                     //     padding: const edgeinsets.all(8.0),
-//                                     //     child: (int.parse(task_data.duedatedb.split("/")[0]) -
-//                                     //         datetime.now().day !=
-//                                     //         0)
-//                                     //         ? text(
-//                                     //       "${int.parse(task_data.duedatedb.split("/")[0]) - datetime.now().day} days , ${task_data.duetimedb.split(":")[0]} hours ${task_data.duetimedb.split(":")[1]} mins  ",
-//                                     //       textalign: textalign.left,
-//                                     //       style: googlefonts.poppins(
-//                                     //           color: colors.redaccent,
-//                                     //           fontweight: fontweight.bold,
-//                                     //           fontsize:
-//                                     //           mediaquery.of(context).size.width *
-//                                     //               0.04),
-//                                     //     )
-//                                     //         : text(
-//                                     //       " ${hrleft} hours ${minleft} mins  ",
-//                                     //       textalign: textalign.left,
-//                                     //       style: googlefonts.poppins(
-//                                     //           color: colors.redaccent,
-//                                     //           fontweight: fontweight.bold,
-//                                     //           fontsize:
-//                                     //           mediaquery.of(context).size.width *
-//                                     //               0.04),
-//                                     //     )
-//                                     // ),
-//                                   ],
-//                                 ),
-//                                 sizedbox(height: mediaquery.of(context).size.width * 0.008),
-//                                 (pageview == 1)
-//                                     ? column(
-//                                   children: [
-//                                     standardtext(text: document['reason']),
-//                                   ],
-//                                 )
-//                                     : sizedbox(
-//                                   height: 0,
-//                                 ),
-//                                 (pageview == 1)
-//                                     ? center(
-//                                   child: row(
-//                                     mainaxisalignment: mainaxisalignment.center,
-//                                     crossaxisalignment: crossaxisalignment.center,
-//                                     children: [
-//                                       padding(
-//                                         padding: const edgeinsets.all(15.0),
-//                                         child: elevatedbutton(
-//                                             style: elevatedbutton.stylefrom(
-//                                                 elevation: 5.0,
-//                                                 shape: stadiumborder(),
-//                                                 primary: colors.black),
-//                                             onpressed: () {
-//                                               setstate(() => isedit = 1);
-//                                                 categoryvalue = document['category'];
-//                                                 tasktitlecontroller.text = document['title'];
-//                                                 taskdescriptioncontroller.text = document['description'];
-//                                                 startdateinstring = document['startdate'];
-//                                                 enddateinstring = document['enddate'];
-//                                                 duedateinstring = document['duedate'];
-//                                                 duetime = document['duetime'];
-//                                                 facultyvalue = document['faculty'];
-//                                                 checkinserttask = "update";
-//                                               ;
-//                                               navigator.push(
-//                                                   context,
-//                                                   materialpageroute(
-//                                                       builder:
-//                                                           (buildcontext context) {
-//                                                         return taskassign_a();
-//                                                       },
-//                                                       settings: routesettings(
-//                                                           arguments: task_data)))
-//                                                   .then((value) {
-//                                                 setstate(() {});
-//                                               });
-//                                             },
-//                                             child: padding(
-//                                               padding: edgeinsets.fromltrb(
-//                                                   mediaquery.of(context).size.height *
-//                                                       0.04,
-//                                                   12,
-//                                                   mediaquery.of(context).size.height *
-//                                                       0.04,
-//                                                   12),
-//                                               child: text(
-//                                                 'edit',
-//                                                 style: googlefonts.lato(
-//                                                     color: colors.white,
-//                                                     fontsize: mediaquery.of(context)
-//                                                         .size
-//                                                         .height *
-//                                                         0.02),
-//                                               ),
-//                                             )),
-//                                       ),
-//                                       padding(
-//                                         padding: const edgeinsets.all(15.0),
-//                                         child: elevatedbutton(
-//                                             style: elevatedbutton.stylefrom(
-//                                                 elevation: 5.0,
-//                                                 shape: stadiumborder(),
-//                                                 primary: colors.black),
-//                                             onpressed: () async {
-//                                               ///todo:delete function
-//                                               firebasetask.deletetask(docid: document.id);
-//                                              // await mongodbmodel.delete_task(task_data);
-//                                               setstate(() {});
-//                                             },
-//                                             child: padding(
-//                                               padding: edgeinsets.fromltrb(
-//                                                   mediaquery.of(context).size.height *
-//                                                       0.04,
-//                                                   12,
-//                                                   mediaquery.of(context).size.height *
-//                                                       0.04,
-//                                                   12),
-//                                               child: text(
-//                                                 'delete',
-//                                                 style: googlefonts.lato(
-//                                                     color: colors.white,
-//                                                     fontsize: mediaquery.of(context)
-//                                                         .size
-//                                                         .height *
-//                                                         0.02),
-//                                               ),
-//                                             )),
-//                                       ),
-//                                     ],
-//                                   ),
-//                                 )
-//                                     : row(
-//                                   children: [
-//                                     padding(
-//                                       padding: const edgeinsets.all(15.0),
-//                                       child: elevatedbutton(
-//                                           style: elevatedbutton.stylefrom(
-//                                               elevation: 5.0,
-//                                               shape: stadiumborder(),
-//                                               primary: colors.black),
-//                                           onpressed: () {
-//                                             showdialog(
-//                                                 context: context,
-//                                                 builder: (_) => alertdialog(
-//                                                     title: text(
-//                                                         'do you wish to accept the task ?'),
-//                                                     actions: [
-//                                                       elevatedbutton(
-//                                                           onpressed: () {
-//                                                             navigator.push(
-//                                                                 context,
-//                                                                 materialpageroute(
-//                                                                     builder: (context) =>
-//                                                                         tabsscreen()));
-//                                                           },
-//                                                           child: text('no')),
-//                                                       elevatedbutton(
-//                                                           onpressed: () async {
-//                                                             status = 1;
-//                                                             await _updatetask(
-//                                                                 document.id,
-//                                                                 document['category'],
-//                                                                 document['title'],
-//                                                                 document['description'],
-//                                                                 document['startdate'],
-//                                                                 document['enddate'],
-//                                                                 document['duedate'],
-//                                                                 document['duetime'],
-//                                                                 document['faculty'],
-//                                                                 status,
-//                                                                 taskreasoncontroller
-//                                                                     .text
-//                                                             );
-//                                                             navigator.push(
-//                                                                 context,
-//                                                                 materialpageroute(
-//                                                                     builder: (context) =>
-//                                                                         tabsscreen()));
-//                                                           },
-//                                                           child: text("yes"))
-//                                                     ]),
-//                                                 barrierdismissible: false);
-//                                           },
-//
-//                                           ///add accept onpressed
-//                                           child: padding(
-//                                             padding: edgeinsets.fromltrb(
-//                                                 mediaquery.of(context).size.height * 0.04,
-//                                                 12,
-//                                                 mediaquery.of(context).size.height * 0.04,
-//                                                 12),
-//                                             child: text(
-//                                               'accept',
-//                                               style: googlefonts.lato(
-//                                                   color: colors.white,
-//                                                   fontsize:
-//                                                   mediaquery.of(context).size.height *
-//                                                       0.02),
-//                                             ),
-//                                           )),
-//                                     ),
-//                                     spacer(),
-//                                     padding(
-//                                       padding: const edgeinsets.all(8.0),
-//                                       child: elevatedbutton(
-//                                           style: elevatedbutton.stylefrom(
-//                                               elevation: 5.0,
-//                                               shape: stadiumborder(),
-//                                               primary: colors.black),
-//                                           onpressed: () {
-//                                             showdialog(
-//                                                 context: context,
-//                                                 builder: (_) => alertdialog(
-//                                                     title: text(
-//                                                         'do you wish to decline the task ?'),
-//                                                     actionsalignment:
-//                                                     mainaxisalignment.center,
-//                                                     actions: [
-//                                                       column(
-//                                                         children: [
-//                                                           padding(
-//                                                             padding:
-//                                                             const edgeinsets.all(
-//                                                                 8.0),
-//                                                             child: container(
-//                                                               height: 60,
-//                                                               child: textfield(
-//                                                                 onchanged: (_) {
-//                                                                   if (_.length > 0)
-//                                                                     widget.grey =
-//                                                                     false;
-//                                                                   else
-//                                                                     widget.grey =
-//                                                                     true;
-//                                                                   setstate(() {});
-//                                                                 },
-//                                                                 decoration:
-//                                                                 inputdecoration(
-//                                                                     fillcolor:
-//                                                                     colors
-//                                                                         .black,
-//                                                                     hinttext:
-//                                                                     'type the reason to decline...',
-//                                                                     hintstyle:
-//                                                                     textstyle(
-//                                                                       color: colors
-//                                                                           .black,
-//                                                                     )),
-//                                                                 keyboardtype:
-//                                                                 textinputtype
-//                                                                     .text,
-//                                                                 maxlines: 2,
-//                                                                 cursorcolor:
-//                                                                 colors.black,
-//                                                                 controller:
-//                                                                 taskreasoncontroller,
-//                                                                 onsubmitted:
-//                                                                     (helo) async {
-//                                                                   status = -1;
-//                                                                   await _updatetask(
-//                                                                             document.id,
-//                                                                       document['category'],
-//                                                                       document['title'],
-//                                                                       document['description'],
-//                                                                       document['startdate'],
-//                                                                       document['enddate'],
-//                                                                       document['duedate'],
-//                                                                       document['duetime'],
-//                                                                       document['faculty'],
-//                                                                             status,
-//                                                                             taskreasoncontroller.text
-//                                                                   );
-//                                                                       },
-//
-//                                                                 ///enter title
-//                                                               ),
-//                                                             ),
-//                                                           ),
-//                                                           elevatedbutton(
-//                                                               onpressed: () {
-//                                                                 taskreasoncontroller
-//                                                                     .clear();
-//                                                                 navigator.pop(
-//                                                                     context);
-//                                                               },
-//                                                               child: text('close')),
-//                                                         ],
-//                                                       ),
-//                                                     ]),
-//                                                 barrierdismissible: false);
-//                                           },
-//
-//                                           ///add reject onpressed
-//                                           child: padding(
-//                                             padding: edgeinsets.fromltrb(
-//                                                 mediaquery.of(context).size.height *
-//                                                     0.048,
-//                                                 12,
-//                                                 mediaquery.of(context).size.height *
-//                                                     0.048,
-//                                                 12),
-//                                             child: text(
-//                                               'reject',
-//                                               style: googlefonts.lato(
-//                                                   color: colors.white,
-//                                                   fontsize:
-//                                                   mediaquery.of(context).size.height *
-//                                                       0.02),
-//                                             ),
-//                                           )),
-//                                     ),
-//                                   ],
-//                                 )
-//                               ],
-//                             )
-//                           ],
-//                         ),
-//                       ),
-//                       (document['status'] == 0)
-//                           ? container(
-//                         padding: const edgeinsets.only(right: 20),
-//                         alignment: alignment.topright,
-//                         child: row(
-//                           mainaxisalignment: mainaxisalignment.end,
-//                           crossaxisalignment: crossaxisalignment.end,
-//                           children: [
-//                             icon(
-//                               icons.circle_rounded,
-//                               color: colors.black,
-//                               size: 18,
-//                             ),
-//                             text(
-//                               'assigned',
-//                               style: googlefonts.poppins(
-//                                   color: colors.black,
-//                                   fontsize: mediaquery.of(context).size.width * 0.03),
-//                             ),
-//                           ],
-//                         ),
-//                       )
-//                           : (document['status'] == 1)
-//                           ? container(
-//                         padding: const edgeinsets.only(right: 20),
-//                         alignment: alignment.topright,
-//                         child: row(
-//                           mainaxisalignment: mainaxisalignment.end,
-//                           crossaxisalignment: crossaxisalignment.end,
-//                           children: [
-//                             icon(
-//                               icons.circle_rounded,
-//                               color: colors.green,
-//                               size: 18,
-//                             ),
-//                             text(
-//                               'completed',
-//                               style: googlefonts.poppins(
-//                                   color: colors.black,
-//                                   fontsize: mediaquery.of(context).size.width * 0.03),
-//                             ),
-//                           ],
-//                         ),
-//                       )
-//                           : (document['status'] == -1)
-//                           ? container(
-//                         padding: const edgeinsets.only(right: 20),
-//                         alignment: alignment.topright,
-//                         child: row(
-//                           mainaxisalignment: mainaxisalignment.end,
-//                           crossaxisalignment: crossaxisalignment.end,
-//                           children: [
-//                             icon(
-//                               icons.circle_rounded,
-//                               color: colors.red,
-//                               size: 18,
-//                             ),
-//                             text(
-//                               'rejected',
-//                               style: googlefonts.poppins(
-//                                   color: colors.black,
-//                                   fontsize:
-//                                   mediaquery.of(context).size.width * 0.03),
-//                             ),
-//                           ],
-//                         ),
-//                       )
-//                           : (document['status'] == 2)
-//                           ? container(
-//                         padding: const edgeinsets.only(right: 20),
-//                         alignment: alignment.topright,
-//                         child: row(
-//                           mainaxisalignment: mainaxisalignment.end,
-//                           crossaxisalignment: crossaxisalignment.end,
-//                           children: [
-//                             icon(
-//                               icons.circle_rounded,
-//                               color: colors.red,
-//                               size: 18,
-//                             ),
-//                             text(
-//                               'overdue',
-//                               style: googlefonts.poppins(
-//                                   color: colors.black,
-//                                   fontsize:
-//                                   mediaquery.of(context).size.width *
-//                                       0.03),
-//                             ),
-//                           ],
-//                         ),
-//                       )
-//                           : sizedbox()
-//                     ]));
-//               }).tolist(),
-//
-//             );
-//           }),
-//     );
-//   }
-//   future<void> _updatetask(
-//       var id,
-//       string category_update,
-//       string title_update,
-//       string description_update,
-//       string startdate_update,
-//       string enddate_update,
-//       string duedate_update,
-//       string duetime_update,
-//       string faculty_update,
-//       int status_update,
-//       string reason_update) async {
-//     await firebasetask.updatetask(
-//         docid: id,
-//         categorydb: category_update,
-//         titledb: title_update,
-//         descriptiondb: description_update,
-//         startdatedb: startdate_update,
-//         enddatedb: enddate_update,
-//         duedatedb: duedate_update,
-//         duetimedb: duetime_update,
-//         facultydb: faculty_update,
-//         statusdb: status_update,
-//         reasondb: reason_update
-//     ).whencomplete(
-//           () => navigator.pop(context),
-//     );
-//   }
-// }
-// widget _floating(buildcontext context) {
-//   if (pageview == 1) {
-//     return floatingactionbutton(
-//       backgroundcolor: colors.black,
-//       onpressed: () {
-//         navigator.push(
-//             context, materialpageroute(builder: (context) => taskassign_a()));
-//       },
-//       child: const icon(icons.add),
-//     );
-//   } else {
-//     return container();
-//   }
-// }
-// /*
-// document['title']
-// document['category']
-// document['description']
-// document['startdate']
-// document['endate']
-// document['duedate']
-// document['duetime']
-// document['faculty']
-// */
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
+import 'package:sense_task/Services/firebase_crud.dart';
+import 'AdminMongo.dart';
+import 'AssignTask_Admin.dart';
+import 'LoginPage.dart';
+import 'Models/TaskMango.dart';
+import 'TaskPage_Admin.dart';
+import 'Models/UserMango.dart';
+import 'adminview/adminpage.dart';
+import 'main.dart';
+import 'mangodb.dart';
+String filterDateInString = '';
+DateTime filterDate = DateTime.now();
+bool isDateSelectedforfilter = false;
+
+var filterlist = [
+  'Tasks for Today',
+  'Assigned Tasks',
+  'Completed Tasks',
+  'Rejected Tasks',
+  'Overdued Tasks',
+  'Select Date'
+];
+
+Color bb = Color(0xFFADA4A5);
+Color b = Color(0xFF817B7C);
+TextEditingController taskreasoncontroller = new TextEditingController();
+TextEditingController taskreasonblah = new TextEditingController();
+int _selectedIndex = 0;
+class second extends StatefulWidget {
+  late bool grey;
+  @override
+  secondState createState() => secondState();
+}
+
+class secondState extends State<second> {
+  secondState();
+  int tasklength = 0;
+  Widget build(BuildContext context) {
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+        print('index is ');
+        print(_selectedIndex);
+      });
+    }
+    return Scaffold(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: _floating(context),
+        bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.black87,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.white.withOpacity(.60),
+            selectedFontSize: 14,
+            unselectedFontSize: 14,
+            currentIndex: _selectedIndex, //New
+            onTap: _onItemTapped, //New
+
+//New
+
+            items: [
+              BottomNavigationBarItem(
+                label: 'Home',
+                icon: Icon(Icons.home_rounded),
+              ),
+              BottomNavigationBarItem(
+                label: 'Faculty',
+                icon: Icon(Icons.person_outline_rounded),
+              )
+            ]),
+      body: SafeArea(
+        child: Container(
+          constraints: BoxConstraints.expand(),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              alignment: Alignment.topCenter,
+              image: AssetImage(
+                  'assets/images/bgnd.png'), // color: Colors.amber,
+            ),
+          ),
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 10),
+                  child: Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {}, icon: Icon(Icons.menu)),
+                      Text(
+                        'Hello, ',
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black,
+                            fontSize:
+                            MediaQuery.of(context).size.width *
+                                0.06),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Text(
+                          'Admin',
+                          style: GoogleFonts.poppins(
+                              color: Colors.black,
+                              fontSize:
+                              MediaQuery.of(context).size.width *
+                                  0.052),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 8, 0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '${tasklength} tasks waiting for you ...',
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize:
+                        MediaQuery.of(context).size.width * 0.04),
+                  ),
+                ),
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width * 0.7,
+                child: Divider(
+                  color: Colors.transparent,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+                child: Row(
+                  children: [
+                    Text(
+                      'All Tasks',
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: MediaQuery.of(context).size.width *
+                              0.045),
+                    ),
+                    Spacer(),
+                   Align(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => FunkyOverlay(),
+                            );
+                          },
+                          icon: Icon(Icons.filter_alt_sharp)),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection('Tasks').snapshots(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        print(FirebaseFirestore.instance.collection('Tasks').snapshots().toString());
+                        print(FirebaseFirestore.instance.collection('Tasks').snapshots().length);
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return ListView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        children:
+                          snapshot.data!.docs.map((document) {
+                          return Dismissible(
+                            key: ValueKey(document.id),
+                            background: Container(
+                              color: Theme.of(context).errorColor,
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                              alignment: Alignment.centerLeft,
+                              padding: EdgeInsets.only(left: 20),
+                              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                            ),
+                            secondaryBackground: Container(
+                              color: Colors.green,
+                              child: Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                                size: 35,
+                              ),
+                              alignment: Alignment.centerRight,
+                              padding: EdgeInsets.only(right: 20),
+                              margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                            ),
+                            onDismissed: (direction) async {
+                              if (direction == DismissDirection.endToStart) {
+                                setState(() => isEdit = 1);
+                                if (document != null) {
+                                  print('Updating UI');
+                                  categoryvalue = document['category'];
+                                  tasktitlecontroller.text = document['title'];
+                                  taskdescriptioncontroller.text = document['description'];
+                                  startDateInString = document['startdate'];
+                                  endDateInString = document['endate'];
+                                  dueDateInString = document['duedate'];
+                                  duetime = document['duetime'];
+                                  facultyvalue = document['faculty'];
+                                  checkInserttask = "Update";
+                                }
+                                ;
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return taskassign_a();
+                                        },
+                                        settings: RouteSettings(arguments: document)))
+                                    .then((value) {
+                                  setState(() {});
+                                });
+                              } else {
+                                print(document.id);
+                                FirebaseTask.deleteTask(docId: document.id);
+                                setState(() {});
+                              }
+                            },
+                            child: Align(
+                                child: Stack(children: <Widget>[
+                                  Card(
+                                    elevation: 0,
+                                    color: Colors.white,
+                                    child: RoundedExpansionTile(
+                                      trailing: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        children: [
+                                          Icon(
+                                            Icons.arrow_drop_down_outlined,
+                                            color: Colors.black,
+                                          ),
+                                        ],
+                                      ),
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                                      title: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          largetext(text: document['title']),
+                                          SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  standardtext(text: 'Date:  '),
+                                                  Align(
+                                                    alignment: Alignment.topLeft,
+                                                    child: Text(
+                                                      document['startdate'],
+                                                      textAlign: TextAlign.left,
+                                                      style: GoogleFonts.poppins(
+                                                          color: Colors.amber,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize:
+                                                          MediaQuery.of(context).size.width * 0.04),
+                                                    ),
+                                                  ),
+                                                  SizedBox(width: MediaQuery.of(context).size.width * 0.15),
+                                                ],
+                                              ),
+                                              SizedBox(height: MediaQuery.of(context).size.width * 0.01),
+                                              (pageview == 1)
+                                                  ? Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  standardtext(text: 'Faculty     :  '),
+                                                  Align(
+                                                    alignment: Alignment.topLeft,
+                                                    child: Text(
+                                                      document['faculty'],
+                                                      textAlign: TextAlign.left,
+                                                      style: GoogleFonts.poppins(
+                                                          color: Colors.black,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize:
+                                                          MediaQuery.of(context).size.width *
+                                                              0.04),
+                                                    ),
+                                                  )
+                                                  /*  standardtext(text: " ${task_data.facultydb}"),*/
+                                                ],
+                                              )
+                                                  : Align(
+                                                alignment: Alignment.centerRight,
+                                                child: Text(
+                                                  document['duedate'] + " " +  document['duetime'],
+                                                  style: GoogleFonts.poppins(
+                                                      color: Colors.red,
+                                                      fontSize:
+                                                      MediaQuery.of(context).size.width * 0.03),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                ///todo: category have to replaced in the heading or is it same update i  next commit
+                                                standardtext(text: 'Category :  '),
+                                                Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Text(
+                                                    document['category'],
+                                                    textAlign: TextAlign.left,
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: MediaQuery.of(context).size.width * 0.04),
+                                                  ),
+                                                )
+                                                /*  standardtext(text: " ${task_data.facultydb}"),*/
+                                              ],
+                                            ),
+                                            SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+                                            standardtext(text: 'Event Description:'),
+                                            Padding(
+                                              padding: const EdgeInsets.all(20.0),
+                                              child: Text(
+                                                document['description'],
+                                                textAlign: TextAlign.left,
+                                                style: GoogleFonts.poppins(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: MediaQuery.of(context).size.width * 0.04),
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                standardtext(text: 'Due :  '),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Text(
+                                                    document['duedate'],
+                                                    textAlign: TextAlign.left,
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.redAccent,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: MediaQuery.of(context).size.width * 0.04),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                standardtext(text: 'Time left:  '),
+                                                // Padding(
+                                                //     padding: const EdgeInsets.all(8.0),
+                                                //     child: (int.parse(task_data.duedatedb.split("/")[0]) -
+                                                //         DateTime.now().day !=
+                                                //         0)
+                                                //         ? Text(
+                                                //       "${int.parse(task_data.duedatedb.split("/")[0]) - DateTime.now().day} days , ${task_data.duetimedb.split(":")[0]} hours ${task_data.duetimedb.split(":")[1]} mins  ",
+                                                //       textAlign: TextAlign.left,
+                                                //       style: GoogleFonts.poppins(
+                                                //           color: Colors.redAccent,
+                                                //           fontWeight: FontWeight.bold,
+                                                //           fontSize:
+                                                //           MediaQuery.of(context).size.width *
+                                                //               0.04),
+                                                //     )
+                                                //         : Text(
+                                                //       " ${hrleft} hours ${minleft} mins  ",
+                                                //       textAlign: TextAlign.left,
+                                                //       style: GoogleFonts.poppins(
+                                                //           color: Colors.redAccent,
+                                                //           fontWeight: FontWeight.bold,
+                                                //           fontSize:
+                                                //           MediaQuery.of(context).size.width *
+                                                //               0.04),
+                                                //     )
+                                                // ),
+                                              ],
+                                            ),
+                                            SizedBox(height: MediaQuery.of(context).size.width * 0.008),
+                                            (pageview == 1)
+                                                ? Column(
+                                              children: [
+                                                standardtext(text: document['reason']),
+                                              ],
+                                            )
+                                                : SizedBox(
+                                              height: 0,
+                                            ),
+                                            (pageview == 1)
+                                                ? Center(
+                                              child: Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(15.0),
+                                                    child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                            elevation: 5.0,
+                                                            shape: StadiumBorder(),
+                                                            primary: Colors.black),
+                                                        onPressed: () {
+                                                          //setState(() => isEdit = 1);
+                                                          categoryvalue = document['category'];
+                                                          tasktitlecontroller.text = document['title'];
+                                                          taskdescriptioncontroller.text = document['description'];
+                                                          startDateInString = document['startdate'];
+                                                          endDateInString = document['enddate'];
+                                                          dueDateInString = document['duedate'];
+                                                          duetime = document['duetime'];
+                                                          facultyvalue = document['faculty'];
+                                                          checkInserttask = "update";
+                                                          ;
+                                                          Navigator.push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (BuildContext context) {
+                                                                    return taskassign_a();
+                                                                  },
+                                                                  settings: RouteSettings(
+                                                                      arguments: task_data)))
+                                                              .then((value) {
+                                                            setState(() {});
+                                                          });
+                                                        },
+                                                        child: Padding(
+                                                          padding: EdgeInsets.fromLTRB(
+                                                              MediaQuery.of(context).size.height *
+                                                                  0.04,
+                                                              12,
+                                                              MediaQuery.of(context).size.height *
+                                                                  0.04,
+                                                              12),
+                                                          child: Text(
+                                                            'Edit',
+                                                            style: GoogleFonts.lato(
+                                                                color: Colors.white,
+                                                                fontSize: MediaQuery.of(context)
+                                                                    .size
+                                                                    .height *
+                                                                    0.02),
+                                                          ),
+                                                        )),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.all(15.0),
+                                                    child: ElevatedButton(
+                                                        style: ElevatedButton.styleFrom(
+                                                            elevation: 5.0,
+                                                            shape: StadiumBorder(),
+                                                            primary: Colors.black),
+                                                        onPressed: () async {
+                                                          ///todo:delete function
+                                                          FirebaseTask.deleteTask(docId: document.id);
+                                                          // await MongoDbModel.delete_task(task_data);
+                                                          setState(() {});
+                                                        },
+                                                        child: Padding(
+                                                          padding: EdgeInsets.fromLTRB(
+                                                              MediaQuery.of(context).size.height *
+                                                                  0.04,
+                                                              12,
+                                                              MediaQuery.of(context).size.height *
+                                                                  0.04,
+                                                              12),
+                                                          child: Text(
+                                                            'Delete',
+                                                            style: GoogleFonts.lato(
+                                                                color: Colors.white,
+                                                                fontSize: MediaQuery.of(context)
+                                                                    .size
+                                                                    .height *
+                                                                    0.02),
+                                                          ),
+                                                        )),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                                : Row(
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.all(15.0),
+                                                  child: ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                          elevation: 5.0,
+                                                          shape: StadiumBorder(),
+                                                          primary: Colors.black),
+                                                      onPressed: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (_) => AlertDialog(
+                                                                title: Text(
+                                                                    'Do you wish to Accept the Task ?'),
+                                                                actions: [
+                                                                  ElevatedButton(
+                                                                      onPressed: () {
+                                                                     /*   Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                                builder: (context) =>
+                                                                                    TabsScreen()));*/
+                                                                      },
+                                                                      child: Text('No')),
+                                                                  ElevatedButton(
+                                                                      onPressed: () async {
+                                                                        status = 1;
+                                                                        await _updateTask(
+                                                                            document.id,
+                                                                            document['category'],
+                                                                            document['title'],
+                                                                            document['description'],
+                                                                            document['startdate'],
+                                                                            document['enddate'],
+                                                                            document['duedate'],
+                                                                            document['duetime'],
+                                                                            document['faculty'],
+                                                                            status,
+                                                                            taskreasoncontroller
+                                                                                .text
+                                                                        );
+                                                                 /*       Navigator.push(
+                                                                            context,
+                                                                            MaterialPageRoute(
+                                                                                builder: (context) =>
+                                                                                    TabsScreen()));*/
+                                                                      },
+                                                                      child: Text("Yes"))
+                                                                ]),
+                                                            barrierDismissible: false);
+                                                      },
+
+                                                      ///add accept onpressed
+                                                      child: Padding(
+                                                        padding: EdgeInsets.fromLTRB(
+                                                            MediaQuery.of(context).size.height * 0.04,
+                                                            12,
+                                                            MediaQuery.of(context).size.height * 0.04,
+                                                            12),
+                                                        child: Text(
+                                                          'Accept',
+                                                          style: GoogleFonts.lato(
+                                                              color: Colors.white,
+                                                              fontSize:
+                                                              MediaQuery.of(context).size.height *
+                                                                  0.02),
+                                                        ),
+                                                      )),
+                                                ),
+                                                Spacer(),
+                                                Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: ElevatedButton(
+                                                      style: ElevatedButton.styleFrom(
+                                                          elevation: 5.0,
+                                                          shape: StadiumBorder(),
+                                                          primary: Colors.black),
+                                                      onPressed: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (_) => AlertDialog(
+                                                                title: Text(
+                                                                    'Do you wish to Decline the Task ?'),
+                                                                actionsAlignment:
+                                                                MainAxisAlignment.center,
+                                                                actions: [
+                                                                  Column(
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                        child: Container(
+                                                                          height: 60,
+                                                                          child: TextField(
+                                                                            onChanged: (_) {
+                                                                              if (_.length > 0)
+                                                                                widget.grey =
+                                                                                false;
+                                                                              else
+                                                                                widget.grey =
+                                                                                true;
+                                                                              setState(() {});
+                                                                            },
+                                                                            decoration:
+                                                                            InputDecoration(
+                                                                                fillColor:
+                                                                                Colors
+                                                                                    .black,
+                                                                                hintText:
+                                                                                'Type the reason to decline...',
+                                                                                hintStyle:
+                                                                                TextStyle(
+                                                                                  color: Colors
+                                                                                      .black,
+                                                                                )),
+                                                                            keyboardType:
+                                                                            TextInputType
+                                                                                .text,
+                                                                            maxLines: 2,
+                                                                            cursorColor:
+                                                                            Colors.black,
+                                                                            controller:
+                                                                            taskreasoncontroller,
+                                                                            onSubmitted:
+                                                                                (helo) async {
+                                                                              status = -1;
+                                                                              await _updateTask(
+                                                                                  document.id,
+                                                                                  document['category'],
+                                                                                  document['title'],
+                                                                                  document['description'],
+                                                                                  document['startdate'],
+                                                                                  document['enddate'],
+                                                                                  document['duedate'],
+                                                                                  document['duetime'],
+                                                                                  document['faculty'],
+                                                                                  status,
+                                                                                  taskreasoncontroller.text
+                                                                              );
+                                                                            },
+
+                                                                            ///enter title
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      ElevatedButton(
+                                                                          onPressed: () {
+                                                                            taskreasoncontroller
+                                                                                .clear();
+                                                                            Navigator.pop(
+                                                                                context);
+                                                                          },
+                                                                          child: Text('Close')),
+                                                                    ],
+                                                                  ),
+                                                                ]),
+                                                            barrierDismissible: false);
+                                                      },
+
+                                                      ///add reject onpressed
+                                                      child: Padding(
+                                                        padding: EdgeInsets.fromLTRB(
+                                                            MediaQuery.of(context).size.height *
+                                                                0.048,
+                                                            12,
+                                                            MediaQuery.of(context).size.height *
+                                                                0.048,
+                                                            12),
+                                                        child: Text(
+                                                          'Reject',
+                                                          style: GoogleFonts.lato(
+                                                              color: Colors.white,
+                                                              fontSize:
+                                                              MediaQuery.of(context).size.height *
+                                                                  0.02),
+                                                        ),
+                                                      )),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  (document['status'] == 0)
+                                      ? Container(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    alignment: Alignment.topRight,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Icon(
+                                          Icons.circle_rounded,
+                                          color: Colors.black,
+                                          size: 18,
+                                        ),
+                                        Text(
+                                          'Assigned',
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: MediaQuery.of(context).size.width * 0.03),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                      : (document['status'] == 1)
+                                      ? Container(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    alignment: Alignment.topRight,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Icon(
+                                          Icons.circle_rounded,
+                                          color: Colors.green,
+                                          size: 18,
+                                        ),
+                                        Text(
+                                          'Completed',
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize: MediaQuery.of(context).size.width * 0.03),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                      : (document['status'] == -1)
+                                      ? Container(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    alignment: Alignment.topRight,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Icon(
+                                          Icons.circle_rounded,
+                                          color: Colors.red,
+                                          size: 18,
+                                        ),
+                                        Text(
+                                          'Rejected',
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize:
+                                              MediaQuery.of(context).size.width * 0.03),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                      : (document['status'] == 2)
+                                      ? Container(
+                                    padding: const EdgeInsets.only(right: 20),
+                                    alignment: Alignment.topRight,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      children: [
+                                        Icon(
+                                          Icons.circle_rounded,
+                                          color: Colors.red,
+                                          size: 18,
+                                        ),
+                                        Text(
+                                          'Overdue',
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontSize:
+                                              MediaQuery.of(context).size.width *
+                                                  0.03),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                      : SizedBox()
+                                ])),
+                          );
+                        }).toList(),
+                      );
+                    }),
+              ),
+            ],
+          ),
+        ))
+    );
+  }
+  Future<void> _updateTask(
+      var id,
+      String category_update,
+      String title_update,
+      String description_update,
+      String startdate_update,
+      String enddate_update,
+      String duedate_update,
+      String duetime_update,
+      String faculty_update,
+      int status_update,
+      String reason_update) async {
+    await FirebaseTask.updateTask(
+        docId: id,
+        categorydb: category_update,
+        titledb: title_update,
+        descriptiondb: description_update,
+        startdatedb: startdate_update,
+        enddatedb: enddate_update,
+        duedatedb: duedate_update,
+        duetimedb: duetime_update,
+        facultydb: faculty_update,
+        statusdb: status_update,
+        reasondb: reason_update
+    ).whenComplete(
+          () => Navigator.pop(context),
+    );
+  }
+}
+Widget _floating(BuildContext context) {
+  if (pageview == 1) {
+    return FloatingActionButton(
+      backgroundColor: Colors.black,
+      onPressed: () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => taskassign_a()));
+      },
+      child: const Icon(Icons.add),
+    );
+  } else {
+    return Container();
+  }
+}
+class FunkyOverlay extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => FunkyOverlayState();
+}
+
+class FunkyOverlayState extends State<FunkyOverlay>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.6,
+            width: MediaQuery.of(context).size.width * 0.7,
+            decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Filter by',
+                          style: GoogleFonts.poppins(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize:
+                              MediaQuery.of(context).size.width * 0.045),
+                        ),
+                      ),
+                    ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: filterlist.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return (filterlist[index]) != 'Select Date'
+                              ? Container(
+                            decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(15)),
+                            ),
+                            child: MaterialButton(
+                              color: Colors.black,
+                              onPressed: () {},
+                              child: Text(
+                                style: TextStyle(color: Colors.white),
+                                filterlist[index],
+                              ),
+                            ),
+                          )
+                              : Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  final datePick = await showDatePicker(
+                                    context: context,
+                                    initialDate: filterDate,
+                                    firstDate: new DateTime(1900),
+                                    lastDate: new DateTime.now(),
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
+                                          colorScheme: ColorScheme.light(
+                                            primary: Colors
+                                                .black, // header background color
+                                            onPrimary: Colors
+                                                .white, // header text color
+                                            onSurface: Colors
+                                                .black, // body text color
+                                          ),
+                                          textButtonTheme:
+                                          TextButtonThemeData(
+                                            style: TextButton.styleFrom(
+                                              primary: Colors
+                                                  .black, // button text color
+                                            ),
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
+                                  );
+                                  if (datePick != null &&
+                                      datePick != filterDate) {
+                                    setState(() {
+                                      filterDate = datePick;
+                                      isDateSelectedforfilter = true;
+
+                                      // put it here
+                                      filterDateInString =
+                                      "${filterDate.day}/${filterDate.month}/${filterDate.year}";
+                                      print(
+                                          filterDateInString); // 08/14/2019
+                                    });
+                                  }
+                                  setState(() {});
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                        Radius.circular(15)),
+                                  ),
+                                  child: Text(
+                                    "Select date",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+class largetext extends StatelessWidget {
+  String text;
+
+  largetext({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Text(
+        text,
+        textAlign: TextAlign.left,
+        style: GoogleFonts.poppins(
+            fontWeight: FontWeight.bold,
+            color: b,
+            fontSize: MediaQuery.of(context).size.width * 0.045),
+      ),
+    );
+  }
+}
+
+class standardtext extends StatelessWidget {
+  String text;
+
+  standardtext({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.topLeft,
+      child: Text(
+        text,
+        textAlign: TextAlign.left,
+        style: GoogleFonts.poppins(
+            color: bb,
+            fontWeight: FontWeight.w600,
+            fontSize: MediaQuery.of(context).size.width * 0.04),
+      ),
+    );
+  }
+}
+
+class smalltext extends StatelessWidget {
+  String text;
+
+  smalltext({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Text(
+        textAlign: TextAlign.center,
+        text,
+        style: GoogleFonts.poppins(
+            color: bb, fontSize: MediaQuery.of(context).size.width * 0.02),
+      ),
+    );
+  }
+}
