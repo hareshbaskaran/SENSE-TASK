@@ -28,72 +28,74 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Align(
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 8.0),
-              Text(
-                _user.displayName!,
-                style: TextStyle(
-                  fontSize: 26,
+      body: Drawer(
+        child: SafeArea(
+          child: Align(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 8.0),
+                Text(
+                  _user.displayName!,
+                  style: TextStyle(
+                    fontSize: 26,
+                  ),
                 ),
-              ),
-              SizedBox(height: 8.0),
-              Text(
-                '( ${_user.email!} )',
-                style: TextStyle(
-                  fontSize: 20,
+                SizedBox(height: 8.0),
+                Text(
+                  '( ${_user.email!} )',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
-              ),
-              SizedBox(height: 24.0),
-              SizedBox(height: 16.0),
-              _isSigningOut
-                  ? CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                    )
-                  : ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          Colors.black,
-                        ),
-                        shape: MaterialStateProperty.all(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                SizedBox(height: 24.0),
+                SizedBox(height: 16.0),
+                _isSigningOut
+                    ? CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                      )
+                    : ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                            Colors.black,
+                          ),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
                           ),
                         ),
-                      ),
-                      onPressed: () async {
-                        setState(() {
-                          _isSigningOut = true;
-                          googleuser = _user.displayName!;
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => loginpage(Hive_box)));
-                        });
+                        onPressed: () async {
+                          setState(() {
+                            _isSigningOut = true;
+                            googleuser = _user.displayName!;
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => loginpage(Hive_box)));
+                          });
 
-                        ///todo:sign-in method
-                        await signOut(context: context);
-                        setState(() {
-                          _isSigningOut = false;
-                        });
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
-                        child: Text(
-                          'Sign Out',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                          ///todo:sign-in method
+                          await signOut(context: context);
+                          setState(() {
+                            _isSigningOut = false;
+                          });
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                          child: Text(
+                            'Sign Out',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
