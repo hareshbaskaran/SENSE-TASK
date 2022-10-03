@@ -63,9 +63,6 @@ class secondState extends State<second> {
             unselectedFontSize: 14,
             currentIndex: _selectedIndex, //New
             onTap: _onItemTapped, //New
-
-//New
-
             items: [
               BottomNavigationBarItem(
                 label: 'Home',
@@ -202,7 +199,7 @@ class secondState extends State<second> {
                             });
                           }
                           return Dismissible(
-                            key: ValueKey(document.id),
+                            key: UniqueKey(),
                             background: Container(
                               color: Theme.of(context).errorColor,
                               child: Icon(
@@ -258,7 +255,8 @@ class secondState extends State<second> {
                               } else {
                                 print(document.id);
 
-                                FirebaseTask.deleteTask(docId: document.id);
+                                await FirebaseTask.deleteTask(
+                                    docId: document.id);
                                 setState(() {});
                               }
                             },
@@ -276,6 +274,7 @@ class secondState extends State<second> {
                                   elevation: 0,
                                   color: Colors.white,
                                   child: RoundedExpansionTile(
+                                    rotateTrailing: false,
                                     trailing: Column(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       crossAxisAlignment:

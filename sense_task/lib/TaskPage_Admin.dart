@@ -32,7 +32,7 @@
 //               future: (pageview == 1)
 //                   ? MongoDbModel.getTask()
 //                   : MongoDbModel.getQuerryTask(),
-//               builder: (context, AsyncSnapshot snapshot) {
+//               builder: (context, AsyncSnapshot s145napshot) {
 //                 if (snapshot.connectionState == ConnectionState.waiting) {
 //                   print('connection waiting');
 //                   return Center(
