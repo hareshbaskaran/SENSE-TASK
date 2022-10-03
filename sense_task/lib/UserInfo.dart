@@ -7,8 +7,10 @@ import 'package:sense_task/main.dart';
 String googleuser = "haredfgf";
 late User _user;
 bool _isSigningOut = false;
+
 class UserInfoScreen extends StatefulWidget {
-  const UserInfoScreen({Key? key, required User user}): _user = user,
+  const UserInfoScreen({Key? key, required User user})
+      : _user = user,
         super(key: key);
   final User _user;
 
@@ -17,7 +19,6 @@ class UserInfoScreen extends StatefulWidget {
 }
 
 class _UserInfoScreenState extends State<UserInfoScreen> {
-
   @override
   void initState() {
     _user = widget._user;
@@ -35,6 +36,14 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: BackButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
                 SizedBox(height: 8.0),
                 Text(
                   _user.displayName!,

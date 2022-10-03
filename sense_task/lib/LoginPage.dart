@@ -16,6 +16,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'main.dart';
+
 ///B2A4F0
 Box<dynamic> Hive_box = Hive.box('myBox');
 bool isButtonDisabled = true;
@@ -133,64 +134,60 @@ class _loginpageState extends State<loginpage> {
                           image: AssetImage('assets/images/loginpic.png'))),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.08),
-          (pageview == 1)
+                (pageview == 1)
+                    ? Column(children: [
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.025),
+                        _googleSignInButton(),
+                        SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.025),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: InkWell(
+                            child: Text(
+                              'Login as User',
+                              style: GoogleFonts.lato(
+                                  color: Colors.deepPurpleAccent,
+                                  fontSize:
+                                      MediaQuery.of(context).size.width * 0.04),
+                            ),
+                            onTap: () {
+                              setState(() {
+                                pageview = 2;
+                              });
+                            },
+                          ),
+                        ),
+                      ])
+                    : (pageview == 2)
                         ? Column(children: [
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.025),
                             _googleSignInButton(),
-            SizedBox(
-                height:
-                MediaQuery.of(context).size.height * 0.025),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: InkWell(
-                child: Text(
-                  'Login as User',
-                  style: GoogleFonts.lato(
-                      color: Colors.deepPurpleAccent,
-                      fontSize:
-                      MediaQuery.of(context).size.width *
-                          0.04),
-                ),
-                onTap: (){
-                  setState(() {
-                    pageview = 2;
-                  });
-                },
-              ),
-            ),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.025),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: InkWell(
+                                child: Text(
+                                  'Login as admin',
+                                  style: GoogleFonts.lato(
+                                      color: Colors.deepPurpleAccent,
+                                      fontSize:
+                                          MediaQuery.of(context).size.width *
+                                              0.04),
+                                ),
+                                onTap: () {
+                                  setState(() {
+                                    pageview = 1;
+                                  });
+                                },
+                              ),
+                            ),
                           ])
-                        : (pageview == 2)
-                            ? Column(
-
-                           children: [
-                                SizedBox(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.025),
-                                _googleSignInButton(),
-                             SizedBox(
-                                 height: MediaQuery.of(context).size.height *
-                                     0.025),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: InkWell(
-                child: Text(
-                  'Login as admin',
-                  style: GoogleFonts.lato(
-                      color: Colors.deepPurpleAccent,
-                      fontSize: MediaQuery.of(context).size.width * 0.04
-                  ),
-                ),
-                onTap: (){
-                  setState(() {
-                    pageview = 1;
-                  });
-                },
-              ),
-            ),
-                              ])
-                            : Text('nothing')
+                        : Text('nothing')
               ],
             ),
           ),
@@ -220,8 +217,12 @@ class _loginpageState extends State<loginpage> {
           if (user != null) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) =>
-              (pageview==2)?userpage():(pageview==1)?second() :userpage()
+              MaterialPageRoute(
+                  builder: (context) => (pageview == 2)
+                      ? second()
+                      : (pageview == 1)
+                          ? second()
+                          : second()
                   //UserInfoScreen(user: user)
                   ),
             );
