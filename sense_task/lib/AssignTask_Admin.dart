@@ -12,7 +12,6 @@ import 'mangodb.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 List<Widget> allTasks = [];
-int isEdit = 0;
 
 TextEditingController tasktitlecontroller = new TextEditingController();
 
@@ -53,11 +52,11 @@ var facultylist = [
   'Shobi',
 ];
 
-String duetime = '';
+String duetime = '00/00/00';
 
 int status = 0;
 
-String reason = '';
+String reason = 'No reason';
 
 class taskassign_a extends StatefulWidget {
   bool grey = true;
@@ -130,7 +129,8 @@ class _taskassign_aState extends State<taskassign_a> {
                               context,
                               MaterialPageRoute(builder: (context) => second()),
                             );
-                            setState(() => isEdit = 0);
+                            setState(() => checkInserttask = 'Assign');
+
                             _clearassignpage();
                           }),
                     ),
@@ -727,7 +727,7 @@ class _taskassign_aState extends State<taskassign_a> {
                 ],
               )),
         ),
-        floatingActionButton: (isEdit == 1 &&
+        floatingActionButton: (checkInserttask == 'Update' &&
                 tasktitlecontroller.text.length > 0 &&
                 taskdescriptioncontroller.text.length > 0 &&
                 startDateInString.length > 0 &&
@@ -779,7 +779,8 @@ class _taskassign_aState extends State<taskassign_a> {
                       )),
                 ),
               )
-            : (tasktitlecontroller.text.length > 0 &&
+            : (checkInserttask == 'Assign' &&
+                    tasktitlecontroller.text.length > 0 &&
                     taskdescriptioncontroller.text.length > 0 &&
                     startDateInString.length > 0 &&
                     dueDateInString.length > 0 &&
@@ -793,7 +794,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                 shape: StadiumBorder(side: BorderSide.none),
                                 primary: Colors.black),
                             onPressed: () {
-                              setState(() => isEdit = 0);
+                              setState(() {});
                               FirebaseTask.addTask(
                                   categorydb: categoryvalue,
                                   titledb: tasktitlecontroller.text,
@@ -855,6 +856,22 @@ class _taskassign_aState extends State<taskassign_a> {
       int status_update,
       String reason_update) async {
     print('in update task function');
+    print(document?.id);
+    await FirebaseTask.updateTask(
+      docId: id,
+      categorydb: category_update,
+      titledb: title_update,
+      descriptiondb: description_update,
+      startdatedb: startdate_update,
+      enddatedb: enddate_update,
+      duedatedb: duedate_update,
+      duetimedb: duetime_update,
+      facultydb: faculty_update,
+      statusdb: status_update,
+      reasondb: reason_update,
+    ).whenComplete(
+      () => Navigator.pop(context),
+    );
     print(categoryvalue);
     print(tasktitlecontroller.text);
 
@@ -867,20 +884,5 @@ class _taskassign_aState extends State<taskassign_a> {
     print(dueDateInString);
     print(duetime);
     print(facultyvalue);
-    await FirebaseTask.updateTask(
-            categorydb: category_update,
-            titledb: title_update,
-            descriptiondb: description_update,
-            startdatedb: startdate_update,
-            enddatedb: enddate_update,
-            duedatedb: duedate_update,
-            duetimedb: duetime_update,
-            facultydb: faculty_update,
-            statusdb: status_update,
-            reasondb: reason_update,
-            docId: id)
-        .whenComplete(
-      () => Navigator.pop(context),
-    );
   }
 }

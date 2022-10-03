@@ -13,7 +13,6 @@ import 'adminview/adminpage.dart';
 import 'main.dart';
 import 'mangodb.dart';
 
-int isEdit = 0;
 String filterDateInString = '';
 DateTime filterDate = DateTime.now();
 bool isDateSelectedforfilter = false;
@@ -226,21 +225,9 @@ class secondState extends State<second> {
                             ),
                             onDismissed: (direction) async {
                               if (direction == DismissDirection.endToStart) {
-                                setState(() => isEdit = 1);
-                                if (document != null) {
-                                  print('Updating UI');
-                                  categoryvalue = document['category'];
-                                  tasktitlecontroller.text = document['title'];
-                                  taskdescriptioncontroller.text =
-                                      document['description'];
-                                  startDateInString = document['startdate'];
-                                  endDateInString = document['endate'];
-                                  dueDateInString = document['duedate'];
-                                  duetime = document['duetime'];
-                                  facultyvalue = document['faculty'];
+                                setState(() {
                                   checkInserttask = "Update";
-                                }
-                                ;
+                                });
                                 Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -252,6 +239,18 @@ class secondState extends State<second> {
                                     .then((value) {
                                   setState(() {});
                                 });
+
+                                print('Updating UI');
+                                categoryvalue = document['category'];
+                                tasktitlecontroller.text = document['title'];
+                                taskdescriptioncontroller.text =
+                                    document['description'];
+                                startDateInString = document['startdate'];
+                                endDateInString = document['endate'];
+                                dueDateInString = document['duedate'];
+                                duetime = document['duetime'];
+                                facultyvalue = document['faculty'];
+                                checkInserttask = "Update";
                               } else {
                                 print(document.id);
 

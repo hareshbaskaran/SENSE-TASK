@@ -1,64 +1,53 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sense_task/Models/FirebaseResponse.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _UserCollection = _firestore.collection('SenseTask');
 final CollectionReference _taskCollection = _firestore.collection('Tasks');
+
 class FirebaseCrud {
   static Future<Response> addUserDetails({
     required String username,
   }) async {
     Response response = Response();
-    DocumentReference documentReferencer =
-    _UserCollection.doc();
+    DocumentReference documentReferencer = _UserCollection.doc();
 
-    Map<String, dynamic> data = <String, dynamic>{
-      "username": username
-    };
+    Map<String, dynamic> data = <String, dynamic>{"username": username};
 
-    var result = await documentReferencer
-        .set(data)
-        .whenComplete(() {
+    var result = await documentReferencer.set(data).whenComplete(() {
       response.code = 200;
       response.message = "Sucessfully added to the database";
-    }
-    )
-        .catchError((e) {
+    }).catchError((e) {
       response.code = 500;
       response.message = e;
     });
 
     return response;
   }
+
   static Stream<QuerySnapshot> readItems() {
     CollectionReference notesItemCollection =
-    _UserCollection.doc().collection('SenseTask');
-print(notesItemCollection.snapshots());
+        _UserCollection.doc().collection('SenseTask');
+    print(notesItemCollection.snapshots());
     return notesItemCollection.snapshots();
   }
 }
 
-
 class FirebaseTask {
-
-///add
-  static Future<Response> addTask({
-    required String categorydb,
-    required String titledb,
-    required String descriptiondb,
-    required String startdatedb,
-    required String enddatedb,
-    required String duedatedb,
-    required String duetimedb,
-    required String facultydb,
-    required int statusdb,
-    required String reasondb
-  }) async {
+  ///add
+  static Future<Response> addTask(
+      {required String categorydb,
+      required String titledb,
+      required String descriptiondb,
+      required String startdatedb,
+      required String enddatedb,
+      required String duedatedb,
+      required String duetimedb,
+      required String facultydb,
+      required int statusdb,
+      required String reasondb}) async {
     Response response = Response();
-    DocumentReference documentReferencer =
-    _taskCollection.doc();
+    DocumentReference documentReferencer = _taskCollection.doc();
 
     Map<String, dynamic> data = <String, dynamic>{
       "category": categorydb,
@@ -73,14 +62,10 @@ class FirebaseTask {
       "reason": reasondb
     };
 
-    var result = await documentReferencer
-        .set(data)
-        .whenComplete(() {
+    var result = await documentReferencer.set(data).whenComplete(() {
       response.code = 200;
       response.message = "Sucessfully added to the database";
-    }
-    )
-        .catchError((e) {
+    }).catchError((e) {
       response.code = 500;
       response.message = e;
     });
@@ -88,48 +73,53 @@ class FirebaseTask {
     return response;
   }
 
-
-///read
+  ///read
   static Stream<QuerySnapshot> readTask() {
     CollectionReference notesItemCollection = _taskCollection;
     return notesItemCollection.snapshots();
   }
 
-
   ///querry results
   static Stream<QuerySnapshot> QueryFaculty() {
     CollectionReference notesItemCollection = _taskCollection;
-    return notesItemCollection.where(
-      "faculty",
-      ///todo:add querry search string inside equal to
-      isEqualTo: "",
-    ).snapshots();
+    return notesItemCollection
+        .where(
+          "faculty",
+
+          ///todo:add querry search string inside equal to
+          isEqualTo: "",
+        )
+        .snapshots();
   }
-  static Future<List<QuerySnapshot<Object?>>> DropdownFaculty(){
+
+  static Future<List<QuerySnapshot<Object?>>> DropdownFaculty() {
     CollectionReference notesItemCollection = _taskCollection;
-    return notesItemCollection.where(
-      "faculty",
-      ///todo:add querry search string inside equal to
-      isEqualTo: "",
-    ).snapshots().toList();
+    return notesItemCollection
+        .where(
+          "faculty",
+
+          ///todo:add querry search string inside equal to
+          isEqualTo: "",
+        )
+        .snapshots()
+        .toList();
   }
-///edit
-  static Future<Response> updateTask({
-    required String categorydb,
-    required String titledb,
-    required String descriptiondb,
-    required String startdatedb,
-    required String enddatedb,
-    required String duedatedb,
-    required String duetimedb,
-    required String facultydb,
-    required int statusdb,
-    required String reasondb,
-    required String docId
-  }) async {
+
+  ///edit
+  static Future<Response> updateTask(
+      {required String categorydb,
+      required String titledb,
+      required String descriptiondb,
+      required String startdatedb,
+      required String enddatedb,
+      required String duedatedb,
+      required String duetimedb,
+      required String facultydb,
+      required int statusdb,
+      required String reasondb,
+      required String docId}) async {
     Response response = Response();
-    DocumentReference documentReferencer =
-    _taskCollection.doc(docId);
+    DocumentReference documentReferencer = _taskCollection.doc(docId);
 
     Map<String, dynamic> data = <String, dynamic>{
       "category": categorydb,
@@ -141,39 +131,31 @@ class FirebaseTask {
       "duetime": duetimedb,
       "faculty": facultydb,
       "status": statusdb,
-      "reason": reasondb
+      "reason": reasondb,
     };
 
-    await documentReferencer
-        .update(data)
-        .whenComplete(() {
+    await documentReferencer.update(data).whenComplete(() {
       response.code = 200;
       response.message = "Sucessfully updated Employee";
-    })
-        .catchError((e) {
+    }).catchError((e) {
       response.code = 500;
       response.message = e;
     });
 
     return response;
   }
-
 
   ///delete
   static Future<Response> deleteTask({
     required String docId,
   }) async {
     Response response = Response();
-    DocumentReference documentReferencer =
-    _taskCollection.doc(docId);
+    DocumentReference documentReferencer = _taskCollection.doc(docId);
 
-    await documentReferencer
-        .delete()
-        .whenComplete((){
+    await documentReferencer.delete().whenComplete(() {
       response.code = 200;
       response.message = "Sucessfully Deleted Employee";
-    })
-        .catchError((e) {
+    }).catchError((e) {
       response.code = 500;
       response.message = e;
     });
