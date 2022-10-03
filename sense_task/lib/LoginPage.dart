@@ -5,6 +5,7 @@ import 'package:mongo_dart/mongo_dart.dart' as M;
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
+import 'package:sense_task/adminview/admin_facultypage.dart';
 import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
@@ -219,10 +220,10 @@ class _loginpageState extends State<loginpage> {
               context,
               MaterialPageRoute(
                   builder: (context) => (pageview == 2)
-                      ? second()
+                      ? userpage()
                       : (pageview == 1)
                           ? second()
-                          : second()
+                          : facultystatus()
                   //UserInfoScreen(user: user)
                   ),
             );

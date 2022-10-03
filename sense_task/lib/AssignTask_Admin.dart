@@ -742,7 +742,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           shape: StadiumBorder(),
                           primary: Colors.black),
                       onPressed: () async {
-                        await _updateTask(
+/*                        await _updateTask(
                             document?.id,
                             categoryvalue,
                             tasktitlecontroller.text,
@@ -753,15 +753,30 @@ class _taskassign_aState extends State<taskassign_a> {
                             duetime,
                             facultyvalue,
                             status,
-                            reason);
-
+                            reason
+                        );*/
+                       await FirebaseTask.updateTask(
+                           categorydb: categoryvalue,
+                           titledb: tasktitlecontroller.text,
+                           descriptiondb: taskdescriptioncontroller.text,
+                           startdatedb: startDateInString,
+                           enddatedb: endDateInString,
+                           duedatedb: dueDateInString,
+                           duetimedb: dueDateInString,
+                           facultydb: facultyvalue,
+                           statusdb: status,
+                           reasondb:  reason,
+                           docId: document!.id
+                       ).whenComplete(
+                             () => Navigator.pop(context),
+                       );
                         _clearassignpage();
 
                         print('updateeeeeeeeee');
-                        Navigator.push(
+                      /*  Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => second()),
-                        );
+                        );*/
                       },
                       child: Padding(
                         padding: EdgeInsets.fromLTRB(
