@@ -21,7 +21,7 @@ import 'main.dart';
 ///B2A4F0
 Box<dynamic> Hive_box = Hive.box('myBox');
 bool isButtonDisabled = true;
-late User user;
+User? user;
 bool checkbox_value = false;
 Prefsetsignin() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -222,8 +222,8 @@ class _loginpageState extends State<loginpage> {
                   builder: (context) => (pageview == 2)
                       ? userpage()
                       : (pageview == 1)
-                          ? second()
-                          : facultystatus()
+                          ? adminpage()
+                          : userpage()
                   //UserInfoScreen(user: user)
                   ),
             );
