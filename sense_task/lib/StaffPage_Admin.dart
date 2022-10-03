@@ -13,7 +13,7 @@ import 'adminview/adminpage.dart';
 import 'main.dart';
 import 'mangodb.dart';
 
-int isEdit = 0;
+
 String filterDateInString = '';
 DateTime filterDate = DateTime.now();
 bool isDateSelectedforfilter = false;
@@ -34,6 +34,7 @@ TextEditingController taskreasonblah = new TextEditingController();
 int _selectedIndex = 0;
 
 class second extends StatefulWidget {
+  int isEdit =0;
   late bool grey;
   @override
   secondState createState() => secondState();
@@ -227,6 +228,17 @@ class secondState extends State<second> {
                             onDismissed: (direction) async {
                               if (direction == DismissDirection.endToStart) {
                                 setState(() => isEdit = 1);
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) {
+                                          return taskassign_a();
+                                        },
+                                        settings: RouteSettings(
+                                            arguments: document)))
+                                    .then((value) {
+                                  setState(() {});
+                                });
                                 if (document != null) {
                                   print('Updating UI');
                                   categoryvalue = document['category'];
@@ -241,17 +253,6 @@ class secondState extends State<second> {
                                   checkInserttask = "Update";
                                 }
                                 ;
-                                Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (BuildContext context) {
-                                              return taskassign_a();
-                                            },
-                                            settings: RouteSettings(
-                                                arguments: document)))
-                                    .then((value) {
-                                  setState(() {});
-                                });
                               } else {
                                 print(document.id);
 

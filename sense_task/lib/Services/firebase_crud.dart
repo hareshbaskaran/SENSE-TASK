@@ -157,9 +157,6 @@ class FirebaseTask {
 
     return response;
   }
-
-
-  ///delete
   static Future<Response> deleteTask({
     required String docId,
   }) async {
