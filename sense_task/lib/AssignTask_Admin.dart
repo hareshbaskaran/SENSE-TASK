@@ -128,7 +128,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           Navigator.pop(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => second()),
+                                builder: (context) => second(user: u_name,)),
                           );
                           setState(() => isEdit = 0);
                           _clearassignpage();
@@ -757,7 +757,7 @@ class _taskassign_aState extends State<taskassign_a> {
                         print('updateeeeeeeeee');
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => second()),
+                          MaterialPageRoute(builder: (context) => second(user: u_name,)),
                         );
                       },
                       child: Padding(
@@ -807,7 +807,7 @@ class _taskassign_aState extends State<taskassign_a> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => second()),
+                                    builder: (context) => second(user: u_name,)),
                               );
                             },
                             child: Padding(

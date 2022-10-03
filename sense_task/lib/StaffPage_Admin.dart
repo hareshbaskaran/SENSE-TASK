@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
@@ -27,21 +28,29 @@ var filterlist = [
   'Overdued Tasks',
   'Select Date'
 ];
-
+late User u_name;
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 TextEditingController taskreasoncontroller = new TextEditingController();
 TextEditingController taskreasonblah = new TextEditingController();
 int _selectedIndex = 0;
 class second extends StatefulWidget {
-  late bool grey;
+  const second({Key? key, required User user}): u_name=user,
+        super(key: key);
+  final User u_name;
   @override
   secondState createState() => secondState();
 }
 
 class secondState extends State<second> {
-  secondState();
+  late bool grey;
   int tasklength = 0;
+  @override
+  void initState() {
+    u_name = widget.u_name;
+
+    super.initState();
+  }
   Widget build(BuildContext context) {
     void _onItemTapped(int index) {
       setState(() {
@@ -109,7 +118,7 @@ class secondState extends State<second> {
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Text(
-                          'Admin',
+                          '${u_name.displayName}',
                           style: GoogleFonts.poppins(
                               color: Colors.black,
                               fontSize:
@@ -610,12 +619,12 @@ class secondState extends State<second> {
                                                                           height: 60,
                                                                           child: TextField(
                                                                             onChanged: (_) {
-                                                                              if (_.length > 0)
+                                                                           /*   if (_.length > 0)
                                                                                 widget.grey =
                                                                                 false;
                                                                               else
                                                                                 widget.grey =
-                                                                                true;
+                                                                                true;*/
                                                                               setState(() {});
                                                                             },
                                                                             decoration:
