@@ -41,7 +41,7 @@ CheckloggedIn() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await MongoDbModel.connect();
+
   await Hive.initFlutter();
   Box<dynamic> Hive_box = await Hive.openBox('myBox');
   WidgetsFlutterBinding.ensureInitialized();

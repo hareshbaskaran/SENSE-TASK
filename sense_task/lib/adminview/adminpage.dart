@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +7,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sense_task/Models/TaskMango.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/StaffPage_Admin.dart';
+import 'package:sense_task/UserInfo.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/mangodb.dart';
@@ -14,6 +16,7 @@ import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'package:sense_task/mangodb.dart';
 import 'package:sense_task/LoginPage.dart';
 
+late User _user;
 String filterDateInString = '';
 DateTime filterDate = DateTime.now();
 bool isDateSelectedforfilter = false;
@@ -97,7 +100,14 @@ class _adminpageState extends State<adminpage> {
                           child: Row(
                             children: [
                               IconButton(
-                                  onPressed: () {}, icon: Icon(Icons.menu)),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                UserInfoScreen(user: user)));
+                                  },
+                                  icon: Icon(Icons.menu)),
                               Text(
                                 'Hello, ',
                                 style: GoogleFonts.poppins(
@@ -199,7 +209,10 @@ class _adminpageState extends State<adminpage> {
                                     physics: NeverScrollableScrollPhysics(),
                                     itemCount: snapshot.data!.docs.length,
                                     itemBuilder: (context, index) {
-                                      return TaskCard(snapshot.data!.docs[snapshot.data!.docs.length - index - 1]);
+                                      return TaskCard(snapshot.data!.docs[
+                                          snapshot.data!.docs.length -
+                                              index -
+                                              1]);
                                     });
                             }),
                       ),
@@ -223,18 +236,18 @@ class _adminpageState extends State<adminpage> {
       int status_update,
       String reason_update) async {
     await FirebaseTask.updateTask(
-        categorydb: category_update,
-        titledb: title_update,
-        descriptiondb: description_update,
-        startdatedb: startdate_update,
-        enddatedb: enddate_update,
-        duedatedb: duedate_update,
-        duetimedb: duetime_update,
-        facultydb: faculty_update,
-        statusdb: status_update,
-        reasondb: reason_update,
-        docId: id
-    ).whenComplete(
+            categorydb: category_update,
+            titledb: title_update,
+            descriptiondb: description_update,
+            startdatedb: startdate_update,
+            enddatedb: enddate_update,
+            duedatedb: duedate_update,
+            duetimedb: duetime_update,
+            facultydb: faculty_update,
+            statusdb: status_update,
+            reasondb: reason_update,
+            docId: id)
+        .whenComplete(
       () => Navigator.pop(context),
     );
   }
@@ -249,7 +262,7 @@ class _adminpageState extends State<adminpage> {
         (hrleft < 0 || minleft <= 0)) {
       ///todo:status check
       setState(() {
-        status =2;
+        status = 2;
       });
     }
     return Dismissible(
@@ -514,8 +527,7 @@ class _adminpageState extends State<adminpage> {
                                                     .size
                                                     .width *
                                                 0.04),
-                                      )
-                        ),
+                                      )),
                       ],
                     ),
                     SizedBox(height: MediaQuery.of(context).size.width * 0.008),
