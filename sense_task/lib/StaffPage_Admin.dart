@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
+import 'package:sense_task/adminview/admin_facultypage.dart';
 import 'AdminMongo.dart';
 import 'AssignTask_Admin.dart';
 import 'LoginPage.dart';
@@ -75,7 +76,9 @@ class secondState extends State<second> {
               )
             ]),
       body: SafeArea(
-        child: Container(
+        child:
+        (_selectedIndex==0)?
+        Container(
           constraints: BoxConstraints.expand(),
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -797,7 +800,8 @@ class secondState extends State<second> {
               ),
             ],
           ),
-        ))
+        ):facultystatus()
+      )
     );
   }
   Future<void> _updateTask(
