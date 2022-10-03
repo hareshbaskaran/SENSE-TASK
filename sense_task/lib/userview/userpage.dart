@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
@@ -13,23 +12,15 @@ int status = 0;
 
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
-late User user_u;
+
 class userpage extends StatefulWidget {
-  const userpage({Key? key, required User user}): user_u=user,
-        super(key: key);
-  final User user_u;
+  const userpage({Key? key}) : super(key: key);
+
   @override
   State<userpage> createState() => _userpageState();
 }
 
 class _userpageState extends State<userpage> {
-
-  @override
-  void initState() {
-    user_u = widget.user_u;
-
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

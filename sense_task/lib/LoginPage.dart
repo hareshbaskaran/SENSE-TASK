@@ -221,7 +221,7 @@ class _loginpageState extends State<loginpage> {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) =>
-              (pageview==2)?userpage(user: user_u,):(pageview==1)?second(user: u_name) :userpage(user: user_u)
+              (pageview==2)?userpage():(pageview==1)?second() :userpage()
                   //UserInfoScreen(user: user)
                   ),
             );
