@@ -243,8 +243,7 @@ class secondState extends State<second> {
                                   print('Updating UI');
                                   categoryvalue = document['category'];
                                   tasktitlecontroller.text = document['title'];
-                                  taskdescriptioncontroller.text =
-                                      document['description'];
+                                  taskdescriptioncontroller.text = document['description'];
                                   startDateInString = document['startdate'];
                                   endDateInString = document['endate'];
                                   dueDateInString = document['duedate'];
