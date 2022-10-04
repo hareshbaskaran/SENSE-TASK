@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sense_task/Models/FirebaseResponse.dart';
+import 'package:sense_task/adminview/adminpage.dart';
 
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -108,7 +109,8 @@ class FirebaseTask {
 
   ///edit
   static Future<Response> updateTask(
-      {required String categorydb,
+      {
+        required String categorydb,
       required String titledb,
       required String descriptiondb,
       required String startdatedb,
@@ -162,5 +164,16 @@ class FirebaseTask {
     });
 
     return response;
+  }
+}
+class AdminQuery{
+
+  static Stream<QuerySnapshot> AdminStatus() {
+    CollectionReference notesItemCollection = _taskCollection;
+    return notesItemCollection
+        .where(
+      "status",
+      isEqualTo: adminquery,
+    ).snapshots();
   }
 }

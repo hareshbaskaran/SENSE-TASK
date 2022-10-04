@@ -15,19 +15,10 @@ import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/main.dart';
 
 import '../userview/userpage.dart';
-
+int adminquery=5;
 String filterDateInString = '';
 DateTime filterDate = DateTime.now();
 bool isDateSelectedforfilter = false;
-
-var filterlist = [
-  'Tasks for Today',
-  'Assigned Tasks',
-  'Completed Tasks',
-  'Rejected Tasks',
-  'Overdued Tasks',
-  'Select Date'
-];
 
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
@@ -157,7 +148,11 @@ class adminpageState extends State<adminpage> {
                           child: Row(
                             children: [
                               Text(
-                                'All Tasks',
+                                (adminquery==5)? 'All Tasks':
+                          (adminquery==0)? 'Assigned Tasks ':
+                          (adminquery==3)? 'Overdue Tasks':
+                          (adminquery==1)? 'Accepted Tasks':
+                          (adminquery==2)? 'Rejected Tasks':"",
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -183,9 +178,9 @@ class adminpageState extends State<adminpage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection('Tasks')
-                                  .snapshots(),
+                              stream: (adminquery==5)?
+                                  FirebaseTask.readTask():
+                              AdminQuery.AdminStatus(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (!snapshot.hasData) {
@@ -211,25 +206,6 @@ class adminpageState extends State<adminpage> {
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
                                   children: snapshot.data!.docs.map((document) {
-                                    // int hrleft = int.parse(document['duetime']
-                                    //         .toString()
-                                    //         .split(":")[0]) -
-                                    //     DateTime.now().hour;
-                                    // int minleft = int.parse(document['duetime']
-                                    //         .toString()
-                                    //         .split(":")[1]) -
-                                    //     DateTime.now().minute;
-                                    // if (int.parse(document['duedate']
-                                    //                 .toString()
-                                    //                 .split("/")[0]) -
-                                    //             DateTime.now().day <=
-                                    //         0 &&
-                                    //     (hrleft < 0 || minleft <= 0)) {
-                                    //   ///todo:status check
-                                    //   setState(() {
-                                    //     status = 2;
-                                    //   });
-                                    // }
                                     return Padding(
                                       padding: EdgeInsets.fromLTRB(6, 0, 6, 8),
                                       child: Dismissible(
@@ -275,18 +251,12 @@ class adminpageState extends State<adminpage> {
                                               checkInserttask = "Update";
                                             });
                                             print('Updating UI');
-                                            categoryvalue =
-                                                document['category'];
-                                            tasktitlecontroller.text =
-                                                document['title'];
-                                            taskdescriptioncontroller.text =
-                                                document['description'];
-                                            startDateInString =
-                                                document['startdate'];
-                                            endDateInString =
-                                                document['enddate'];
-                                            dueDateInString =
-                                                document['duedate'];
+                                            categoryvalue = document['category'];
+                                            tasktitlecontroller.text = document['title'];
+                                            taskdescriptioncontroller.text = document['description'];
+                                            startDateInString = document['startdate'];
+                                            endDateInString = document['enddate'];
+                                            dueDateInString = document['duedate'];
                                             duetime = document['duetime'];
                                             facultyvalue = document['faculty'];
                                             checkInserttask = "Update";
@@ -486,7 +456,6 @@ class adminpageState extends State<adminpage> {
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          ///todo: category have to replaced in the heading or is it same update i  next commit
                                                           standardtext(
                                                               text:
                                                                   'Category :  '),
@@ -580,42 +549,6 @@ class adminpageState extends State<adminpage> {
                                                           standardtext(
                                                               text:
                                                                   'Time left:  '),
-                                                          //               Padding(
-                                                          //                   padding: const EdgeInsets.all(8.0),
-                                                          //                   child: (int.parse(task_data.duedatedb.split("/")[0]) -
-                                                          //                       DateTime.now().day !=
-                                                          //                       0)
-                                                          //                       ? Text(
-                                                          //                     "${int.parse(task_data.duedatedb.split("/")[0]) - DateTime.now().day} days , ${task_data.duetimedb.split(":")[0]} hours ${task_data.duetimedb.split(":")[1]} mins  ",
-                                                          //                     textAlign: TextAlign.left,
-                                                          //                     style: GoogleFonts.poppins(
-                                                          //                         color: Colors.redAccent,
-                                                          //                         fontWeight: FontWeight.bold,
-                                                          //                         fontSize:
-                                                          //                         MediaQuery.of(context).size.width *
-                                                          //                             0.04),
-                                                          //                   )
-                                                          //                       : Text(
-                                                          //                     " ${hrleft} hours ${minleft} mins  ",
-                                                          //                     textAlign: TextAlign.left,
-                                                          //                     style: GoogleFonts.poppins(
-                                                          //                         color: Colors.redAccent,
-                                                          //                         fontWeight: FontWeight.bold,
-                                                          //                         fontSize:
-                                                          //                         MediaQuery.of(context).size.width *
-                                                          //                             0.04),: Text(
-                                                          //                   " ${hrleft} hours ${minleft} mins  ",
-                                                          //                   textAlign: TextAlign.left,
-                                                          //                       style: GoogleFonts.poppins(
-                                                          //                       color: Colors.redAccent,
-                                                          //                   fontWeight: FontWeight.bold,
-                                                          //                   fontSize: MediaQuery.of(context)
-                                                          //                       .size
-                                                          //                       .width *
-                                                          //                       0.04),
-                                                          // )
-                                                          //                   )
-                                                          //               ),
                                                         ],
                                                       ),
                                                       SizedBox(
@@ -642,157 +575,17 @@ class adminpageState extends State<adminpage> {
                                             ),
                                           ),
                                           (document['status'] == 0)
-                                              ? Container(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          right: 20, top: 20),
-                                                  alignment: Alignment.topRight,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: [
-                                                      Icon(
-                                                        Icons.circle_rounded,
-                                                        color: Colors.black,
-                                                        size: 14,
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 8),
-                                                        child: Text(
-                                                          'Assigned',
-                                                          style: GoogleFonts.poppins(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.035),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
+                                              ? StatusTag(Colors.black,'Assigned')
                                               : (document['status'] == 1)
-                                                  ? Container(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              right: 20,
-                                                              top: 20),
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .end,
-                                                        children: [
-                                                          Icon(
-                                                            Icons
-                                                                .circle_rounded,
-                                                            color: Colors.green,
-                                                            size: 18,
-                                                          ),
-                                                          Text(
-                                                            'Completed',
-                                                            style: GoogleFonts.poppins(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.03),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    )
-                                                  : (document['status'] == -1)
-                                                      ? Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  right: 20,
-                                                                  top: 20),
-                                                          alignment: Alignment
-                                                              .topRight,
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .end,
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .circle_rounded,
-                                                                color:
-                                                                    Colors.red,
-                                                                size: 18,
-                                                              ),
-                                                              Text(
-                                                                'Rejected',
-                                                                style: GoogleFonts.poppins(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.03),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        )
-                                                      : (document['status'] ==
-                                                              2)
-                                                          ? Container(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      right: 20,
-                                                                      top: 20),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topRight,
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .end,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .end,
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .circle_rounded,
-                                                                    color: Colors
-                                                                        .red,
-                                                                    size: 18,
-                                                                  ),
-                                                                  Text(
-                                                                    'Overdue',
-                                                                    style: GoogleFonts.poppins(
-                                                                        color: Colors
-                                                                            .black,
-                                                                        fontSize:
-                                                                            MediaQuery.of(context).size.width *
-                                                                                0.03),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            )
+                                                  ? StatusTag(Colors.green,'Accepted')
+                                                  : (document['status'] == 2)
+                                                      ? StatusTag(Colors.redAccent,'Rejected')
+                                                      : (document['status'] == 3)
+                                                          ? StatusTag(Colors.deepOrangeAccent,'Overdue')
                                                           : SizedBox()
-                                        ])),
+                                        ]
+                                            )
+                                        ),
                                       ),
                                     );
                                   }).toList(),
@@ -865,7 +658,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
     super.initState();
 
     controller =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 700));
     scaleAnimation =
         CurvedAnimation(parent: controller!, curve: Curves.elasticInOut);
 
@@ -889,7 +682,8 @@ class FunkyOverlayState extends State<FunkyOverlay>
             decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))),
+                    borderRadius: BorderRadius.circular(15.0))
+            ),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Padding(
@@ -899,7 +693,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                     Padding(
                       padding: const EdgeInsets.only(bottom: 10),
                       child: Align(
-                        alignment: Alignment.centerLeft,
+                        alignment: Alignment.center,
                         child: Text(
                           'Filter by',
                           style: GoogleFonts.poppins(
@@ -910,18 +704,31 @@ class FunkyOverlayState extends State<FunkyOverlay>
                         ),
                       ),
                     ),
-                    ListView.builder(
+                    SizedBox(height: MediaQuery.of(context).size.height*0.02),
+                    FilterBox('All Tasks', 5),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    FilterBox('Assigned Tasks', 0),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    FilterBox('Overdue Tasks', 3),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    FilterBox('Accepted Tasks', 1),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    FilterBox('Rejected Tasks', 2),
+                  /*  ListView.builder(
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: filterlist.length,
                         itemBuilder: (BuildContext context, int index) {
                           return (filterlist[index]) != 'Select Date'
                               ? Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15)),
-                                  ),
+                            decoration:ShapeDecoration(
+                                color: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0))
+                            ),
                                   child: MaterialButton(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15.0)),
                                     color: Colors.black,
                                     onPressed: () {
                                       tasktype = filterlist[
@@ -997,7 +804,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
                                     ),
                                   ],
                                 );
-                        }),
+                        }),*/
                   ],
                 ),
               ),
@@ -1069,3 +876,101 @@ class smalltext extends StatelessWidget {
     );
   }
 }
+class FilterBox extends StatefulWidget {
+  String text;int query;
+  FilterBox(this.text,this.query);
+  @override
+  State<FilterBox> createState() => _FilterBoxState();
+}
+
+class _FilterBoxState extends State<FilterBox> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width*0.5,
+      decoration:ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0))
+      ),
+      child: MaterialButton(
+        elevation: 5,
+        splashColor: Colors.deepPurpleAccent,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0)),
+        color: Colors.black,
+        onPressed: () {
+          setState(() {
+            adminquery=widget.query;
+          });
+          print(adminquery);
+          Navigator.pop(context);
+          setState(() {
+          });
+        },
+        child: Text(
+            style: TextStyle(
+              color: Colors.white,
+            ),
+            widget.text
+        ),
+      ),
+    );
+  }
+}
+class StatusTag extends StatefulWidget {
+  Color status;String text;
+  StatusTag(this.status,this.text);
+
+  @override
+  State<StatusTag> createState() => _StatusTagState();
+}
+
+class _StatusTagState extends State<StatusTag> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding:
+      const EdgeInsets.only(
+          right: 20, top: 20),
+      alignment: Alignment.topRight,
+      child: Row(
+        mainAxisAlignment:
+        MainAxisAlignment.end,
+        crossAxisAlignment:
+        CrossAxisAlignment.end,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4),
+            child: Icon(
+              Icons.circle_rounded,
+              color: widget.status,
+              size: 14,
+            ),
+          ),
+          Padding(
+            padding:
+            EdgeInsets.only(
+                left: 8),
+            child: Text(
+              widget.text,
+              style: GoogleFonts.poppins(
+                  color:
+                  Colors.black,
+                  fontWeight:
+                  FontWeight
+                      .w500,
+                  fontSize: MediaQuery.of(
+                      context)
+                      .size
+                      .width *
+                      0.035),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+

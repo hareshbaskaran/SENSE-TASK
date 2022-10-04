@@ -58,7 +58,9 @@ class _facultystatusState extends State<facultystatus> {
                                   color: Colors.black,
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.04),
-                              facultylist[index])),
+                              facultylist[index]
+                          )
+                      ),
                     ),
                   ),
                 ),
