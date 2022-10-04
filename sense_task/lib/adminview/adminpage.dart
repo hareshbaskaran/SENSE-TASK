@@ -13,7 +13,6 @@ import 'package:sense_task/Models/UserMango.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
 import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/main.dart';
-import 'package:sense_task/mangodb.dart';
 
 import '../userview/userpage.dart';
 

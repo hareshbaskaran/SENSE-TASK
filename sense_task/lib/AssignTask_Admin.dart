@@ -7,7 +7,6 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sense_task/main.dart';
 import 'package:mongo_dart/mongo_dart.dart' as T;
-import 'mangodb.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 TextEditingController tasktitlecontroller = new TextEditingController();
@@ -721,7 +720,8 @@ class _taskassign_aState extends State<taskassign_a> {
                                 facultydb: facultyvalue,
                                 statusdb: status,
                                 reasondb: reason,
-                                docId: document!.id)
+                                docId: document!.id
+                        )
                             .whenComplete(
                           () => Navigator.pop(context),
                         );
@@ -775,7 +775,8 @@ class _taskassign_aState extends State<taskassign_a> {
                                   duetimedb: duetime,
                                   facultydb: facultyvalue,
                                   statusdb: status,
-                                  reasondb: reason);
+                                  reasondb: reason
+                              );
                               _clearassignpage();
                               Navigator.push(
                                 context,
@@ -812,47 +813,4 @@ class _taskassign_aState extends State<taskassign_a> {
     duetime = "";
     facultyvalue = "Ishu";
   }
-
-  // Future<void> _updateTask(
-  //     var id,
-  //     String category_update,
-  //     String title_update,
-  //     String description_update,
-  //     String startdate_update,
-  //     String enddate_update,
-  //     String duedate_update,
-  //     String duetime_update,
-  //     String faculty_update,
-  //     int status_update,
-  //     String reason_update) async {
-  //   print('in update task function');
-  //
-  //   await FirebaseTask.updateTask(
-  //     docId: id,
-  //     categorydb: category_update,
-  //     titledb: title_update,
-  //     descriptiondb: description_update,
-  //     startdatedb: startdate_update,
-  //     enddatedb: enddate_update,
-  //     duedatedb: duedate_update,
-  //     duetimedb: duetime_update,
-  //     facultydb: faculty_update,
-  //     statusdb: status_update,
-  //     reasondb: reason_update,
-  //   ).whenComplete(
-  //     () => Navigator.pop(context),
-  //   );
-  //   print(categoryvalue);
-  //   print(tasktitlecontroller.text);
-  //
-  //   print(taskdescriptioncontroller.text);
-  //   print(startDate);
-  //   print(startDateInString);
-  //   print(endDate);
-  //   print(endDateInString);
-  //   print(dueDate);
-  //   print(dueDateInString);
-  //   print(duetime);
-  //   print(facultyvalue);
-  // }
 }

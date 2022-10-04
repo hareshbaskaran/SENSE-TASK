@@ -1,3 +1,5 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,7 +8,6 @@ import 'package:sense_task/Services/firebase_crud.dart';
 
 import '../../LoginPage.dart';
 import '../../adminview/adminpage.dart';
-import '../../mangodb.dart';
 import '../AssignTask_Admin.dart';
 import '../Models/TaskMango.dart';
 
@@ -144,22 +145,6 @@ class _userpageState extends State<userpage> {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         children: snapshot.data!.docs.map((document) {
-                          // int hrleft =
-                          //     int.parse(document['duetime'].split(":")[0]) -
-                          //         DateTime.now().hour;
-                          // int minleft =
-                          //     int.parse(document['duetime'].split(":")[1]) -
-                          //         DateTime.now().minute;
-                          // if (int.parse(document['duedate'].split("/")[0]) -
-                          //     DateTime.now().day <=
-                          //     0 &&
-                          //     (hrleft < 0 || minleft <= 0)) {
-                          //   ///todo:status check
-                          //   setState(() {
-                          //     status = 2;
-                          //   });
-                          // }
-
                           return Padding(
                             padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                             child: Dismissible(
@@ -304,19 +289,7 @@ class _userpageState extends State<userpage> {
                                                           MediaQuery.of(context)
                                                                   .size
                                                                   .width *
-                                                              0.15),
-                                                  /*  standardtext(text: 'Due :  '),
-                        Align(
-                            alignment: Alignment.topRight,
-                            child: Text(
-                              " ${task_data.duedatedb}",
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.poppins(
-                                  color: Colors.redAccent,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: MediaQuery.of(context).size.width * 0.04),
-                            ),
-                        )*/
+                                                              0.15)
                                                 ],
                                               ),
                                               SizedBox(
@@ -1317,6 +1290,8 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
 
   @override
   Widget build(BuildContext context) {
+    QueryDocumentSnapshot? document =
+    ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot?;
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -1352,8 +1327,6 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
-
-                                        ///add accept onpressed
                                         child: Padding(
                                           padding: EdgeInsets.fromLTRB(
                                               MediaQuery.of(context)
@@ -1385,28 +1358,26 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
                                             shape: StadiumBorder(),
                                             primary: Colors.black),
                                         onPressed: () async {
-                                          status = 1;
-                                          // await _updateTask(
-                                          //     task_data!.id_t,
-                                          //     task_data!.categorydb,
-                                          //     task_data!.titledb,
-                                          //     task_data!.descriptiondb,
-                                          //     task_data!.startdatedb,
-                                          //     task_data!.enddatedb,
-                                          //     task_data!.duedatedb,
-                                          //     task_data!.duetimedb,
-                                          //     task_data!.facultydb,
-                                          //     status,
-                                          //     ''
-                                          // );
-                                          Navigator.pop(context);
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) => userpage()));
+                                          setState(() {
+                                            status = 1;
+                                          });
+                                          ///todo:accept to be work
+                     /*                     await FirebaseTask.updateTask(
+                                              categorydb: document!['category'],
+                                              titledb: document['title'],
+                                              descriptiondb: document['description'],
+                                              startdatedb: document['startdate'],
+                                              enddatedb: document['enddate'],
+                                              duedatedb: document['duedate'],
+                                              duetimedb: document['duetime'],
+                                              facultydb: document['faculty'],
+                                              statusdb: 1,
+                                              reasondb: '',
+                                              docId: document.id
+                                          ).whenComplete(
+                                                () => Navigator.pop(context),
+                                          );*/
                                         },
-
-                                        ///add accept onpressed
                                         child: Padding(
                                           padding: EdgeInsets.fromLTRB(
                                               MediaQuery.of(context)
@@ -1454,23 +1425,11 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
                                     cursorColor: Colors.black,
                                     controller: taskreasoncontroller,
                                     onSubmitted: (helo) async {
-                                      status = -1;
-                                      /*         await _updateTask(
-                                          task_data!.categorydb,
-                                          task_data!.titledb,
-                                          task_data!.descriptiondb,
-                                          task_data!.startdatedb,
-                                          task_data!.enddatedb,
-                                          task_data!.duedatedb,
-                                          task_data!.duetimedb,
-                                          task_data!.facultydb,
-                                          status,
-                                          taskreasoncontroller.text
-                                      );*/
+                                      setState(() {
+                                        status = -1;
+                                      });
                                       Navigator.pop(context);
                                     },
-
-                                    ///enter title
                                   ),
                                 ),
                               ),
@@ -1486,35 +1445,5 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
         ),
       ),
     );
-  }
-
-  Future<void> _updateTask(
-      var id,
-      String category_update,
-      String title_update,
-      String description_update,
-      String startdate_update,
-      String enddate_update,
-      String duedate_update,
-      String duetime_update,
-      String faculty_update,
-      int status_update,
-      String reason_update) async {
-    await FirebaseTask.updateTask(
-            categorydb: category_update,
-            titledb: title_update,
-            descriptiondb: description_update,
-            startdatedb: startdate_update,
-            enddatedb: enddate_update,
-            duedatedb: duedate_update,
-            duetimedb: duetime_update,
-            facultydb: faculty_update,
-            statusdb: status_update,
-            reasondb: reason_update,
-            docId: id)
-        .whenComplete(
-      () => Navigator.pop(context),
-    );
-    print('task updateddddddddddddddddddddddddddddddddddddddddddddddddd');
   }
 }
