@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
@@ -11,10 +12,7 @@ import 'package:sense_task/Models/TaskMango.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/Models/UserMango.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
-import 'package:sense_task/adminview/adminpage.dart';
-import 'package:sense_task/main.dart';
 
-import '../userview/userpage.dart';
 int adminquery=5;
 String filterDateInString = '';
 DateTime filterDate = DateTime.now();
@@ -90,12 +88,7 @@ class adminpageState extends State<adminpage> {
                                 IconButton(
                                     onPressed: () {
                                       Navigator.push(context, MaterialPageRoute(
-                                        builder: (BuildContext context) {
-                                          return UserInfoScreen(user: user!);
-                                        },
-                                      )).then((value) {
-                                        setState(() {});
-                                      });
+                                        builder: (context) => UserInfoScreen(user: user!)));
                                     },
                                     icon: Icon(Icons
                                         .menu)), // TODO : Implement left drawer for profile page (null error)
@@ -123,20 +116,21 @@ class adminpageState extends State<adminpage> {
                             ),
                           ),
                         ),
-                        Padding(
+            /*            Padding(
                           padding: EdgeInsets.fromLTRB(20, 0, 8, 0),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              '${tasklength.toString()} tasks waiting for you ...',
+                              'Tasks Waiting for you to Manage.....',
                               style: GoogleFonts.poppins(
+                                letterSpacing: 1.2,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.04),
                             ),
                           ),
-                        ),
+                        ),*/
                         Container(
                           width: MediaQuery.of(context).size.width * 0.7,
                           child: Divider(
@@ -184,10 +178,6 @@ class adminpageState extends State<adminpage> {
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (!snapshot.hasData) {
-                                  tasklength = FirebaseFirestore.instance
-                                      .collection('Tasks')
-                                      .snapshots()
-                                      .length;
                                   print(FirebaseFirestore.instance
                                       .collection('Tasks')
                                       .snapshots()
@@ -201,7 +191,9 @@ class adminpageState extends State<adminpage> {
                                     child: CircularProgressIndicator(),
                                   );
                                 }
-
+                               if(snapshot.hasData){
+                                 tasklength = FirebaseTask.readTask().length;
+                               }
                                 return ListView(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
@@ -288,7 +280,7 @@ class adminpageState extends State<adminpage> {
                                             decoration: new BoxDecoration(
                                               color: Colors.white,
                                               shape: BoxShape.rectangle,
-                                              border: Border.all(width: 1.0),
+                                              border: Border.all(width: 2.0),
                                               borderRadius: BorderRadius.all(
                                                   Radius.circular(15.0)),
                                             ),
@@ -315,20 +307,14 @@ class adminpageState extends State<adminpage> {
                                                         BorderRadius.circular(
                                                             4)),
                                                 title: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     largetext(
                                                         text:
                                                             document['title']),
-                                                    SizedBox(
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height *
-                                                            0.01),
+                                                    standardtext(text: "${document['faculty']}",c: Colors.deepPurpleAccent,),
+                                               standardtext(text:   "${document['startdate']} - ${document['enddate']}",c: Color(0xff555556),),
                                                     Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -345,31 +331,6 @@ class adminpageState extends State<adminpage> {
                                                               CrossAxisAlignment
                                                                   .center,
                                                           children: [
-                                                            standardtext(
-                                                                text:
-                                                                    'Start Date:  '),
-                                                            Align(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topLeft,
-                                                              child: Text(
-                                                                document[
-                                                                    'startdate'],
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .left,
-                                                                style: GoogleFonts.poppins(
-                                                                    color: Colors
-                                                                        .amber,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize: MediaQuery.of(context)
-                                                                            .size
-                                                                            .width *
-                                                                        0.04),
-                                                              ),
-                                                            ),
                                                             SizedBox(
                                                                 width: MediaQuery.of(
                                                                             context)
@@ -384,58 +345,6 @@ class adminpageState extends State<adminpage> {
                                                                     .size
                                                                     .width *
                                                                 0.01),
-                                                        (pageview == 1)
-                                                            ? Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  standardtext(
-                                                                      text:
-                                                                          'Faculty     :  '),
-                                                                  Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topLeft,
-                                                                    child: Text(
-                                                                      document[
-                                                                          'faculty'],
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .left,
-                                                                      style: GoogleFonts.poppins(
-                                                                          color: Colors
-                                                                              .black,
-                                                                          fontWeight: FontWeight
-                                                                              .bold,
-                                                                          fontSize:
-                                                                              MediaQuery.of(context).size.width * 0.04),
-                                                                    ),
-                                                                  )
-                                                                  /*  standardtext(text: " ${task_data.facultydb}"),*/
-                                                                ],
-                                                              )
-                                                            : Align(
-                                                                alignment: Alignment
-                                                                    .centerRight,
-                                                                child: Text(
-                                                                  document[
-                                                                          'duedate'] +
-                                                                      " " +
-                                                                      document[
-                                                                          'duetime'],
-                                                                  style: GoogleFonts.poppins(
-                                                                      color: Colors
-                                                                          .red,
-                                                                      fontSize: MediaQuery.of(context)
-                                                                              .size
-                                                                              .width *
-                                                                          0.03),
-                                                                ),
-                                                              ),
                                                       ],
                                                     )
                                                   ],
@@ -458,30 +367,8 @@ class adminpageState extends State<adminpage> {
                                                         children: [
                                                           standardtext(
                                                               text:
-                                                                  'Category :  '),
-                                                          Align(
-                                                            alignment: Alignment
-                                                                .topLeft,
-                                                            child: Text(
-                                                              document[
-                                                                  'category'],
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: GoogleFonts.poppins(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.04),
-                                                            ),
-                                                          )
-                                                          /*  standardtext(text: " ${task_data.facultydb}"),*/
+                                                                  'Category :  ',c: bb),
+                                                          standardtext(text: '${document['category']}', c: Colors.deepPurpleAccent)
                                                         ],
                                                       ),
                                                       SizedBox(
@@ -492,7 +379,7 @@ class adminpageState extends State<adminpage> {
                                                               0.01),
                                                       standardtext(
                                                           text:
-                                                              'Event Description:'),
+                                                              'Event Description:',c: bb),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -518,7 +405,7 @@ class adminpageState extends State<adminpage> {
                                                       Row(
                                                         children: [
                                                           standardtext(
-                                                              text: 'Due :  '),
+                                                              text: 'Due :  ',c: bb),
                                                           Padding(
                                                             padding:
                                                                 const EdgeInsets
@@ -548,7 +435,7 @@ class adminpageState extends State<adminpage> {
                                                         children: [
                                                           standardtext(
                                                               text:
-                                                                  'Time left:  '),
+                                                                  'Time left:  ',c: bb),
                                                         ],
                                                       ),
                                                       SizedBox(
@@ -562,7 +449,7 @@ class adminpageState extends State<adminpage> {
                                                               children: [
                                                                 standardtext(
                                                                     text: document[
-                                                                        'reason']),
+                                                                        'reason'],c: bb),
                                                               ],
                                                             )
                                                           : SizedBox(
@@ -582,8 +469,59 @@ class adminpageState extends State<adminpage> {
                                                       ? StatusTag(Colors.redAccent,'Rejected')
                                                       : (document['status'] == 3)
                                                           ? StatusTag(Colors.deepOrangeAccent,'Overdue')
-                                                          : SizedBox()
-                                        ]
+                                                          : SizedBox(),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top:75),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    mainAxisAlignment: MainAxisAlignment.end,
+                                                    children: [
+                                                      Container(
+                                                        width: MediaQuery.of(context).size.width*0.11,
+                                                        height: MediaQuery.of(context).size.height*0.03,
+                                                        decoration:ShapeDecoration(
+                                                            color: Color(0xff555556),
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(15.0))
+                                                        ),
+                                                        child: MaterialButton(
+                                                          onPressed: () {
+                                                          },
+                                                          child: Text(
+                                                            "",
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      SizedBox(width: 5),
+                                                      Container(
+                                                        width: MediaQuery.of(context).size.width*0.11,
+                                                        height: MediaQuery.of(context).size.height*0.03,
+                                                        decoration:ShapeDecoration(
+                                                            //color: Color(0xff22C087),
+                                                            color: Color(0xff555556),
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(15.0))
+                                                        ),
+                                                        child: MaterialButton(
+                                                          onPressed: () {
+                                                          },
+                                                          child: Text(
+                                                            "",
+                                                            style: TextStyle(
+                                                              color: Colors.white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                              ]
                                             )
                                         ),
                                       ),
@@ -714,97 +652,6 @@ class FunkyOverlayState extends State<FunkyOverlay>
                     FilterBox('Accepted Tasks', 1),
                     SizedBox(height: MediaQuery.of(context).size.height*0.0025),
                     FilterBox('Rejected Tasks', 2),
-                  /*  ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: filterlist.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return (filterlist[index]) != 'Select Date'
-                              ? Container(
-                            decoration:ShapeDecoration(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.0))
-                            ),
-                                  child: MaterialButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15.0)),
-                                    color: Colors.black,
-                                    onPressed: () {
-                                      tasktype = filterlist[
-                                          index]; //TODO : Implement tasktype displaying when query is selected in filter list
-                                    },
-                                    child: Text(
-                                      style: TextStyle(color: Colors.white),
-                                      filterlist[index],
-                                    ),
-                                  ),
-                                )
-                              : Row(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () async {
-                                        final datePick = await showDatePicker(
-                                          context: context,
-                                          initialDate: filterDate,
-                                          firstDate: new DateTime(1900),
-                                          lastDate: new DateTime.now(),
-                                          builder: (context, child) {
-                                            return Theme(
-                                              data: Theme.of(context).copyWith(
-                                                colorScheme: ColorScheme.light(
-                                                  primary: Colors
-                                                      .black, // header background color
-                                                  onPrimary: Colors
-                                                      .white, // header text color
-                                                  onSurface: Colors
-                                                      .black, // body text color
-                                                ),
-                                                textButtonTheme:
-                                                    TextButtonThemeData(
-                                                  style: TextButton.styleFrom(
-                                                    primary: Colors
-                                                        .black, // button text color
-                                                  ),
-                                                ),
-                                              ),
-                                              child: child!,
-                                            );
-                                          },
-                                        );
-                                        if (datePick != null &&
-                                            datePick != filterDate) {
-                                          setState(() {
-                                            filterDate = datePick;
-                                            isDateSelectedforfilter = true;
-
-                                            // put it here
-                                            filterDateInString =
-                                                "${filterDate.day}/${filterDate.month}/${filterDate.year}";
-                                            print(
-                                                filterDateInString); // 08/14/2019
-                                          });
-                                        }
-                                        setState(() {});
-                                      },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(15)),
-                                        ),
-                                        child: Text(
-                                          "Select date",
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.normal,
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                );
-                        }),*/
                   ],
                 ),
               ),
@@ -824,13 +671,13 @@ class largetext extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10),
       child: Text(
         text,
         textAlign: TextAlign.left,
         style: GoogleFonts.poppins(
             fontWeight: FontWeight.bold,
-            color: b,
+            color: Colors.black,
             fontSize: MediaQuery.of(context).size.width * 0.045),
       ),
     );
@@ -838,19 +685,19 @@ class largetext extends StatelessWidget {
 }
 
 class standardtext extends StatelessWidget {
-  String text;
+  String text;Color c;
 
-  standardtext({required this.text});
+  standardtext({required this.text,required this.c});
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topLeft,
+    return Padding(
+      padding: const EdgeInsets.only(left:10.0),
       child: Text(
         text,
         textAlign: TextAlign.left,
         style: GoogleFonts.poppins(
-            color: bb,
+            color: c,
             fontWeight: FontWeight.w600,
             fontSize: MediaQuery.of(context).size.width * 0.04),
       ),

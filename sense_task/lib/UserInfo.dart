@@ -7,7 +7,6 @@ import 'package:sense_task/main.dart';
 String googleuser = "haredfgf";
 User? _user;
 bool _isSigningOut = false;
-
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({Key? key, required User user})
       : _user = user,
@@ -20,16 +19,8 @@ class UserInfoScreen extends StatefulWidget {
 
 class _UserInfoScreenState extends State<UserInfoScreen> {
   @override
-  void initState() {
-    _user = widget._user;
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Drawer(
+    return  Drawer(
         child: SafeArea(
           child: Align(
             alignment: Alignment.center,
@@ -107,7 +98,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
             ),
           ),
         ),
-      ),
+      backgroundColor: Colors.amber,
     );
   }
 }

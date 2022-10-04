@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sense_task/Models/FirebaseResponse.dart';
 import 'package:sense_task/adminview/adminpage.dart';
 
-
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _UserCollection = _firestore.collection('SenseTask');
 final CollectionReference _taskCollection = _firestore.collection('Tasks');
@@ -81,18 +80,6 @@ class FirebaseTask {
     return notesItemCollection.snapshots();
   }
 
-  ///querry results
-  static Stream<QuerySnapshot> QueryFaculty() {
-    CollectionReference notesItemCollection = _taskCollection;
-    return notesItemCollection
-        .where(
-          "faculty",
-
-          ///todo:add querry search string inside equal to
-          isEqualTo: "",
-        )
-        .snapshots();
-  }
 
   static Future<List<QuerySnapshot<Object?>>> DropdownFaculty() {
     CollectionReference notesItemCollection = _taskCollection;
@@ -174,6 +161,30 @@ class AdminQuery{
         .where(
       "status",
       isEqualTo: adminquery,
+    ).snapshots();
+  }
+}
+class UsernameQuery{
+  static Stream<QuerySnapshot> UserOngoing() {
+    CollectionReference notesItemCollection = _taskCollection;
+    return notesItemCollection
+        .where(
+      "status",
+      isEqualTo: 0,
+    ).where("faculty",
+      ///todo:change my name to stringfield catches username
+      isEqualTo: "Haresh"
+    ).snapshots();
+  }
+  static Stream<QuerySnapshot> UserAccepted() {
+    CollectionReference notesItemCollection = _taskCollection;
+    return notesItemCollection
+        .where(
+      "status",
+      isEqualTo: 1,
+    ).where("faculty",
+        ///todo:change my name to stringfield catches username
+        isEqualTo: "Haresh"
     ).snapshots();
   }
 }
