@@ -5,7 +5,7 @@ import 'package:sense_task/Models/UserLoginModel.dart';
 import 'package:sense_task/main.dart';
 
 String googleuser = "haredfgf";
-late User _user;
+User? _user;
 bool _isSigningOut = false;
 
 class UserInfoScreen extends StatefulWidget {
@@ -46,14 +46,14 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  _user.displayName!,
+                  _user!.displayName!,
                   style: TextStyle(
                     fontSize: 26,
                   ),
                 ),
                 SizedBox(height: 8.0),
                 Text(
-                  '( ${_user.email!} )',
+                  '( ${_user!.email!} )',
                   style: TextStyle(
                     fontSize: 20,
                   ),
@@ -78,7 +78,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                         onPressed: () async {
                           setState(() {
                             _isSigningOut = true;
-                            googleuser = _user.displayName!;
+                            googleuser = _user!.displayName!;
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

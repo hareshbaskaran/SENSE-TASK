@@ -1,11 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/StaffPage_Admin.dart';
+import 'package:sense_task/adminview/adminpage.dart';
+import 'package:sense_task/Models/TaskMango.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:sense_task/main.dart';
+import 'package:mongo_dart/mongo_dart.dart' as T;
+import 'mangodb.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-List<Widget> allTasks = [];
 
 TextEditingController tasktitlecontroller = new TextEditingController();
 
@@ -14,7 +17,6 @@ TextEditingController taskdescriptioncontroller = new TextEditingController();
 var checkInserttask = "Assign";
 
 // TaskMongo? task_data;
-QueryDocumentSnapshot? document;
 
 String startDateInString = '';
 DateTime startDate = DateTime.now();
@@ -46,7 +48,7 @@ var facultylist = [
   'Shobi',
 ];
 
-String duetime = '00/00/00';
+String duetime = '';
 
 int status = 0;
 
@@ -65,37 +67,8 @@ bool isRegister = true;
 class _taskassign_aState extends State<taskassign_a> {
   @override
   Widget build(BuildContext context) {
-    // TaskMongo? task_data =
-    //     ModalRoute.of(context)!.settings.arguments as TaskMongo?;
-    // void initState() {
-    //   super.initState();
-    //   if (document != null) {
-    //     print('Updating UI');
-    //     categoryvalue = document.categorydb;
-    //     tasktitlecontroller.text = document.titledb;
-    //     taskdescriptioncontroller.text = document.descriptiondb;
-    //     startDateInString = document.startdatedb;
-    //     endDateInString = document.enddatedb;
-    //     dueDateInString = document.duedatedb;
-    //     duetime = document.duetimedb;
-    //     facultyvalue = document.facultydb;
-    //     var _checkInserttask = "update";
-    //     print(categoryvalue);
-    //     print(tasktitlecontroller.text);
-    //
-    //     print(taskdescriptioncontroller.text);
-    //     print(startDate);
-    //     print(startDateInString);
-    //     print(endDate);
-    //     print(endDateInString);
-    //     print(dueDate);
-    //     print(dueDateInString);
-    //     print(duetime);
-    //     print(facultyvalue);
-    //   }
-    //   ;
-    // }
-
+    QueryDocumentSnapshot? document =
+        ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot?;
     return Scaffold(
         backgroundColor: Colors.white,
         resizeToAvoidBottomInset: false,
@@ -121,10 +94,10 @@ class _taskassign_aState extends State<taskassign_a> {
                           onPressed: () {
                             Navigator.pop(
                               context,
-                              MaterialPageRoute(builder: (context) => second()),
+                              MaterialPageRoute(
+                                  builder: (context) => adminpage()),
                             );
                             setState(() => checkInserttask = 'Assign');
-
                             _clearassignpage();
                           }),
                     ),
@@ -636,7 +609,8 @@ class _taskassign_aState extends State<taskassign_a> {
                             child: DateTimePicker(
                               type: DateTimePickerType.time,
                               textAlign: TextAlign.center,
-                              timeHintText: 'time',
+                              timeHintText:
+                                  (duetime != '') ? duetime : "Due Time",
                               cursorColor: Colors.black,
                               style: TextStyle(
                                 color: Colors.black,
@@ -736,38 +710,25 @@ class _taskassign_aState extends State<taskassign_a> {
                           shape: StadiumBorder(),
                           primary: Colors.black),
                       onPressed: () async {
-/*                        await _updateTask(
-                            document?.id,
-                            categoryvalue,
-                            tasktitlecontroller.text,
-                            taskdescriptioncontroller.text,
-                            startDateInString,
-                            endDateInString,
-                            dueDateInString,
-                            duetime,
-                            facultyvalue,
-                            status,
-                            reason
-                        );*/
-                       await FirebaseTask.updateTask(
-                           categorydb: categoryvalue,
-                           titledb: tasktitlecontroller.text,
-                           descriptiondb: taskdescriptioncontroller.text,
-                           startdatedb: startDateInString,
-                           enddatedb: endDateInString,
-                           duedatedb: dueDateInString,
-                           duetimedb: dueDateInString,
-                           facultydb: facultyvalue,
-                           statusdb: status,
-                           reasondb:  reason,
-                           docId: document!.id
-                       ).whenComplete(
-                             () => Navigator.pop(context),
-                       );
+                        await FirebaseTask.updateTask(
+                                categorydb: categoryvalue,
+                                titledb: tasktitlecontroller.text,
+                                descriptiondb: taskdescriptioncontroller.text,
+                                startdatedb: startDateInString,
+                                enddatedb: endDateInString,
+                                duedatedb: dueDateInString,
+                                duetimedb: dueDateInString,
+                                facultydb: facultyvalue,
+                                statusdb: status,
+                                reasondb: reason,
+                                docId: document!.id)
+                            .whenComplete(
+                          () => Navigator.pop(context),
+                        );
                         _clearassignpage();
 
                         print('updateeeeeeeeee');
-                      /*  Navigator.push(
+                        /*  Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => second()),
                         );*/
@@ -819,7 +780,7 @@ class _taskassign_aState extends State<taskassign_a> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => second()),
+                                    builder: (context) => adminpage()),
                               );
                             },
                             child: Padding(
@@ -852,46 +813,46 @@ class _taskassign_aState extends State<taskassign_a> {
     facultyvalue = "Ishu";
   }
 
-  Future<void> _updateTask(
-      var id,
-      String category_update,
-      String title_update,
-      String description_update,
-      String startdate_update,
-      String enddate_update,
-      String duedate_update,
-      String duetime_update,
-      String faculty_update,
-      int status_update,
-      String reason_update) async {
-    print('in update task function');
-    print(document?.id);
-    await FirebaseTask.updateTask(
-      docId: id,
-      categorydb: category_update,
-      titledb: title_update,
-      descriptiondb: description_update,
-      startdatedb: startdate_update,
-      enddatedb: enddate_update,
-      duedatedb: duedate_update,
-      duetimedb: duetime_update,
-      facultydb: faculty_update,
-      statusdb: status_update,
-      reasondb: reason_update,
-    ).whenComplete(
-      () => Navigator.pop(context),
-    );
-    print(categoryvalue);
-    print(tasktitlecontroller.text);
-
-    print(taskdescriptioncontroller.text);
-    print(startDate);
-    print(startDateInString);
-    print(endDate);
-    print(endDateInString);
-    print(dueDate);
-    print(dueDateInString);
-    print(duetime);
-    print(facultyvalue);
-  }
+  // Future<void> _updateTask(
+  //     var id,
+  //     String category_update,
+  //     String title_update,
+  //     String description_update,
+  //     String startdate_update,
+  //     String enddate_update,
+  //     String duedate_update,
+  //     String duetime_update,
+  //     String faculty_update,
+  //     int status_update,
+  //     String reason_update) async {
+  //   print('in update task function');
+  //
+  //   await FirebaseTask.updateTask(
+  //     docId: id,
+  //     categorydb: category_update,
+  //     titledb: title_update,
+  //     descriptiondb: description_update,
+  //     startdatedb: startdate_update,
+  //     enddatedb: enddate_update,
+  //     duedatedb: duedate_update,
+  //     duetimedb: duetime_update,
+  //     facultydb: faculty_update,
+  //     statusdb: status_update,
+  //     reasondb: reason_update,
+  //   ).whenComplete(
+  //     () => Navigator.pop(context),
+  //   );
+  //   print(categoryvalue);
+  //   print(tasktitlecontroller.text);
+  //
+  //   print(taskdescriptioncontroller.text);
+  //   print(startDate);
+  //   print(startDateInString);
+  //   print(endDate);
+  //   print(endDateInString);
+  //   print(dueDate);
+  //   print(dueDateInString);
+  //   print(duetime);
+  //   print(facultyvalue);
+  // }
 }

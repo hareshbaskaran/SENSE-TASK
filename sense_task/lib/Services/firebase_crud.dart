@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sense_task/Models/FirebaseResponse.dart';
 
+
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _UserCollection = _firestore.collection('SenseTask');
 final CollectionReference _taskCollection = _firestore.collection('Tasks');
