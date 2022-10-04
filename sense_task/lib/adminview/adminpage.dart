@@ -315,37 +315,40 @@ class adminpageState extends State<adminpage> {
                                                             document['title']),
                                                     standardtext(text: "${document['faculty']}",c: Colors.deepPurpleAccent,),
                                                standardtext(text:   "${document['startdate']} - ${document['enddate']}",c: Color(0xff555556),),
-                                                    Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            SizedBox(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.15),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                            height: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.01),
-                                                      ],
+                                                    Padding(
+                                                      padding: const EdgeInsets.only(left:10.0),
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                  width: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.15),
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                              height: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.01),
+                                                        ],
+                                                      ),
                                                     )
                                                   ],
                                                 ),
@@ -357,6 +360,7 @@ class adminpageState extends State<adminpage> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
+                                                      SizedBox(height: 20),
                                                       Row(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -383,7 +387,7 @@ class adminpageState extends State<adminpage> {
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
-                                                                .all(20.0),
+                                                                .all(10.0),
                                                         child: Text(
                                                           document[
                                                               'description'],
@@ -402,59 +406,17 @@ class adminpageState extends State<adminpage> {
                                                                   0.04),
                                                         ),
                                                       ),
-                                                      Row(
-                                                        children: [
-                                                          standardtext(
-                                                              text: 'Due :  ',c: bb),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(8.0),
-                                                            child: Text(
-                                                              document[
-                                                                  'duedate'],
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: GoogleFonts.poppins(
-                                                                  color: Colors
-                                                                      .redAccent,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.04),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        children: [
-                                                          standardtext(
-                                                              text:
-                                                                  'Time left:  ',c: bb),
-                                                        ],
-                                                      ),
-                                                      SizedBox(
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.008),
                                                       (pageview == 1)
                                                           ? Column(
                                                               children: [
                                                                 standardtext(
                                                                     text: document[
-                                                                        'reason'],c: bb),
+                                                                        'reason'],c: Colors.red),
                                                               ],
                                                             )
                                                           : SizedBox(
                                                               height: 0,
-                                                            ),
+                                                      ),
                                                     ],
                                                   )
                                                 ],

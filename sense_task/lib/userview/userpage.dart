@@ -194,429 +194,215 @@ class _userpageState extends State<userpage> {
                               },
                               child: Align(
                                   child: Stack(children: <Widget>[
-                                Container(
-                                  decoration: new BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.rectangle,
-                                    border: Border.all(width: 1.0),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(15.0)),
-                                  ),
-                                  child: Card(
-                                    elevation: 0,
-                                    color: Colors.white,
-                                    child: RoundedExpansionTile(
-                                      rotateTrailing: false,
-                                      trailing: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_drop_down_outlined,
-                                            color: Colors.black,
-                                          ),
-                                        ],
+                                    Container(
+                                      decoration: new BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.rectangle,
+                                        border: Border.all(width: 2.0),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.0)),
                                       ),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      title: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${document['title']}",
-                                            style: GoogleFonts.poppins(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                                fontSize: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.05),
-                                          ),
-                                          SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.01),
-                                          Column(
+                                      child: Card(
+                                        elevation: 0,
+                                        color: Colors.white,
+                                        child: RoundedExpansionTile(
+                                          rotateTrailing: false,
+                                          trailing: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            MainAxisAlignment.end,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                            CrossAxisAlignment.end,
                                             children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  standardtext(text: 'Date:  '),
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: Text(
-                                                      " ${document['startdate']}",
-                                                      textAlign: TextAlign.left,
-                                                      style: GoogleFonts.poppins(
-                                                          color: Colors.amber,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.04),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                      width:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.15)
-                                                ],
+                                              Icon(
+                                                Icons
+                                                    .arrow_drop_down_outlined,
+                                                color: Colors.black,
                                               ),
-                                              SizedBox(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.01),
-                                              (pageview == 1)
-                                                  ? Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        standardtext(
-                                                            text:
-                                                                'Faculty     :  '),
-                                                        Align(
-                                                          alignment:
-                                                              Alignment.topLeft,
-                                                          child: Text(
-                                                            " ${document['faculty']}",
-                                                            textAlign:
-                                                                TextAlign.left,
-                                                            style: GoogleFonts.poppins(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.04),
-                                                          ),
-                                                        )
-                                                        /*  standardtext(text: " ${task_data.facultydb}"),*/
-                                                      ],
-                                                    )
-                                                  : Align(
-                                                      alignment:
-                                                          Alignment.centerRight,
-                                                      child: Text(
-                                                        '${document['duedate']}  ,   ${document['duetime']}',
-                                                        style: GoogleFonts.poppins(
-                                                            color: Colors.red,
-                                                            fontSize: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.03),
-                                                      ),
-                                                    ),
                                             ],
-                                          )
-                                        ],
-                                      ),
-                                      children: [
-                                        Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                ///todo: category have to replaced in the heading or is it same update i  next commit
-                                                standardtext(
-                                                    text: 'Category :  '),
-                                                Align(
-                                                  alignment: Alignment.topLeft,
-                                                  child: Text(
-                                                    " ${document['category']} ",
-                                                    textAlign: TextAlign.left,
-                                                    style: GoogleFonts.poppins(
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.04),
-                                                  ),
-                                                )
-                                                /*  standardtext(text: " ${task_data.facultydb}"),*/
-                                              ],
-                                            ),
-                                            SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height *
-                                                    0.01),
-                                            standardtext(
-                                                text: 'Event Description:'),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(20.0),
-                                              child: Text(
-                                                "${document['description']}",
-                                                textAlign: TextAlign.left,
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.04),
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                standardtext(text: 'Due :  '),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Text(
-                                                    " ${document['duedate']}",
-                                                    textAlign: TextAlign.left,
-                                                    style: GoogleFonts.poppins(
-                                                        color: Colors.redAccent,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.04),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                // standardtext(
-                                                //     text: 'Time left:  '),
-                                                // Padding(
-                                                //     padding:
-                                                //         const EdgeInsets.all(
-                                                //             8.0),
-                                                //     child: (int.parse(document[
-                                                //                             'duedate']
-                                                //                         .split(
-                                                //                             "/")[
-                                                //                     0]) -
-                                                //                 DateTime.now()
-                                                //                     .day !=
-                                                //             0)
-                                                //         ? Text(
-                                                //             "${int.parse(document['duedate'].split("/")[0]) - DateTime.now().day} days , ${document['duedate'].split(":")[0]} hours ${document['duedate'].split(":")[1]} mins  ",
-                                                //             textAlign:
-                                                //                 TextAlign.left,
-                                                //             style: GoogleFonts.poppins(
-                                                //                 color: Colors
-                                                //                     .redAccent,
-                                                //                 fontWeight:
-                                                //                     FontWeight
-                                                //                         .bold,
-                                                //                 fontSize: MediaQuery.of(
-                                                //                             context)
-                                                //                         .size
-                                                //                         .width *
-                                                //                     0.04),
-                                                //           )
-                                                //         : Text(
-                                                //             " ${hrleft} hours ${minleft} mins  ",
-                                                //             textAlign:
-                                                //                 TextAlign.left,
-                                                //             style: GoogleFonts.poppins(
-                                                //                 color: Colors
-                                                //                     .redAccent,
-                                                //                 fontWeight:
-                                                //                     FontWeight
-                                                //                         .bold,
-                                                //                 fontSize: MediaQuery.of(
-                                                //                             context)
-                                                //                         .size
-                                                //                         .width *
-                                                //                     0.04),
-                                                //           )),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.008),
-                                            (pageview == 1)
-                                                ? Column(
-                                                    children: [
-                                                      standardtext(
-                                                          text:
-                                                              "${document['reason']}"),
-                                                    ],
-                                                  )
-                                                : SizedBox(
-                                                    height: 0,
-                                                  ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                (document['status'] == 0)
-                                    ? Container(
-                                        padding: const EdgeInsets.only(
-                                            right: 20, top: 20),
-                                        alignment: Alignment.topRight,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Icon(
-                                              Icons.circle_rounded,
-                                              color: Colors.black,
-                                              size: 14,
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsets.only(left: 8),
-                                              child: Text(
-                                                'Assigned',
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.035),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    : (document['status'] == 1)
-                                        ? Container(
-                                            padding: const EdgeInsets.only(
-                                                right: 20, top: 20),
-                                            alignment: Alignment.topRight,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
-                                              children: [
-                                                Icon(
-                                                  Icons.circle_rounded,
-                                                  color: Colors.green,
-                                                  size: 18,
-                                                ),
-                                                Text(
-                                                  'Completed',
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.black,
-                                                      fontSize:
-                                                          MediaQuery.of(context)
-                                                                  .size
-                                                                  .width *
-                                                              0.03),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        : (document['status'] == -1)
-                                            ? Container(
-                                                padding: const EdgeInsets.only(
-                                                    right: 20, top: 20),
-                                                alignment: Alignment.topRight,
-                                                child: Row(
+                                          ),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  4)),
+                                          title: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              largetext(
+                                                  text:
+                                                  document['title']),
+                                              standardtext(text:   "${document['startdate']} - ${document['enddate']}",c: Colors.deepPurpleAccent),
+                                              Padding(
+                                                padding: const EdgeInsets.only(left:10.0),
+                                                child: Column(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.end,
+                                                  MainAxisAlignment
+                                                      .start,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
+                                                  CrossAxisAlignment
+                                                      .start,
                                                   children: [
-                                                    Icon(
-                                                      Icons.circle_rounded,
-                                                      color: Colors.red,
-                                                      size: 18,
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .start,
+                                                      crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .center,
+                                                      children: [
+                                                        SizedBox(
+                                                            width: MediaQuery.of(
+                                                                context)
+                                                                .size
+                                                                .width *
+                                                                0.15),
+                                                      ],
                                                     ),
-                                                    Text(
-                                                      'Rejected',
-                                                      style: GoogleFonts.poppins(
-                                                          color: Colors.black,
-                                                          fontSize: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.03),
-                                                    ),
+                                                    SizedBox(
+                                                        height: MediaQuery.of(
+                                                            context)
+                                                            .size
+                                                            .width *
+                                                            0.01),
                                                   ],
                                                 ),
                                               )
-                                            : (document['status'] == 2)
-                                                ? Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            right: 20, top: 20),
-                                                    alignment:
-                                                        Alignment.topRight,
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.circle_rounded,
-                                                          color: Colors.red,
-                                                          size: 18,
-                                                        ),
-                                                        Text(
-                                                          'Overdue',
-                                                          style: GoogleFonts.poppins(
-                                                              color:
-                                                                  Colors.black,
-                                                              fontSize: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.03),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  )
-                                                : SizedBox()
-                              ])),
+                                            ],
+                                          ),
+                                          children: [
+                                            Column(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .start,
+                                              children: [
+                                                SizedBox(height: 20),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .start,
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment
+                                                      .start,
+                                                  children: [
+                                                    standardtext(
+                                                        text:
+                                                        'Category :  ',c: bb),
+                                                    standardtext(text: '${document['category']}', c: Colors.deepPurpleAccent)
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                    height: MediaQuery.of(
+                                                        context)
+                                                        .size
+                                                        .height *
+                                                        0.01),
+                                                standardtext(
+                                                    text:
+                                                    'Event Description:',c: bb),
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsets
+                                                      .all(10.0),
+                                                  child: Text(
+                                                    document[
+                                                    'description'],
+                                                    textAlign:
+                                                    TextAlign.left,
+                                                    style: GoogleFonts.poppins(
+                                                        color:
+                                                        Colors.black,
+                                                        fontWeight:
+                                                        FontWeight
+                                                            .bold,
+                                                        fontSize: MediaQuery.of(
+                                                            context)
+                                                            .size
+                                                            .width *
+                                                            0.04),
+                                                  ),
+                                                ),
+                                                (pageview == 1)
+                                                    ? Column(
+                                                  children: [
+                                                    standardtext(
+                                                        text: document[
+                                                        'reason'],c: Colors.red),
+                                                  ],
+                                                )
+                                                    : SizedBox(
+                                                  height: 0,
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    (document['status'] == 0)
+                                        ? StatusTag(Colors.black,'Assigned')
+                                        : (document['status'] == 1)
+                                        ? StatusTag(Colors.green,'Accepted')
+                                        : (document['status'] == 2)
+                                        ? StatusTag(Colors.redAccent,'Rejected')
+                                        : (document['status'] == 3)
+                                        ? StatusTag(Colors.deepOrangeAccent,'Overdue')
+                                        : SizedBox(),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top:50),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Container(
+                                              width: MediaQuery.of(context).size.width*0.11,
+                                              height: MediaQuery.of(context).size.height*0.03,
+                                              decoration:ShapeDecoration(
+                                                  color: Color(0xff555556),
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(15.0))
+                                              ),
+                                              child: MaterialButton(
+                                                onPressed: () {
+                                                },
+                                                child: Text(
+                                                  "",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(width: 5),
+                                            Container(
+                                              width: MediaQuery.of(context).size.width*0.11,
+                                              height: MediaQuery.of(context).size.height*0.03,
+                                              decoration:ShapeDecoration(
+                                                //color: Color(0xff22C087),
+                                                  color: Color(0xff555556),
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(15.0))
+                                              ),
+                                              child: MaterialButton(
+                                                onPressed: () {
+                                                },
+                                                child: Text(
+                                                  "",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    )
+                                  ]
+                                  )
+                              ),
                             ),
                           );
                         }).toList(),
@@ -665,411 +451,204 @@ class _userpageState extends State<userpage> {
                         padding: EdgeInsets.fromLTRB(6, 0, 6, 8),
                         child: Align(
                             child: Stack(children: <Widget>[
-                          Container(
-                            decoration: new BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              border: Border.all(width: 1.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            child: Card(
-                              elevation: 0,
-                              color: Colors.white,
-                              child: RoundedExpansionTile(
-                                rotateTrailing: false,
-                                trailing: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Icon(
-                                      Icons.arrow_drop_down_outlined,
-                                      color: Colors.black,
-                                    ),
-                                  ],
+                              Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.white,
+                                  shape: BoxShape.rectangle,
+                                  border: Border.all(width: 2.0),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(15.0)),
                                 ),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(4)),
-                                title: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${document['title']}",
-                                      style: GoogleFonts.poppins(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.05),
-                                    ),
-                                    SizedBox(
-                                        height: MediaQuery.of(context)
-                                                .size
-                                                .height *
-                                            0.01),
-                                    Column(
+                                child: Card(
+                                  elevation: 0,
+                                  color: Colors.white,
+                                  child: RoundedExpansionTile(
+                                    rotateTrailing: false,
+                                    trailing: Column(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      MainAxisAlignment.end,
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.end,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            standardtext(text: 'Date:  '),
-                                            Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Text(
-                                                " ${document['startdate']}",
-                                                textAlign: TextAlign.left,
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.amber,
-                                                    fontWeight:
-                                                        FontWeight.bold,
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.04),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.15),
-                                            /*  standardtext(text: 'Due :  '),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Text(
-                            " ${task_data.duedatedb}",
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.poppins(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width * 0.04),
-                          ),
-                        )*/
-                                          ],
+                                        Icon(
+                                          Icons
+                                              .arrow_drop_down_outlined,
+                                          color: Colors.black,
                                         ),
-                                        SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.01),
-                                        (pageview == 1)
-                                            ? Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  standardtext(
-                                                      text:
-                                                          'Faculty     :  '),
-                                                  Align(
-                                                    alignment:
-                                                        Alignment.topLeft,
-                                                    child: Text(
-                                                      " ${document['faculty']}",
-                                                      textAlign:
-                                                          TextAlign.left,
-                                                      style: GoogleFonts.poppins(
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.04),
-                                                    ),
-                                                  )
-                                                  /*  standardtext(text: " ${task_data.facultydb}"),*/
-                                                ],
-                                              )
-                                            : Align(
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Text(
-                                                  '${document['duedate']}  ,   ${document['duetime']}',
-                                                  style: GoogleFonts.poppins(
-                                                      color: Colors.red,
-                                                      fontSize: MediaQuery.of(
-                                                                  context)
-                                                              .size
-                                                              .width *
-                                                          0.03),
-                                                ),
-                                              ),
                                       ],
-                                    )
-                                  ],
-                                ),
-                                children: [
-                                  Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          ///todo: category have to replaced in the heading or is it same update i  next commit
-                                          standardtext(text: 'Category :  '),
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              " ${document['category']} ",
-                                              textAlign: TextAlign.left,
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.04),
-                                            ),
-                                          )
-                                          /*  standardtext(text: " ${task_data.facultydb}"),*/
-                                        ],
-                                      ),
-                                      SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.01),
-                                      standardtext(
-                                          text: 'Event Description:'),
-                                      Padding(
-                                        padding: const EdgeInsets.all(20.0),
-                                        child: Text(
-                                          "${document['description']}",
-                                          textAlign: TextAlign.left,
-                                          style: GoogleFonts.poppins(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.04),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          standardtext(text: 'Due :  '),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              " ${document['duedate']}",
-                                              textAlign: TextAlign.left,
-                                              style: GoogleFonts.poppins(
-                                                  color: Colors.redAccent,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize:
-                                                      MediaQuery.of(context)
-                                                              .size
-                                                              .width *
-                                                          0.04),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          // standardtext(text: 'Time left:  '),
-                                          // Padding(
-                                          //     padding:
-                                          //         const EdgeInsets.all(8.0),
-                                          //     child: (int.parse(document[
-                                          //                         'duedate']
-                                          //                     .split("/")[0]) -
-                                          //                 DateTime.now().day !=
-                                          //             0)
-                                          //         ? Text(
-                                          //             "${int.parse(document['duedate'].split("/")[0]) - DateTime.now().day} days , ${document['duedate'].split(":")[0]} hours ${document['duedate'].split(":")[1]} mins  ",
-                                          //             textAlign: TextAlign.left,
-                                          //             style: GoogleFonts.poppins(
-                                          //                 color:
-                                          //                     Colors.redAccent,
-                                          //                 fontWeight:
-                                          //                     FontWeight.bold,
-                                          //                 fontSize: MediaQuery.of(
-                                          //                             context)
-                                          //                         .size
-                                          //                         .width *
-                                          //                     0.04),
-                                          //           )
-                                          //         : Text(
-                                          //             " ${hrleft} hours ${minleft} mins  ",
-                                          //             textAlign: TextAlign.left,
-                                          //             style: GoogleFonts.poppins(
-                                          //                 color:
-                                          //                     Colors.redAccent,
-                                          //                 fontWeight:
-                                          //                     FontWeight.bold,
-                                          //                 fontSize: MediaQuery.of(
-                                          //                             context)
-                                          //                         .size
-                                          //                         .width *
-                                          //                     0.04),
-                                          //           )),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.008),
-                                      (pageview == 1)
-                                          ? Column(
-                                              children: [
-                                                standardtext(
-                                                    text:
-                                                        "${document['reason']}"),
-                                              ],
-                                            )
-                                          : SizedBox(
-                                              height: 0,
-                                            ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          (document['status'] == 0)
-                              ? Container(
-                                  padding: const EdgeInsets.only(
-                                      right: 20, top: 20),
-                                  alignment: Alignment.topRight,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.end,
-                                    children: [
-                                      Icon(
-                                        Icons.circle_rounded,
-                                        color: Colors.black,
-                                        size: 14,
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 8),
-                                        child: Text(
-                                          'Assigned',
-                                          style: GoogleFonts.poppins(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.035),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : (document['status'] == 1)
-                                  ? Container(
-                                      padding: const EdgeInsets.only(
-                                          right: 20, top: 20),
-                                      alignment: Alignment.topRight,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.end,
-                                        children: [
-                                          Icon(
-                                            Icons.circle_rounded,
-                                            color: Colors.green,
-                                            size: 18,
-                                          ),
-                                          Text(
-                                            'Completed',
-                                            style: GoogleFonts.poppins(
-                                                color: Colors.black,
-                                                fontSize:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                        0.03),
-                                          ),
-                                        ],
-                                      ),
-                                    )
-                                  : (document['status'] == -1)
-                                      ? Container(
-                                          padding: const EdgeInsets.only(
-                                              right: 20, top: 20),
-                                          alignment: Alignment.topRight,
-                                          child: Row(
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(
+                                            4)),
+                                    title: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        largetext(
+                                            text:
+                                            document['title']),
+                                        standardtext(text:   "${document['startdate']} - ${document['enddate']}",c: Colors.deepPurpleAccent,),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left:10.0),
+                                          child: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                            MainAxisAlignment
+                                                .start,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.end,
+                                            CrossAxisAlignment
+                                                .start,
                                             children: [
-                                              Icon(
-                                                Icons.circle_rounded,
-                                                color: Colors.red,
-                                                size: 18,
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .start,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .center,
+                                                children: [
+                                                  SizedBox(
+                                                      width: MediaQuery.of(
+                                                          context)
+                                                          .size
+                                                          .width *
+                                                          0.15),
+                                                ],
                                               ),
-                                              Text(
-                                                'Rejected',
-                                                style: GoogleFonts.poppins(
-                                                    color: Colors.black,
-                                                    fontSize:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.03),
-                                              ),
+                                              SizedBox(
+                                                  height: MediaQuery.of(
+                                                      context)
+                                                      .size
+                                                      .width *
+                                                      0.01),
                                             ],
                                           ),
                                         )
-                                      : (document['status'] == 2)
-                                          ? Container(
-                                              padding: const EdgeInsets.only(
-                                                  right: 20, top: 20),
-                                              alignment: Alignment.topRight,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Icon(
-                                                    Icons.circle_rounded,
-                                                    color: Colors.red,
-                                                    size: 18,
-                                                  ),
-                                                  Text(
-                                                    'Overdue',
-                                                    style: GoogleFonts.poppins(
-                                                        color: Colors.black,
-                                                        fontSize: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.03),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          : SizedBox()
-                        ])),
+                                      ],
+                                    ),
+                                    children: [
+                                      Column(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment
+                                            .start,
+                                        children: [
+                                          SizedBox(height: 20),
+                                          Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment
+                                                .start,
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment
+                                                .start,
+                                            children: [
+                                              standardtext(
+                                                  text:
+                                                  'Category :  ',c: bb),
+                                              standardtext(text: '${document['category']}', c: Colors.deepPurpleAccent)
+                                            ],
+                                          ),
+                                          SizedBox(
+                                              height: MediaQuery.of(
+                                                  context)
+                                                  .size
+                                                  .height *
+                                                  0.01),
+                                          standardtext(
+                                              text:
+                                              'Event Description:',c: bb),
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets
+                                                .all(10.0),
+                                            child: Text(
+                                              document[
+                                              'description'],
+                                              textAlign:
+                                              TextAlign.left,
+                                              style: GoogleFonts.poppins(
+                                                  color:
+                                                  Colors.black,
+                                                  fontWeight:
+                                                  FontWeight
+                                                      .bold,
+                                                  fontSize: MediaQuery.of(
+                                                      context)
+                                                      .size
+                                                      .width *
+                                                      0.04),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              (document['status'] == 0)
+                                  ? StatusTag(Colors.black,'Assigned')
+                                  : (document['status'] == 1)
+                                  ? StatusTag(Colors.green,'Accepted')
+                                  : (document['status'] == 2)
+                                  ? StatusTag(Colors.redAccent,'Rejected')
+                                  : (document['status'] == 3)
+                                  ? StatusTag(Colors.deepOrangeAccent,'Overdue')
+                                  : SizedBox(),
+                              Padding(
+                                padding: const EdgeInsets.only(top:50),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Container(
+                                        width: MediaQuery.of(context).size.width*0.11,
+                                        height: MediaQuery.of(context).size.height*0.03,
+                                        decoration:ShapeDecoration(
+                                            color: Color(0xff555556),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(15.0))
+                                        ),
+                                        child: MaterialButton(
+                                          onPressed: () {
+                                          },
+                                          child: Text(
+                                            "",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width*0.11,
+                                        height: MediaQuery.of(context).size.height*0.03,
+                                        decoration:ShapeDecoration(
+                                          //color: Color(0xff22C087),
+                                            color: Color(0xff555556),
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(15.0))
+                                        ),
+                                        child: MaterialButton(
+                                          onPressed: () {
+                                          },
+                                          child: Text(
+                                            "",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ]
+                            )
+                        ),
                       );
                     }).toList(),
                   );
@@ -1116,66 +695,6 @@ class _userpageState extends State<userpage> {
   }
 }
 
-class largetext extends StatelessWidget {
-  String text;
-
-  largetext({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Text(
-        text,
-        textAlign: TextAlign.left,
-        style: GoogleFonts.poppins(
-            fontWeight: FontWeight.bold,
-            color: b,
-            fontSize: MediaQuery.of(context).size.width * 0.045),
-      ),
-    );
-  }
-}
-
-class standardtext extends StatelessWidget {
-  String text;
-
-  standardtext({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Text(
-        text,
-        textAlign: TextAlign.left,
-        style: GoogleFonts.poppins(
-            color: bb,
-            fontWeight: FontWeight.w600,
-            fontSize: MediaQuery.of(context).size.width * 0.04),
-      ),
-    );
-  }
-}
-
-class smalltext extends StatelessWidget {
-  String text;
-
-  smalltext({required this.text});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Text(
-        textAlign: TextAlign.center,
-        text,
-        style: GoogleFonts.poppins(
-            color: bb, fontSize: MediaQuery.of(context).size.width * 0.02),
-      ),
-    );
-  }
-}
 
 class FunkyOverlayacceptdecline extends StatefulWidget {
   int accept = 1;
