@@ -117,6 +117,7 @@ class _loginpageState extends State<loginpage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
                 Text(
                   textAlign: TextAlign.center,
                   'SENSE TASK MANAGEMENT',
@@ -133,47 +134,41 @@ class _loginpageState extends State<loginpage> {
                       child: Image(
                           image: AssetImage('assets/images/loginpic.png'))),
                 ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.08),
                 (pageview == 1)
                     ? Column(children: [
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.025),
+                      largetext(text: 'LOGIN AS ADMIN'),
                         _googleSignInButton(),
                         SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.025),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: InkWell(
-                            child: Text(
-                              'Login as User',
-                              style: GoogleFonts.lato(
-                                  color: Colors.deepPurpleAccent,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.04),
-                            ),
-                            onTap: () {
-                              setState(() {
-                                pageview = 2;
-                              });
-                            },
+                            height: MediaQuery.of(context).size.height * 0.2),
+                        InkWell(
+                          child: Text(
+                            'Tap here , To Login as User',
+                            style: GoogleFonts.lato(
+                                decoration: TextDecoration.underline,
+                                color: Colors.deepPurpleAccent,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.04),
                           ),
+                          onTap: () {
+                            setState(() {
+                              pageview = 2;
+                            });
+                          },
                         ),
                       ])
                     : (pageview == 2)
                         ? Column(children: [
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.025),
-                            _googleSignInButton(),
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.025),
+                  largetext(text: 'LOGIN AS USER'),
+                  _googleSignInButton(),
+                  SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2),
                             Align(
                               alignment: Alignment.bottomCenter,
                               child: InkWell(
                                 child: Text(
-                                  'Login as admin',
+                                  'Tap here , to Login as admin',
                                   style: GoogleFonts.lato(
+                                    decoration: TextDecoration.underline,
                                       color: Colors.deepPurpleAccent,
                                       fontSize:
                                           MediaQuery.of(context).size.width *
