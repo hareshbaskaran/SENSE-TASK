@@ -6,9 +6,6 @@ import 'package:sense_task/Services/firebase_crud.dart';
 
 import '../../LoginPage.dart';
 import '../../adminview/adminpage.dart';
-import '../../mangodb.dart';
-import '../AssignTask_Admin.dart';
-import '../Models/TaskMango.dart';
 
 int status = 0;
 
@@ -256,18 +253,6 @@ class _userpageState extends State<userpage> {
                                                             ),
                                                             SizedBox(
                                                                 width: MediaQuery.of(context).size.width * 0.15),
-                                                            /*  standardtext(text: 'Due :  '),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Text(
-                            " ${task_data.duedatedb}",
-                            textAlign: TextAlign.left,
-                            style: GoogleFonts.poppins(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: MediaQuery.of(context).size.width * 0.04),
-                          ),
-                        )*/
                                                           ],
                                                         ),
                                                         SizedBox(
@@ -547,28 +532,27 @@ class _userpageState extends State<userpage> {
                       )
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('Tasks')
-        .snapshots(),
-    builder: (BuildContext context,
-    AsyncSnapshot<QuerySnapshot> snapshot) {
-    if (!snapshot.hasData) {
-    print(FirebaseFirestore.instance
-        .collection('Tasks')
-        .snapshots()
-        .toString());
-    print(FirebaseFirestore.instance
-        .collection('Tasks')
-        .snapshots()
-        .length);
-    return Center(
-    child: CircularProgressIndicator(),
-    );
-    }
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: StreamBuilder(
+                stream:
+                    FirebaseFirestore.instance.collection('Tasks').snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    print(FirebaseFirestore.instance
+                        .collection('Tasks')
+                        .snapshots()
+                        .toString());
+                    print(FirebaseFirestore.instance
+                        .collection('Tasks')
+                        .snapshots()
+                        .length);
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
     return ListView(
     shrinkWrap: true,
     physics: NeverScrollableScrollPhysics(),

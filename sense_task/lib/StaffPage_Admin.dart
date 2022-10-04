@@ -3,15 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
-import 'AdminMongo.dart';
 import 'AssignTask_Admin.dart';
 import 'LoginPage.dart';
-import 'Models/TaskMango.dart';
-import 'TaskPage_Admin.dart';
-import 'Models/UserMango.dart';
-import 'adminview/adminpage.dart';
-import 'main.dart';
-import 'mangodb.dart';
 
 String filterDateInString = '';
 DateTime filterDate = DateTime.now();
