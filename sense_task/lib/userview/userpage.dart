@@ -64,7 +64,7 @@ class _userpageState extends State<userpage> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      '$username_user !',
+                      '$googleuser !',
                       style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: MediaQuery.of(context).size.width * 0.052),

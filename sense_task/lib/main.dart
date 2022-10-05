@@ -60,7 +60,6 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        // home:  (already_sign_in)?TabsScreen():
-        home: loginpage(Hive_box));
+    home: loginpage(Hive_box));
   }
 }
