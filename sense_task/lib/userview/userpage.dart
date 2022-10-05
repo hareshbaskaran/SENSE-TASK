@@ -11,7 +11,6 @@ import '../../adminview/adminpage.dart';
 import '../AssignTask_Admin.dart';
 import '../Models/TaskMango.dart';
 bool drawer = false;
-User? user;
 int status = 0;
 String tasktype = 'All Tasks';
 User? fac;
@@ -56,7 +55,7 @@ class _userpageState extends State<userpage> {
               )
             ]),*/
         body: SafeArea(
-            child:(_selectedIndexuser==0)? Container(
+            child: Container(
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -76,15 +75,14 @@ class _userpageState extends State<userpage> {
                 children: [
                   IconButton(
                       onPressed: ()async {
-                        user = await signInWithGoogle(context: context);
-                        if (user != null) {
+                        User? user = await signInWithGoogle(context: context);
                           Navigator.push(
                             context,
-                            MaterialPageRoute(settings: RouteSettings(arguments: user),
-                                builder: (context) => UserInfoScreen(user: user!)
+                            MaterialPageRoute(
+                                settings: RouteSettings(arguments:user),
+                                builder: (context) =>UserInfoScreen(user: user!)
                             ),
                           );
-                        }
                       },
                       icon: Icon(Icons.menu)),
                   Text(
@@ -675,7 +673,7 @@ class _userpageState extends State<userpage> {
           ),
         ],
       ),
-    ):UserInfoScreen(user: user!)
+    )
         ));
   }
 

@@ -26,7 +26,6 @@ Prefsetsignin() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setInt('intValue', 1);
 }
-
 TextEditingController usernamevalue_admin = new TextEditingController();
 TextEditingController passwordvalue_admin = new TextEditingController();
 String username_admin = usernamevalue_admin.text;
@@ -37,15 +36,9 @@ String username_user = usernamevalue_user.text;
 String password_user = passwordvalue_user.text;
 bool grey = true;
 int pageview = 2;
-// pageview = 0 displays the login page
-// pageview = 1 displays the admin view
-// pageview = 2 displays the user view
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn googleSignIn = GoogleSignIn();
-// final fbLogin = FacebookLogin();
 bool isLoggedIn = false;
-var det = "";
+
 
 Future<User?> signInWithGoogle({required BuildContext context}) async {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -203,20 +196,16 @@ class _loginpageState extends State<loginpage> {
           setState(() {
             already_sign_in = true;
           });
-
           User? user = await signInWithGoogle(context: context);
-
           if (user != null) {
             Navigator.push(
               context,
               MaterialPageRoute(
-                settings: RouteSettings(arguments: user),
                   builder: (context) => (pageview == 2)
                       ? userpage()
                       : (pageview == 1)
                           ? adminpage()
                           : userpage()
-                  //UserInfoScreen(user: user)
                   ),
             );
           }
