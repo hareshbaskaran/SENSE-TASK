@@ -103,7 +103,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   : ElevatedButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(
-                    Colors.redAccent,
+                    Colors.deepPurpleAccent,
                   ),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -141,13 +141,18 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               ),
             ],
           ),
-            BackButton(
-              color: Colors.deepPurpleAccent,
-              onPressed: () {
-                Navigator.of(context)
-                    .pushReplacement(_routeToSignInScreen()
-                );
-              }
+            Padding(
+              padding: const EdgeInsets.all(30),
+              child: Container(
+                child: BackButton(
+                  color: Colors.black,
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacement(_routeToSignInScreen()
+                    );
+                  }
+                ),
+              ),
             )
         ],
         ),
