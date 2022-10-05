@@ -6,6 +6,7 @@ import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:sense_task/UserInfo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final tabsList = ['All Tasks', 'Assigned', 'Accepted', 'Rejected', 'Overdue'];
@@ -60,6 +61,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-    home: loginpage(Hive_box));
+    home: loginpage(Hive_box)
+    );
   }
 }

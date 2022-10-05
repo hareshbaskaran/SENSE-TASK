@@ -83,7 +83,6 @@ Future<User?> signInWithGoogle({required BuildContext context}) async {
 
 void signOutGoogle() async {
   await googleSignIn.signOut();
-
   print("User Signed Out");
 }
 
@@ -202,13 +201,7 @@ class _loginpageState extends State<loginpage> {
           setState(() {
             already_sign_in = true;
           });
-
-          User? user = await signInWithGoogle(context: context);
-
-          setState(() {
-            already_sign_in = false;
-          });
-
+          user = await signInWithGoogle(context: context);
           if (user != null) {
             Navigator.push(
               context,
@@ -218,7 +211,6 @@ class _loginpageState extends State<loginpage> {
                       : (pageview == 1)
                           ? adminpage()
                           : userpage()
-                  //UserInfoScreen(user: user)
                   ),
             );
           }

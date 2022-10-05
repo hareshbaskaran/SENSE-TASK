@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -23,7 +24,6 @@ Color b = Color(0xFF817B7C);
 TextEditingController taskreasoncontroller = new TextEditingController();
 TextEditingController taskreasonblah = new TextEditingController();
 int _selectedIndex = 0;
-
 Future<int>? tasklength;
 
 class adminpage extends StatefulWidget {
@@ -87,8 +87,7 @@ class adminpageState extends State<adminpage> {
                               children: [
                                 IconButton(
                                     onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(
-                                        builder: (context) => UserInfoScreen(user: user!)));
+
                                     },
                                     icon: Icon(Icons
                                         .menu)), // TODO : Implement left drawer for profile page (null error)
@@ -492,10 +491,10 @@ class adminpageState extends State<adminpage> {
                                 );
                               }),
                         ),
+                        SizedBox(height: 60)
                       ],
                     ),
-                  )
-                : facultystatus()));
+                  ) : facultystatus()));
   }
 
   Future<void> _updateTask(

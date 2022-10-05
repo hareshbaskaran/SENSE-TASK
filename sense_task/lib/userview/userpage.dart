@@ -12,13 +12,14 @@ import '../../LoginPage.dart';
 import '../../adminview/adminpage.dart';
 import '../AssignTask_Admin.dart';
 import '../Models/TaskMango.dart';
-
+bool drawer = false;
+User? user;
 int status = 0;
 String tasktype = 'All Tasks';
 User? fac;
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
-
+int _selectedIndexuser = 0;
 class userpage extends StatefulWidget {
   const userpage({Key? key}) : super(key: key);
 
@@ -29,9 +30,35 @@ class userpage extends StatefulWidget {
 class _userpageState extends State<userpage> {
   @override
   Widget build(BuildContext context) {
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndexuser = index;
+        print('index is ');
+        print(_selectedIndexuser);
+      });
+    }
     return Scaffold(
+/*        bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: Colors.black87,
+            selectedItemColor: Colors.white,
+            unselectedItemColor: Colors.white.withOpacity(.60),
+            selectedFontSize: 14,
+            unselectedFontSize: 14,
+            currentIndex: _selectedIndexuser, //New
+            onTap: _onItemTapped, //New
+            items: [
+              BottomNavigationBarItem(
+                label: 'Home',
+                icon: Icon(Icons.home_rounded),
+              ),
+              BottomNavigationBarItem(
+                label:'User',
+                icon: Icon(Icons.person_outline_rounded),
+              )
+            ]),*/
         body: SafeArea(
-            child: Container(
+            child:(_selectedIndexuser==0)? Container(
       constraints: BoxConstraints.expand(),
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -50,8 +77,16 @@ class _userpageState extends State<userpage> {
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: () {
-                        setState(() {});
+                      onPressed: ()async {
+                        user = await signInWithGoogle(context: context);
+                        if (user != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => UserInfoScreen(user: user!)
+                            ),
+                          );
+                        }
                       },
                       icon: Icon(Icons.menu)),
                   Text(
@@ -64,7 +99,7 @@ class _userpageState extends State<userpage> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      '$googleuser !',
+                      '!',
                       style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: MediaQuery.of(context).size.width * 0.052),
@@ -656,7 +691,8 @@ class _userpageState extends State<userpage> {
           ),
         ],
       ),
-    )));
+    ):UserInfoScreen(user: user!)
+        ));
   }
 
   Future<void> _updateTask(
