@@ -10,6 +10,7 @@ import '../../LoginPage.dart';
 import '../../adminview/adminpage.dart';
 import '../AssignTask_Admin.dart';
 import '../Models/TaskMango.dart';
+int snaplength = 2 ;
 bool drawer = false;
 int status = 0;
 String tasktype = 'All Tasks';
@@ -110,7 +111,7 @@ class _userpageState extends State<userpage> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                '3 tasks waiting for you ...',
+                '$snaplength tasks waiting for you ...',
                 style: GoogleFonts.poppins(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -164,6 +165,7 @@ class _userpageState extends State<userpage> {
                       return ListView(
                         shrinkWrap: true,
                         children: snapshot.data!.docs.map((document) {
+                              snaplength=snapshot.data!.size;
                           return Padding(
                             padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
                             child: Dismissible(
