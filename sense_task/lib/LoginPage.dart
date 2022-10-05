@@ -26,6 +26,8 @@ Prefsetsignin() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setInt('intValue', 1);
 }
+bool adminlogin=false;
+bool alertlogin=false;
 TextEditingController usernamevalue_admin = new TextEditingController();
 TextEditingController passwordvalue_admin = new TextEditingController();
 String username_admin = usernamevalue_admin.text;
@@ -130,7 +132,98 @@ class _loginpageState extends State<loginpage> {
                 (pageview == 1)
                     ? Column(children: [
                         largetext(text: 'LOGIN AS ADMIN'),
-                        _googleSignInButton(),
+                  (adminlogin==false)?
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Center(
+                            child: SingleChildScrollView(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                decoration: new BoxDecoration(
+                                  color: Color(0xFFF7F8F8),
+                                  shape: BoxShape.rectangle,
+                                  border: Border.all(width: 2.0),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        color: Colors.transparent,
+                                        constraints: BoxConstraints(
+                                            minHeight: MediaQuery.of(context)
+                                                .size
+                                                .height *
+                                                0.05),
+                                        child: TextField(
+                                          maxLines: 1,
+                                          onChanged: (_) {
+                                            setState(() {
+                                            });
+                                          },
+                                          decoration: InputDecoration(
+                                            hintText: "   Enter Admin Password",
+                                            hintStyle: TextStyle(
+
+                                            ),
+                                            fillColor: Colors.black,
+                                            border: InputBorder.none,
+                                          ),
+                                          cursorColor: Colors.black,
+                                          controller: passwordvalue_admin,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: MaterialButton(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 18.0),
+                              child: Icon(
+                                Icons.chevron_right_outlined,
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: (){
+                              if(passwordvalue_admin.text=="Sense_Task"){
+                                setState(() {
+                                  adminlogin=true;
+                                });
+                              }
+                              else setState(() {
+                                alertlogin=true;
+                              });
+                            },
+                          ),
+                            width: MediaQuery.of(context).size.width * 0.1,
+                            decoration: new BoxDecoration(
+                              color: Color(0xFFF7F8F8),
+                              shape: BoxShape.rectangle,
+                              border: Border.all(width: 2.0),
+                              borderRadius:
+                              BorderRadius.all(Radius.circular(15.0)),
+                            )
+                        )
+                      ],
+                      ):_googleSignInButton(),
+                        SizedBox(height: 20),
+                  (alertlogin==true&&adminlogin==false)?
+                      Text(
+                        'Invalid Password',
+                        style: TextStyle(
+                          color: Colors.red
+                        ),
+                      ):SizedBox(),
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.1),
                         InkWell(
@@ -144,6 +237,9 @@ class _loginpageState extends State<loginpage> {
                           ),
                           onTap: () {
                             setState(() {
+                              alertlogin=false;
+                              adminlogin=false;
+                              passwordvalue_admin.text="";
                               pageview = 2;
                             });
                           },

@@ -141,6 +141,7 @@ class adminpageState extends State<adminpage> {
                                         MediaQuery.of(context).size.width *
                                             0.045),
                               ),
+                              SizedBox(width: MediaQuery.of(context).size.width*0.1),
                               (adminquery==6)?
                               Center(
                                 child: GestureDetector(
@@ -189,17 +190,8 @@ class adminpageState extends State<adminpage> {
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
-                                    height: MediaQuery.of(context).size.height *
-                                        0.07,
-                                    width:
-                                    MediaQuery.of(context).size.width * 0.4,
-                                    decoration: new BoxDecoration(
-                                      color: Colors.black,
-                                      shape: BoxShape.rectangle,
-                                      border: Border.all(width: 1.0),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(20.0)),
-                                    ),
+                                    height: MediaQuery.of(context).size.height * 0.07,
+                                    width: MediaQuery.of(context).size.width * 0.4,
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: Container(
@@ -214,14 +206,14 @@ class adminpageState extends State<adminpage> {
                                                 ? Text(
                                               querydateinstring,
                                               style: TextStyle(
-                                                  color: Colors.white),
+                                                  color: Colors.black),
                                             )
                                                 : Text(
                                               "Input Date",
                                               style: TextStyle(
                                                 fontWeight:
                                                 FontWeight.normal,
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontSize: 15,
                                               ),
                                             ),
@@ -236,13 +228,6 @@ class adminpageState extends State<adminpage> {
                                 child: Container(
                                   height: MediaQuery.of(context).size.height * 0.07,
                                   width: MediaQuery.of(context).size.width * 0.4,
-                                  decoration: new BoxDecoration(
-                                    color: Colors.black,
-                                    shape: BoxShape.rectangle,
-                                    border: Border.all(width: 1.0),
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)),
-                                  ),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -255,11 +240,11 @@ class adminpageState extends State<adminpage> {
                                             child: DropdownButton(
                                               icon: Icon(
                                                 Icons.arrow_drop_down,
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 size: 20.09,
                                               ),
                                               alignment: Alignment.centerLeft,
-                                              dropdownColor: Colors.black,
+                                              dropdownColor: Colors.white,
                                               value: queryfaculty,
                                               items: facultylist.map((String faculty) {
                                                 return DropdownMenuItem(
@@ -274,7 +259,7 @@ class adminpageState extends State<adminpage> {
                                               },
                                               style: TextStyle(
                                                 fontWeight: FontWeight.normal,
-                                                color: Colors.white,
+                                                color: Colors.black,
                                                 fontSize: 15,
                                               ),
                                             ),
@@ -292,6 +277,9 @@ class adminpageState extends State<adminpage> {
                                 child: IconButton(
                                     onPressed: () {
                                       showDialog(
+                                        routeSettings: RouteSettings(
+                                          arguments: adminquery
+                                        ),
                                         context: context,
                                         builder: (_) => FunkyOverlay(),
                                       );
@@ -847,12 +835,15 @@ class _FilterBoxState extends State<FilterBox> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0)),
         color: Colors.black,
-        onPressed: () {
+        onPressed: () async{
           setState(() {
             adminquery=widget.query;
+            adminquery=adminquery;
           });
           print(adminquery);
-          Navigator.pop(context);
+          Navigator.pop(
+              context
+          );
           setState(() {
           });
         },
