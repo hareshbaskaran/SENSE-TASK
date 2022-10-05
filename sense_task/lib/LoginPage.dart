@@ -136,13 +136,13 @@ class _loginpageState extends State<loginpage> {
                 ),
                 (pageview == 1)
                     ? Column(children: [
-                      largetext(text: 'LOGIN AS ADMIN'),
+                        largetext(text: 'LOGIN AS ADMIN'),
                         _googleSignInButton(),
                         SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.2),
+                            height: MediaQuery.of(context).size.height * 0.1),
                         InkWell(
                           child: Text(
-                            'Tap here , To Login as User',
+                            'Tap here, To Login as User',
                             style: GoogleFonts.lato(
                                 decoration: TextDecoration.underline,
                                 color: Colors.deepPurpleAccent,
@@ -158,17 +158,18 @@ class _loginpageState extends State<loginpage> {
                       ])
                     : (pageview == 2)
                         ? Column(children: [
-                  largetext(text: 'LOGIN AS USER'),
-                  _googleSignInButton(),
-                  SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.2),
+                            largetext(text: 'LOGIN AS USER'),
+                            _googleSignInButton(),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1),
                             Align(
                               alignment: Alignment.bottomCenter,
                               child: InkWell(
                                 child: Text(
-                                  'Tap here , to Login as admin',
+                                  'Tap here, to Login as admin',
                                   style: GoogleFonts.lato(
-                                    decoration: TextDecoration.underline,
+                                      decoration: TextDecoration.underline,
                                       color: Colors.deepPurpleAccent,
                                       fontSize:
                                           MediaQuery.of(context).size.width *
@@ -204,10 +205,6 @@ class _loginpageState extends State<loginpage> {
           });
 
           User? user = await signInWithGoogle(context: context);
-
-          setState(() {
-            already_sign_in = false;
-          });
 
           if (user != null) {
             Navigator.push(
