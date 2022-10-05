@@ -80,7 +80,7 @@ class _userpageState extends State<userpage> {
                         if (user != null) {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
+                            MaterialPageRoute(settings: RouteSettings(arguments: user),
                                 builder: (context) => UserInfoScreen(user: user!)
                             ),
                           );

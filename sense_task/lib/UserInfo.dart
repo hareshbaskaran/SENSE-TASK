@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'LoginPage.dart';
 
 class UserInfoScreen extends StatefulWidget {
-  const UserInfoScreen({Key? key, required User user})
+  const UserInfoScreen({Key? key})
       : _user = user,
         super(key: key);
 
-  final User _user;
+
 
   @override
   _UserInfoScreenState createState() => _UserInfoScreenState();
@@ -25,6 +25,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   }
   @override
   Widget build(BuildContext context) {
+    User? useruser =
+    ModalRoute.of(context)!.settings.arguments as User?;
     return Scaffold(
       body: SafeArea(
         child: Column(

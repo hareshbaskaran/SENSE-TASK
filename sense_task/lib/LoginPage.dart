@@ -210,6 +210,7 @@ class _loginpageState extends State<loginpage> {
             Navigator.push(
               context,
               MaterialPageRoute(
+                settings: RouteSettings(arguments: user),
                   builder: (context) => (pageview == 2)
                       ? userpage()
                       : (pageview == 1)
