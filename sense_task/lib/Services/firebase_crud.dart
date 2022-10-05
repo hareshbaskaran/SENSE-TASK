@@ -163,6 +163,22 @@ class AdminQuery{
       isEqualTo: adminquery,
     ).snapshots();
   }
+  static Stream<QuerySnapshot> DateQuery() {
+    CollectionReference notesItemCollection = _taskCollection;
+    return notesItemCollection
+        .where(
+      "startdate",
+      isEqualTo: querydateinstring,
+    ).snapshots();
+  }
+  static Stream<QuerySnapshot> FacultyQuery() {
+    CollectionReference notesItemCollection = _taskCollection;
+    return notesItemCollection
+        .where(
+      "faculty",
+      isEqualTo: queryfaculty,
+    ).snapshots();
+  }
 }
 class UsernameQuery{
   static Stream<QuerySnapshot> UserOngoing() {
