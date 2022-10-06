@@ -1,17 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/UserInfo.dart';
-import 'package:sense_task/AdminMongo.dart';
 import 'package:sense_task/AssignTask_Admin.dart';
 import 'package:sense_task/LoginPage.dart';
-import 'package:sense_task/Models/TaskMango.dart';
-import 'package:sense_task/TaskPage_Admin.dart';
-import 'package:sense_task/Models/UserMango.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
 
 String querydateinstring = '';
@@ -375,7 +370,6 @@ class adminpageState extends State<adminpage> {
                                       .collection('Tasks')
                                       .snapshots()
                                       .length);
-
                                   return Center(
                                     child: CircularProgressIndicator(),
                                   );
