@@ -13,13 +13,14 @@ import 'package:sense_task/Models/TaskMango.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/Models/UserMango.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
+
 String querydateinstring = '';
 DateTime querydate = DateTime.now();
-int adminquery=5;
+int adminquery = 5;
 String filterDateInString = '';
 DateTime filterDate = DateTime.now();
 bool isDateSelectedforfilter = false;
-String queryfaculty=facultylist.first;
+String queryfaculty = facultylist.first;
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 TextEditingController taskreasoncontroller = new TextEditingController();
@@ -87,14 +88,16 @@ class adminpageState extends State<adminpage> {
                             child: Row(
                               children: [
                                 IconButton(
-                                    onPressed: ()async {
-                                      User? user = await signInWithGoogle(context: context);
+                                    onPressed: () async {
+                                      User? user = await signInWithGoogle(
+                                          context: context);
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                            settings: RouteSettings(arguments:user),
-                                            builder: (context) =>UserInfoScreen(user: user!)
-                                        ),
+                                            settings:
+                                                RouteSettings(arguments: user),
+                                            builder: (context) =>
+                                                UserInfoScreen(user: user!)),
                                       );
                                     },
                                     icon: Icon(Icons.menu)),
@@ -108,7 +111,7 @@ class adminpageState extends State<adminpage> {
                                               0.06),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top:4.0),
+                                  padding: const EdgeInsets.only(top: 4.0),
                                   child: Text(
                                     'Admin !',
                                     style: GoogleFonts.poppins(
@@ -133,13 +136,21 @@ class adminpageState extends State<adminpage> {
                           child: Row(
                             children: [
                               Text(
-                                (adminquery==5)? 'All Tasks':
-                          (adminquery==0)? 'Assigned Tasks ':
-                          (adminquery==3)? 'Overdue Tasks':
-                          (adminquery==1)? 'Accepted Tasks':
-                          (adminquery==6)?"Select Date":
-                          (adminquery==4)?"Select faculty":
-                          (adminquery==2)? 'Rejected Tasks':"",
+                                (adminquery == 5)
+                                    ? 'All Tasks'
+                                    : (adminquery == 0)
+                                        ? 'Assigned Tasks '
+                                        : (adminquery == 3)
+                                            ? 'Overdue Tasks'
+                                            : (adminquery == 1)
+                                                ? 'Accepted Tasks'
+                                                : (adminquery == 6)
+                                                    ? "Select Date"
+                                                    : (adminquery == 4)
+                                                        ? "Select faculty"
+                                                        : (adminquery == 2)
+                                                            ? 'Rejected Tasks'
+                                                            : "",
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
@@ -147,136 +158,167 @@ class adminpageState extends State<adminpage> {
                                         MediaQuery.of(context).size.width *
                                             0.045),
                               ),
-                              SizedBox(width: MediaQuery.of(context).size.width*0.1),
-                              (adminquery==6)?
-                              Center(
-                                child: GestureDetector(
-                                  onTap: () async {
-                                    final datePick = await showDatePicker(
-                                      context: context,
-                                      initialDate: new DateTime.now(),
-                                      firstDate: new DateTime.now(),
-                                      lastDate: new DateTime.now().add(Duration(days: 365)),
-                                      builder: (context, child) {
-                                        return Theme(
-                                          data: Theme.of(context).copyWith(
-                                            colorScheme: ColorScheme.light(
-                                              primary: Colors
-                                                  .black, // header background color
-                                              onPrimary: Colors
-                                                  .white, // header text color
-                                              onSurface: Colors
-                                                  .black, // body text color
-                                            ),
-                                            textButtonTheme:
-                                            TextButtonThemeData(
-                                              style: TextButton.styleFrom(
-                                                primary: Colors
-                                                    .black, // button text color
+                              SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.1),
+                              (adminquery == 6)
+                                  ? Center(
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          final datePick = await showDatePicker(
+                                            context: context,
+                                            initialDate: new DateTime.now(),
+                                            firstDate: new DateTime.now(),
+                                            lastDate: new DateTime.now()
+                                                .add(Duration(days: 365)),
+                                            builder: (context, child) {
+                                              return Theme(
+                                                data:
+                                                    Theme.of(context).copyWith(
+                                                  colorScheme:
+                                                      ColorScheme.light(
+                                                    primary: Colors
+                                                        .black, // header background color
+                                                    onPrimary: Colors
+                                                        .white, // header text color
+                                                    onSurface: Colors
+                                                        .black, // body text color
+                                                  ),
+                                                  textButtonTheme:
+                                                      TextButtonThemeData(
+                                                    style: TextButton.styleFrom(
+                                                      primary: Colors
+                                                          .black, // button text color
+                                                    ),
+                                                  ),
+                                                ),
+                                                child: child!,
+                                              );
+                                            },
+                                          );
+                                          if (datePick != null &&
+                                              datePick != startDate) {
+                                            setState(() {
+                                              querydate = datePick;
+                                              isDateSelected = true;
+
+                                              // put it here
+                                              querydateinstring =
+                                                  "${querydate.day}/${querydate.month}/${querydate.year}";
+                                              print(
+                                                  startDateInString); // 08/14/2019
+                                            });
+                                          }
+                                          setState(() {});
+                                        },
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.07,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.4,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Container(
+                                              child: Row(
+                                                children: [
+                                                  SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width *
+                                                              0.075),
+                                                  (querydateinstring != '')
+                                                      ? Text(
+                                                          querydateinstring,
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black),
+                                                        )
+                                                      : Text(
+                                                          "Input Date",
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .normal,
+                                                            color: Colors.black,
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                ],
                                               ),
                                             ),
                                           ),
-                                          child: child!,
-                                        );
-                                      },
-                                    );
-                                    if (datePick != null &&
-                                        datePick != startDate) {
-                                      setState(() {
-                                        querydate = datePick;
-                                        isDateSelected = true;
-
-                                        // put it here
-                                        querydateinstring =
-                                        "${querydate.day}/${querydate.month}/${querydate.year}";
-                                        print(startDateInString); // 08/14/2019
-                                      });
-                                    }
-                                    setState(() {});
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: MediaQuery.of(context).size.height * 0.07,
-                                    width: MediaQuery.of(context).size.width * 0.4,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Container(
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                                width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                    0.075),
-                                            (querydateinstring != '')
-                                                ? Text(
-                                              querydateinstring,
-                                              style: TextStyle(
-                                                  color: Colors.black),
-                                            )
-                                                : Text(
-                                              "Input Date",
-                                              style: TextStyle(
-                                                fontWeight:
-                                                FontWeight.normal,
-                                                color: Colors.black,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ],
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ):(adminquery==4)?
-                              Center(
-                                child: Container(
-                                  height: MediaQuery.of(context).size.height * 0.07,
-                                  width: MediaQuery.of(context).size.width * 0.3,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(width: 20),
-                                          new DropdownButtonHideUnderline(
-                                            child: DropdownButton(
-                                              icon: Icon(
-                                                Icons.arrow_drop_down,
-                                                color: Colors.black,
-                                                size: 20.09,
-                                              ),
-                                              alignment: Alignment.centerLeft,
-                                              dropdownColor: Colors.white,
-                                              value: queryfaculty,
-                                              items: facultylist.map((String faculty) {
-                                                return DropdownMenuItem(
-                                                  value: faculty,
-                                                  child: Text(faculty),
-                                                );
-                                              }).toList(),
-                                              onChanged: (String? newValue) {
-                                                setState(() {
-                                                  queryfaculty = newValue!;
-                                                });
-                                              },
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.normal,
-                                                color: Colors.black,
-                                                fontSize: 15,
-                                              ),
+                                    )
+                                  : (adminquery == 4)
+                                      ? Center(
+                                          child: Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.07,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.3,
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    SizedBox(width: 20),
+                                                    new DropdownButtonHideUnderline(
+                                                      child: DropdownButton(
+                                                        icon: Icon(
+                                                          Icons.arrow_drop_down,
+                                                          color: Colors.black,
+                                                          size: 20.09,
+                                                        ),
+                                                        alignment: Alignment
+                                                            .centerLeft,
+                                                        dropdownColor:
+                                                            Colors.white,
+                                                        value: queryfaculty,
+                                                        items: facultylist.map(
+                                                            (String faculty) {
+                                                          return DropdownMenuItem(
+                                                            value: faculty,
+                                                            child:
+                                                                Text(faculty),
+                                                          );
+                                                        }).toList(),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          setState(() {
+                                                            queryfaculty =
+                                                                newValue!;
+                                                          });
+                                                        },
+                                                        style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          color: Colors.black,
+                                                          fontSize: 15,
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ):
-                              SizedBox(),
+                                          ),
+                                        )
+                                      : SizedBox(),
                               Spacer(),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -284,8 +326,7 @@ class adminpageState extends State<adminpage> {
                                     onPressed: () {
                                       showDialog(
                                         routeSettings: RouteSettings(
-                                          arguments: adminquery
-                                        ),
+                                            arguments: adminquery),
                                         context: context,
                                         builder: (_) => FunkyOverlay(),
                                       );
@@ -298,12 +339,16 @@ class adminpageState extends State<adminpage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: StreamBuilder(
-                              stream: (adminquery==4)?
-                                  AdminQuery.FacultyQuery():
-                              (adminquery==0||adminquery==1||adminquery==2||adminquery==3)?
-                              AdminQuery.AdminStatus():
-                              (adminquery==6)?
-                                  AdminQuery.DateQuery():FirebaseTask.readTask(),
+                              stream: (adminquery == 4)
+                                  ? AdminQuery.FacultyQuery()
+                                  : (adminquery == 0 ||
+                                          adminquery == 1 ||
+                                          adminquery == 2 ||
+                                          adminquery == 3)
+                                      ? AdminQuery.AdminStatus()
+                                      : (adminquery == 6)
+                                          ? AdminQuery.DateQuery()
+                                          : FirebaseTask.readTask(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (!snapshot.hasData) {
@@ -320,9 +365,9 @@ class adminpageState extends State<adminpage> {
                                     child: CircularProgressIndicator(),
                                   );
                                 }
-                               if(snapshot.hasData){
-                                 tasklength = FirebaseTask.readTask().length;
-                               }
+                                if (snapshot.hasData) {
+                                  tasklength = FirebaseTask.readTask().length;
+                                }
                                 return ListView(
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
@@ -372,12 +417,18 @@ class adminpageState extends State<adminpage> {
                                               checkInserttask = "Update";
                                             });
                                             print('Updating UI');
-                                            categoryvalue = document['category'];
-                                            tasktitlecontroller.text = document['title'];
-                                            taskdescriptioncontroller.text = document['description'];
-                                            startDateInString = document['startdate'];
-                                            endDateInString = document['enddate'];
-                                            dueDateInString = document['duedate'];
+                                            categoryvalue =
+                                                document['category'];
+                                            tasktitlecontroller.text =
+                                                document['title'];
+                                            taskdescriptioncontroller.text =
+                                                document['description'];
+                                            startDateInString =
+                                                document['startdate'];
+                                            endDateInString =
+                                                document['enddate'];
+                                            dueDateInString =
+                                                document['duedate'];
                                             duetime = document['duetime'];
                                             facultyvalue = document['faculty'];
                                             checkInserttask = "Update";
@@ -436,16 +487,29 @@ class adminpageState extends State<adminpage> {
                                                         BorderRadius.circular(
                                                             4)),
                                                 title: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     largetext(
                                                         text:
                                                             document['title']),
-                                                    standardtext(text: "${document['faculty']}",c: Colors.deepPurpleAccent,),
-                                               standardtext(text:   "${document['startdate']} - ${document['enddate']}",c: Color(0xff555556),),
+                                                    standardtext(
+                                                      text:
+                                                          "${document['faculty']}",
+                                                      c: Colors
+                                                          .deepPurpleAccent,
+                                                    ),
+                                                    standardtext(
+                                                      text:
+                                                          "${document['startdate']} - ${document['enddate']}",
+                                                      c: Color(0xff555556),
+                                                    ),
                                                     Padding(
-                                                      padding: const EdgeInsets.only(left:10.0),
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 10.0),
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -500,8 +564,13 @@ class adminpageState extends State<adminpage> {
                                                         children: [
                                                           standardtext(
                                                               text:
-                                                                  'Category :  ',c: bb),
-                                                          standardtext(text: '${document['category']}', c: Colors.deepPurpleAccent)
+                                                                  'Category :  ',
+                                                              c: bb),
+                                                          standardtext(
+                                                              text:
+                                                                  '${document['category']}',
+                                                              c: Colors
+                                                                  .deepPurpleAccent)
                                                         ],
                                                       ),
                                                       SizedBox(
@@ -512,7 +581,8 @@ class adminpageState extends State<adminpage> {
                                                               0.01),
                                                       standardtext(
                                                           text:
-                                                              'Event Description:',c: bb),
+                                                              'Event Description:',
+                                                          c: bb),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -540,12 +610,14 @@ class adminpageState extends State<adminpage> {
                                                               children: [
                                                                 standardtext(
                                                                     text: document[
-                                                                        'reason'],c: Colors.red),
+                                                                        'reason'],
+                                                                    c: Colors
+                                                                        .red),
                                                               ],
                                                             )
                                                           : SizedBox(
                                                               height: 0,
-                                                      ),
+                                                            ),
                                                     ],
                                                   )
                                                 ],
@@ -553,68 +625,97 @@ class adminpageState extends State<adminpage> {
                                             ),
                                           ),
                                           (document['status'] == 0)
-                                              ? StatusTag(Colors.black,'Assigned')
+                                              ? StatusTag(
+                                                  Colors.black, 'Assigned')
                                               : (document['status'] == 1)
-                                                  ? StatusTag(Colors.green,'Accepted')
+                                                  ? StatusTag(
+                                                      Colors.green, 'Accepted')
                                                   : (document['status'] == 2)
-                                                      ? StatusTag(Colors.redAccent,'Rejected')
-                                                      : (document['status'] == 3)
-                                                          ? StatusTag(Colors.deepOrangeAccent,'Overdue')
+                                                      ? StatusTag(
+                                                          Colors.redAccent,
+                                                          'Rejected')
+                                                      : (document['status'] ==
+                                                              3)
+                                                          ? StatusTag(
+                                                              Colors
+                                                                  .deepOrangeAccent,
+                                                              'Overdue')
                                                           : SizedBox(),
-                                              Padding(
-                                                padding: const EdgeInsets.only(top:75),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    mainAxisAlignment: MainAxisAlignment.end,
-                                                    children: [
-                                                      Container(
-                                                        width: MediaQuery.of(context).size.width*0.11,
-                                                        height: MediaQuery.of(context).size.height*0.03,
-                                                        decoration:ShapeDecoration(
-                                                            color: Color(0xff555556),
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius: BorderRadius.circular(15.0))
-                                                        ),
-                                                        child: MaterialButton(
-                                                          onPressed: () {
-                                                          },
-                                                          child: Text(
-                                                            "",
-                                                            style: TextStyle(
-                                                              color: Colors.white,
-                                                            ),
-                                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 75),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
+                                                children: [
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.11,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.03,
+                                                    decoration: ShapeDecoration(
+                                                        color:
+                                                            Color(0xff555556),
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0))),
+                                                    child: MaterialButton(
+                                                      onPressed: () {},
+                                                      child: Text(
+                                                        "",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
                                                         ),
                                                       ),
-                                                      SizedBox(width: 5),
-                                                      Container(
-                                                        width: MediaQuery.of(context).size.width*0.11,
-                                                        height: MediaQuery.of(context).size.height*0.03,
-                                                        decoration:ShapeDecoration(
-                                                            //color: Color(0xff22C087),
-                                                            color: Color(0xff555556),
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius: BorderRadius.circular(15.0))
-                                                        ),
-                                                        child: MaterialButton(
-                                                          onPressed: () {
-                                                          },
-                                                          child: Text(
-                                                            "",
-                                                            style: TextStyle(
-                                                              color: Colors.white,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
+                                                    ),
                                                   ),
-                                                ),
-                                              )
-                                              ]
-                                            )
-                                        ),
+                                                  SizedBox(width: 5),
+                                                  Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.11,
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height *
+                                                            0.03,
+                                                    decoration: ShapeDecoration(
+                                                        //color: Color(0xff22C087),
+                                                        color:
+                                                            Color(0xff555556),
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0))),
+                                                    child: MaterialButton(
+                                                      onPressed: () {},
+                                                      child: Text(
+                                                        "",
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          )
+                                        ])),
                                       ),
                                     );
                                   }).toList(),
@@ -624,7 +725,8 @@ class adminpageState extends State<adminpage> {
                         SizedBox(height: 60)
                       ],
                     ),
-                  ) : facultystatus()));
+                  )
+                : facultystatus()));
   }
 
   Future<void> _updateTask(
@@ -711,8 +813,7 @@ class FunkyOverlayState extends State<FunkyOverlay>
             decoration: ShapeDecoration(
                 color: Colors.white,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0))
-            ),
+                    borderRadius: BorderRadius.circular(15.0))),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Padding(
@@ -733,19 +834,25 @@ class FunkyOverlayState extends State<FunkyOverlay>
                         ),
                       ),
                     ),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.02),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02),
                     FilterBox('All Tasks', 5),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.0025),
                     FilterBox('Assigned Tasks', 0),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.0025),
                     FilterBox('Overdue Tasks', 3),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.0025),
                     FilterBox('Accepted Tasks', 1),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.0025),
                     FilterBox('Rejected Tasks', 2),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.0025),
                     FilterBox('Date selected Tasks', 6),
-                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.0025),
                     FilterBox('Faculty Tasks', 4),
                   ],
                 ),
@@ -780,14 +887,15 @@ class largetext extends StatelessWidget {
 }
 
 class standardtext extends StatelessWidget {
-  String text;Color c;
+  String text;
+  Color c;
 
-  standardtext({required this.text,required this.c});
+  standardtext({required this.text, required this.c});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left:10.0),
+      padding: const EdgeInsets.only(left: 10.0),
       child: Text(
         text,
         textAlign: TextAlign.left,
@@ -818,9 +926,11 @@ class smalltext extends StatelessWidget {
     );
   }
 }
+
 class FilterBox extends StatefulWidget {
-  String text;int query;
-  FilterBox(this.text,this.query);
+  String text;
+  int query;
+  FilterBox(this.text, this.query);
   @override
   State<FilterBox> createState() => _FilterBoxState();
 }
@@ -829,43 +939,42 @@ class _FilterBoxState extends State<FilterBox> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width*0.5,
-      decoration:ShapeDecoration(
+      width: MediaQuery.of(context).size.width * 0.5,
+      decoration: ShapeDecoration(
           color: Colors.white,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0))
-      ),
+              borderRadius: BorderRadius.circular(15.0))),
       child: MaterialButton(
         elevation: 5,
         splashColor: Colors.deepPurpleAccent,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
         color: Colors.black,
-        onPressed: () async{
+        onPressed: () async {
           setState(() {
-            adminquery=widget.query;
-            adminquery=adminquery;
+            adminquery = widget.query;
+            adminquery = adminquery;
           });
           print(adminquery);
-          Navigator.pop(
-              context
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => adminpage()),
           );
-          setState(() {
-          });
         },
         child: Text(
             style: TextStyle(
               color: Colors.white,
             ),
-            widget.text
-        ),
+            widget.text),
       ),
     );
   }
 }
+
 class StatusTag extends StatefulWidget {
-  Color status;String text;
-  StatusTag(this.status,this.text);
+  Color status;
+  String text;
+  StatusTag(this.status, this.text);
 
   @override
   State<StatusTag> createState() => _StatusTagState();
@@ -875,15 +984,11 @@ class _StatusTagState extends State<StatusTag> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-      const EdgeInsets.only(
-          right: 20, top: 20),
+      padding: const EdgeInsets.only(right: 20, top: 20),
       alignment: Alignment.topRight,
       child: Row(
-        mainAxisAlignment:
-        MainAxisAlignment.end,
-        crossAxisAlignment:
-        CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 4),
@@ -894,22 +999,13 @@ class _StatusTagState extends State<StatusTag> {
             ),
           ),
           Padding(
-            padding:
-            EdgeInsets.only(
-                left: 8),
+            padding: EdgeInsets.only(left: 8),
             child: Text(
               widget.text,
               style: GoogleFonts.poppins(
-                  color:
-                  Colors.black,
-                  fontWeight:
-                  FontWeight
-                      .w500,
-                  fontSize: MediaQuery.of(
-                      context)
-                      .size
-                      .width *
-                      0.035),
+                  color: Colors.black,
+                  fontWeight: FontWeight.w500,
+                  fontSize: MediaQuery.of(context).size.width * 0.035),
             ),
           ),
         ],
@@ -917,5 +1013,3 @@ class _StatusTagState extends State<StatusTag> {
     );
   }
 }
-
-

@@ -10,7 +10,8 @@ import '../../LoginPage.dart';
 import '../../adminview/adminpage.dart';
 import '../AssignTask_Admin.dart';
 import '../Models/TaskMango.dart';
-int snaplength = 2 ;
+
+int snaplength = 2;
 bool drawer = false;
 int status = 0;
 String tasktype = 'All Tasks';
@@ -18,6 +19,7 @@ User? fac;
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 int _selectedIndexuser = 0;
+
 class userpage extends StatefulWidget {
   const userpage({Key? key}) : super(key: key);
 
@@ -35,6 +37,7 @@ class _userpageState extends State<userpage> {
         print(_selectedIndexuser);
       });
     }
+
     return Scaffold(
 /*        bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -75,15 +78,15 @@ class _userpageState extends State<userpage> {
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: ()async {
+                      onPressed: () async {
                         User? user = await signInWithGoogle(context: context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                settings: RouteSettings(arguments:user),
-                                builder: (context) =>UserInfoScreen(user: user!)
-                            ),
-                          );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              settings: RouteSettings(arguments: user),
+                              builder: (context) =>
+                                  UserInfoScreen(user: user!)),
+                        );
                       },
                       icon: Icon(Icons.menu)),
                   Text(
@@ -674,8 +677,7 @@ class _userpageState extends State<userpage> {
           ),
         ],
       ),
-    )
-        ));
+    )));
   }
 
   Future<void> _updateTask(
