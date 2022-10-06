@@ -20,7 +20,7 @@ int adminquery = 5;
 String filterDateInString = '';
 DateTime filterDate = DateTime.now();
 bool isDateSelectedforfilter = false;
-String queryfaculty = facultylist.first;
+String queryfaculty = faculty_list.first;
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 TextEditingController taskreasoncontroller = new TextEditingController();
@@ -304,7 +304,7 @@ class adminpageState extends State<adminpage> {
                                                         dropdownColor:
                                                             Colors.white,
                                                         value: queryfaculty,
-                                                        items: facultylist.map(
+                                                        items: faculty_list.map(
                                                             (String faculty) {
                                                           return DropdownMenuItem(
                                                             value: faculty,

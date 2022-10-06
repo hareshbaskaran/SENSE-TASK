@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/StaffPage_Admin.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:sense_task/main.dart';
 import 'package:mongo_dart/mongo_dart.dart' as T;
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 TextEditingController tasktitlecontroller = new TextEditingController();
 
@@ -39,13 +42,26 @@ var items = [
   'Venue Preparation for TRB/TNPSC exams',
   'OTHERS'
 ];
-String facultyvalue =facultylist.first;
-var facultylist = [
-  'Ishu',
-  'Haresh',
-  'Mami',
-  'Shobi',
-];
+List<String> faculty_list = [];
+
+String facultyvalue = faculty_list.first;
+
+getfacultylistAPI() async {
+  faculty_list = [];
+  var faculty_url = Uri.parse(
+      "https://gist.github.com/iamishu2908/006812760864f6859dcaaf5e719f29b0");
+  var faculty_response = await http.get(faculty_url);
+  print('Response status: ${faculty_response.statusCode}');
+  print('Response body: ${faculty_response.body}');
+  final List<dynamic> faculty_data = await json.decode(faculty_response.body);
+  if (faculty_response.statusCode == 200) {
+    for (int i = 0; i < faculty_data.length; i++) {
+      faculty_list.add(
+        faculty_data[i]['name'],
+      );
+    }
+  }
+}
 
 String duetime = '';
 
@@ -64,6 +80,11 @@ bool isDateSelected = false;
 bool isRegister = true;
 
 class _taskassign_aState extends State<taskassign_a> {
+  void initState() {
+    getfacultylistAPI();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     QueryDocumentSnapshot? document =
@@ -235,7 +256,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                       alignment: Alignment.centerLeft,
                                       dropdownColor: Colors.black,
                                       value: facultyvalue,
-                                      items: facultylist.map((String faculty) {
+                                      items: faculty_list.map((String faculty) {
                                         return DropdownMenuItem(
                                           value: faculty,
                                           child: Text(faculty),

@@ -37,7 +37,7 @@ class _facultystatusState extends State<facultystatus> {
         ListView.builder(
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            itemCount: facultylist.length,
+            itemCount: faculty_list.length,
             itemBuilder: (context, index) {
               return InkWell(
                 onTap: () {},
@@ -58,9 +58,7 @@ class _facultystatusState extends State<facultystatus> {
                                   color: Colors.black,
                                   fontSize:
                                       MediaQuery.of(context).size.width * 0.04),
-                              facultylist[index]
-                          )
-                      ),
+                              faculty_list[index])),
                     ),
                   ),
                 ),
