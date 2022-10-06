@@ -49,25 +49,40 @@ class adminpageState extends State<adminpage> {
     return Scaffold(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: _floating(context),
-        bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.black87,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withOpacity(.60),
-            selectedFontSize: 14,
-            unselectedFontSize: 14,
-            currentIndex: _selectedIndex, //New
-            onTap: _onItemTapped, //New
-            items: [
-              BottomNavigationBarItem(
-                label: 'Home',
-                icon: Icon(Icons.home_rounded),
-              ),
-              BottomNavigationBarItem(
-                label: 'Faculty',
-                icon: Icon(Icons.person_outline_rounded),
-              )
-            ]),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topRight: Radius.circular(30), topLeft: Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30.0),
+              topRight: Radius.circular(30.0),
+            ),
+            child: BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                backgroundColor: Colors.black87,
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Colors.white.withOpacity(.60),
+                selectedFontSize: 14,
+                unselectedFontSize: 14,
+                currentIndex: _selectedIndex, //New
+                onTap: _onItemTapped, //New
+                items: [
+                  BottomNavigationBarItem(
+                    label: 'Home',
+                    icon: Icon(Icons.home_rounded),
+                  ),
+                  BottomNavigationBarItem(
+                    label: 'Faculty',
+                    icon: Icon(Icons.person_outline_rounded),
+                  )
+                ]),
+          ),
+        ),
         body: SafeArea(
             child: (_selectedIndex == 0)
                 ? Container(
