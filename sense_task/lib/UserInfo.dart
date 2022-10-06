@@ -149,12 +149,14 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    'Hey Admin ,want To LOGOUT ?',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 24
+                  child: Center(
+                    child: Text(
+                      'Hey Admin ! want To LOGOUT ?',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 24
+                      ),
                     ),
                   ),
                 ),
@@ -207,8 +209,27 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
               'You are Not allowed to Use this Application Kindly LogOut'
             ),
             Padding(
-              padding: const EdgeInsets.all(30),
+              padding: const EdgeInsets.only(left: 10,top:30),
               child: Container(
+                width:
+                MediaQuery.of(context)
+                    .size
+                    .width *
+                    0.1,
+                height:
+                MediaQuery.of(context)
+                    .size
+                    .height *
+                    0.05,
+                decoration: ShapeDecoration(
+                  //color: Color(0xff22C087),
+                    color:
+                    Color(0xff555556),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                        BorderRadius
+                            .circular(
+                            80.0))),
                 child: BackButton(
                   color: Colors.black,
                   onPressed: () {
