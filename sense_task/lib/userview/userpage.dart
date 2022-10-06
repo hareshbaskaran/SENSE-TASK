@@ -93,10 +93,10 @@ class _userpageState extends State<userpage> {
                         color: Colors.black,
                         fontSize: MediaQuery.of(context).size.width * 0.06),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
+                  Padding(
+                    padding: const EdgeInsets.only(top:4),
                     child: Text(
-                      '!',
+                      'User !',
                       style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: MediaQuery.of(context).size.width * 0.052),

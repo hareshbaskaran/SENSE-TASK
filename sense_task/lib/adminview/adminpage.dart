@@ -87,11 +87,17 @@ class adminpageState extends State<adminpage> {
                             child: Row(
                               children: [
                                 IconButton(
-                                    onPressed: () {
-
+                                    onPressed: ()async {
+                                      User? user = await signInWithGoogle(context: context);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            settings: RouteSettings(arguments:user),
+                                            builder: (context) =>UserInfoScreen(user: user!)
+                                        ),
+                                      );
                                     },
-                                    icon: Icon(Icons
-                                        .menu)), // TODO : Implement left drawer for profile page (null error)
+                                    icon: Icon(Icons.menu)),
                                 Text(
                                   'Hello, ',
                                   style: GoogleFonts.poppins(
@@ -101,8 +107,8 @@ class adminpageState extends State<adminpage> {
                                           MediaQuery.of(context).size.width *
                                               0.06),
                                 ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
+                                Padding(
+                                  padding: const EdgeInsets.only(top:4.0),
                                   child: Text(
                                     'Admin !',
                                     style: GoogleFonts.poppins(
@@ -227,7 +233,7 @@ class adminpageState extends State<adminpage> {
                               Center(
                                 child: Container(
                                   height: MediaQuery.of(context).size.height * 0.07,
-                                  width: MediaQuery.of(context).size.width * 0.4,
+                                  width: MediaQuery.of(context).size.width * 0.3,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment: CrossAxisAlignment.center,
