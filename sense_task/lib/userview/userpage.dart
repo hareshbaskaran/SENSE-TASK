@@ -12,7 +12,6 @@ import '../AssignTask_Admin.dart';
 import '../Models/TaskMango.dart';
 
 bool drawer = false;
-User? user;
 int status = 0;
 String tasktype = 'All Tasks';
 User? fac;
@@ -59,756 +58,625 @@ class _userpageState extends State<userpage> {
               )
             ]),*/
         body: SafeArea(
-            child: (_selectedIndexuser == 0)
-                ? Container(
-                    constraints: BoxConstraints.expand(),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        alignment: Alignment.topCenter,
-                        image: AssetImage('assets/images/bgnd.png'),
+            child: Container(
+      constraints: BoxConstraints.expand(),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          alignment: Alignment.topCenter,
+          image: AssetImage('assets/images/bgnd.png'),
 
-                        // color: Colors.amber,
-                      ),
+          // color: Colors.amber,
+        ),
+      ),
+      child: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: EdgeInsets.only(top: 10),
+              child: Row(
+                children: [
+                  IconButton(
+                      onPressed: () async {
+                        User? user = await signInWithGoogle(context: context);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              settings: RouteSettings(arguments: user),
+                              builder: (context) =>
+                                  UserInfoScreen(user: user!)),
+                        );
+                      },
+                      icon: Icon(Icons.menu)),
+                  Text(
+                    'Hello, ',
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontSize: MediaQuery.of(context).size.width * 0.06),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      '!',
+                      style: GoogleFonts.poppins(
+                          color: Colors.black,
+                          fontSize: MediaQuery.of(context).size.width * 0.052),
                     ),
-                    child: ListView(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Row(
-                              children: [
-                                IconButton(
-                                    onPressed: () async {
-                                      user = await signInWithGoogle(
-                                          context: context);
-                                      if (user != null) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  UserInfoScreen(user: user!)),
-                                        );
-                                      }
-                                    },
-                                    icon: Icon(Icons.menu)),
-                                Text(
-                                  'Hello, ',
-                                  style: GoogleFonts.poppins(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.06),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(20, 0, 8, 0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                '3 tasks waiting for you ...',
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontSize: MediaQuery.of(context).size.width * 0.04),
+              ),
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width * 0.7,
+            child: Divider(
+              color: Colors.transparent,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+            child: Row(
+              children: [
+                Text(
+                  'Ongoing Tasks',
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: MediaQuery.of(context).size.width * 0.045),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              height: MediaQuery.of(context).size.height * 0.3,
+              decoration: new BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.rectangle,
+                border: Border.all(width: 1.0),
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: StreamBuilder(
+                    stream: UsernameQuery.UserOngoing(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.deepPurpleAccent,
+                          ),
+                        );
+                      }
+                      return ListView(
+                        shrinkWrap: true,
+                        children: snapshot.data!.docs.map((document) {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(0, 0, 0, 8),
+                            child: Dismissible(
+                              key: UniqueKey(),
+                              background: Container(
+                                decoration: new BoxDecoration(
+                                  color: Theme.of(context).errorColor,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.0)),
                                 ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Text(
-                                    '!',
-                                    style: GoogleFonts.poppins(
-                                        color: Colors.black,
-                                        fontSize:
-                                            MediaQuery.of(context).size.width *
-                                                0.052),
-                                  ),
+                                child: Icon(
+                                  Icons.close,
+                                  color: Colors.white,
+                                  size: 35,
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(20, 0, 8, 0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              '3 tasks waiting for you ...',
-                              style: GoogleFonts.poppins(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.04),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width * 0.7,
-                          child: Divider(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                          child: Row(
-                            children: [
-                              Text(
-                                'Ongoing Tasks',
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.045),
+                                alignment: Alignment.centerLeft,
+                                padding: EdgeInsets.only(left: 20),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 8),
                               ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            decoration: new BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              border: Border.all(width: 1.0),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: StreamBuilder(
-                                  stream: UsernameQuery.UserOngoing(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: CircularProgressIndicator(
-                                          color: Colors.deepPurpleAccent,
-                                        ),
-                                      );
-                                    }
-                                    return ListView(
-                                      shrinkWrap: true,
-                                      children:
-                                          snapshot.data!.docs.map((document) {
-                                        return Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(0, 0, 0, 8),
-                                          child: Dismissible(
-                                            key: UniqueKey(),
-                                            background: Container(
-                                              decoration: new BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .errorColor,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15.0)),
-                                              ),
-                                              child: Icon(
-                                                Icons.close,
-                                                color: Colors.white,
-                                                size: 35,
-                                              ),
-                                              alignment: Alignment.centerLeft,
-                                              padding:
-                                                  EdgeInsets.only(left: 20),
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 15, vertical: 8),
-                                            ),
-                                            secondaryBackground: Container(
-                                              decoration: new BoxDecoration(
-                                                color: Colors.green,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15.0)),
-                                              ),
-                                              child: Icon(
-                                                Icons.check,
-                                                color: Colors.white,
-                                                size: 35,
-                                              ),
-                                              alignment: Alignment.centerRight,
-                                              padding:
-                                                  EdgeInsets.only(right: 20),
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 15, vertical: 8),
-                                            ),
-                                            onDismissed: (direction) {
-                                              if (direction ==
-                                                  DismissDirection.endToStart) {
-                                                setState(() {
-                                                  showDialog(
-                                                    routeSettings:
-                                                        RouteSettings(
-                                                            arguments:
-                                                                document),
-                                                    context: context,
-                                                    builder: (_) =>
-                                                        FunkyOverlayacceptdecline(
-                                                            accept: 1),
-                                                  );
-                                                });
-                                              } else {
-                                                setState(() {
-                                                  showDialog(
-                                                    routeSettings:
-                                                        RouteSettings(
-                                                            arguments:
-                                                                document),
-                                                    context: context,
-                                                    builder: (_) =>
-                                                        FunkyOverlayacceptdecline(
-                                                      accept: 0,
-                                                    ),
-                                                  );
-                                                });
-                                              }
-                                            },
-                                            child: Align(
-                                                child: Stack(children: <Widget>[
-                                              Container(
-                                                decoration: new BoxDecoration(
-                                                  color: Colors.white,
-                                                  shape: BoxShape.rectangle,
-                                                  border:
-                                                      Border.all(width: 2.0),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              15.0)),
-                                                ),
-                                                child: Card(
-                                                  elevation: 0,
-                                                  color: Colors.white,
-                                                  child: RoundedExpansionTile(
-                                                    rotateTrailing: false,
-                                                    trailing: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .end,
-                                                      children: [
-                                                        Icon(
-                                                          Icons
-                                                              .arrow_drop_down_outlined,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        4)),
-                                                    title: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        largetext(
-                                                            text: document[
-                                                                'title']),
-                                                        standardtext(
-                                                            text:
-                                                                "${document['startdate']} - ${document['enddate']}",
-                                                            c: Colors
-                                                                .deepPurpleAccent),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  left: 10.0),
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  SizedBox(
-                                                                      width: MediaQuery.of(context)
-                                                                              .size
-                                                                              .width *
-                                                                          0.15),
-                                                                ],
-                                                              ),
-                                                              SizedBox(
-                                                                  height: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.01),
-                                                            ],
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                    children: [
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          SizedBox(height: 20),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              standardtext(
-                                                                  text:
-                                                                      'Category :  ',
-                                                                  c: bb),
-                                                              standardtext(
-                                                                  text:
-                                                                      '${document['category']}',
-                                                                  c: Colors
-                                                                      .deepPurpleAccent)
-                                                            ],
-                                                          ),
-                                                          SizedBox(
-                                                              height: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height *
-                                                                  0.01),
-                                                          standardtext(
-                                                              text:
-                                                                  'Event Description:',
-                                                              c: bb),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(10.0),
-                                                            child: Text(
-                                                              document[
-                                                                  'description'],
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .left,
-                                                              style: GoogleFonts.poppins(
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width *
-                                                                      0.04),
-                                                            ),
-                                                          ),
-                                                          (pageview == 1)
-                                                              ? Column(
-                                                                  children: [
-                                                                    standardtext(
-                                                                        text: document[
-                                                                            'reason'],
-                                                                        c: Colors
-                                                                            .red),
-                                                                  ],
-                                                                )
-                                                              : SizedBox(
-                                                                  height: 0,
-                                                                ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              (document['status'] == 0)
-                                                  ? StatusTag(
-                                                      Colors.black, 'Assigned')
-                                                  : (document['status'] == 1)
-                                                      ? StatusTag(Colors.green,
-                                                          'Accepted')
-                                                      : (document['status'] ==
-                                                              2)
-                                                          ? StatusTag(
-                                                              Colors.redAccent,
-                                                              'Rejected')
-                                                          : (document['status'] ==
-                                                                  3)
-                                                              ? StatusTag(
-                                                                  Colors
-                                                                      .deepOrangeAccent,
-                                                                  'Overdue')
-                                                              : SizedBox(),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 50),
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.end,
-                                                    children: [
-                                                      Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.11,
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height *
-                                                            0.03,
-                                                        decoration: ShapeDecoration(
-                                                            color: Color(
-                                                                0xff555556),
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            15.0))),
-                                                        child: MaterialButton(
-                                                          onPressed: () {},
-                                                          child: Text(
-                                                            "",
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width: 5),
-                                                      Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width *
-                                                            0.11,
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height *
-                                                            0.03,
-                                                        decoration:
-                                                            ShapeDecoration(
-                                                                //color: Color(0xff22C087),
-                                                                color: Color(
-                                                                    0xff555556),
-                                                                shape: RoundedRectangleBorder(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            15.0))),
-                                                        child: MaterialButton(
-                                                          onPressed: () {},
-                                                          child: Text(
-                                                            "",
-                                                            style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            ])),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    );
-                                  }),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
-                          child: Row(
-                            children: [
-                              Text(
-                                '$tasktype',
-                                style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    fontSize:
-                                        MediaQuery.of(context).size.width *
-                                            0.045),
-                              ),
-                              Spacer(),
-                              Align(
+                              secondaryBackground: Container(
+                                decoration: new BoxDecoration(
+                                  color: Colors.green,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.0)),
+                                ),
+                                child: Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                  size: 35,
+                                ),
                                 alignment: Alignment.centerRight,
-                                child: IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Icons.filter_alt_sharp)),
-                              )
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: StreamBuilder(
-                              stream: UsernameQuery.UserAccepted(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<QuerySnapshot> snapshot) {
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
+                                padding: EdgeInsets.only(right: 20),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 15, vertical: 8),
+                              ),
+                              onDismissed: (direction) {
+                                if (direction == DismissDirection.endToStart) {
+                                  setState(() {
+                                    showDialog(
+                                      routeSettings:
+                                          RouteSettings(arguments: document),
+                                      context: context,
+                                      builder: (_) =>
+                                          FunkyOverlayacceptdecline(accept: 1),
+                                    );
+                                  });
+                                } else {
+                                  setState(() {
+                                    showDialog(
+                                      routeSettings:
+                                          RouteSettings(arguments: document),
+                                      context: context,
+                                      builder: (_) => FunkyOverlayacceptdecline(
+                                        accept: 0,
+                                      ),
+                                    );
+                                  });
                                 }
-                                return ListView(
-                                  shrinkWrap: true,
-                                  children: snapshot.data!.docs.map((document) {
-                                    return Padding(
-                                      padding: EdgeInsets.fromLTRB(6, 0, 6, 8),
-                                      child: Align(
-                                          child: Stack(children: <Widget>[
-                                        Container(
-                                          decoration: new BoxDecoration(
-                                            color: Colors.white,
-                                            shape: BoxShape.rectangle,
-                                            border: Border.all(width: 2.0),
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(15.0)),
+                              },
+                              child: Align(
+                                  child: Stack(children: <Widget>[
+                                Container(
+                                  decoration: new BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.rectangle,
+                                    border: Border.all(width: 2.0),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(15.0)),
+                                  ),
+                                  child: Card(
+                                    elevation: 0,
+                                    color: Colors.white,
+                                    child: RoundedExpansionTile(
+                                      rotateTrailing: false,
+                                      trailing: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Icon(
+                                            Icons.arrow_drop_down_outlined,
+                                            color: Colors.black,
                                           ),
-                                          child: Card(
-                                            elevation: 0,
-                                            color: Colors.white,
-                                            child: RoundedExpansionTile(
-                                              rotateTrailing: false,
-                                              trailing: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Icon(
-                                                    Icons
-                                                        .arrow_drop_down_outlined,
-                                                    color: Colors.black,
-                                                  ),
-                                                ],
-                                              ),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(4)),
-                                              title: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  largetext(
-                                                      text: document['title']),
-                                                  standardtext(
-                                                    text:
-                                                        "${document['startdate']} - ${document['enddate']}",
-                                                    c: Colors.deepPurpleAccent,
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10.0),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            SizedBox(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.15),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                            height: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.01),
-                                                      ],
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
+                                        ],
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4)),
+                                      title: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          largetext(text: document['title']),
+                                          standardtext(
+                                              text:
+                                                  "${document['startdate']} - ${document['enddate']}",
+                                              c: Colors.deepPurpleAccent),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10.0),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Column(
+                                                Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.start,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                      CrossAxisAlignment.center,
                                                   children: [
-                                                    SizedBox(height: 20),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        standardtext(
-                                                            text:
-                                                                'Category :  ',
-                                                            c: bb),
-                                                        standardtext(
-                                                            text:
-                                                                '${document['category']}',
-                                                            c: Colors
-                                                                .deepPurpleAccent)
-                                                      ],
-                                                    ),
                                                     SizedBox(
-                                                        height: MediaQuery.of(
+                                                        width: MediaQuery.of(
                                                                     context)
                                                                 .size
-                                                                .height *
-                                                            0.01),
-                                                    standardtext(
-                                                        text:
-                                                            'Event Description:',
-                                                        c: bb),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              10.0),
-                                                      child: Text(
-                                                        document['description'],
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                        style: GoogleFonts.poppins(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width *
-                                                                0.04),
-                                                      ),
-                                                    ),
+                                                                .width *
+                                                            0.15),
                                                   ],
-                                                )
+                                                ),
+                                                SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.01),
                                               ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      children: [
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(height: 20),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                standardtext(
+                                                    text: 'Category :  ',
+                                                    c: bb),
+                                                standardtext(
+                                                    text:
+                                                        '${document['category']}',
+                                                    c: Colors.deepPurpleAccent)
+                                              ],
+                                            ),
+                                            SizedBox(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.01),
+                                            standardtext(
+                                                text: 'Event Description:',
+                                                c: bb),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              child: Text(
+                                                document['description'],
+                                                textAlign: TextAlign.left,
+                                                style: GoogleFonts.poppins(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.04),
+                                              ),
+                                            ),
+                                            (pageview == 1)
+                                                ? Column(
+                                                    children: [
+                                                      standardtext(
+                                                          text: document[
+                                                              'reason'],
+                                                          c: Colors.red),
+                                                    ],
+                                                  )
+                                                : SizedBox(
+                                                    height: 0,
+                                                  ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                (document['status'] == 0)
+                                    ? StatusTag(Colors.black, 'Assigned')
+                                    : (document['status'] == 1)
+                                        ? StatusTag(Colors.green, 'Accepted')
+                                        : (document['status'] == 2)
+                                            ? StatusTag(
+                                                Colors.redAccent, 'Rejected')
+                                            : (document['status'] == 3)
+                                                ? StatusTag(
+                                                    Colors.deepOrangeAccent,
+                                                    'Overdue')
+                                                : SizedBox(),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 50),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.11,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
+                                          decoration: ShapeDecoration(
+                                              color: Color(0xff555556),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0))),
+                                          child: MaterialButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              "",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                        (document['status'] == 0)
-                                            ? StatusTag(
-                                                Colors.black, 'Assigned')
-                                            : (document['status'] == 1)
-                                                ? StatusTag(
-                                                    Colors.green, 'Accepted')
-                                                : (document['status'] == 2)
-                                                    ? StatusTag(
-                                                        Colors.redAccent,
-                                                        'Rejected')
-                                                    : (document['status'] == 3)
-                                                        ? StatusTag(
-                                                            Colors
-                                                                .deepOrangeAccent,
-                                                            'Overdue')
-                                                        : SizedBox(),
-                                        Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 50),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              children: [
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.11,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.03,
-                                                  decoration: ShapeDecoration(
-                                                      color: Color(0xff555556),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15.0))),
-                                                  child: MaterialButton(
-                                                    onPressed: () {},
-                                                    child: Text(
-                                                      "",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(width: 5),
-                                                Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.11,
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.03,
-                                                  decoration: ShapeDecoration(
-                                                      //color: Color(0xff22C087),
-                                                      color: Color(0xff555556),
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          15.0))),
-                                                  child: MaterialButton(
-                                                    onPressed: () {},
-                                                    child: Text(
-                                                      "",
-                                                      style: TextStyle(
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
+                                        SizedBox(width: 5),
+                                        Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.11,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.03,
+                                          decoration: ShapeDecoration(
+                                              //color: Color(0xff22C087),
+                                              color: Color(0xff555556),
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0))),
+                                          child: MaterialButton(
+                                            onPressed: () {},
+                                            child: Text(
+                                              "",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                              ),
                                             ),
                                           ),
                                         )
-                                      ])),
-                                    );
-                                  }).toList(),
-                                );
-                              }),
-                        ),
-                      ],
-                    ),
-                  )
-                : UserInfoScreen(user: user!)));
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ])),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    }),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+            child: Row(
+              children: [
+                Text(
+                  '$tasktype',
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      fontSize: MediaQuery.of(context).size.width * 0.045),
+                ),
+                Spacer(),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: IconButton(
+                      onPressed: () {}, icon: Icon(Icons.filter_alt_sharp)),
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: StreamBuilder(
+                stream: UsernameQuery.UserAccepted(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  return ListView(
+                    shrinkWrap: true,
+                    children: snapshot.data!.docs.map((document) {
+                      return Padding(
+                        padding: EdgeInsets.fromLTRB(6, 0, 6, 8),
+                        child: Align(
+                            child: Stack(children: <Widget>[
+                          Container(
+                            decoration: new BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.rectangle,
+                              border: Border.all(width: 2.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0)),
+                            ),
+                            child: Card(
+                              elevation: 0,
+                              color: Colors.white,
+                              child: RoundedExpansionTile(
+                                rotateTrailing: false,
+                                trailing: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Icon(
+                                      Icons.arrow_drop_down_outlined,
+                                      color: Colors.black,
+                                    ),
+                                  ],
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4)),
+                                title: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    largetext(text: document['title']),
+                                    standardtext(
+                                      text:
+                                          "${document['startdate']} - ${document['enddate']}",
+                                      c: Colors.deepPurpleAccent,
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 10.0),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.15),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.01),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 20),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          standardtext(
+                                              text: 'Category :  ', c: bb),
+                                          standardtext(
+                                              text: '${document['category']}',
+                                              c: Colors.deepPurpleAccent)
+                                        ],
+                                      ),
+                                      SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.01),
+                                      standardtext(
+                                          text: 'Event Description:', c: bb),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Text(
+                                          document['description'],
+                                          textAlign: TextAlign.left,
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.04),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          (document['status'] == 0)
+                              ? StatusTag(Colors.black, 'Assigned')
+                              : (document['status'] == 1)
+                                  ? StatusTag(Colors.green, 'Accepted')
+                                  : (document['status'] == 2)
+                                      ? StatusTag(Colors.redAccent, 'Rejected')
+                                      : (document['status'] == 3)
+                                          ? StatusTag(Colors.deepOrangeAccent,
+                                              'Overdue')
+                                          : SizedBox(),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 50),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.11,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.03,
+                                    decoration: ShapeDecoration(
+                                        color: Color(0xff555556),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0))),
+                                    child: MaterialButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        "",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: 5),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.11,
+                                    height: MediaQuery.of(context).size.height *
+                                        0.03,
+                                    decoration: ShapeDecoration(
+                                        //color: Color(0xff22C087),
+                                        color: Color(0xff555556),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15.0))),
+                                    child: MaterialButton(
+                                      onPressed: () {},
+                                      child: Text(
+                                        "",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        ])),
+                      );
+                    }).toList(),
+                  );
+                }),
+          ),
+        ],
+      ),
+    )));
   }
 
   Future<void> _updateTask(
@@ -1135,7 +1003,7 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
                                                 .whenComplete(
                                               () => Navigator.pop(context),
                                             );
-                                            /*print(document['category']);
+                                            print(document['category']);
                                             print(document['title']);
                                             print(document['description']);
                                             print(document['startdate']);
@@ -1145,7 +1013,7 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
                                             print(document['status']);
                                             print(document['reason']);
                                             print('Rejected !');
-                                            taskreasoncontroller.clear();*/
+                                            taskreasoncontroller.clear();
                                           }
                                         },
                                         child: Padding(

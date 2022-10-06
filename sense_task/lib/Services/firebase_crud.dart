@@ -15,7 +15,7 @@ class FirebaseCrud {
 
     Map<String, dynamic> data = <String, dynamic>{"username": username};
 
-    var result = await documentReferencer.set(data).whenComplete(() {
+     await documentReferencer.set(data).whenComplete(() {
       response.code = 200;
       response.message = "Sucessfully added to the database";
     }).catchError((e) {
