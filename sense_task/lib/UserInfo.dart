@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/userview/userpage.dart';
 import 'LoginPage.dart';
 class UserInfoScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Route _routeToSignInScreen() {
     return PageRouteBuilder(
       settings: RouteSettings(arguments:user),
-      pageBuilder: (context, animation, secondaryAnimation) => userpage(),
+      pageBuilder: (context, animation, secondaryAnimation) => (pageview==1)?adminpage():userpage(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(-1.0, 0.0);
         var end = Offset.zero;
@@ -56,6 +57,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
         ),
         child: Stack(
           children:<Widget> [
+            (pageview==2)?
             Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -140,7 +142,70 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                 ),
               ),
             ],
-          ),
+          ):(pageview==1)?
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Text(
+                    'Hey Admin ,want To LOGOUT ?',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 24
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                _isSigningOut
+                    ? CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                )
+                    : ElevatedButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      Colors.deepPurpleAccent,
+                    ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                  onPressed: () async {
+                    setState(() {
+                      _isSigningOut = true;
+                    });
+                    await signOut(context: context);
+                    setState(() {
+                      _isSigningOut = false;
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => loginpage(Hive_box)
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    child: Text(
+                      'Sign Out',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        letterSpacing: 2,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ):Text(
+              'You are Not allowed to Use this Application Kindly LogOut'
+            ),
             Padding(
               padding: const EdgeInsets.all(30),
               child: Container(

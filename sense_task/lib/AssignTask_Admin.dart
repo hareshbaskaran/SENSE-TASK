@@ -39,7 +39,7 @@ var items = [
   'Venue Preparation for TRB/TNPSC exams',
   'OTHERS'
 ];
-String facultyvalue = 'Ishu';
+String facultyvalue =facultylist.first;
 var facultylist = [
   'Ishu',
   'Haresh',

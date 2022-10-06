@@ -13,12 +13,13 @@ import 'package:sense_task/Models/TaskMango.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/Models/UserMango.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
-
+String querydateinstring = '';
+DateTime querydate = DateTime.now();
 int adminquery=5;
 String filterDateInString = '';
 DateTime filterDate = DateTime.now();
 bool isDateSelectedforfilter = false;
-
+String queryfaculty=facultylist.first;
 Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 TextEditingController taskreasoncontroller = new TextEditingController();
@@ -86,11 +87,17 @@ class adminpageState extends State<adminpage> {
                             child: Row(
                               children: [
                                 IconButton(
-                                    onPressed: () {
-
+                                    onPressed: ()async {
+                                      User? user = await signInWithGoogle(context: context);
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            settings: RouteSettings(arguments:user),
+                                            builder: (context) =>UserInfoScreen(user: user!)
+                                        ),
+                                      );
                                     },
-                                    icon: Icon(Icons
-                                        .menu)), // TODO : Implement left drawer for profile page (null error)
+                                    icon: Icon(Icons.menu)),
                                 Text(
                                   'Hello, ',
                                   style: GoogleFonts.poppins(
@@ -100,8 +107,8 @@ class adminpageState extends State<adminpage> {
                                           MediaQuery.of(context).size.width *
                                               0.06),
                                 ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
+                                Padding(
+                                  padding: const EdgeInsets.only(top:4.0),
                                   child: Text(
                                     'Admin !',
                                     style: GoogleFonts.poppins(
@@ -115,21 +122,6 @@ class adminpageState extends State<adminpage> {
                             ),
                           ),
                         ),
-            /*            Padding(
-                          padding: EdgeInsets.fromLTRB(20, 0, 8, 0),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Tasks Waiting for you to Manage.....',
-                              style: GoogleFonts.poppins(
-                                letterSpacing: 1.2,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                  fontSize:
-                                      MediaQuery.of(context).size.width * 0.04),
-                            ),
-                          ),
-                        ),*/
                         Container(
                           width: MediaQuery.of(context).size.width * 0.7,
                           child: Divider(
@@ -145,6 +137,8 @@ class adminpageState extends State<adminpage> {
                           (adminquery==0)? 'Assigned Tasks ':
                           (adminquery==3)? 'Overdue Tasks':
                           (adminquery==1)? 'Accepted Tasks':
+                          (adminquery==6)?"Select Date":
+                          (adminquery==4)?"Select faculty":
                           (adminquery==2)? 'Rejected Tasks':"",
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
@@ -153,12 +147,145 @@ class adminpageState extends State<adminpage> {
                                         MediaQuery.of(context).size.width *
                                             0.045),
                               ),
+                              SizedBox(width: MediaQuery.of(context).size.width*0.1),
+                              (adminquery==6)?
+                              Center(
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    final datePick = await showDatePicker(
+                                      context: context,
+                                      initialDate: new DateTime.now(),
+                                      firstDate: new DateTime.now(),
+                                      lastDate: new DateTime.now().add(Duration(days: 365)),
+                                      builder: (context, child) {
+                                        return Theme(
+                                          data: Theme.of(context).copyWith(
+                                            colorScheme: ColorScheme.light(
+                                              primary: Colors
+                                                  .black, // header background color
+                                              onPrimary: Colors
+                                                  .white, // header text color
+                                              onSurface: Colors
+                                                  .black, // body text color
+                                            ),
+                                            textButtonTheme:
+                                            TextButtonThemeData(
+                                              style: TextButton.styleFrom(
+                                                primary: Colors
+                                                    .black, // button text color
+                                              ),
+                                            ),
+                                          ),
+                                          child: child!,
+                                        );
+                                      },
+                                    );
+                                    if (datePick != null &&
+                                        datePick != startDate) {
+                                      setState(() {
+                                        querydate = datePick;
+                                        isDateSelected = true;
+
+                                        // put it here
+                                        querydateinstring =
+                                        "${querydate.day}/${querydate.month}/${querydate.year}";
+                                        print(startDateInString); // 08/14/2019
+                                      });
+                                    }
+                                    setState(() {});
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: MediaQuery.of(context).size.height * 0.07,
+                                    width: MediaQuery.of(context).size.width * 0.4,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Container(
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                    0.075),
+                                            (querydateinstring != '')
+                                                ? Text(
+                                              querydateinstring,
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            )
+                                                : Text(
+                                              "Input Date",
+                                              style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.normal,
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ):(adminquery==4)?
+                              Center(
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height * 0.07,
+                                  width: MediaQuery.of(context).size.width * 0.3,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SizedBox(width: 20),
+                                          new DropdownButtonHideUnderline(
+                                            child: DropdownButton(
+                                              icon: Icon(
+                                                Icons.arrow_drop_down,
+                                                color: Colors.black,
+                                                size: 20.09,
+                                              ),
+                                              alignment: Alignment.centerLeft,
+                                              dropdownColor: Colors.white,
+                                              value: queryfaculty,
+                                              items: facultylist.map((String faculty) {
+                                                return DropdownMenuItem(
+                                                  value: faculty,
+                                                  child: Text(faculty),
+                                                );
+                                              }).toList(),
+                                              onChanged: (String? newValue) {
+                                                setState(() {
+                                                  queryfaculty = newValue!;
+                                                });
+                                              },
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                color: Colors.black,
+                                                fontSize: 15,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ):
+                              SizedBox(),
                               Spacer(),
                               Align(
                                 alignment: Alignment.centerRight,
                                 child: IconButton(
                                     onPressed: () {
                                       showDialog(
+                                        routeSettings: RouteSettings(
+                                          arguments: adminquery
+                                        ),
                                         context: context,
                                         builder: (_) => FunkyOverlay(),
                                       );
@@ -171,9 +298,12 @@ class adminpageState extends State<adminpage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: StreamBuilder(
-                              stream: (adminquery==5)?
-                                  FirebaseTask.readTask():
-                              AdminQuery.AdminStatus(),
+                              stream: (adminquery==4)?
+                                  AdminQuery.FacultyQuery():
+                              (adminquery==0||adminquery==1||adminquery==2||adminquery==3)?
+                              AdminQuery.AdminStatus():
+                              (adminquery==6)?
+                                  AdminQuery.DateQuery():FirebaseTask.readTask(),
                               builder: (BuildContext context,
                                   AsyncSnapshot<QuerySnapshot> snapshot) {
                                 if (!snapshot.hasData) {
@@ -613,6 +743,10 @@ class FunkyOverlayState extends State<FunkyOverlay>
                     FilterBox('Accepted Tasks', 1),
                     SizedBox(height: MediaQuery.of(context).size.height*0.0025),
                     FilterBox('Rejected Tasks', 2),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    FilterBox('Date selected Tasks', 6),
+                    SizedBox(height: MediaQuery.of(context).size.height*0.0025),
+                    FilterBox('Faculty Tasks', 4),
                   ],
                 ),
               ),
@@ -707,12 +841,15 @@ class _FilterBoxState extends State<FilterBox> {
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0)),
         color: Colors.black,
-        onPressed: () {
+        onPressed: () async{
           setState(() {
             adminquery=widget.query;
+            adminquery=adminquery;
           });
           print(adminquery);
-          Navigator.pop(context);
+          Navigator.pop(
+              context
+          );
           setState(() {
           });
         },
