@@ -684,41 +684,6 @@ class _userpageState extends State<userpage> {
       ),
     )));
   }
-
-  Future<void> _updateTask(
-      var id,
-      String category_update,
-      String title_update,
-      String description_update,
-      String startdate_update,
-      String enddate_update,
-      String duedate_update,
-      String duetime_update,
-      String faculty_update,
-      int status_update,
-      String reason_update) async {
-/*    if ((int.parse(task_data!.duedatedb.split("/")[0]) -
-        DateTime.now().minute == -1)){
-      setState(() {
-        status == 2;
-      });
-    }*/
-    await FirebaseTask.updateTask(
-            categorydb: category_update,
-            titledb: title_update,
-            descriptiondb: description_update,
-            startdatedb: startdate_update,
-            enddatedb: enddate_update,
-            duedatedb: duedate_update,
-            duetimedb: duetime_update,
-            facultydb: faculty_update,
-            statusdb: status_update,
-            docId: id,
-            reasondb: reason_update)
-        .whenComplete(
-      () => Navigator.pop(context),
-    );
-  }
 }
 
 class FunkyOverlayacceptdecline extends StatefulWidget {
@@ -834,6 +799,7 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
                                           ///todo:accept to be work
                                           if (document != null) {
                                             await FirebaseTask.updateTask(
+                                              admindb: document['admin'],
                                                     categorydb:
                                                         document['category'],
                                                     titledb: document['title'],
@@ -988,6 +954,7 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
                                           ///todo:accept to be work
                                           if (document != null) {
                                             await FirebaseTask.updateTask(
+                                              admindb: document['admin'],
                                                     categorydb:
                                                         document['category'],
                                                     titledb: document['title'],

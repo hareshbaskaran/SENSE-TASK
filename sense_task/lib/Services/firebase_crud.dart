@@ -45,8 +45,10 @@ class FirebaseTask {
       required String duedatedb,
       required String duetimedb,
       required String facultydb,
+        required String admindb,
       required int statusdb,
-      required String reasondb}) async {
+      required String reasondb}
+      ) async {
     Response response = Response();
     DocumentReference documentReferencer = _taskCollection.doc();
 
@@ -60,7 +62,8 @@ class FirebaseTask {
       "duetime": duetimedb,
       "faculty": facultydb,
       "status": statusdb,
-      "reason": reasondb
+      "reason": reasondb,
+      "admin":admindb
     };
 
     var result = await documentReferencer.set(data).whenComplete(() {
@@ -107,6 +110,7 @@ class FirebaseTask {
       required String facultydb,
       required int statusdb,
       required String reasondb,
+        required String admindb,
       required String docId}) async {
     Response response = Response();
     DocumentReference documentReferencer = _taskCollection.doc(docId);
@@ -121,7 +125,8 @@ class FirebaseTask {
       "duetime": duetimedb,
       "faculty": facultydb,
       "status": statusdb,
-      "reason": reasondb
+      "reason": reasondb,
+      "admin":admindb
     };
 
     await documentReferencer.update(data).whenComplete(() {

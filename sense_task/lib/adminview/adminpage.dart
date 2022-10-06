@@ -650,80 +650,23 @@ class adminpageState extends State<adminpage> {
                                                                   .deepOrangeAccent,
                                                               'Overdue')
                                                           : SizedBox(),
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(top: 75),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.11,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.03,
-                                                    decoration: ShapeDecoration(
-                                                        color:
-                                                            Color(0xff555556),
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0))),
-                                                    child: MaterialButton(
-                                                      onPressed: () {},
-                                                      child: Text(
-                                                        "",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
+                                              (document['admin']!="")?
+                                                  Align(
+                                                    alignment: Alignment.bottomRight,
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.only(top:80.0,right: 10),
+                                                      child: InkWell(
+                                                        onTap: (){
+
+                                                        },
+                                                        child: Icon(
+                                                          Icons.recommend_rounded,
+                                                          color: Colors.red,
+                                                          size: MediaQuery.of(context).size.width*0.1,
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  SizedBox(width: 5),
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.11,
-                                                    height:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .height *
-                                                            0.03,
-                                                    decoration: ShapeDecoration(
-                                                        //color: Color(0xff22C087),
-                                                        color:
-                                                            Color(0xff555556),
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15.0))),
-                                                    child: MaterialButton(
-                                                      onPressed: () {},
-                                                      child: Text(
-                                                        "",
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          )
+                                                  ):SizedBox()
                                         ])),
                                       ),
                                     );
@@ -736,35 +679,6 @@ class adminpageState extends State<adminpage> {
                     ),
                   )
                 : facultystatus()));
-  }
-
-  Future<void> _updateTask(
-      var id,
-      String category_update,
-      String title_update,
-      String description_update,
-      String startdate_update,
-      String enddate_update,
-      String duedate_update,
-      String duetime_update,
-      String faculty_update,
-      int status_update,
-      String reason_update) async {
-    await FirebaseTask.updateTask(
-            docId: id,
-            categorydb: category_update,
-            titledb: title_update,
-            descriptiondb: description_update,
-            startdatedb: startdate_update,
-            enddatedb: enddate_update,
-            duedatedb: duedate_update,
-            duetimedb: duetime_update,
-            facultydb: faculty_update,
-            statusdb: status_update,
-            reasondb: reason_update)
-        .whenComplete(
-      () => Navigator.pop(context),
-    );
   }
 }
 

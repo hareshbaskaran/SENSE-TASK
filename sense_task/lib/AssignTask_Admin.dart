@@ -10,7 +10,7 @@ import 'package:mongo_dart/mongo_dart.dart' as T;
 import 'package:google_fonts/google_fonts.dart';
 
 TextEditingController tasktitlecontroller = new TextEditingController();
-
+TextEditingController adminreasoncontroller = new TextEditingController();
 TextEditingController taskdescriptioncontroller = new TextEditingController();
 
 var checkInserttask = "Assign";
@@ -727,7 +727,44 @@ class _taskassign_aState extends State<taskassign_a> {
                               )),
                         ],
                       )),
-
+                      SizedBox(
+                          height:
+                          MediaQuery.of(context).size.height * 0.01),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        decoration: new BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.rectangle,
+                          border: Border.all(width: 1.0),
+                          borderRadius:
+                          BorderRadius.all(Radius.circular(15.0)),
+                        ),
+                        constraints: BoxConstraints(minHeight: 60),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: TextField(
+                            maxLines: null,
+                            onChanged: (_) {
+                              if (_.length > 0)
+                                widget.grey = false;
+                              else
+                                widget.grey = true;
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                border: InputBorder.none,
+                                hintText: '     Enter Reason',
+                                hintStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold)),
+                            keyboardType: TextInputType.text,
+                            // maxLines: 20,
+                            cursorColor: Colors.black,
+                            controller: adminreasoncontroller,
+                          ),
+                        ),
+                      ),
                       ///TODO: Add task assigning datas with setting parameters
                       ///try ov-ai profile page and try to implement according to ui design
                     ],
@@ -736,7 +773,6 @@ class _taskassign_aState extends State<taskassign_a> {
             floatingActionButton: (checkInserttask == 'Update' &&
                     tasktitlecontroller.text.length > 0 &&
                     taskdescriptioncontroller.text.length > 0 &&
-                    startDateInString.length > 0 &&
                     dueDateInString.length > 0 &&
                     duetime.length > 0)
                 ? Padding(
@@ -754,7 +790,9 @@ class _taskassign_aState extends State<taskassign_a> {
                                   facultydb: facultyvalue,
                                   statusdb: status,
                                   reasondb: reason,
-                                  docId: document!.id)
+                                  admindb: adminreasoncontroller.text,
+                                  docId: document!.id
+                          )
                               .whenComplete(
                             () => Navigator.pop(context),
                           );
@@ -791,7 +829,6 @@ class _taskassign_aState extends State<taskassign_a> {
                 : (checkInserttask == 'Assign' &&
                         tasktitlecontroller.text.length > 0 &&
                         taskdescriptioncontroller.text.length > 0 &&
-                        startDateInString.length > 0 &&
                         dueDateInString.length > 0 &&
                         duetime.length > 0)
                     ? Padding(
@@ -808,8 +845,10 @@ class _taskassign_aState extends State<taskassign_a> {
                                   duedatedb: dueDateInString,
                                   duetimedb: duetime,
                                   facultydb: facultyvalue,
+                                  admindb: adminreasoncontroller.text,
                                   statusdb: status,
-                                  reasondb: reason);
+                                  reasondb: reason
+                              );
                               _clearassignpage();
                               Navigator.push(
                                 context,
