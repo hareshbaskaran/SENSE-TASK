@@ -131,7 +131,17 @@ class _loginpageState extends State<loginpage> {
                 ),
                 (pageview == 1)
                     ? Column(children: [
-                        largetext(text: 'LOGIN AS ADMIN'),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left:MediaQuery.of(context).size.width * 0.08),
+                        child: Text('Login as Admin',style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300,
+                            fontSize: MediaQuery.of(context).size.width * 0.045)),
+                      ),
+                    ],
+                  ),
                   (adminlogin==false)?
                       Center(
                         child: Row(
@@ -242,7 +252,17 @@ class _loginpageState extends State<loginpage> {
                       ])
                     : (pageview == 2)
                         ? Column(children: [
-                            largetext(text: 'LOGIN AS USER'),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left:MediaQuery.of(context).size.width * 0.08,bottom: 20),
+                        child: Text('Login as User',style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300,
+                            fontSize: MediaQuery.of(context).size.width * 0.045)),
+                      ),
+                    ],
+                  ),
                             _googleSignInButton(),
                             SizedBox(
                                 height:
