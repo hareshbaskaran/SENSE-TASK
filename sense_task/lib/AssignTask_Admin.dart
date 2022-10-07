@@ -22,8 +22,7 @@ var checkInserttask = "Assign";
 DateTime todayDate = DateTime.now();
 String todayDateinString =
     "${startDate.day}/${startDate.month}/${startDate.year}";
-var todayDateinString =
-"${startDate.day}/${startDate.month}/${startDate.year}";
+
 String startDateInString = '';
 DateTime startDate = DateTime.now();
 
@@ -64,8 +63,6 @@ bool isRegister = true;
 int ct = 0;
 
 class _taskassign_aState extends State<taskassign_a> {
-
-
   @override
   Widget build(BuildContext context) {
     QueryDocumentSnapshot? document =
@@ -118,7 +115,9 @@ class _taskassign_aState extends State<taskassign_a> {
                             child: Container(
                               alignment: Alignment.topCenter,
                               child: Text(
-                              "${checkInserttask}" + ' Task' +"\n$todayDateinString",
+                                "${checkInserttask}" +
+                                    ' Task' +
+                                    "\n$todayDateinString",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -758,16 +757,14 @@ class _taskassign_aState extends State<taskassign_a> {
                         ],
                       )),
                       SizedBox(
-                          height:
-                          MediaQuery.of(context).size.height * 0.01),
+                          height: MediaQuery.of(context).size.height * 0.01),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.9,
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.rectangle,
                           border: Border.all(width: 1.0),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(15.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
                         constraints: BoxConstraints(minHeight: 60),
                         child: Padding(
@@ -795,6 +792,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           ),
                         ),
                       ),
+
                       ///TODO: Add task assigning datas with setting parameters
                       ///try ov-ai profile page and try to implement according to ui design
                     ],
@@ -805,24 +803,46 @@ class _taskassign_aState extends State<taskassign_a> {
                     padding: const EdgeInsets.all(15.0),
                     child: MaterialButton(
                         onPressed: () async {
-                          await FirebaseTask.updateTask(
-                                  categorydb: categoryvalue,
-                                  titledb: tasktitlecontroller.text,
-                                  descriptiondb: taskdescriptioncontroller.text,
-                                  startdatedb: startDateInString,
-                                  enddatedb: endDateInString,
-                                  duedatedb: dueDateInString,
-                                  duetimedb: duetime,
-                                  facultydb: facultyvalue,
-                                  statusdb: status,
-                                  reasondb: reason,
-                                  admindb: adminreasoncontroller.text,
-                                  docId: document!.id
-                          )
-                              .whenComplete(
-                            () => Navigator.pop(context),
-                          );
-                          _clearassignpage();
+                          if (document != null) {
+                            if (document['faculty'] == facultyvalue) {
+                              await FirebaseTask.updateTask(
+                                      categorydb: categoryvalue,
+                                      titledb: tasktitlecontroller.text,
+                                      descriptiondb:
+                                          taskdescriptioncontroller.text,
+                                      startdatedb: startDateInString,
+                                      enddatedb: endDateInString,
+                                      duedatedb: dueDateInString,
+                                      duetimedb: duetime,
+                                      facultydb: facultyvalue,
+                                      statusdb: document['status'],
+                                      reasondb: reason,
+                                      admindb: adminreasoncontroller.text,
+                                      docId: document!.id)
+                                  .whenComplete(
+                                () => Navigator.pop(context),
+                              );
+                            } else {
+                              await FirebaseTask.updateTask(
+                                      categorydb: categoryvalue,
+                                      titledb: tasktitlecontroller.text,
+                                      descriptiondb:
+                                          taskdescriptioncontroller.text,
+                                      startdatedb: startDateInString,
+                                      enddatedb: endDateInString,
+                                      duedatedb: dueDateInString,
+                                      duetimedb: duetime,
+                                      facultydb: facultyvalue,
+                                      statusdb: status,
+                                      reasondb: reason,
+                                      admindb: adminreasoncontroller.text,
+                                      docId: document!.id)
+                                  .whenComplete(
+                                () => Navigator.pop(context),
+                              );
+                            }
+                            _clearassignpage();
+                          }
 
                           print('updateeeeeeeeee');
                         },
@@ -859,7 +879,7 @@ class _taskassign_aState extends State<taskassign_a> {
                             onPressed: () {
                               setState(() {});
                               FirebaseTask.addTask(
-                                todaydatedb: todayDateinString,
+                                  todaydatedb: todayDateinString,
                                   categorydb: categoryvalue,
                                   titledb: tasktitlecontroller.text,
                                   descriptiondb: taskdescriptioncontroller.text,
