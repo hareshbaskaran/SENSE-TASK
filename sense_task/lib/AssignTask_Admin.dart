@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:sense_task/main.dart';
 import 'package:mongo_dart/mongo_dart.dart' as T;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 
 TextEditingController taskcategorycontroller = new TextEditingController();
 
@@ -21,7 +20,7 @@ TextEditingController taskdescriptioncontroller = new TextEditingController();
 var checkInserttask = "Assign";
 DateTime todayDate = DateTime.now();
 String todayDateinString =
-"${startDate.day}/${startDate.month}/${startDate.year}";
+    "${startDate.day}/${startDate.month}/${startDate.year}";
 String startDateInString = '';
 DateTime startDate = DateTime.now();
 
@@ -43,26 +42,6 @@ var category_list = [
   'Venue Preparation for VITEEE',
   'Venue Preparation for TRB/TNPSC exams',
 ];
-List<String> faculty_list = [];
-
-String facultyvalue = "Ishwarya";
-
-getfacultylistAPI() async {
-  faculty_list = [];
-  var faculty_url = Uri.parse(
-      "https://gist.githubusercontent.com/iamishu2908/006812760864f6859dcaaf5e719f29b0/raw/acd0f3ad6c4495e061bb30ee29545a1dff4de3f8/facultynames.json");
-  var faculty_response = await http.get(faculty_url);
-  print('Response status: ${faculty_response.statusCode}');
-  print('Response body: ${faculty_response.body}');
-  final List<dynamic> faculty_data = await json.decode(faculty_response.body);
-  if (faculty_response.statusCode == 200) {
-    for (int i = 0; i < faculty_data.length; i++) {
-      faculty_list.add(
-        faculty_data[i]['name'],
-      );
-    }
-  }
-}
 
 String duetime = '';
 
@@ -79,17 +58,14 @@ class taskassign_a extends StatefulWidget {
 
 bool isDateSelected = false;
 bool isRegister = true;
+int ct = 0;
 
 class _taskassign_aState extends State<taskassign_a> {
-  void initState() {
-    getfacultylistAPI();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     QueryDocumentSnapshot? document =
         ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot?;
+
     return Container(
       decoration: const BoxDecoration(
           image: DecorationImage(
@@ -105,6 +81,9 @@ class _taskassign_aState extends State<taskassign_a> {
               color: Colors.black,
               onRefresh: () async {
                 await Future.delayed(Duration(seconds: 1));
+                setState(() {
+                  ct += 1;
+                });
               },
               child: Padding(
                   padding: const EdgeInsets.fromLTRB(10, 0, 10, 30),
@@ -774,16 +753,14 @@ class _taskassign_aState extends State<taskassign_a> {
                         ],
                       )),
                       SizedBox(
-                          height:
-                          MediaQuery.of(context).size.height * 0.01),
+                          height: MediaQuery.of(context).size.height * 0.01),
                       Container(
                         width: MediaQuery.of(context).size.width * 0.9,
                         decoration: new BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.rectangle,
                           border: Border.all(width: 1.0),
-                          borderRadius:
-                          BorderRadius.all(Radius.circular(15.0)),
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         ),
                         constraints: BoxConstraints(minHeight: 60),
                         child: Padding(
@@ -811,16 +788,13 @@ class _taskassign_aState extends State<taskassign_a> {
                           ),
                         ),
                       ),
+
                       ///TODO: Add task assigning datas with setting parameters
                       ///try ov-ai profile page and try to implement according to ui design
                     ],
                   )),
             ),
-            floatingActionButton: (checkInserttask == 'Update' &&
-                    tasktitlecontroller.text.length > 0 &&
-                    taskdescriptioncontroller.text.length > 0 &&
-                    dueDateInString.length > 0 &&
-                    duetime.length > 0)
+            floatingActionButton: (checkInserttask == 'Update')
                 ? Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: MaterialButton(
@@ -837,8 +811,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                   statusdb: status,
                                   reasondb: reason,
                                   admindb: adminreasoncontroller.text,
-                                  docId: document!.id
-                          )
+                                  docId: document!.id)
                               .whenComplete(
                             () => Navigator.pop(context),
                           );
@@ -872,11 +845,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           ),
                         )),
                   )
-                : (checkInserttask == 'Assign' &&
-                        tasktitlecontroller.text.length > 0 &&
-                        taskdescriptioncontroller.text.length > 0 &&
-                        dueDateInString.length > 0 &&
-                        duetime.length > 0)
+                : (checkInserttask == 'Assign')
                     ? Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: MaterialButton(
@@ -893,8 +862,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                   facultydb: facultyvalue,
                                   admindb: adminreasoncontroller.text,
                                   statusdb: status,
-                                  reasondb: reason
-                              );
+                                  reasondb: reason);
                               _clearassignpage();
                               Navigator.push(
                                 context,

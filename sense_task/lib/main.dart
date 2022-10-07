@@ -9,6 +9,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:sense_task/UserInfo.dart';
 import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/userview/userpage.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 final tabsList = ['All Tasks', 'Assigned', 'Accepted', 'Rejected', 'Overdue'];
@@ -63,9 +64,9 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-home: loginpage(Hive_box)
+        home: loginpage(Hive_box)
 /*    home:(already_sign_in==false)? loginpage(Hive_box):
     (pageview==1&&already_sign_in==true)?adminpage():(already_sign_in==true&&pageview==2)?userpage():loginpage(Hive_box)*/
-    );
+        );
   }
 }

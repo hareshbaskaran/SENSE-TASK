@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,28 @@ import 'package:sense_task/UserInfo.dart';
 import 'package:sense_task/AssignTask_Admin.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
+import 'package:http/http.dart' as http;
+
+List<String> faculty_list = [];
+
+String facultyvalue = "Ishwarya";
+
+getfacultylistAPI() async {
+  faculty_list = [];
+  var faculty_url = Uri.parse(
+      "https://gist.githubusercontent.com/iamishu2908/006812760864f6859dcaaf5e719f29b0/raw/acd0f3ad6c4495e061bb30ee29545a1dff4de3f8/facultynames.json");
+  var faculty_response = await http.get(faculty_url);
+  print('Response status: ${faculty_response.statusCode}');
+  print('Response body: ${faculty_response.body}');
+  final List<dynamic> faculty_data = await json.decode(faculty_response.body);
+  if (faculty_response.statusCode == 200) {
+    for (int i = 0; i < faculty_data.length; i++) {
+      faculty_list.add(
+        faculty_data[i]['name'],
+      );
+    }
+  }
+}
 
 String querydateinstring = '';
 DateTime querydate = DateTime.now();
@@ -30,7 +54,10 @@ class adminpage extends StatefulWidget {
 }
 
 class adminpageState extends State<adminpage> {
-  adminpageState();
+  void initState() {
+    getfacultylistAPI();
+    super.initState();
+  }
 
   Widget build(BuildContext context) {
     void _onItemTapped(int index) {
@@ -426,7 +453,8 @@ class adminpageState extends State<adminpage> {
                                               checkInserttask = "Update";
                                             });
                                             print('Updating UI');
-                                            adminreasoncontroller.text=document['admin'];
+                                            adminreasoncontroller.text =
+                                                document['admin'];
                                             categoryvalue =
                                                 document['category'];
                                             tasktitlecontroller.text =
@@ -651,38 +679,51 @@ class adminpageState extends State<adminpage> {
                                                                   .deepOrangeAccent,
                                                               'Overdue')
                                                           : SizedBox(),
-                                              (document['admin']=="")?
-                                                  Align(
-                                                    alignment: Alignment.bottomRight,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(top:80.0,right: 10),
-                                                      child: InkWell(
-                                                        onTap: (){
-
-                                                        },
-                                                        child: Icon(
-                                                          Icons.recommend_rounded,
-                                                          color: Colors.red,
-                                                          size: MediaQuery.of(context).size.width*0.1,
-                                                        ),
+                                          (document['admin'] == "")
+                                              ? Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 80.0,
+                                                            right: 10),
+                                                    child: InkWell(
+                                                      onTap: () {},
+                                                      child: Icon(
+                                                        Icons.recommend_rounded,
+                                                        color: Colors.red,
+                                                        size: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.1,
                                                       ),
                                                     ),
-                                                  ): Align(
-                                                alignment: Alignment.bottomRight,
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(top:80.0,right: 10),
-                                                  child: InkWell(
-                                                    onTap: (){
-
-                                                    },
-                                                    child: Icon(
-                                                      Icons.recommend_rounded,
-                                                      color: Colors.green,
-                                                      size: MediaQuery.of(context).size.width*0.1,
+                                                  ),
+                                                )
+                                              : Align(
+                                                  alignment:
+                                                      Alignment.bottomRight,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 80.0,
+                                                            right: 10),
+                                                    child: InkWell(
+                                                      onTap: () {},
+                                                      child: Icon(
+                                                        Icons.recommend_rounded,
+                                                        color: Colors.green,
+                                                        size: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.1,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                              )
+                                                )
                                         ])),
                                       ),
                                     );
