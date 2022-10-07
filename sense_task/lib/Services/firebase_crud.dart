@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:sense_task/AssignTask_Admin.dart';
 import 'package:sense_task/Models/FirebaseResponse.dart';
 import 'package:sense_task/adminview/adminpage.dart';
 
@@ -46,6 +47,7 @@ class FirebaseTask {
       required String duetimedb,
       required String facultydb,
         required String admindb,
+        required String todaydatedb,
       required int statusdb,
       required String reasondb}
       ) async {
@@ -63,7 +65,8 @@ class FirebaseTask {
       "faculty": facultydb,
       "status": statusdb,
       "reason": reasondb,
-      "admin":admindb
+      "admin":admindb,
+      "today":todaydatedb
     };
 
     var result = await documentReferencer.set(data).whenComplete(() {
@@ -159,6 +162,14 @@ class FirebaseTask {
   }
 }
 class AdminQuery{
+  static Stream<QuerySnapshot> TodayTasks() {
+    CollectionReference notesItemCollection = _taskCollection;
+    return notesItemCollection
+        .where(
+      "today",
+      isEqualTo: todayDateinString,
+    ).snapshots();
+  }
 
   static Stream<QuerySnapshot> AdminStatus() {
     CollectionReference notesItemCollection = _taskCollection;
