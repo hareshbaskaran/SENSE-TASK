@@ -426,6 +426,7 @@ class adminpageState extends State<adminpage> {
                                               checkInserttask = "Update";
                                             });
                                             print('Updating UI');
+                                            adminreasoncontroller.text=document['admin'];
                                             categoryvalue =
                                                 document['category'];
                                             tasktitlecontroller.text =
@@ -650,7 +651,7 @@ class adminpageState extends State<adminpage> {
                                                                   .deepOrangeAccent,
                                                               'Overdue')
                                                           : SizedBox(),
-                                              (document['admin']!="")?
+                                              (document['admin']=="")?
                                                   Align(
                                                     alignment: Alignment.bottomRight,
                                                     child: Padding(
@@ -666,7 +667,22 @@ class adminpageState extends State<adminpage> {
                                                         ),
                                                       ),
                                                     ),
-                                                  ):SizedBox()
+                                                  ): Align(
+                                                alignment: Alignment.bottomRight,
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(top:80.0,right: 10),
+                                                  child: InkWell(
+                                                    onTap: (){
+
+                                                    },
+                                                    child: Icon(
+                                                      Icons.recommend_rounded,
+                                                      color: Colors.green,
+                                                      size: MediaQuery.of(context).size.width*0.1,
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
                                         ])),
                                       ),
                                     );

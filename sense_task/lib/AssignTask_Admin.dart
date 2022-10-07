@@ -19,9 +19,9 @@ TextEditingController adminreasoncontroller = new TextEditingController();
 TextEditingController taskdescriptioncontroller = new TextEditingController();
 
 var checkInserttask = "Assign";
-
-// TaskMongo? task_data;
-
+DateTime todayDate = DateTime.now();
+String todayDateinString=
+"${startDate.day}/${startDate.month}/${startDate.year}";
 String startDateInString = '';
 DateTime startDate = DateTime.now();
 
@@ -942,6 +942,7 @@ class _taskassign_aState extends State<taskassign_a> {
     dueDateInString = '';
     duetime = "";
     facultyvalue = "Ishwarya";
+    adminreasoncontroller.clear();
   }
 }
 
