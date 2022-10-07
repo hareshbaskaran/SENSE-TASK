@@ -20,7 +20,7 @@ TextEditingController taskdescriptioncontroller = new TextEditingController();
 
 var checkInserttask = "Assign";
 DateTime todayDate = DateTime.now();
-String todayDateinString=
+String todayDateinString =
 "${startDate.day}/${startDate.month}/${startDate.year}";
 String startDateInString = '';
 DateTime startDate = DateTime.now();
