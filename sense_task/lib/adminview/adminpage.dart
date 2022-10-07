@@ -44,6 +44,7 @@ Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 TextEditingController taskreasoncontroller = new TextEditingController();
 TextEditingController taskreasonblah = new TextEditingController();
+TextEditingController reasonpop=new TextEditingController();
 int _selectedIndex = 0;
 Future<int>? tasklength;
 
@@ -185,7 +186,7 @@ class adminpageState extends State<adminpage> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
+                            height: MediaQuery.of(context).size.height * 0.5,
                             decoration: new BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.rectangle,
@@ -208,28 +209,15 @@ class adminpageState extends State<adminpage> {
                                     }
                                     return ListView(
                                       shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
                                       children: snapshot.data!.docs.map((document) {
                                         return Padding(
                                           padding: EdgeInsets.fromLTRB(6, 0, 6, 8),
                                           child: Dismissible(
                                             key: UniqueKey(),
-                                            background: Container(
-                                              decoration: new BoxDecoration(
-                                                color: Theme.of(context).errorColor,
-                                                shape: BoxShape.rectangle,
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15.0)),
-                                              ),
-                                              child: Icon(
-                                                Icons.delete,
-                                                color: Colors.white,
-                                                size: 35,
-                                              ),
-                                              alignment: Alignment.centerLeft,
-                                              padding: EdgeInsets.only(left: 20),
-                                              margin: EdgeInsets.symmetric(
-                                                  horizontal: 15, vertical: 8),
+                                            background: Icon(
+                                              Icons.delete,
+                                              color: Colors.white,
+                                              size: 35,
                                             ),
                                             secondaryBackground: Container(
                                               decoration: new BoxDecoration(
@@ -487,31 +475,26 @@ class adminpageState extends State<adminpage> {
                                                       padding: const EdgeInsets.only(top:80.0,right: 10),
                                                       child: InkWell(
                                                         onTap: (){
-
+                                                          setState(() {
+                                                            showDialog(
+                                                              routeSettings:
+                                                              RouteSettings(arguments: document),
+                                                              context: context,
+                                                              builder: (_) =>
+                                                                  FunkyOverlayAdminReject(),
+                                                            );
+                                                          });
                                                         },
-                                                        child: Icon(
-                                                          Icons.recommend_rounded,
-                                                          color: Colors.red,
-                                                          size: MediaQuery.of(context).size.width*0.1,
+                                                        child: Container(
+                                                          child: Icon(
+                                                            Icons.recommend_rounded,
+                                                            color: Colors.red,
+                                                            size: MediaQuery.of(context).size.width*0.1,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ): Align(
-                                                    alignment: Alignment.bottomRight,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(top:80.0,right: 10),
-                                                      child: InkWell(
-                                                        onTap: (){
-
-                                                        },
-                                                        child: Icon(
-                                                          Icons.recommend_rounded,
-                                                          color: Colors.green,
-                                                          size: MediaQuery.of(context).size.width*0.1,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
+                                                  ): SizedBox()
                                                 ])),
                                           ),
                                         );
@@ -1043,7 +1026,17 @@ class adminpageState extends State<adminpage> {
                                                             top: 80.0,
                                                             right: 10),
                                                     child: InkWell(
-                                                      onTap: () {},
+                                                      onTap: () {
+                                                        setState(() {
+                                                          showDialog(
+                                                            routeSettings:
+                                                            RouteSettings(arguments: document),
+                                                            context: context,
+                                                            builder: (_) =>
+                                                                FunkyOverlayAdminReject(),
+                                                          );
+                                                        });
+                                                      },
                                                       child: Icon(
                                                         Icons.recommend_rounded,
                                                         color: Colors.red,
@@ -1343,6 +1336,184 @@ class _StatusTagState extends State<StatusTag> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+class FunkyOverlayAdminReject extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => FunkyOverlayAdminRejectState();
+}
+
+class FunkyOverlayAdminRejectState extends State<FunkyOverlayAdminReject>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation<double> scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 450));
+    scaleAnimation =
+        CurvedAnimation(parent: controller, curve: Curves.elasticInOut);
+
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    QueryDocumentSnapshot? document =
+    ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot?;
+    return Center(
+      child: Material(
+        color: Colors.transparent,
+        child: ScaleTransition(
+          scale: scaleAnimation,
+          child: Container(
+            decoration: ShapeDecoration(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0))),
+            child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Container(
+                    height: MediaQuery.of(context).size.height * 0.24,
+                    width: MediaQuery.of(context).size.width * 0.88,
+                    decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0))),
+                    child: Column(
+                      children: [
+                        Text(
+                          "Why did u Assign this Task?",
+                          style: GoogleFonts.poppins(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              fontSize:
+                              MediaQuery.of(context).size.width * 0.02),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Container(
+                            height: 40,
+                            child: TextField(
+                              decoration: InputDecoration(
+                                fillColor: Colors.black,
+                                hintText: 'Type here',
+                                hintStyle: GoogleFonts.poppins(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w200,
+                                    fontSize:
+                                    MediaQuery.of(context).size.width *
+                                        0.032),
+                              ),
+                              keyboardType: TextInputType.text,
+                              maxLines: 2,
+                              cursorColor: Colors.black,
+                              controller: reasonpop,
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 5.0,
+                                      shape: StadiumBorder(),
+                                      primary: Colors.black),
+                                  onPressed: () {
+                                    taskcategorycontroller.clear();
+                                    Navigator.pop(context);
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        MediaQuery.of(context).size.height *
+                                            0.04,
+                                        12,
+                                        MediaQuery.of(context).size.height *
+                                            0.04,
+                                        12),
+                                    child: Text(
+                                      'Close',
+                                      style: GoogleFonts.lato(
+                                          color: Colors.white,
+                                          fontSize: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                              0.02),
+                                    ),
+                                  )),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      elevation: 5.0,
+                                      shape: StadiumBorder(),
+                                      primary: Colors.black),
+                                  onPressed: () async{
+                                    if (document != null) {
+                                      await FirebaseTask.updateTask(
+                                          admindb: document['admin'],
+                                          categorydb:
+                                          document['category'],
+                                          titledb: document['title'],
+                                          descriptiondb:
+                                          document['description'],
+                                          startdatedb:
+                                          document['startdate'],
+                                          enddatedb:
+                                          document['enddate'],
+                                          duedatedb:
+                                          document['duedate'],
+                                          duetimedb:
+                                          document['duetime'],
+                                          facultydb:
+                                          document
+                                          ['faculty'],
+                                          statusdb: status,
+                                          reasondb: reasonpop.text,
+                                          docId: document.id)
+                                          .whenComplete(
+                                            () => Navigator.pop(context),
+                                      );
+                                      taskreasoncontroller.clear();
+                                    }
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(
+                                        MediaQuery.of(context).size.height *
+                                            0.04,
+                                        12,
+                                        MediaQuery.of(context).size.height *
+                                            0.04,
+                                        12),
+                                    child: Text(
+                                      'Done',
+                                      style: GoogleFonts.lato(
+                                          color: Colors.white,
+                                          fontSize: MediaQuery.of(context)
+                                              .size
+                                              .height *
+                                              0.02),
+                                    ),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ))),
+          ),
+        ),
       ),
     );
   }
