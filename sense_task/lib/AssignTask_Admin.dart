@@ -20,7 +20,7 @@ TextEditingController taskdescriptioncontroller = new TextEditingController();
 
 var checkInserttask = "Assign";
 DateTime todayDate = DateTime.now();
-String todayDateinString =
+var todayDateinString =
 "${startDate.day}/${startDate.month}/${startDate.year}";
 String startDateInString = '';
 DateTime startDate = DateTime.now();
@@ -134,7 +134,7 @@ class _taskassign_aState extends State<taskassign_a> {
                             child: Container(
                               alignment: Alignment.topCenter,
                               child: Text(
-                                checkInserttask + ' Task',
+                              "${checkInserttask}" + ' Task' +"\n$todayDateinString",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
@@ -883,6 +883,7 @@ class _taskassign_aState extends State<taskassign_a> {
                             onPressed: () {
                               setState(() {});
                               FirebaseTask.addTask(
+                                todaydatedb: todayDateinString,
                                   categorydb: categoryvalue,
                                   titledb: tasktitlecontroller.text,
                                   descriptiondb: taskdescriptioncontroller.text,
