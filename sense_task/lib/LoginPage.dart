@@ -383,7 +383,7 @@ class _loginpageState extends State<loginpage> {
                     ),
                   ):_googleSignInButton(),
                   SizedBox(height: 20),
-                  (alertuser==true)?
+                  (alertuser==true &&userlogin==false)?
                   Text(
                     'No Such User Exists',
                     style: TextStyle(
