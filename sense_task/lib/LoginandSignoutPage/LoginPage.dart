@@ -1,9 +1,8 @@
 import 'dart:convert';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sense_task/AdminView/admin_facultypage.dart';
+
 import 'package:sense_task/AdminView/adminpage.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/UserView/userpage.dart';
