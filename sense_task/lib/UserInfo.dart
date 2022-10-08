@@ -178,6 +178,10 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                   ),
                   onPressed: () async {
                     setState(() {
+                      passwordvalue_admin.clear();
+                      usernamevalue_user.clear();
+                      userlogin=false;
+                      alertuser=false;
                       _isSigningOut = true;
                     });
                     await signOut(context: context);

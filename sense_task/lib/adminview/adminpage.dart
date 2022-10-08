@@ -10,28 +10,6 @@ import 'package:sense_task/UserInfo.dart';
 import 'package:sense_task/AssignTask_Admin.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
-import 'package:http/http.dart' as http;
-
-List<String> faculty_list = [];
-
-String facultyvalue = "Ishwarya";
-
-getfacultylistAPI() async {
-  faculty_list = [];
-  var faculty_url = Uri.parse(
-      "https://gist.githubusercontent.com/iamishu2908/006812760864f6859dcaaf5e719f29b0/raw/acd0f3ad6c4495e061bb30ee29545a1dff4de3f8/facultynames.json");
-  var faculty_response = await http.get(faculty_url);
-  print('Response status: ${faculty_response.statusCode}');
-  print('Response body: ${faculty_response.body}');
-  final List<dynamic> faculty_data = await json.decode(faculty_response.body);
-  if (faculty_response.statusCode == 200) {
-    for (int i = 0; i < faculty_data.length; i++) {
-      faculty_list.add(
-        faculty_data[i]['name'],
-      );
-    }
-  }
-}
 
 String querydateinstring = '';
 DateTime querydate = DateTime.now();
@@ -55,10 +33,7 @@ class adminpage extends StatefulWidget {
 }
 
 class adminpageState extends State<adminpage> {
-  void initState() {
-    getfacultylistAPI();
-    super.initState();
-  }
+
 
   Widget build(BuildContext context) {
     void _onItemTapped(int index) {

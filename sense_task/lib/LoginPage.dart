@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +18,31 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'main.dart';
+import 'package:http/http.dart' as http;
+
+
+
+List<String> faculty_list = [];
+List<dynamic> faculty_data=[];
+String facultyvalue = "Ishwarya";
+
+getfacultylistAPI() async {
+  faculty_list = [];
+  var faculty_url = Uri.parse(
+      "https://gist.githubusercontent.com/iamishu2908/006812760864f6859dcaaf5e719f29b0/raw/acd0f3ad6c4495e061bb30ee29545a1dff4de3f8/facultynames.json");
+  var faculty_response = await http.get(faculty_url);
+  print('Response status: ${faculty_response.statusCode}');
+  print('Response body: ${faculty_response.body}');
+  final faculty_data = await json.decode(faculty_response.body);
+  if (faculty_response.statusCode == 200) {
+    for (int i = 0; i < faculty_data.length; i++) {
+      faculty_list.add(
+        faculty_data[i]['name'],
+      );
+    }
+  }
+}
+
 
 ///B2A4F0
 Box<dynamic> Hive_box = Hive.box('myBox');
@@ -26,6 +53,8 @@ Prefsetsignin() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setInt('intValue', 1);
 }
+bool userlogin=false;
+bool alertuser=false;
 bool adminlogin=false;
 bool alertlogin=false;
 TextEditingController usernamevalue_admin = new TextEditingController();
@@ -90,10 +119,22 @@ class loginpage extends StatefulWidget {
 }
 
 class _loginpageState extends State<loginpage> {
+  void initState() {
+    getfacultylistAPI();
+    super.initState();
+  }
   void onLoginStatusChanged(bool isLoggedIn) {
     setState(() {
       isLoggedIn = isLoggedIn;
     });
+  }
+  bool searchusername(){
+    for (int i = 0 ;i<=faculty_list.length;i++)
+      {
+        if (faculty_list[i] == usernamevalue_user.text)
+          return true;
+      }
+    return false;
   }
 
   var loggedIn = false;
@@ -221,7 +262,6 @@ class _loginpageState extends State<loginpage> {
                         ],
                         ),
                       ):_googleSignInButton(),
-                        SizedBox(height: 20),
                   (alertlogin==true&&adminlogin==false)?
                       Text(
                         'Invalid Password',
@@ -244,7 +284,7 @@ class _loginpageState extends State<loginpage> {
                             setState(() {
                               alertlogin=false;
                               adminlogin=false;
-                              passwordvalue_admin.text="";
+                              passwordvalue_admin.clear();
                               pageview = 2;
                             });
                           },
@@ -263,7 +303,93 @@ class _loginpageState extends State<loginpage> {
                       ),
                     ],
                   ),
-                            _googleSignInButton(),
+                  (userlogin==false)?
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Center(
+                            child: SingleChildScrollView(
+                              child: Container(
+                                width: MediaQuery.of(context).size.width * 0.7,
+                                decoration: new BoxDecoration(
+                                  color: Color(0xFFF7F8F8),
+                                  shape: BoxShape.rectangle,
+                                  border: Border.all(width: 2.0),
+                                  borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        color: Colors.transparent,
+                                        constraints: BoxConstraints(
+                                            minHeight: MediaQuery.of(context)
+                                                .size
+                                                .height *
+                                                0.05),
+                                        child: TextField(
+                                          maxLines: 1,
+                                          onChanged: (_) {
+                                            setState(() {
+                                            });
+                                          },
+                                          decoration: InputDecoration(
+                                            hintText: "   Enter Username",
+                                            hintStyle: TextStyle(
+
+                                            ),
+                                            fillColor: Colors.black,
+                                            border: InputBorder.none,
+                                          ),
+                                          cursorColor: Colors.black,
+                                          controller: usernamevalue_user,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          child: MaterialButton(
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 18.0),
+                              child: Icon(
+                                Icons.chevron_right_outlined,
+                                color: Colors.black,
+                              ),
+                            ),
+                            onPressed: (){
+                              setState(() {
+                                if(searchusername()){
+                                  userlogin=true;
+                                }
+                                else {
+                                  alertuser=true;
+                                }
+                              });
+                            },
+                          ),
+                          width: MediaQuery.of(context).size.width * 0.1,
+                        )
+                      ],
+                    ),
+                  ):_googleSignInButton(),
+                  SizedBox(height: 20),
+                  (alertuser==true)?
+                  Text(
+                    'No Such User Exists',
+                    style: TextStyle(
+                        color: Colors.red
+                    ),
+                  ):SizedBox(),
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.1),
@@ -281,6 +407,9 @@ class _loginpageState extends State<loginpage> {
                                 ),
                                 onTap: () {
                                   setState(() {
+                                    usernamevalue_user.clear();
+                                    userlogin=false;
+                                    alertuser=false;
                                     pageview = 1;
                                   });
                                 },
