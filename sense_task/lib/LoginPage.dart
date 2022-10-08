@@ -129,7 +129,7 @@ class _loginpageState extends State<loginpage> {
     });
   }
   bool searchusername(){
-    for (int i = 0 ;i<=faculty_list.length;i++)
+    for (int i = 0 ;i<faculty_list.length;i++)
       {
         if (faculty_list[i] == usernamevalue_user.text)
           return true;
