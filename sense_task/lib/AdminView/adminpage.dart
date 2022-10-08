@@ -5,11 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
-import 'package:sense_task/Services/firebase_crud.dart';
-import 'package:sense_task/UserInfo.dart';
-import 'package:sense_task/AssignTask_Admin.dart';
-import 'package:sense_task/LoginPage.dart';
-import 'package:sense_task/adminview/admin_facultypage.dart';
+import 'package:sense_task/Servicesandresponse/firebase_crud.dart';
+import 'package:sense_task/LoginandSignoutPage//UserInfo.dart';
+import 'package:sense_task/AdminView/AssignTask_Admin.dart';
+import 'package:sense_task/LoginandSignoutPage//LoginPage.dart';
+import 'package:sense_task/AdminView/admin_facultypage.dart';
 
 String querydateinstring = '';
 DateTime querydate = DateTime.now();
@@ -22,7 +22,7 @@ Color bb = Color(0xFFADA4A5);
 Color b = Color(0xFF817B7C);
 TextEditingController taskreasoncontroller = new TextEditingController();
 TextEditingController taskreasonblah = new TextEditingController();
-TextEditingController reasonpop=new TextEditingController();
+TextEditingController reasonpop = new TextEditingController();
 int _selectedIndex = 0;
 Future<int>? tasklength;
 
@@ -33,8 +33,6 @@ class adminpage extends StatefulWidget {
 }
 
 class adminpageState extends State<adminpage> {
-
-
   Widget build(BuildContext context) {
     void _onItemTapped(int index) {
       setState(() {
@@ -153,7 +151,9 @@ class adminpageState extends State<adminpage> {
                                 style: GoogleFonts.poppins(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black,
-                                    fontSize: MediaQuery.of(context).size.width * 0.045),
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.045),
                               ),
                             ],
                           ),
@@ -166,7 +166,8 @@ class adminpageState extends State<adminpage> {
                               color: Colors.white,
                               shape: BoxShape.rectangle,
                               border: Border.all(width: 1.0),
-                              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0)),
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(10),
@@ -175,7 +176,6 @@ class adminpageState extends State<adminpage> {
                                   builder: (BuildContext context,
                                       AsyncSnapshot<QuerySnapshot> snapshot) {
                                     if (!snapshot.hasData) {
-
                                       return Center(
                                         child: CircularProgressIndicator(
                                           color: Colors.deepPurpleAccent,
@@ -184,9 +184,11 @@ class adminpageState extends State<adminpage> {
                                     }
                                     return ListView(
                                       shrinkWrap: true,
-                                      children: snapshot.data!.docs.map((document) {
+                                      children:
+                                          snapshot.data!.docs.map((document) {
                                         return Padding(
-                                          padding: EdgeInsets.fromLTRB(6, 0, 6, 8),
+                                          padding:
+                                              EdgeInsets.fromLTRB(6, 0, 6, 8),
                                           child: Dismissible(
                                             key: UniqueKey(),
                                             background: Icon(
@@ -207,7 +209,8 @@ class adminpageState extends State<adminpage> {
                                                 size: 35,
                                               ),
                                               alignment: Alignment.centerRight,
-                                              padding: EdgeInsets.only(right: 20),
+                                              padding:
+                                                  EdgeInsets.only(right: 20),
                                               margin: EdgeInsets.symmetric(
                                                   horizontal: 15, vertical: 8),
                                             ),
@@ -218,33 +221,37 @@ class adminpageState extends State<adminpage> {
                                                   checkInserttask = "Update";
                                                 });
                                                 print('Updating UI');
-                                                adminreasoncontroller.text=document['admin'];
+                                                adminreasoncontroller.text =
+                                                    document['admin'];
                                                 categoryvalue =
-                                                document['category'];
+                                                    document['category'];
                                                 tasktitlecontroller.text =
-                                                document['title'];
+                                                    document['title'];
                                                 taskdescriptioncontroller.text =
-                                                document['description'];
+                                                    document['description'];
                                                 startDateInString =
-                                                document['startdate'];
+                                                    document['startdate'];
                                                 endDateInString =
-                                                document['enddate'];
+                                                    document['enddate'];
                                                 dueDateInString =
-                                                document['duedate'];
+                                                    document['duedate'];
                                                 duetime = document['duetime'];
-                                                facultyvalue = document['faculty'];
+                                                facultyvalue =
+                                                    document['faculty'];
                                                 checkInserttask = "Update";
 
                                                 Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext
-                                                        context) {
-                                                          return taskassign_a();
-                                                        },
-                                                        settings: RouteSettings(
-                                                            arguments:
-                                                            document)))
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder:
+                                                                (BuildContext
+                                                                    context) {
+                                                              return taskassign_a();
+                                                            },
+                                                            settings:
+                                                                RouteSettings(
+                                                                    arguments:
+                                                                        document)))
                                                     .then((value) {
                                                   setState(() {});
                                                 });
@@ -258,219 +265,244 @@ class adminpageState extends State<adminpage> {
                                             },
                                             child: Align(
                                                 child: Stack(children: <Widget>[
-                                                  Container(
-                                                    decoration: new BoxDecoration(
-                                                      color: Colors.white,
-                                                      shape: BoxShape.rectangle,
-                                                      border: Border.all(width: 2.0),
-                                                      borderRadius: BorderRadius.all(
-                                                          Radius.circular(15.0)),
-                                                    ),
-                                                    child: Card(
-                                                      elevation: 0,
-                                                      color: Colors.white,
-                                                      child: RoundedExpansionTile(
-                                                        rotateTrailing: false,
-                                                        trailing: Column(
-                                                          mainAxisAlignment:
+                                              Container(
+                                                decoration: new BoxDecoration(
+                                                  color: Colors.white,
+                                                  shape: BoxShape.rectangle,
+                                                  border:
+                                                      Border.all(width: 2.0),
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              15.0)),
+                                                ),
+                                                child: Card(
+                                                  elevation: 0,
+                                                  color: Colors.white,
+                                                  child: RoundedExpansionTile(
+                                                    rotateTrailing: false,
+                                                    trailing: Column(
+                                                      mainAxisAlignment:
                                                           MainAxisAlignment.end,
-                                                          crossAxisAlignment:
-                                                          CrossAxisAlignment.end,
-                                                          children: [
-                                                            Icon(
-                                                              Icons
-                                                                  .arrow_drop_down_outlined,
-                                                              color: Colors.black,
-                                                            ),
-                                                          ],
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .arrow_drop_down_outlined,
+                                                          color: Colors.black,
                                                         ),
-                                                        shape: RoundedRectangleBorder(
+                                                      ],
+                                                    ),
+                                                    shape:
+                                                        RoundedRectangleBorder(
                                                             borderRadius:
-                                                            BorderRadius.circular(
-                                                                4)),
-                                                        title: Column(
-                                                          mainAxisAlignment:
-                                                          MainAxisAlignment.start,
-                                                          crossAxisAlignment:
-                                                          CrossAxisAlignment.start,
-                                                          children: [
-                                                            largetext(
-                                                                text:
-                                                                document['title']),
-                                                            standardtext(
-                                                              text:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        4)),
+                                                    title: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        largetext(
+                                                            text: document[
+                                                                'title']),
+                                                        standardtext(
+                                                          text:
                                                               "${document['faculty']}",
-                                                              c: Colors
-                                                                  .deepPurpleAccent,
-                                                            ),
-                                                            standardtext(
-                                                              text:
+                                                          c: Colors
+                                                              .deepPurpleAccent,
+                                                        ),
+                                                        standardtext(
+                                                          text:
                                                               "${document['startdate']} - ${document['enddate']}",
-                                                              c: Color(0xff555556),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                              const EdgeInsets.only(
+                                                          c: Color(0xff555556),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
                                                                   left: 10.0),
-                                                              child: Column(
-                                                                mainAxisAlignment:
+                                                          child: Column(
+                                                            mainAxisAlignment:
                                                                 MainAxisAlignment
                                                                     .start,
-                                                                crossAxisAlignment:
+                                                            crossAxisAlignment:
                                                                 CrossAxisAlignment
                                                                     .start,
-                                                                children: [
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                    crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .center,
-                                                                    children: [
-                                                                      SizedBox(
-                                                                          width: MediaQuery.of(
-                                                                              context)
-                                                                              .size
-                                                                              .width *
-                                                                              0.15),
-                                                                    ],
-                                                                  ),
-                                                                  SizedBox(
-                                                                      height: MediaQuery.of(
-                                                                          context)
-                                                                          .size
-                                                                          .width *
-                                                                          0.01),
-                                                                ],
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                        children: [
-                                                          Column(
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment.start,
-                                                            crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
                                                             children: [
-                                                              SizedBox(height: 20),
                                                               Row(
                                                                 mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .start,
+                                                                    MainAxisAlignment
+                                                                        .start,
                                                                 crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                                    CrossAxisAlignment
+                                                                        .center,
                                                                 children: [
-                                                                  standardtext(
-                                                                      text:
-                                                                      'Category :  ',
-                                                                      c: bb),
-                                                                  standardtext(
-                                                                      text:
-                                                                      '${document['category']}',
-                                                                      c: Colors
-                                                                          .deepPurpleAccent)
+                                                                  SizedBox(
+                                                                      width: MediaQuery.of(context)
+                                                                              .size
+                                                                              .width *
+                                                                          0.15),
                                                                 ],
                                                               ),
                                                               SizedBox(
                                                                   height: MediaQuery.of(
-                                                                      context)
-                                                                      .size
-                                                                      .height *
-                                                                      0.01),
-                                                              standardtext(
-                                                                  text:
-                                                                  'Event Description:',
-                                                                  c: bb),
-                                                              Padding(
-                                                                padding:
-                                                                const EdgeInsets
-                                                                    .all(10.0),
-                                                                child: Text(
-                                                                  document[
-                                                                  'description'],
-                                                                  textAlign:
-                                                                  TextAlign.left,
-                                                                  style: GoogleFonts.poppins(
-                                                                      color:
-                                                                      Colors.black,
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                      fontSize: MediaQuery.of(
-                                                                          context)
+                                                                              context)
                                                                           .size
                                                                           .width *
-                                                                          0.04),
-                                                                ),
-                                                              ),
-                                                              (pageview == 1)
-                                                                  ? Column(
-                                                                children: [
-                                                                  standardtext(
-                                                                      text: document[
-                                                                      'reason'],
-                                                                      c: Colors
-                                                                          .red),
-                                                                ],
-                                                              )
-                                                                  : SizedBox(
-                                                                height: 0,
-                                                              ),
+                                                                      0.01),
                                                             ],
-                                                          )
-                                                        ],
-                                                      ),
+                                                          ),
+                                                        )
+                                                      ],
                                                     ),
+                                                    children: [
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          SizedBox(height: 20),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .start,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              standardtext(
+                                                                  text:
+                                                                      'Category :  ',
+                                                                  c: bb),
+                                                              standardtext(
+                                                                  text:
+                                                                      '${document['category']}',
+                                                                  c: Colors
+                                                                      .deepPurpleAccent)
+                                                            ],
+                                                          ),
+                                                          SizedBox(
+                                                              height: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height *
+                                                                  0.01),
+                                                          standardtext(
+                                                              text:
+                                                                  'Event Description:',
+                                                              c: bb),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(10.0),
+                                                            child: Text(
+                                                              document[
+                                                                  'description'],
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              style: GoogleFonts.poppins(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: MediaQuery.of(
+                                                                              context)
+                                                                          .size
+                                                                          .width *
+                                                                      0.04),
+                                                            ),
+                                                          ),
+                                                          (pageview == 1)
+                                                              ? Column(
+                                                                  children: [
+                                                                    standardtext(
+                                                                        text: document[
+                                                                            'reason'],
+                                                                        c: Colors
+                                                                            .red),
+                                                                  ],
+                                                                )
+                                                              : SizedBox(
+                                                                  height: 0,
+                                                                ),
+                                                        ],
+                                                      )
+                                                    ],
                                                   ),
-                                                  (document['status'] == 0)
-                                                      ? StatusTag(
+                                                ),
+                                              ),
+                                              (document['status'] == 0)
+                                                  ? StatusTag(
                                                       Colors.black, 'Assigned')
-                                                      : (document['status'] == 1)
-                                                      ? StatusTag(
-                                                      Colors.green, 'Accepted')
-                                                      : (document['status'] == 2)
-                                                      ? StatusTag(
-                                                      Colors.redAccent,
-                                                      'Rejected')
+                                                  : (document['status'] == 1)
+                                                      ? StatusTag(Colors.green,
+                                                          'Accepted')
                                                       : (document['status'] ==
-                                                      3)
-                                                      ? StatusTag(
-                                                      Colors
-                                                          .deepOrangeAccent,
-                                                      'Overdue')
-                                                      : SizedBox(),
-                                                  (document['admin']=="")?
-                                                  Align(
-                                                    alignment: Alignment.bottomRight,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(top:80.0,right: 10),
-                                                      child: InkWell(
-                                                        onTap: (){
-                                                          setState(() {
-                                                            showDialog(
-                                                              routeSettings:
-                                                              RouteSettings(arguments: document),
-                                                              context: context,
-                                                              builder: (_) =>
-                                                                  FunkyOverlayAdminReject(),
-                                                            );
-                                                          });
-                                                        },
-                                                        child: Container(
-                                                          child: Icon(
-                                                            Icons.recommend_rounded,
-                                                            color: Colors.red,
-                                                            size: MediaQuery.of(context).size.width*0.1,
+                                                              2)
+                                                          ? StatusTag(
+                                                              Colors.redAccent,
+                                                              'Rejected')
+                                                          : (document['status'] ==
+                                                                  3)
+                                                              ? StatusTag(
+                                                                  Colors
+                                                                      .deepOrangeAccent,
+                                                                  'Overdue')
+                                                              : SizedBox(),
+                                              (document['admin'] == "")
+                                                  ? Align(
+                                                      alignment:
+                                                          Alignment.bottomRight,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                top: 80.0,
+                                                                right: 10),
+                                                        child: InkWell(
+                                                          onTap: () {
+                                                            setState(() {
+                                                              showDialog(
+                                                                routeSettings:
+                                                                    RouteSettings(
+                                                                        arguments:
+                                                                            document),
+                                                                context:
+                                                                    context,
+                                                                builder: (_) =>
+                                                                    FunkyOverlayAdminReject(),
+                                                              );
+                                                            });
+                                                          },
+                                                          child: Container(
+                                                            child: Icon(
+                                                              Icons
+                                                                  .recommend_rounded,
+                                                              color: Colors.red,
+                                                              size: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.1,
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ): SizedBox()
-                                                ])),
+                                                    )
+                                                  : SizedBox()
+                                            ])),
                                           ),
                                         );
                                       }).toList(),
@@ -479,7 +511,7 @@ class adminpageState extends State<adminpage> {
                             ),
                           ),
                         ),
-                        SizedBox(height:30),
+                        SizedBox(height: 30),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
                           child: Row(
@@ -1005,7 +1037,9 @@ class adminpageState extends State<adminpage> {
                                                         setState(() {
                                                           showDialog(
                                                             routeSettings:
-                                                            RouteSettings(arguments: document),
+                                                                RouteSettings(
+                                                                    arguments:
+                                                                        document),
                                                             context: context,
                                                             builder: (_) =>
                                                                 FunkyOverlayAdminReject(),
@@ -1315,6 +1349,7 @@ class _StatusTagState extends State<StatusTag> {
     );
   }
 }
+
 class FunkyOverlayAdminReject extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => FunkyOverlayAdminRejectState();
@@ -1344,7 +1379,7 @@ class FunkyOverlayAdminRejectState extends State<FunkyOverlayAdminReject>
   @override
   Widget build(BuildContext context) {
     QueryDocumentSnapshot? document =
-    ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot?;
+        ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot?;
     return Center(
       child: Material(
         color: Colors.transparent,
@@ -1372,7 +1407,7 @@ class FunkyOverlayAdminRejectState extends State<FunkyOverlayAdminReject>
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
                               fontSize:
-                              MediaQuery.of(context).size.width * 0.02),
+                                  MediaQuery.of(context).size.width * 0.02),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
@@ -1386,8 +1421,8 @@ class FunkyOverlayAdminRejectState extends State<FunkyOverlayAdminReject>
                                     color: Colors.black,
                                     fontWeight: FontWeight.w200,
                                     fontSize:
-                                    MediaQuery.of(context).size.width *
-                                        0.032),
+                                        MediaQuery.of(context).size.width *
+                                            0.032),
                               ),
                               keyboardType: TextInputType.text,
                               maxLines: 2,
@@ -1422,8 +1457,8 @@ class FunkyOverlayAdminRejectState extends State<FunkyOverlayAdminReject>
                                       style: GoogleFonts.lato(
                                           color: Colors.white,
                                           fontSize: MediaQuery.of(context)
-                                              .size
-                                              .height *
+                                                  .size
+                                                  .height *
                                               0.02),
                                     ),
                                   )),
@@ -1435,31 +1470,25 @@ class FunkyOverlayAdminRejectState extends State<FunkyOverlayAdminReject>
                                       elevation: 5.0,
                                       shape: StadiumBorder(),
                                       primary: Colors.black),
-                                  onPressed: () async{
+                                  onPressed: () async {
                                     if (document != null) {
                                       await FirebaseTask.updateTask(
-                                          admindb: document['admin'],
-                                          categorydb:
-                                          document['category'],
-                                          titledb: document['title'],
-                                          descriptiondb:
-                                          document['description'],
-                                          startdatedb:
-                                          document['startdate'],
-                                          enddatedb:
-                                          document['enddate'],
-                                          duedatedb:
-                                          document['duedate'],
-                                          duetimedb:
-                                          document['duetime'],
-                                          facultydb:
-                                          document
-                                          ['faculty'],
-                                          statusdb: status,
-                                          reasondb: reasonpop.text,
-                                          docId: document.id)
+                                              admindb: document['admin'],
+                                              categorydb: document['category'],
+                                              titledb: document['title'],
+                                              descriptiondb:
+                                                  document['description'],
+                                              startdatedb:
+                                                  document['startdate'],
+                                              enddatedb: document['enddate'],
+                                              duedatedb: document['duedate'],
+                                              duetimedb: document['duetime'],
+                                              facultydb: document['faculty'],
+                                              statusdb: status,
+                                              reasondb: reasonpop.text,
+                                              docId: document.id)
                                           .whenComplete(
-                                            () => Navigator.pop(context),
+                                        () => Navigator.pop(context),
                                       );
                                       taskreasoncontroller.clear();
                                     }
@@ -1477,8 +1506,8 @@ class FunkyOverlayAdminRejectState extends State<FunkyOverlayAdminReject>
                                       style: GoogleFonts.lato(
                                           color: Colors.white,
                                           fontSize: MediaQuery.of(context)
-                                              .size
-                                              .height *
+                                                  .size
+                                                  .height *
                                               0.02),
                                     ),
                                   )),

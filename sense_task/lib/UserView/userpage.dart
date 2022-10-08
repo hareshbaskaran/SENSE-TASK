@@ -3,15 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
-import 'package:sense_task/Services/firebase_crud.dart';
-import 'package:sense_task/UserInfo.dart';
+import 'package:sense_task/AdminView/adminpage.dart';
+import 'package:sense_task/Servicesandresponse/firebase_crud.dart';
+import 'package:sense_task/LoginandSignoutPage//UserInfo.dart';
+import 'package:sense_task/widgets/Textwidgets.dart';
 
-import '../../LoginPage.dart';
-import '../../adminview/adminpage.dart';
-import '../AssignTask_Admin.dart';
-import '../Models/TaskMango.dart';
-
-
+import '../LoginandSignoutPage/LoginPage.dart';
+import '../../AdminView/adminpage.dart';
+import '../AdminView/AssignTask_Admin.dart';
 
 int snaplength = 2;
 bool drawer = false;
@@ -24,7 +23,6 @@ int _selectedIndexuser = 0;
 int assignedtasks = 0;
 
 class userpage extends StatefulWidget {
-
   const userpage({Key? key}) : super(key: key);
 
   @override
@@ -136,13 +134,9 @@ class _userpageState extends State<userpage> {
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
             child: Row(
               children: [
-                Text(
-                  'Ongoing Tasks',
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: MediaQuery.of(context).size.width * 0.045),
-                ),
+                tasktypetitle(
+                  text: 'Ongoing Tasks',
+                )
               ],
             ),
           ),
@@ -151,6 +145,14 @@ class _userpageState extends State<userpage> {
             child: Container(
               height: MediaQuery.of(context).size.height * 0.3,
               decoration: new BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 1,
+                    blurRadius: 5,
+                    offset: Offset(1, 2), // changes position of shadow
+                  ),
+                ],
                 color: Colors.white,
                 shape: BoxShape.rectangle,
                 border: Border.all(width: 1.0),
@@ -163,7 +165,6 @@ class _userpageState extends State<userpage> {
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (!snapshot.hasData) {
-
                         return Center(
                           child: CircularProgressIndicator(
                             color: Colors.deepPurpleAccent,
@@ -179,6 +180,15 @@ class _userpageState extends State<userpage> {
                               key: UniqueKey(),
                               background: Container(
                                 decoration: new BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 1,
+                                      blurRadius: 7,
+                                      offset: Offset(
+                                          1, 2), // changes position of shadow
+                                    ),
+                                  ],
                                   color: Theme.of(context).errorColor,
                                   shape: BoxShape.rectangle,
                                   borderRadius:
@@ -196,6 +206,15 @@ class _userpageState extends State<userpage> {
                               ),
                               secondaryBackground: Container(
                                 decoration: new BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.3),
+                                      spreadRadius: 1,
+                                      blurRadius: 7,
+                                      offset: Offset(
+                                          1, 2), // changes position of shadow
+                                    ),
+                                  ],
                                   color: Colors.green,
                                   shape: BoxShape.rectangle,
                                   borderRadius:
@@ -239,6 +258,15 @@ class _userpageState extends State<userpage> {
                                   child: Stack(children: <Widget>[
                                 Container(
                                   decoration: new BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        spreadRadius: 1,
+                                        blurRadius: 3,
+                                        offset: Offset(
+                                            1, 2), // changes position of shadow
+                                      ),
+                                    ],
                                     color: Colors.white,
                                     shape: BoxShape.rectangle,
                                     border: Border.all(width: 2.0),
@@ -387,69 +415,69 @@ class _userpageState extends State<userpage> {
                                                     Colors.deepOrangeAccent,
                                                     'Overdue')
                                                 : SizedBox(),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 50),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.11,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.03,
-                                          decoration: ShapeDecoration(
-                                              color: Color(0xff555556),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0))),
-                                          child: MaterialButton(
-                                            onPressed: () {},
-                                            child: Text(
-                                              "",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(width: 5),
-                                        Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.11,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height *
-                                              0.03,
-                                          decoration: ShapeDecoration(
-                                              //color: Color(0xff22C087),
-                                              color: Color(0xff555556),
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0))),
-                                          child: MaterialButton(
-                                            onPressed: () {},
-                                            child: Text(
-                                              "",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
+                                // Padding(
+                                //   padding: const EdgeInsets.only(top: 50),
+                                //   child: Padding(
+                                //     padding: const EdgeInsets.all(8.0),
+                                //     child: Row(
+                                //       mainAxisAlignment: MainAxisAlignment.end,
+                                //       children: [
+                                //         Container(
+                                //           width: MediaQuery.of(context)
+                                //                   .size
+                                //                   .width *
+                                //               0.11,
+                                //           height: MediaQuery.of(context)
+                                //                   .size
+                                //                   .height *
+                                //               0.03,
+                                //           decoration: ShapeDecoration(
+                                //               color: Color(0xff555556),
+                                //               shape: RoundedRectangleBorder(
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(
+                                //                           15.0))),
+                                //           child: MaterialButton(
+                                //             onPressed: () {},
+                                //             child: Text(
+                                //               "",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         ),
+                                //         SizedBox(width: 5),
+                                //         Container(
+                                //           width: MediaQuery.of(context)
+                                //                   .size
+                                //                   .width *
+                                //               0.11,
+                                //           height: MediaQuery.of(context)
+                                //                   .size
+                                //                   .height *
+                                //               0.03,
+                                //           decoration: ShapeDecoration(
+                                //               //color: Color(0xff22C087),
+                                //               color: Color(0xff555556),
+                                //               shape: RoundedRectangleBorder(
+                                //                   borderRadius:
+                                //                       BorderRadius.circular(
+                                //                           15.0))),
+                                //           child: MaterialButton(
+                                //             onPressed: () {},
+                                //             child: Text(
+                                //               "",
+                                //               style: TextStyle(
+                                //                 color: Colors.white,
+                                //               ),
+                                //             ),
+                                //           ),
+                                //         )
+                                //       ],
+                                //     ),
+                                //   ),
+                                //)
                               ])),
                             ),
                           );
@@ -463,12 +491,8 @@ class _userpageState extends State<userpage> {
             padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
             child: Row(
               children: [
-                Text(
-                  'Accepted Tasks',
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                      fontSize: MediaQuery.of(context).size.width * 0.045),
+                tasktypetitle(
+                  text: 'Accepted Tasks',
                 ),
                 Spacer(),
                 Align(
@@ -530,7 +554,7 @@ class _userpageState extends State<userpage> {
                                     standardtext(
                                       text:
                                           "${document['startdate']} - ${document['enddate']}",
-                                      c: Colors.deepPurpleAccent,
+                                      c: Colors.black87,
                                     ),
                                     Padding(
                                       padding:
@@ -799,7 +823,7 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
                                           ///todo:accept to be work
                                           if (document != null) {
                                             await FirebaseTask.updateTask(
-                                              admindb: document['admin'],
+                                                    admindb: document['admin'],
                                                     categorydb:
                                                         document['category'],
                                                     titledb: document['title'],
@@ -954,7 +978,7 @@ class FunkyOverlayacceptdeclineState extends State<FunkyOverlayacceptdecline>
                                           ///todo:accept to be work
                                           if (document != null) {
                                             await FirebaseTask.updateTask(
-                                              admindb: document['admin'],
+                                                    admindb: document['admin'],
                                                     categorydb:
                                                         document['category'],
                                                     titledb: document['title'],

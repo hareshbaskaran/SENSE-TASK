@@ -1,18 +1,17 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sense_task/Services/firebase_crud.dart';
-import 'package:sense_task/StaffPage_Admin.dart';
-import 'package:sense_task/adminview/adminpage.dart';
-import 'package:sense_task/Models/TaskMango.dart';
+import 'package:sense_task/LoginandSignoutPage/LoginPage.dart';
+import 'package:sense_task/Servicesandresponse/firebase_crud.dart';
+
+import 'package:sense_task/AdminView/adminpage.dart';
+
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:sense_task/main.dart';
 import 'package:mongo_dart/mongo_dart.dart' as T;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
-
-import 'LoginPage.dart';
 
 TextEditingController taskcategorycontroller = new TextEditingController();
 

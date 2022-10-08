@@ -1,14 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:sense_task/LoginPage.dart';
-import 'package:sense_task/AssignTask_Admin.dart';
-import 'package:sense_task/StaffPage_Admin.dart';
-import 'package:sense_task/TaskPage_Admin.dart';
+import 'package:sense_task/LoginandSignoutPage/LoginPage.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:sense_task/UserInfo.dart';
-import 'package:sense_task/adminview/adminpage.dart';
-import 'package:sense_task/userview/userpage.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
