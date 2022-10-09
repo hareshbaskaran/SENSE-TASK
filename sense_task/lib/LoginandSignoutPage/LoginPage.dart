@@ -124,17 +124,16 @@ class _loginpageState extends State<loginpage> {
   var loggedIn = false;
   var firebaseAuth = FirebaseAuth.instance;
   bool grey = true;
-  @override
-  void initState() {
+/*  void initState() {
     getfacultylistAPI();
       usernamevalue_user.text=Hive_box.get('username');
     passwordvalue_admin.text=Hive_box.get('password');
     super.initState();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
-    Hive_box = widget.box;
+    //Hive_box = widget.box;
     return Scaffold(
         body: SafeArea(
       child: SingleChildScrollView(

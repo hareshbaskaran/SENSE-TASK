@@ -148,7 +148,8 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            loginpage(Hive_box)),
+                                            loginpage(Hive_box)
+                                    ),
                                   );
                                 },
                                 child: Padding(
