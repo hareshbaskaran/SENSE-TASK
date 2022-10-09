@@ -101,7 +101,7 @@ class _userpageState extends State<userpage> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      '!',
+                      '${usernamevalue_user.text}!',
                       style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: MediaQuery.of(context).size.width * 0.052),
@@ -171,6 +171,7 @@ class _userpageState extends State<userpage> {
                           ),
                         );
                       }
+                      assignedtasks = snapshot.data!.size;
                       return ListView(
                         shrinkWrap: true,
                         children: snapshot.data!.docs.map((document) {

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import 'package:sense_task/AdminView/adminpage.dart';
 import 'package:sense_task/main.dart';
@@ -50,14 +51,11 @@ bool userlogin = false;
 bool alertuser = false;
 bool adminlogin = false;
 bool alertlogin = false;
-TextEditingController usernamevalue_admin = new TextEditingController();
+
 TextEditingController passwordvalue_admin = new TextEditingController();
-String username_admin = usernamevalue_admin.text;
 String password_admin = passwordvalue_admin.text;
 TextEditingController usernamevalue_user = new TextEditingController();
-TextEditingController passwordvalue_user = new TextEditingController();
-String username_user = usernamevalue_user.text;
-String password_user = passwordvalue_user.text;
+
 bool grey = true;
 int pageview = 2;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -257,26 +255,25 @@ class _loginpageState extends State<loginpage> {
                                   ),
                                   Container(
                                     child: MaterialButton(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(right: 18.0),
-                                        child: Icon(
-                                          Icons.chevron_right_outlined,
-                                          color: Colors.black,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 18.0),
+                                          child: Icon(
+                                            Icons.chevron_right_outlined,
+                                            color: Colors.black,
+                                          ),
                                         ),
-                                      ),
-                                      onPressed: () {
-                                        if (passwordvalue_admin.text ==
-                                            "Sense_Task") {
-                                          setState(() {
-                                            adminlogin = true;
-                                          });
-                                        } else
-                                          setState(() {
-                                            alertlogin = true;
-                                          });
-                                      },
-                                    ),
+                                        onPressed: () async {
+                                          if (passwordvalue_admin.text ==
+                                              "Sense_Task") {
+                                            setState(() {
+                                              adminlogin = true;
+                                            });
+                                          } else
+                                            setState(() {
+                                              alertlogin = true;
+                                            });
+                                        }),
                                     width:
                                         MediaQuery.of(context).size.width * 0.1,
                                   )
@@ -506,6 +503,7 @@ class _loginpageState extends State<loginpage> {
   }
 
   Widget _googleSignInButton() {
+    bool hasInternet = false;
     return Container(
       height: 60,
       width: 340,
@@ -518,18 +516,32 @@ class _loginpageState extends State<loginpage> {
           setState(() {
             already_sign_in = true;
           });
-          User? user = await signInWithGoogle(context: context);
-          if (user != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => (pageview == 2)
-                      ? userpage()
-                      : (pageview == 1)
-                          ? adminpage()
-                          : userpage()),
+          hasInternet = await InternetConnectionChecker().hasConnection;
+          if (hasInternet) {
+            User? user = await signInWithGoogle(context: context);
+            if (user != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => (pageview == 2)
+                        ? userpage()
+                        : (pageview == 1)
+                            ? adminpage()
+                            : userpage()),
+              );
+            }
+          } else
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  ' No Internet Connection !',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
+                  ),
+                ),
+                duration: const Duration(seconds: 3),
+              ),
             );
-          }
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         highlightElevation: 0,
