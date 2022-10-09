@@ -1,28 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sense_task/LoginandSignoutPage/LoginPage.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-
-final tabsList = ['All Tasks', 'Assigned', 'Accepted', 'Rejected', 'Overdue'];
-
-class SizeConfig {
-  static MediaQueryData _mediaQueryData = const MediaQueryData();
-  static double screenWidth = 0;
-  static double screenHeight = 0;
-  static double blockSizeHorizontal = 0;
-  static double blockSizeVertical = 0;
-  void init(BuildContext context) {
-    _mediaQueryData = MediaQuery.of(context);
-    screenWidth = _mediaQueryData.size.width;
-    screenHeight = _mediaQueryData.size.height;
-    blockSizeHorizontal = screenWidth / 100;
-    blockSizeVertical = screenHeight / 100;
-  }
-}
 
 bool already_sign_in = false;
 CheckloggedIn() async {
@@ -43,6 +27,8 @@ void main() async {
   await Hive.initFlutter();
   Box<dynamic> Hive_box = await Hive.openBox('myBox');
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   await Firebase.initializeApp();
   await CheckloggedIn();
   runApp(MyApp());
@@ -59,9 +45,6 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home: loginpage(Hive_box)
-/*    home:(already_sign_in==false)? loginpage(Hive_box):
-    (pageview==1&&already_sign_in==true)?adminpage():(already_sign_in==true&&pageview==2)?userpage():loginpage(Hive_box)*/
-        );
+        home: loginpage(Hive_box));
   }
 }

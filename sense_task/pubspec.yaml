@@ -87,6 +87,7 @@ flutter:
     - assets/images/vit-logo.png
     - assets/images/logo.png
     - assets/images/Group 12.png
+    - assets/images/googlelogo.png
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

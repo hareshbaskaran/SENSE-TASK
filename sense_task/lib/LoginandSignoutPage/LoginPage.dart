@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:sense_task/AdminView/adminpage.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/UserView/userpage.dart';
+import 'package:sense_task/widgets/Textwidgets.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -135,323 +136,373 @@ class _loginpageState extends State<loginpage> {
   Widget build(BuildContext context) {
     Hive_box = widget.box;
     return Scaffold(
-        resizeToAvoidBottomInset: false,
         body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 20, 10, 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-                Text(
-                  textAlign: TextAlign.center,
-                  'SENSE TASK MANAGEMENT',
-                  style: GoogleFonts.lato(
-                      color: Colors.black,
-                      fontSize: MediaQuery.of(context).size.width * 0.075),
-                ),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.025),
-                Padding(
-                  padding: EdgeInsets.only(
-                      left: MediaQuery.of(context).size.width * 0.03,
-                      right: MediaQuery.of(context).size.width * 0.03),
-                  child: Container(
-                      child: Image(
-                          image: AssetImage('assets/images/loginpic.png'))),
-                ),
-                (pageview == 1)
-                    ? Column(children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left:
-                                      MediaQuery.of(context).size.width * 0.08),
-                              child: Text('Login as Admin',
-                                  style: GoogleFonts.poppins(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w300,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.045)),
-                            ),
-                          ],
-                        ),
-                        (adminlogin == false)
-                            ? Center(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Center(
-                                        child: SingleChildScrollView(
-                                          child: Container(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.7,
-                                            decoration: new BoxDecoration(
-                                              color: Color(0xFFF7F8F8),
-                                              shape: BoxShape.rectangle,
-                                              border: Border.all(width: 2.0),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(15.0)),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Container(
-                                                    color: Colors.transparent,
-                                                    constraints: BoxConstraints(
-                                                        minHeight:
-                                                            MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height *
-                                                                0.05),
-                                                    child: TextField(
-                                                      maxLines: 1,
-                                                      onChanged: (_) {
-                                                        setState(() {});
-                                                      },
-                                                      decoration:
-                                                          InputDecoration(
-                                                        hintText:
-                                                            "   Enter Admin Password",
-                                                        hintStyle: TextStyle(),
-                                                        fillColor: Colors.black,
-                                                        border:
-                                                            InputBorder.none,
-                                                      ),
-                                                      cursorColor: Colors.black,
-                                                      controller:
-                                                          passwordvalue_admin,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      child: MaterialButton(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(
-                                              right: 18.0),
-                                          child: Icon(
-                                            Icons.chevron_right_outlined,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          if (passwordvalue_admin.text ==
-                                              "Sense_Task") {
-                                            setState(() {
-                                              adminlogin = true;
-                                            });
-                                          } else
-                                            setState(() {
-                                              alertlogin = true;
-                                            });
-                                        },
-                                      ),
-                                      width: MediaQuery.of(context).size.width *
-                                          0.1,
-                                    )
-                                  ],
-                                ),
-                              )
-                            : _googleSignInButton(),
-                        (alertlogin == true && adminlogin == false)
-                            ? Text(
-                                'Invalid Password',
-                                style: TextStyle(color: Colors.red),
-                              )
-                            : SizedBox(),
-                        SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1),
-                        InkWell(
-                          child: Text(
-                            'Tap here, To Login as User',
-                            style: GoogleFonts.lato(
-                                decoration: TextDecoration.underline,
-                                color: Colors.deepPurpleAccent,
-                                fontSize:
-                                    MediaQuery.of(context).size.width * 0.04),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: MediaQuery.of(context).size.height * 0.2),
+              Text(
+                textAlign: TextAlign.center,
+                'SENSE TASK\n MANAGEMENT',
+                style: GoogleFonts.lato(
+                    color: Colors.black,
+                    fontSize: MediaQuery.of(context).size.width * 0.075),
+              ),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.025),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0.03,
+                    right: MediaQuery.of(context).size.width * 0.03),
+                child: Container(
+                    child:
+                        Image(image: AssetImage('assets/images/loginpic.png'))),
+              ),
+              (pageview == 1)
+                  ? Column(children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width * 0.08),
+                            child: Text('Login as Admin',
+                                style: GoogleFonts.poppins(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w300,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.045)),
                           ),
-                          onTap: () {
-                            setState(() {
-                              alertlogin = false;
-                              adminlogin = false;
-                              passwordvalue_admin.clear();
-                              pageview = 2;
-                            });
-                          },
-                        ),
-                      ])
-                    : (pageview == 2)
-                        ? Column(children: [
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: MediaQuery.of(context).size.width *
-                                          0.08,
-                                      bottom: 20),
-                                  child: Text('Login as User',
-                                      style: GoogleFonts.poppins(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w300,
-                                          fontSize: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.045)),
-                                ),
-                              ],
-                            ),
-                            (userlogin == false)
-                                ? Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(10.0),
-                                          child: Center(
-                                            child: SingleChildScrollView(
-                                              child: Container(
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width *
-                                                    0.7,
-                                                decoration: new BoxDecoration(
-                                                  color: Color(0xFFF7F8F8),
-                                                  shape: BoxShape.rectangle,
-                                                  border:
-                                                      Border.all(width: 2.0),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              15.0)),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Container(
-                                                        color:
-                                                            Colors.transparent,
-                                                        constraints: BoxConstraints(
-                                                            minHeight: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height *
-                                                                0.05),
-                                                        child: TextField(
-                                                          maxLines: 1,
-                                                          onChanged: (_) {
-                                                            setState(() {});
-                                                          },
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                "   Enter Username",
-                                                            hintStyle:
-                                                                TextStyle(),
-                                                            fillColor:
-                                                                Colors.black,
-                                                            border: InputBorder
-                                                                .none,
-                                                          ),
-                                                          cursorColor:
-                                                              Colors.black,
-                                                          controller:
-                                                              usernamevalue_user,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Container(
-                                          child: MaterialButton(
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  right: 18.0),
-                                              child: Icon(
-                                                Icons.chevron_right_outlined,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                if (searchusername()) {
-                                                  userlogin = true;
-                                                } else {
-                                                  alertuser = true;
-                                                }
-                                              });
-                                            },
-                                          ),
+                        ],
+                      ),
+                      (adminlogin == false)
+                          ? Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Center(
+                                      child: SingleChildScrollView(
+                                        child: Container(
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width *
-                                              0.1,
-                                        )
-                                      ],
+                                              0.7,
+                                          decoration: new BoxDecoration(
+                                            color: Color(0xFFF7F8F8),
+                                            shape: BoxShape.rectangle,
+                                            border: Border.all(width: 2.0),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0)),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                  color: Colors.transparent,
+                                                  constraints: BoxConstraints(
+                                                      minHeight:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.05),
+                                                  child: TextField(
+                                                    style: GoogleFonts.poppins(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        fontSize: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width *
+                                                            0.036),
+                                                    cursorHeight: 20,
+                                                    maxLines: 1,
+                                                    onChanged: (_) {
+                                                      setState(() {});
+                                                    },
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          'Enter Admin Password',
+                                                      hintStyle: GoogleFonts.poppins(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w200,
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.036),
+                                                      fillColor: Colors.black,
+                                                      border: InputBorder.none,
+                                                    ),
+                                                    cursorColor: Colors.black,
+                                                    controller:
+                                                        passwordvalue_admin,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ),
+                                  ),
+                                  Container(
+                                    child: MaterialButton(
+                                      child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 18.0),
+                                        child: Icon(
+                                          Icons.chevron_right_outlined,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        if (passwordvalue_admin.text ==
+                                            "Sense_Task") {
+                                          setState(() {
+                                            adminlogin = true;
+                                          });
+                                        } else
+                                          setState(() {
+                                            alertlogin = true;
+                                          });
+                                      },
+                                    ),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
                                   )
-                                : _googleSignInButton(),
-                            SizedBox(height: 20),
-                            (alertuser == true && userlogin == false)
-                                ? Text(
-                                    'No Such User Exists',
-                                    style: TextStyle(color: Colors.red),
-                                  )
-                                : SizedBox(),
-                            SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.1),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: InkWell(
-                                child: Text(
-                                  'Tap here, to Login as admin',
-                                  style: GoogleFonts.lato(
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.deepPurpleAccent,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.04),
-                                ),
-                                onTap: () {
-                                  setState(() {
-                                    usernamevalue_user.clear();
-                                    userlogin = false;
-                                    alertuser = false;
-                                    pageview = 1;
-                                  });
-                                },
+                                ],
                               ),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: _googleSignInButton(),
                             ),
-                          ])
-                        : Text('nothing')
-              ],
-            ),
+                      (alertlogin == true && adminlogin == false)
+                          ? Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: Text(
+                                'Invalid Password ! Try again !',
+                                style: GoogleFonts.poppins(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.036),
+                              ),
+                            )
+                          : SizedBox(),
+                      SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.07),
+                      InkWell(
+                        child: Text(
+                          'Tap here, to Login as User',
+                          style: GoogleFonts.lato(
+                              decoration: TextDecoration.underline,
+                              color: Colors.deepPurpleAccent,
+                              fontSize:
+                                  MediaQuery.of(context).size.width * 0.04),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            alertlogin = false;
+                            adminlogin = false;
+                            passwordvalue_admin.clear();
+                            pageview = 2;
+                          });
+                        },
+                      ),
+                    ])
+                  : (pageview == 2)
+                      ? Column(children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  left:
+                                      MediaQuery.of(context).size.width * 0.08,
+                                ),
+                                child: Text('Login as User',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.w300,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.045)),
+                              ),
+                            ],
+                          ),
+                          (userlogin == false)
+                              ? Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Center(
+                                          child: SingleChildScrollView(
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.7,
+                                              decoration: new BoxDecoration(
+                                                color: Color(0xFFF7F8F8),
+                                                shape: BoxShape.rectangle,
+                                                border: Border.all(width: 2.0),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(15.0)),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Container(
+                                                      color: Colors.transparent,
+                                                      constraints: BoxConstraints(
+                                                          minHeight:
+                                                              MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height *
+                                                                  0.05),
+                                                      child: TextField(
+                                                        style: GoogleFonts.poppins(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w400,
+                                                            fontSize: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width *
+                                                                0.036),
+                                                        cursorHeight: 20,
+                                                        maxLines: 1,
+                                                        onChanged: (_) {
+                                                          setState(() {});
+                                                        },
+                                                        decoration:
+                                                            InputDecoration(
+                                                          hintText:
+                                                              "Enter Your Name",
+                                                          hintStyle: GoogleFonts.poppins(
+                                                              color:
+                                                                  Colors.black,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w200,
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.036),
+                                                          fillColor:
+                                                              Colors.black,
+                                                          border:
+                                                              InputBorder.none,
+                                                        ),
+                                                        cursorColor:
+                                                            Colors.black,
+                                                        controller:
+                                                            usernamevalue_user,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        child: MaterialButton(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10.0),
+                                            child: Icon(
+                                              Icons.chevron_right_rounded,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              if (searchusername()) {
+                                                userlogin = true;
+                                              } else {
+                                                alertuser = true;
+                                              }
+                                            });
+                                          },
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.1,
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: _googleSignInButton(),
+                                ),
+                          SizedBox(height: 20),
+                          (alertuser == true && userlogin == false)
+                              ? Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    'No Such User Exists !',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.red,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width *
+                                                0.036),
+                                  ),
+                                )
+                              : SizedBox(),
+                          SizedBox(
+                              height:
+                                  MediaQuery.of(context).size.height * 0.07),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: InkWell(
+                              child: Text(
+                                'Tap here, to Login as admin',
+                                style: GoogleFonts.lato(
+                                    decoration: TextDecoration.underline,
+                                    color: Colors.deepPurpleAccent,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width *
+                                            0.04),
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  usernamevalue_user.clear();
+                                  userlogin = false;
+                                  alertuser = false;
+                                  pageview = 1;
+                                });
+                              },
+                            ),
+                          ),
+                        ])
+                      : Text('nothing')
+            ],
           ),
-        ));
+        ),
+      ),
+    ));
   }
 
   Widget _googleSignInButton() {
@@ -491,23 +542,20 @@ class _loginpageState extends State<loginpage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                color: Colors.transparent,
-                alignment: Alignment.centerLeft,
-                height: 20,
-                width: 20,
-                /* child: Image(
-                  image: AssetImage('assets/images/googleicon.png'),
-                ),*/
-              ),
+                  alignment: Alignment.centerLeft,
+                  height: 38,
+                  width: 38,
+                  child:
+                      Image(image: AssetImage('assets/images/googlelogo.png'))),
               SizedBox(
                 width: 20,
               ),
               Text(
                 'Sign in with Google',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: MediaQuery.of(context).size.width * 0.045),
               ),
             ],
           ),
