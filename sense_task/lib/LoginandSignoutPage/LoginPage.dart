@@ -19,12 +19,12 @@ import 'package:http/http.dart' as http;
 Box<dynamic> Hive_box = Hive.box('myBox');
 List<String> faculty_list = [];
 List<dynamic> faculty_data = [];
-String facultyvalue = "Ishwarya";
+String facultyvalue = "S.Anand";
 
 getfacultylistAPI() async {
   faculty_list = [];
   var faculty_url = Uri.parse(
-      "https://gist.githubusercontent.com/iamishu2908/006812760864f6859dcaaf5e719f29b0/raw/acd0f3ad6c4495e061bb30ee29545a1dff4de3f8/facultynames.json");
+      "https://gist.githubusercontent.com/iamishu2908/006812760864f6859dcaaf5e719f29b0/raw/95edfe95a9a5723c4221a29434b1fdaa4cacb96f/facultynames.json");
   var faculty_response = await http.get(faculty_url);
   print('Response status: ${faculty_response.statusCode}');
   print('Response body: ${faculty_response.body}');
