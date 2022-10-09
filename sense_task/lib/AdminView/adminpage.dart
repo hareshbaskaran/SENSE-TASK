@@ -1226,35 +1226,11 @@ class FunkyOverlayState extends State<FunkyOverlay>
                     SizedBox(
                         height: MediaQuery.of(context).size.height * 0.0025),
                     FilterBox('Rejected Tasks', 2),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Filter tasks by Date',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.045),
-                        ),
-                      ),
-                    ),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.0025),
                     FilterBox('Choose Date', 6),
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 10),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Filter tasks by Faculty',
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.045),
-                        ),
-                      ),
-                    ),
+                    SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.0025),
                     FilterBox('Choose Faculty', 4),
                   ],
                 ),

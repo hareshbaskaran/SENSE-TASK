@@ -30,7 +30,7 @@ class _facultystatusState extends State<facultystatus> {
                     style: GoogleFonts.poppins(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                        fontSize: MediaQuery.of(context).size.width * 0.06),
+                        fontSize: MediaQuery.of(context).size.width * 0.04),
                   ),
                 ),
               ],
