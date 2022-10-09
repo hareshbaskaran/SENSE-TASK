@@ -104,7 +104,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                 Navigator.pop(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => adminpage()),
+                                      builder: (context) => adminpage(Hive_box)),
                                 );
                                 _clearassignpage();
                               },
@@ -791,7 +791,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => adminpage()),
+                                builder: (context) => adminpage(Hive_box)),
                           );
                         },
                         child: Container(

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'package:sense_task/AdminView/adminpage.dart';
 import 'package:sense_task/Servicesandresponse/firebase_crud.dart';
@@ -25,7 +26,8 @@ int _selectedIndexuser = 0;
 int assignedtasks = 0;
 
 class userpage extends StatefulWidget {
-  const userpage({Key? key}) : super(key: key);
+  late final Box<dynamic> box;
+  userpage(this.box);
 
   @override
   State<userpage> createState() => _userpageState();
