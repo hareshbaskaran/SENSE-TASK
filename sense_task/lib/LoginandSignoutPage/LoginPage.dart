@@ -442,7 +442,7 @@ class _loginpageState extends State<loginpage> {
                                             ),
                                           ),
                                           onPressed: () async{
-                                            Hive_box.put('username',usernamevalue_user.text);
+                                           // Hive_box.put('username',usernamevalue_user.text);
                                             setState(() {
                                               if (searchusername()) {
                                                 userlogin = true;
