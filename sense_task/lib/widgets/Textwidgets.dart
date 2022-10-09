@@ -19,3 +19,22 @@ class tasktypetitle extends StatelessWidget {
     );
   }
 }
+
+class mediumtext extends StatelessWidget {
+  String text;
+  mediumtext({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Text(
+        '$text',
+        style: GoogleFonts.lato(
+          color: Colors.black,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+}

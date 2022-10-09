@@ -511,6 +511,7 @@ class _loginpageState extends State<loginpage> {
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: MaterialButton(
+        splashColor: Colors.white,
         color: Colors.black,
         onPressed: () async {
           setState(() {
