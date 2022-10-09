@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'package:sense_task/AdminView/adminpage.dart';
 import 'package:sense_task/Servicesandresponse/firebase_crud.dart';
@@ -12,7 +13,7 @@ import 'package:sense_task/widgets/Textwidgets.dart';
 import '../LoginandSignoutPage/LoginPage.dart';
 import '../../AdminView/adminpage.dart';
 import '../AdminView/AssignTask_Admin.dart';
-
+Box<dynamic> Hive_box = Hive.box('myBox');
 TextEditingController taskreasoncontroller = new TextEditingController();
 int snaplength = 2;
 bool drawer = false;
@@ -25,8 +26,8 @@ int _selectedIndexuser = 0;
 int assignedtasks = 0;
 
 class userpage extends StatefulWidget {
-  const userpage({Key? key}) : super(key: key);
-
+  late final Box<dynamic> box;
+  userpage(this.box);
   @override
   State<userpage> createState() => _userpageState();
 }
@@ -45,25 +46,6 @@ class _userpageState extends State<userpage> {
     }
 
     return Scaffold(
-/*        bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.black87,
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withOpacity(.60),
-            selectedFontSize: 14,
-            unselectedFontSize: 14,
-            currentIndex: _selectedIndexuser, //New
-            onTap: _onItemTapped, //New
-            items: [
-              BottomNavigationBarItem(
-                label: 'Home',
-                icon: Icon(Icons.home_rounded),
-              ),
-              BottomNavigationBarItem(
-                label:'User',
-                icon: Icon(Icons.person_outline_rounded),
-              )
-            ]),*/
         body: SafeArea(
             child: RefreshIndicator(
       color: Colors.black,

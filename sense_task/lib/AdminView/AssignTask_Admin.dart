@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:hive/hive.dart';
 import 'package:sense_task/LoginandSignoutPage/LoginPage.dart';
 import 'package:sense_task/Servicesandresponse/firebase_crud.dart';
 
@@ -20,7 +21,7 @@ TextEditingController taskcategorycontroller = new TextEditingController();
 TextEditingController tasktitlecontroller = new TextEditingController();
 TextEditingController adminreasoncontroller = new TextEditingController();
 TextEditingController taskdescriptioncontroller = new TextEditingController();
-
+Box<dynamic> Hive_box = Hive.box('myBox');
 var checkInserttask = "Assign";
 DateTime todayDate = DateTime.now();
 String todayDateinString =
@@ -104,7 +105,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                 Navigator.pop(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => adminpage()),
+                                      builder: (context) => adminpage(Hive_box)),
                                 );
                                 _clearassignpage();
                               },
@@ -791,7 +792,7 @@ class _taskassign_aState extends State<taskassign_a> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => adminpage()),
+                                builder: (context) => adminpage(Hive_box)),
                           );
                         },
                         child: Container(

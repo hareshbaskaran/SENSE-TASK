@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:sense_task/AdminView/adminpage.dart';
 import 'package:sense_task/UserView/userpage.dart';
 import 'package:sense_task/constants.dart';
 import 'LoginPage.dart';
-
+Box<dynamic> Hive_box = Hive.box('myBox');
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen({Key? key, required User user})
       : _user = user,
@@ -25,7 +26,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     return PageRouteBuilder(
       settings: RouteSettings(arguments: user),
       pageBuilder: (context, animation, secondaryAnimation) =>
-          (pageview == 1) ? adminpage() : userpage(),
+          (pageview == 1) ? adminpage(Hive_box) : userpage(Hive_box),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(-1.0, 0.0);
         var end = Offset.zero;

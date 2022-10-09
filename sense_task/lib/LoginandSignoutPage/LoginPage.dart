@@ -16,6 +16,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:http/http.dart' as http;
 
+Box<dynamic> Hive_box = Hive.box('myBox');
 List<String> faculty_list = [];
 List<dynamic> faculty_data = [];
 String facultyvalue = "Ishwarya";
@@ -36,9 +37,6 @@ getfacultylistAPI() async {
     }
   }
 }
-
-///B2A4F0
-Box<dynamic> Hive_box = Hive.box('myBox');
 bool isButtonDisabled = true;
 User? user;
 bool checkbox_value = false;
@@ -109,10 +107,6 @@ class loginpage extends StatefulWidget {
 }
 
 class _loginpageState extends State<loginpage> {
-  void initState() {
-    getfacultylistAPI();
-    super.initState();
-  }
 
   void onLoginStatusChanged(bool isLoggedIn) {
     setState(() {
@@ -130,6 +124,14 @@ class _loginpageState extends State<loginpage> {
   var loggedIn = false;
   var firebaseAuth = FirebaseAuth.instance;
   bool grey = true;
+  @override
+  void initState() {
+    getfacultylistAPI();
+      usernamevalue_user.text=Hive_box.get('username');
+    passwordvalue_admin.text=Hive_box.get('password');
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     Hive_box = widget.box;
@@ -266,6 +268,14 @@ class _loginpageState extends State<loginpage> {
                                         onPressed: () async {
                                           if (passwordvalue_admin.text ==
                                               "Sense_Task") {
+                                            Hive_box.put('name', passwordvalue_admin.text);
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return adminpage(Hive_box);
+                                                },
+                                              ),
+                                            );
                                             setState(() {
                                               adminlogin = true;
                                             });
@@ -432,7 +442,8 @@ class _loginpageState extends State<loginpage> {
                                               color: Colors.black,
                                             ),
                                           ),
-                                          onPressed: () {
+                                          onPressed: () async{
+                                            Hive_box.put('username',usernamevalue_user.text);
                                             setState(() {
                                               if (searchusername()) {
                                                 userlogin = true;
@@ -525,10 +536,10 @@ class _loginpageState extends State<loginpage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => (pageview == 2)
-                        ? userpage()
+                        ? userpage(Hive_box)
                         : (pageview == 1)
-                            ? adminpage()
-                            : userpage()),
+                            ? adminpage(Hive_box)
+                            : userpage(Hive_box)),
               );
             }
           } else
