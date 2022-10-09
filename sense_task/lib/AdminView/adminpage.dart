@@ -1077,8 +1077,7 @@ class adminpageState extends State<adminpage> {
                                                                     .deepOrangeAccent,
                                                                 'Overdue')
                                                             : SizedBox(),
-                                            (document['admin'] == "" &&
-                                                    document['status'] != 1)
+                                            (document['admin'] == "")
                                                 ? Align(
                                                     alignment:
                                                         Alignment.bottomRight,
@@ -1114,29 +1113,33 @@ class adminpageState extends State<adminpage> {
                                                       ),
                                                     ),
                                                   )
-                                                : Align(
-                                                    alignment:
-                                                        Alignment.bottomRight,
-                                                    child: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 80.0,
-                                                              right: 10),
-                                                      child: InkWell(
-                                                        onTap: () {},
-                                                        child: Icon(
-                                                          Icons
-                                                              .recommend_rounded,
-                                                          color: Colors.green,
-                                                          size: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.1,
+                                                : (document['admin'] != "")
+                                                    ? Align(
+                                                        alignment: Alignment
+                                                            .bottomRight,
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 80.0,
+                                                                  right: 10),
+                                                          child: InkWell(
+                                                            onTap: () {},
+                                                            child: Icon(
+                                                              Icons
+                                                                  .recommend_rounded,
+                                                              color:
+                                                                  Colors.green,
+                                                              size: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.1,
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
-                                                    ),
-                                                  )
+                                                      )
+                                                    : SizedBox()
                                           ])),
                                         ),
                                       );
