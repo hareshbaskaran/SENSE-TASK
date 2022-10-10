@@ -1,12 +1,23 @@
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sense_task/Services/firebase_crud.dart';
-import 'package:sense_task/adminview/adminpage.dart';
+import 'package:sense_task/LoginandSignoutPage/LoginPage.dart';
+import 'package:sense_task/Servicesandresponse/firebase_crud.dart';
+
+import 'package:sense_task/AdminView/adminpage.dart';
+
 import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:sense_task/constants.dart';
+import 'package:sense_task/main.dart';
 
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
 import '../LoginPage.dart';
+========
+import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:sense_task/widgets/Textwidgets.dart';
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
 
 TextEditingController taskcategorycontroller = new TextEditingController();
 
@@ -45,7 +56,7 @@ String duetime = '';
 
 int status = 0;
 
-String reason = 'No reason';
+String reason = '';
 
 class taskassign_a extends StatefulWidget {
   bool grey = true;
@@ -64,12 +75,26 @@ class _taskassign_aState extends State<taskassign_a> {
     QueryDocumentSnapshot? document =
         ModalRoute.of(context)!.settings.arguments as QueryDocumentSnapshot?;
 
-    return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(
-                'assets/images/Group 12.png',
+    return Scaffold(
+        body: RefreshIndicator(
+          color: Colors.black,
+          onRefresh: () async {
+            await Future.delayed(Duration(seconds: 1));
+            setState(() {
+              ct += 1;
+            });
+          },
+          child: SafeArea(
+            child: Container(
+              constraints: BoxConstraints.expand(),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  alignment: Alignment.topCenter,
+                  image: AssetImage(
+                      'assets/images/bgnd3.png'), // color: Colors.amber,
+                ),
               ),
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
               fit: BoxFit.cover)),
       child: SafeArea(
         child: Scaffold(
@@ -83,6 +108,8 @@ class _taskassign_aState extends State<taskassign_a> {
                   ct += 1;
                 });
               },
+========
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -111,7 +138,11 @@ class _taskassign_aState extends State<taskassign_a> {
                                   fontWeight: FontWeight.bold,
                                   color: Colors.black,
                                   fontSize:
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                   MediaQuery.of(context).size.width * 0.06),
+========
+                                      MediaQuery.of(context).size.width * 0.06),
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                             ),
                           ],
                         ),
@@ -231,7 +262,11 @@ class _taskassign_aState extends State<taskassign_a> {
                                         dropdownColor: Colors.black,
                                         value: facultyvalue,
                                         items:
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                         faculty_list.map((String faculty) {
+========
+                                            faculty_list.map((String faculty) {
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                           return DropdownMenuItem(
                                             value: faculty,
                                             child: Text(faculty),
@@ -279,8 +314,13 @@ class _taskassign_aState extends State<taskassign_a> {
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400,
                                       fontSize:
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                       MediaQuery.of(context).size.width *
                                           0.036),
+========
+                                          MediaQuery.of(context).size.width *
+                                              0.036),
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                   onChanged: (_) {
                                     if (_.length > 0)
                                       widget.grey = false;
@@ -327,8 +367,13 @@ class _taskassign_aState extends State<taskassign_a> {
                                       color: Colors.black,
                                       fontWeight: FontWeight.w400,
                                       fontSize:
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                       MediaQuery.of(context).size.width *
                                           0.036),
+========
+                                          MediaQuery.of(context).size.width *
+                                              0.036),
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                   maxLines: null,
                                   onChanged: (_) {
                                     if (_.length > 0)
@@ -413,12 +458,17 @@ class _taskassign_aState extends State<taskassign_a> {
                                   style: OutlinedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                         BorderRadius.circular(30.0)),
+========
+                                            BorderRadius.circular(30.0)),
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: (startDateInString != '')
                                         ? Text(
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                       startDateInString,
                                       style: GoogleFonts.poppins(
                                         color: Colors.black,
@@ -432,6 +482,21 @@ class _taskassign_aState extends State<taskassign_a> {
                                           fontWeight: FontWeight.w400,
                                           fontSize: 15,
                                         )),
+========
+                                            startDateInString,
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15,
+                                            ),
+                                          )
+                                        : Text("Start date",
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15,
+                                            )),
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                   ),
                                 ),
                               ),
@@ -485,12 +550,17 @@ class _taskassign_aState extends State<taskassign_a> {
                                   style: OutlinedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                         BorderRadius.circular(30.0)),
+========
+                                            BorderRadius.circular(30.0)),
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
                                     child: (endDateInString != '')
                                         ? Text(
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                       endDateInString,
                                       style: GoogleFonts.poppins(
                                         color: Colors.black,
@@ -504,6 +574,21 @@ class _taskassign_aState extends State<taskassign_a> {
                                           fontWeight: FontWeight.w400,
                                           fontSize: 15,
                                         )),
+========
+                                            endDateInString,
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15,
+                                            ),
+                                          )
+                                        : Text("End date",
+                                            style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15,
+                                            )),
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                   ),
                                 ),
                               ),
@@ -516,6 +601,7 @@ class _taskassign_aState extends State<taskassign_a> {
                       ),
                       Center(
                           child: Row(
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
@@ -583,14 +669,87 @@ class _taskassign_aState extends State<taskassign_a> {
                                               ),
                                             )
                                                 : Text("Due Date",
+========
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child: Center(
+                              child: OutlinedButton(
+                                onPressed: () async {
+                                  final datePick = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now(),
+                                    lastDate: startDate,
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
+                                          colorScheme: ColorScheme.light(
+                                            primary: Colors
+                                                .black, // header background color
+                                            onPrimary: Colors
+                                                .white, // header text color
+                                            onSurface:
+                                                Colors.black, // body text color
+                                          ),
+                                          textButtonTheme: TextButtonThemeData(
+                                            style: TextButton.styleFrom(
+                                              primary: Colors
+                                                  .black, // button text color
+                                            ),
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
+                                  );
+                                  if (datePick != null && datePick != dueDate) {
+                                    setState(() {
+                                      dueDate = datePick;
+                                      isDateSelected = true;
+
+                                      // put it here
+                                      dueDateInString =
+                                          "${dueDate.day}/${dueDate.month}/${dueDate.year}";
+                                      print(dueDateInString); // 08/14/2019
+                                    });
+                                  }
+                                  setState(() {});
+                                },
+                                style: OutlinedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        (dueDateInString != '')
+                                            ? Text(
+                                                dueDateInString,
+                                                style: GoogleFonts.poppins(
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 15,
+                                                ),
+                                              )
+                                            : Text("Due Date",
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                                 style: GoogleFonts.poppins(
                                                   color: Colors.black,
                                                   fontWeight: FontWeight.w400,
                                                   fontSize: 15,
                                                 )),
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                           ],
                                         ),
                                       ),
+========
+                                      ],
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                     ),
                                   ),
                                 ),
@@ -606,6 +765,7 @@ class _taskassign_aState extends State<taskassign_a> {
                                     textAlign: TextAlign.center,
                                     timeHintText:
                                     (duetime != '') ? duetime : "Due Time",
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                     cursorColor: Colors.black,
                                     style: GoogleFonts.poppins(
                                       color: Colors.black,
@@ -620,6 +780,22 @@ class _taskassign_aState extends State<taskassign_a> {
                                   )),
                             ],
                           )),
+========
+                                cursorColor: Colors.black,
+                                style: GoogleFonts.poppins(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                ),
+                                timeFieldWidth: 0,
+                                onChanged: (value) {
+                                  duetime = value;
+                                  print(duetime);
+                                },
+                              )),
+                        ],
+                      )),
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                       SizedBox(
                           height: MediaQuery.of(context).size.height * 0.01),
 
@@ -643,7 +819,11 @@ class _taskassign_aState extends State<taskassign_a> {
                             shape: BoxShape.rectangle,
                             border: Border.all(width: 1.0),
                             borderRadius:
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                             BorderRadius.all(Radius.circular(15.0)),
+========
+                                BorderRadius.all(Radius.circular(15.0)),
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -665,7 +845,11 @@ class _taskassign_aState extends State<taskassign_a> {
                                   fillColor: Colors.black,
                                   border: InputBorder.none,
                                   hintText:
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                   ' Enter why you chose this faculty here',
+========
+                                      ' Enter why you chose this faculty here',
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                   hintStyle: GoogleFonts.poppins(
                                     color: Colors.black,
                                     fontWeight: FontWeight.w200,
@@ -689,6 +873,7 @@ class _taskassign_aState extends State<taskassign_a> {
                 ),
               ),
             ),
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
             floatingActionButton: (checkInserttask == 'Update')
                 ? Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -769,6 +954,18 @@ class _taskassign_aState extends State<taskassign_a> {
                               setState(() {});
                               FirebaseTask.addTask(
                                   todaydatedb: todayDateinString,
+========
+          ),
+        ),
+        floatingActionButton: (checkInserttask == 'Update')
+            ? Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: MaterialButton(
+                    onPressed: () async {
+                      if (document != null) {
+                        if (document['faculty'] == facultyvalue) {
+                          await FirebaseTask.updateTask(
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
                                   categorydb: categoryvalue,
                                   titledb: tasktitlecontroller.text,
                                   descriptiondb: taskdescriptioncontroller.text,
@@ -777,8 +974,25 @@ class _taskassign_aState extends State<taskassign_a> {
                                   duedatedb: dueDateInString,
                                   duetimedb: duetime,
                                   facultydb: facultyvalue,
+                                  statusdb: document['status'],
+                                  reasondb: reason,
                                   admindb: adminreasoncontroller.text,
+                                  docId: document!.id)
+                              .whenComplete(
+                            () => Navigator.pop(context),
+                          );
+                        } else {
+                          await FirebaseTask.updateTask(
+                                  categorydb: categoryvalue,
+                                  titledb: tasktitlecontroller.text,
+                                  descriptiondb: taskdescriptioncontroller.text,
+                                  startdatedb: startDateInString,
+                                  enddatedb: endDateInString,
+                                  duedatedb: dueDateInString,
+                                  duetimedb: duetime,
+                                  facultydb: facultyvalue,
                                   statusdb: status,
+<<<<<<<< HEAD:sense_task/lib/adminview/AssignTask_Admin.dart
                                   reasondb: reason);
                               _clearassignpage();
                               Navigator.push(
@@ -811,6 +1025,94 @@ class _taskassign_aState extends State<taskassign_a> {
     ),
     ))))
         : SizedBox())));
+========
+                                  reasondb: reason,
+                                  admindb: adminreasoncontroller.text,
+                                  docId: document!.id)
+                              .whenComplete(
+                            () => Navigator.pop(context),
+                          );
+                        }
+                        _clearassignpage();
+                      }
+
+                      print('updateeeeeeeeee');
+                    },
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width * 0.4,
+                      decoration: new BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        border: Border.all(width: 2.0),
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Center(
+                          child: Text(
+                            'Update',
+                            style: GoogleFonts.lato(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize:
+                                    MediaQuery.of(context).size.height * 0.02),
+                          ),
+                        ),
+                      ),
+                    )),
+              )
+            : (checkInserttask == 'Assign')
+                ? Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: MaterialButton(
+                        onPressed: () {
+                          setState(() {});
+                          FirebaseTask.addTask(
+                              todaydatedb: todayDateinString,
+                              categorydb: categoryvalue,
+                              titledb: tasktitlecontroller.text,
+                              descriptiondb: taskdescriptioncontroller.text,
+                              startdatedb: startDateInString,
+                              enddatedb: endDateInString,
+                              duedatedb: dueDateInString,
+                              duetimedb: duetime,
+                              facultydb: facultyvalue,
+                              admindb: adminreasoncontroller.text,
+                              statusdb: status,
+                              reasondb: reason);
+                          _clearassignpage();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => adminpage()),
+                          );
+                        },
+                        child: Container(
+                            height: MediaQuery.of(context).size.height * 0.05,
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            decoration: new BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.rectangle,
+                              border: Border.all(width: 2.0),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Center(
+                                child: Text(
+                                  'Add Task',
+                                  style: GoogleFonts.lato(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ))))
+                : SizedBox());
+>>>>>>>> main:sense_task/lib/AdminView/AssignTask_Admin.dart
   }
 
   void _clearassignpage() {
@@ -878,19 +1180,23 @@ class FunkyOverlayforcategoryState extends State<FunkyOverlayforcategory>
                             borderRadius: BorderRadius.circular(15.0))),
                     child: Column(
                       children: [
-                        Text(
-                          " Add a new category ",
-                          style: GoogleFonts.poppins(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
-                              fontSize:
-                                  MediaQuery.of(context).size.width * 0.035),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            " Add a new category ",
+                            style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.035),
+                          ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Container(
                             height: 40,
                             child: TextField(
+                              cursorHeight: 20,
                               decoration: InputDecoration(
                                 fillColor: Colors.black,
                                 hintText: 'Type here',
@@ -908,10 +1214,12 @@ class FunkyOverlayforcategoryState extends State<FunkyOverlayforcategory>
                             ),
                           ),
                         ),
+                        Spacer(),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(10.0),
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       elevation: 5.0,
