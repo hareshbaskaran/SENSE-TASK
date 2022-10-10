@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sense_task/AssignTask_Admin.dart';
+import 'package:sense_task/adminview/AssignTask_Admin.dart';
 
 import '../LoginPage.dart';
 import 'adminpage.dart';

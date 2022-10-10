@@ -6,7 +6,7 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'LoginPage.dart';
+import '../LoginPage.dart';
 
 TextEditingController taskcategorycontroller = new TextEditingController();
 

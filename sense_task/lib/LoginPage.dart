@@ -4,21 +4,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:sense_task/Services/firebase_crud.dart';
-import 'package:sense_task/StaffPage_Admin.dart';
-import 'package:sense_task/TaskPage_Admin.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
 import 'package:sense_task/adminview/adminpage.dart';
 import 'package:sense_task/main.dart';
 import 'package:sense_task/userview/userpage.dart';
-import 'Filterpage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'main.dart';
-import 'package:http/http.dart' as http;
 
 
 

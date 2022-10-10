@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/UserInfo.dart';
-import 'package:sense_task/AssignTask_Admin.dart';
+import 'package:sense_task/adminview/AssignTask_Admin.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/adminview/admin_facultypage.dart';
 

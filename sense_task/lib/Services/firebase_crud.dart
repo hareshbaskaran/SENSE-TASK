@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:sense_task/AssignTask_Admin.dart';
+import 'package:sense_task/adminview/AssignTask_Admin.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/Models/FirebaseResponse.dart';
 import 'package:sense_task/adminview/adminpage.dart';
@@ -206,7 +206,7 @@ class UsernameQuery{
       isEqualTo: 0,
     ).where("faculty",
       ///todo:change my name to stringfield catches username
-      isEqualTo: usernamevalue_user.text
+      isEqualTo: user
     ).snapshots();
   }
   static Stream<QuerySnapshot> UserAccepted() {
