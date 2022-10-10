@@ -55,7 +55,11 @@ bool alertlogin = false;
 TextEditingController passwordvalue_admin = new TextEditingController();
 String password_admin = passwordvalue_admin.text;
 TextEditingController usernamevalue_user = new TextEditingController();
+<<<<<<< HEAD
 
+=======
+//
+>>>>>>> parent of ee35c8f (deleted_sense)
 bool grey = true;
 int pageview = 2;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -310,6 +314,10 @@ class _loginpageState extends State<loginpage> {
                                   MediaQuery.of(context).size.width * 0.04),
                         ),
                         onTap: () {
+<<<<<<< HEAD
+=======
+                          Hive_box.put('page',2);
+>>>>>>> parent of ee35c8f (deleted_sense)
                           setState(() {
                             alertlogin = false;
                             adminlogin = false;
@@ -484,6 +492,11 @@ class _loginpageState extends State<loginpage> {
                                             0.04),
                               ),
                               onTap: () {
+<<<<<<< HEAD
+=======
+                                Hive_box.put('page',1);
+                                Hive_box.put('user',usernamevalue_user.text);
+>>>>>>> parent of ee35c8f (deleted_sense)
                                 setState(() {
                                   usernamevalue_user.clear();
                                   userlogin = false;
@@ -525,10 +538,17 @@ class _loginpageState extends State<loginpage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => (pageview == 2)
+<<<<<<< HEAD
                         ? userpage()
                         : (pageview == 1)
                             ? adminpage()
                             : userpage()),
+=======
+                        ? userpage(Hive_box)
+                        : (pageview == 1)
+                            ? adminpage(Hive_box)
+                            : userpage(Hive_box)),
+>>>>>>> parent of ee35c8f (deleted_sense)
               );
             }
           } else
