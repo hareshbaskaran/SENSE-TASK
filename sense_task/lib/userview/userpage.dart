@@ -41,7 +41,7 @@ class _userpageState extends State<userpage> {
   late Box box1;
   @override
   Widget build(BuildContext context) {
-    String userhive=user_box.get('user');
+    usernamevalue_user.text=user_box.get('user');
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndexuser = index;
@@ -92,7 +92,7 @@ class _userpageState extends State<userpage> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      '$userhive !',
+                      '${usernamevalue_user.text}!',
                       style: GoogleFonts.poppins(
                           color: Colors.black,
                           fontSize: MediaQuery.of(context).size.width * 0.052),
