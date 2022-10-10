@@ -1,8 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+import 'package:sense_task/LoginPage.dart';
+import 'package:sense_task/adminview/AssignTask_Admin.dart';
+=======
 import 'package:flutter/services.dart';
 import 'package:sense_task/LoginandSignoutPage/LoginPage.dart';
 
+>>>>>>> main
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -23,7 +28,6 @@ CheckloggedIn() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Hive.initFlutter();
   Box<dynamic> Hive_box = await Hive.openBox('myBox');
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,8 +39,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,6 +47,12 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
+        home: already_sign_in?adminpage():loginpage(Hive_box)
+        //already_sign_in?(pageview==1)?adminpage():(pageview==2)?userpage(user_box):loginpage(Hive_box):loginpage(Hive_box)
+        );
+=======
         home: loginpage(Hive_box));
+>>>>>>> main
   }
 }
