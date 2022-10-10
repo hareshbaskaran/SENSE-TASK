@@ -3,6 +3,7 @@ import 'package:sense_task/adminview/AssignTask_Admin.dart';
 import 'package:sense_task/LoginPage.dart';
 import 'package:sense_task/Models/FirebaseResponse.dart';
 import 'package:sense_task/adminview/adminpage.dart';
+import 'package:sense_task/userview/userpage.dart';
 
 final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 final CollectionReference _UserCollection = _firestore.collection('SenseTask');
@@ -206,7 +207,7 @@ class UsernameQuery{
       isEqualTo: 0,
     ).where("faculty",
       ///todo:change my name to stringfield catches username
-      isEqualTo: user
+      isEqualTo: user_hive
     ).snapshots();
   }
   static Stream<QuerySnapshot> UserAccepted() {
@@ -217,7 +218,7 @@ class UsernameQuery{
       isEqualTo: 1,
     ).where("faculty",
         ///todo:change my name to stringfield catches username
-        isEqualTo: usernamevalue_user.text
+        isEqualTo: user_hive
     ).snapshots();
   }
 }

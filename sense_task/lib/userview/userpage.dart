@@ -10,7 +10,7 @@ import 'package:sense_task/UserInfo.dart';
 import '../../LoginPage.dart';
 import '../../adminview/adminpage.dart';
 import '../adminview/AssignTask_Admin.dart';
-
+String user_hive="";
 Box<dynamic> user_box = Hive.box('myBox');
 int snaplength = 2;
 bool drawer = false;
@@ -40,7 +40,9 @@ class _userpageState extends State<userpage> {
   late Box box1;
   @override
   Widget build(BuildContext context) {
-    String user_hive=user_box.get('user');
+    setState(() {
+      user_hive=user_box.get('user');
+    });
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndexuser = index;
