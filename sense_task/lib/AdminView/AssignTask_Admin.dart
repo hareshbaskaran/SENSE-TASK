@@ -169,7 +169,6 @@ class _taskassign_aState extends State<taskassign_a> {
                             children: [
                               Row(
                                 children: [
-                                  SizedBox(width: 20),
                                   new DropdownButtonHideUnderline(
                                     child: DropdownButton(
                                         icon: Icon(

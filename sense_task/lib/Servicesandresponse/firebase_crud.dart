@@ -178,6 +178,7 @@ class AdminQuery {
           "status",
           isEqualTo: adminquery,
         )
+        .orderBy('today')
         .snapshots();
   }
 
