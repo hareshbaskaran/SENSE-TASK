@@ -516,21 +516,24 @@ class _loginpageState extends State<loginpage> {
             already_sign_in = true;
           });
           hasInternet = await InternetConnectionChecker().hasConnection;
-          if (hasInternet) {
-            User? user = await signInWithGoogle(context: context);
-            if (user != null) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => (pageview == 2)
-                        ? userpage(user_box)
-                        : (pageview == 1)
-                        ? adminpage()
-                        : userpage(user_box)
-                ),
-              );
-            }
-          } else
+              User? user =await signInWithGoogle(context: context).then((result) {
+                if(User!=null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) {
+                          return (pageview == 2)
+                              ? userpage(user_box)
+                              : (pageview == 1)
+                              ? adminpage()
+                              : userpage(user_box);
+                        }
+                    ),
+
+                  );
+                }
+              });
+   /*      else
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(
@@ -541,7 +544,7 @@ class _loginpageState extends State<loginpage> {
                 ),
                 duration: const Duration(seconds: 3),
               ),
-            );
+            );*/
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         highlightElevation: 0,

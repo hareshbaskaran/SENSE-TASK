@@ -60,6 +60,7 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: already_sign_in?adminpage():loginpage(Hive_box)
+        //already_sign_in?(pageview==1)?adminpage():(pageview==2)?userpage(user_box):loginpage(Hive_box):loginpage(Hive_box)
         );
   }
 }
