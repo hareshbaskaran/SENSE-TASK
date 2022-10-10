@@ -48,6 +48,7 @@ dependencies:
   firebase_auth: ^3.3.4
   cloud_firestore: ^3.1.5
   http: ^0.13.5
+  internet_connection_checker: ^1.0.0+1
 
 
 
@@ -82,11 +83,15 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/images/bgnd.png
-    - assets/images/loginpic.png
-    - assets/images/vit-logo.png
-    - assets/images/logo.png
-    - assets/images/Group 12.png
+      - assets/images/bgnd.png
+      - assets/images/loginpic.png
+      - assets/images/vit-logo.png
+      - assets/images/logo.png
+      - assets/images/Group 12.png
+      - assets/images/googlelogo.png
+      - assets/images/bgnd2.png
+      - assets/images/bgnd3.png
+      - assets/images/bgnd4.png
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

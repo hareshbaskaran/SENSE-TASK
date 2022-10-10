@@ -44,7 +44,6 @@ CheckloggedIn() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Hive.initFlutter();
   Box<dynamic> Hive_box = await Hive.openBox('myBox');
   WidgetsFlutterBinding.ensureInitialized();
@@ -54,8 +53,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -64,9 +61,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home: loginpage(Hive_box)
-/*    home:(already_sign_in==false)? loginpage(Hive_box):
-    (pageview==1&&already_sign_in==true)?adminpage():(already_sign_in==true&&pageview==2)?userpage():loginpage(Hive_box)*/
+        home: already_sign_in?adminpage():loginpage(Hive_box)
         );
   }
 }

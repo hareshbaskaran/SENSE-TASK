@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:sense_task/Services/firebase_crud.dart';
 import 'package:sense_task/StaffPage_Admin.dart';
 import 'package:sense_task/TaskPage_Admin.dart';
@@ -21,37 +22,15 @@ import 'package:http/http.dart' as http;
 
 
 
-List<String> faculty_list = [];
-List<dynamic> faculty_data=[];
-String facultyvalue = "Ishwarya";
-
-getfacultylistAPI() async {
-  faculty_list = [];
-  var faculty_url = Uri.parse(
-      "https://gist.githubusercontent.com/iamishu2908/006812760864f6859dcaaf5e719f29b0/raw/acd0f3ad6c4495e061bb30ee29545a1dff4de3f8/facultynames.json");
-  var faculty_response = await http.get(faculty_url);
-  print('Response status: ${faculty_response.statusCode}');
-  print('Response body: ${faculty_response.body}');
-  final faculty_data = await json.decode(faculty_response.body);
-  if (faculty_response.statusCode == 200) {
-    for (int i = 0; i < faculty_data.length; i++) {
-      faculty_list.add(
-        faculty_data[i]['name'],
-      );
-    }
-  }
-}
-
-
-///B2A4F0
+List<String> faculty_list = [
+  'S.Anand',
+  'T.Yuvaraj'
+];
+String facultyvalue = "S.Anand";
 Box<dynamic> Hive_box = Hive.box('myBox');
 bool isButtonDisabled = true;
 User? user;
 bool checkbox_value = false;
-Prefsetsignin() async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setInt('intValue', 1);
-}
 bool userlogin=false;
 bool alertuser=false;
 bool adminlogin=false;
@@ -65,7 +44,7 @@ TextEditingController passwordvalue_user = new TextEditingController();
 String username_user = usernamevalue_user.text;
 String password_user = passwordvalue_user.text;
 bool grey = true;
-int pageview = 2;
+var pageview = 2;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 bool isLoggedIn = false;
 
@@ -118,9 +97,23 @@ class loginpage extends StatefulWidget {
 }
 
 class _loginpageState extends State<loginpage> {
+  late Box box1;
+  @override
   void initState() {
-    getfacultylistAPI();
+    // TODO: implement initState
     super.initState();
+    createOpenBox();
+  }
+  void createOpenBox()async{
+    box1 = await Hive.openBox('myBox');
+    getdata();
+  }
+  void getdata()async{
+    if(box1.get('user')!=null){
+      usernamevalue_user.text = box1.get('user');
+      setState(() {
+      });
+    }
   }
   void onLoginStatusChanged(bool isLoggedIn) {
     setState(() {
@@ -154,7 +147,7 @@ class _loginpageState extends State<loginpage> {
               children: [
                 Text(
                   textAlign: TextAlign.center,
-                  'SENSE TASK MANAGEMENT',
+                  'SENSE TASK\n MANAGEMENT',
                   style: GoogleFonts.lato(
                       color: Colors.black,
                       fontSize: MediaQuery.of(context).size.width * 0.075),
@@ -165,108 +158,146 @@ class _loginpageState extends State<loginpage> {
                       left: MediaQuery.of(context).size.width * 0.03,
                       right: MediaQuery.of(context).size.width * 0.03),
                   child: Container(
-                      child: Image(
-                          image: AssetImage('assets/images/loginpic.png'))),
+                      child:
+                      Image(image: AssetImage('assets/images/loginpic.png'))),
                 ),
                 (pageview == 1)
                     ? Column(children: [
                   Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left:MediaQuery.of(context).size.width * 0.08),
-                        child: Text('Login as Admin',style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300,
-                            fontSize: MediaQuery.of(context).size.width * 0.045)),
-                      ),
-                    ],
-                  ),
+                children: [
+                Padding(
+                padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width * 0.08),
+          child: Text('Login as Admin',
+              style: GoogleFonts.poppins(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w300,
+                  fontSize:
+                  MediaQuery.of(context).size.width *
+                      0.045)),
+        ),
+      ],
+    ),
                   (adminlogin==false)?
-                      Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Center(
-                              child: SingleChildScrollView(
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width * 0.7,
-                                  decoration: new BoxDecoration(
-                                    color: Color(0xFFF7F8F8),
-                                    shape: BoxShape.rectangle,
-                                    border: Border.all(width: 2.0),
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(15.0)),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          color: Colors.transparent,
-                                          constraints: BoxConstraints(
-                                              minHeight: MediaQuery.of(context)
+                  Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Center(
+                            child: SingleChildScrollView(
+                              child: Container(
+                                width: MediaQuery.of(context)
+                                    .size
+                                    .width *
+                                    0.7,
+                                decoration: new BoxDecoration(
+                                  color: Color(0xFFF7F8F8),
+                                  shape: BoxShape.rectangle,
+                                  border: Border.all(width: 2.0),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(15.0)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        color: Colors.transparent,
+                                        constraints: BoxConstraints(
+                                            minHeight:
+                                            MediaQuery.of(context)
+                                                .size
+                                                .height *
+                                                0.05),
+                                        child: TextField(
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight:
+                                              FontWeight.w400,
+                                              fontSize: MediaQuery.of(
+                                                  context)
                                                   .size
-                                                  .height *
-                                                  0.05),
-                                          child: TextField(
-                                            maxLines: 1,
-                                            onChanged: (_) {
-                                              setState(() {
-                                              });
-                                            },
-                                            decoration: InputDecoration(
-                                              hintText: "   Enter Admin Password",
-                                              hintStyle: TextStyle(
-
-                                              ),
-                                              fillColor: Colors.black,
-                                              border: InputBorder.none,
-                                            ),
-                                            cursorColor: Colors.black,
-                                            controller: passwordvalue_admin,
+                                                  .width *
+                                                  0.036),
+                                          cursorHeight: 20,
+                                          maxLines: 1,
+                                          onChanged: (_) {
+                                            setState(() {});
+                                          },
+                                          decoration: InputDecoration(
+                                            hintText:
+                                            'Enter Admin Password',
+                                            hintStyle: GoogleFonts.poppins(
+                                                color: Colors.black,
+                                                fontWeight:
+                                                FontWeight.w200,
+                                                fontSize: MediaQuery.of(
+                                                    context)
+                                                    .size
+                                                    .width *
+                                                    0.036),
+                                            fillColor: Colors.black,
+                                            border: InputBorder.none,
                                           ),
+                                          cursorColor: Colors.black,
+                                          controller:
+                                          passwordvalue_admin,
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                          Container(
-                            child: MaterialButton(
+                        ),
+                        Container(
+                          child: MaterialButton(
                               child: Padding(
-                                padding: const EdgeInsets.only(right: 18.0),
+                                padding: const EdgeInsets.only(
+                                    right: 18.0),
                                 child: Icon(
                                   Icons.chevron_right_outlined,
                                   color: Colors.black,
                                 ),
                               ),
-                              onPressed: (){
-                                if(passwordvalue_admin.text=="Sense_Task"){
+                              onPressed: () async {
+                                if (passwordvalue_admin.text ==
+                                    "Sense_Task") {
                                   setState(() {
-                                    adminlogin=true;
+                                    adminlogin = true;
                                   });
-                                }
-                                else setState(() {
-                                  alertlogin=true;
-                                });
-                              },
-                            ),
-                              width: MediaQuery.of(context).size.width * 0.1,
-                          )
-                        ],
-                        ),
-                      ):_googleSignInButton(),
+                                } else
+                                  setState(() {
+                                    alertlogin = true;
+                                  });
+                              }),
+                          width:
+                          MediaQuery.of(context).size.width * 0.1,
+                        )
+                      ],
+                    ),
+                  )
+                      : Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: _googleSignInButton(),
+                  ),
                   (alertlogin==true&&adminlogin==false)?
-                      Text(
-                        'Invalid Password',
-                        style: TextStyle(
-                          color: Colors.red
-                        ),
-                      ):SizedBox(),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Text(
+                      'Invalid Password ! Try again !',
+                      style: GoogleFonts.poppins(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w500,
+                          fontSize:
+                          MediaQuery.of(context).size.width *
+                              0.036),
+                    ),
+                  ):SizedBox(),
                         SizedBox(
                             height: MediaQuery.of(context).size.height * 0.1),
                         InkWell(
@@ -293,11 +324,17 @@ class _loginpageState extends State<loginpage> {
                   Row(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left:MediaQuery.of(context).size.width * 0.08,bottom: 20),
-                        child: Text('Login as User',style: GoogleFonts.poppins(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300,
-                            fontSize: MediaQuery.of(context).size.width * 0.045)),
+                        padding: EdgeInsets.only(
+                          left:
+                          MediaQuery.of(context).size.width * 0.08,
+                        ),
+                        child: Text('Login as User',
+                            style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w300,
+                                fontSize:
+                                MediaQuery.of(context).size.width *
+                                    0.045)),
                       ),
                     ],
                   ),
@@ -311,41 +348,71 @@ class _loginpageState extends State<loginpage> {
                           child: Center(
                             child: SingleChildScrollView(
                               child: Container(
-                                width: MediaQuery.of(context).size.width * 0.7,
+                                width: MediaQuery.of(context)
+                                    .size
+                                    .width *
+                                    0.7,
                                 decoration: new BoxDecoration(
                                   color: Color(0xFFF7F8F8),
                                   shape: BoxShape.rectangle,
                                   border: Border.all(width: 2.0),
-                                  borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
+                                  borderRadius: BorderRadius.all(
+                                      Radius.circular(15.0)),
                                 ),
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding:
+                                      const EdgeInsets.all(
+                                          8.0),
                                       child: Container(
                                         color: Colors.transparent,
                                         constraints: BoxConstraints(
-                                            minHeight: MediaQuery.of(context)
+                                            minHeight:
+                                            MediaQuery.of(
+                                                context)
                                                 .size
                                                 .height *
                                                 0.05),
                                         child: TextField(
+                                          style: GoogleFonts.poppins(
+                                              color: Colors.black,
+                                              fontWeight:
+                                              FontWeight.w400,
+                                              fontSize: MediaQuery.of(
+                                                  context)
+                                                  .size
+                                                  .width *
+                                                  0.036),
+                                          cursorHeight: 20,
                                           maxLines: 1,
                                           onChanged: (_) {
-                                            setState(() {
-                                            });
+                                            setState(() {});
                                           },
-                                          decoration: InputDecoration(
-                                            hintText: "   Enter Username",
-                                            hintStyle: TextStyle(
-
-                                            ),
-                                            fillColor: Colors.black,
-                                            border: InputBorder.none,
+                                          decoration:
+                                          InputDecoration(
+                                            hintText:
+                                            "Enter Your Name",
+                                            hintStyle: GoogleFonts.poppins(
+                                                color:
+                                                Colors.black,
+                                                fontWeight:
+                                                FontWeight
+                                                    .w200,
+                                                fontSize: MediaQuery.of(
+                                                    context)
+                                                    .size
+                                                    .width *
+                                                    0.036),
+                                            fillColor:
+                                            Colors.black,
+                                            border:
+                                            InputBorder.none,
                                           ),
-                                          cursorColor: Colors.black,
-                                          controller: usernamevalue_user,
+                                          cursorColor:
+                                          Colors.black,
+                                          controller:
+                                          usernamevalue_user,
                                         ),
                                       ),
                                     ),
@@ -358,51 +425,64 @@ class _loginpageState extends State<loginpage> {
                         Container(
                           child: MaterialButton(
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 18.0),
+                              padding: const EdgeInsets.only(
+                                  right: 10.0),
                               child: Icon(
-                                Icons.chevron_right_outlined,
+                                Icons.chevron_right_rounded,
                                 color: Colors.black,
                               ),
                             ),
-                            onPressed: (){
+                            onPressed: () {
                               setState(() {
-                                if(searchusername()){
-                                  userlogin=true;
-                                }
-                                else {
-                                  alertuser=true;
+                                if (searchusername()) {
+                                  userlogin = true;
+                                } else {
+                                  alertuser = true;
                                 }
                               });
                             },
                           ),
-                          width: MediaQuery.of(context).size.width * 0.1,
+                          width:
+                          MediaQuery.of(context).size.width *
+                              0.1,
                         )
                       ],
                     ),
-                  ):_googleSignInButton(),
+                  )
+                      : Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: _googleSignInButton(),
+                  ),
                   SizedBox(height: 20),
                   (alertuser==true &&userlogin==false)?
-                  Text(
-                    'No Such User Exists',
-                    style: TextStyle(
-                        color: Colors.red
+                  Padding(
+                    padding: EdgeInsets.only(top: 10),
+                    child: Text(
+                      'No Such User Exists !',
+                      style: GoogleFonts.poppins(
+                          color: Colors.red,
+                          fontWeight: FontWeight.w500,
+                          fontSize:
+                          MediaQuery.of(context).size.width *
+                              0.036),
                     ),
-                  ):SizedBox(),
+                  )
+                      : SizedBox(),
                             SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.1),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: InkWell(
-                                child: Text(
-                                  'Tap here, to Login as admin',
-                                  style: GoogleFonts.lato(
-                                      decoration: TextDecoration.underline,
-                                      color: Colors.deepPurpleAccent,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width *
-                                              0.04),
-                                ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: InkWell(
+                      child: Text(
+                        'Tap here, to Login as admin',
+                        style: GoogleFonts.lato(
+                            decoration: TextDecoration.underline,
+                            color: Colors.deepPurpleAccent,
+                            fontSize:
+                            MediaQuery.of(context).size.width *
+                                0.04),
+                      ),
                                 onTap: () {
                                   setState(() {
                                     usernamevalue_user.clear();
@@ -422,6 +502,7 @@ class _loginpageState extends State<loginpage> {
   }
 
   Widget _googleSignInButton() {
+    bool hasInternet = false;
     return Container(
       height: 60,
       width: 340,
@@ -429,24 +510,45 @@ class _loginpageState extends State<loginpage> {
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       child: MaterialButton(
+        splashColor: Colors.white,
         color: Colors.black,
         onPressed: () async {
+          if(pageview==2){
+            box1.put('user',usernamevalue_user.text);
+            setState(() {
+
+            });
+          }
           setState(() {
             already_sign_in = true;
           });
-          User? user = await signInWithGoogle(context: context);
-          if (user != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => (pageview == 2)
-                      ? userpage()
-                      : (pageview == 1)
-                          ? adminpage()
-                          : userpage()
+          hasInternet = await InternetConnectionChecker().hasConnection;
+          if (hasInternet) {
+            User? user = await signInWithGoogle(context: context);
+            if (user != null) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => (pageview == 2)
+                        ? userpage(user_box)
+                        : (pageview == 1)
+                        ? adminpage()
+                        : userpage(user_box)
+                ),
+              );
+            }
+          } else
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(
+                  ' No Internet Connection !',
+                  style: GoogleFonts.poppins(
+                    color: Colors.white,
                   ),
+                ),
+                duration: const Duration(seconds: 3),
+              ),
             );
-          }
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         highlightElevation: 0,
@@ -459,23 +561,20 @@ class _loginpageState extends State<loginpage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                color: Colors.transparent,
-                alignment: Alignment.centerLeft,
-                height: 20,
-                width: 20,
-                /* child: Image(
-                  image: AssetImage('assets/images/googleicon.png'),
-                ),*/
-              ),
+                  alignment: Alignment.centerLeft,
+                  height: 38,
+                  width: 38,
+                  child:
+                  Image(image: AssetImage('assets/images/googlelogo.png'))),
               SizedBox(
                 width: 20,
               ),
               Text(
                 'Sign in with Google',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
+                style: GoogleFonts.poppins(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: MediaQuery.of(context).size.width * 0.045),
               ),
             ],
           ),

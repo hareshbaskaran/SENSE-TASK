@@ -23,7 +23,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
   Route _routeToSignInScreen() {
     return PageRouteBuilder(
       settings: RouteSettings(arguments:user),
-      pageBuilder: (context, animation, secondaryAnimation) => (pageview==1)?adminpage():userpage(),
+      pageBuilder: (context, animation, secondaryAnimation) => (pageview==1)?adminpage():userpage(user_box),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(-1.0, 0.0);
         var end = Offset.zero;
