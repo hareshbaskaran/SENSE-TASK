@@ -310,6 +310,7 @@ class _loginpageState extends State<loginpage> {
                                   MediaQuery.of(context).size.width * 0.04),
                         ),
                         onTap: () {
+                          Hive_box.put('page',2);
                           setState(() {
                             alertlogin = false;
                             adminlogin = false;
@@ -484,6 +485,8 @@ class _loginpageState extends State<loginpage> {
                                             0.04),
                               ),
                               onTap: () {
+                                Hive_box.put('page',1);
+                                Hive_box.put('user',usernamevalue_user.text);
                                 setState(() {
                                   usernamevalue_user.clear();
                                   userlogin = false;
@@ -525,10 +528,10 @@ class _loginpageState extends State<loginpage> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => (pageview == 2)
-                        ? userpage()
+                        ? userpage(Hive_box)
                         : (pageview == 1)
-                            ? adminpage()
-                            : userpage()),
+                            ? adminpage(Hive_box)
+                            : userpage(Hive_box)),
               );
             }
           } else

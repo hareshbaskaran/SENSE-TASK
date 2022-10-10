@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sense_task/AdminView/adminpage.dart';
 import 'package:sense_task/LoginandSignoutPage/LoginPage.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:sense_task/UserView/userpage.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
           splashColor: Colors.black,
         ),
         debugShowCheckedModeBanner: false,
-        home: loginpage(Hive_box));
+        home: (already_sign_in)?adminpage(Hive_box):loginpage(Hive_box)
+    );
   }
 }

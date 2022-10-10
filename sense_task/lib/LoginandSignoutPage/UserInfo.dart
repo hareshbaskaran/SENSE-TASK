@@ -27,7 +27,7 @@ class _UserInfoScreenState extends State<UserInfoScreen> {
     return PageRouteBuilder(
       settings: RouteSettings(arguments: user),
       pageBuilder: (context, animation, secondaryAnimation) =>
-          (pageview == 1) ? adminpage() : userpage(),
+          (pageview == 1) ? adminpage(Hive_box) : userpage(Hive_box),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         var begin = Offset(-1.0, 0.0);
         var end = Offset.zero;

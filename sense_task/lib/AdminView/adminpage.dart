@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive/hive.dart';
 import 'package:rounded_expansion_tile/rounded_expansion_tile.dart';
 import 'package:sense_task/Servicesandresponse/firebase_crud.dart';
 import 'package:sense_task/LoginandSignoutPage//UserInfo.dart';
@@ -28,6 +29,8 @@ int todaytasks = 0;
 int ct = 0;
 
 class adminpage extends StatefulWidget {
+  late final Box<dynamic> box;
+  adminpage(this.box);
   late bool grey;
   @override
   adminpageState createState() => adminpageState();
@@ -1363,7 +1366,7 @@ class _FilterBoxState extends State<FilterBox> {
           print(adminquery);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => adminpage()),
+            MaterialPageRoute(builder: (context) => adminpage(Hive_box)),
           );
         },
         child: Text(
